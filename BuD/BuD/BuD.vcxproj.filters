@@ -15,10 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EntryPoint.h">
+    <ClCompile Include="Core\EntryPoint.h">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="bud_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ApplicationCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -27,6 +30,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BuD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ApplicationCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

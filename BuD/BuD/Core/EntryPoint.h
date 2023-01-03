@@ -1,4 +1,6 @@
-#include "bud_pch.h"
+#include <bud_pch.h>
+
+#include <Core/ApplicationCore.h>
 
 int APIENTRY wWinMain(
     _In_ HINSTANCE hInstance,
@@ -7,5 +9,10 @@ int APIENTRY wWinMain(
     _In_ int       nCmdShow
 )
 {
+    auto app = BuD::ApplicationCore::Get();
+    app->Run();
+
+    BuD::ApplicationCore::Close();
+
     return 0;
 }
