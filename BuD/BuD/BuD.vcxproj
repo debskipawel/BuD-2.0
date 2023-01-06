@@ -158,11 +158,18 @@
     <ClCompile Include="bud_pch.cpp" />
     <ClCompile Include="Core\ApplicationCore.cpp" />
     <ClCompile Include="Core\EntryPoint.h" />
+    <ClCompile Include="Core\LayerStack.cpp" />
+    <ClCompile Include="Utils\Random.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BuD.h" />
     <ClInclude Include="bud_pch.h" />
+    <ClInclude Include="Core\AppLayer.h" />
     <ClInclude Include="Core\ApplicationCore.h" />
+    <ClInclude Include="Core\ClientApp.h" />
+    <ClInclude Include="Core\LayerStack.h" />
+    <ClInclude Include="Utils\Clock.h" />
+    <ClInclude Include="Utils\Random.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dependencies\DearImGui\DearImGui.vcxproj">

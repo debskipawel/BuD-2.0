@@ -1,5 +1,7 @@
 #pragma once
 
+#include "LayerStack.h"
+
 namespace BuD
 {
 	class ApplicationCore
@@ -8,9 +10,16 @@ namespace BuD
 		void Run();
 
 	private:
-		ApplicationCore() = default;
+		ApplicationCore();
 		ApplicationCore(const ApplicationCore& other) = delete;
 		ApplicationCore operator=(const ApplicationCore& other) = delete;
+
+		float m_LastFrameTime;
+
+		bool m_Minimized;
+		bool m_ShouldRun;
+
+		LayerStack m_LayerStack;
 
 		static std::shared_ptr<ApplicationCore> s_app;
 
