@@ -4,6 +4,8 @@
 
 namespace BuD
 {
+	extern std::shared_ptr<AppLayer> CreateClientApp();
+
 	class ApplicationCore
 	{
 	public:
@@ -21,7 +23,7 @@ namespace BuD
 
 		LayerStack m_LayerStack;
 
-		static std::shared_ptr<ApplicationCore> s_app;
+		inline static std::shared_ptr<ApplicationCore> s_app = nullptr;
 
 	public:
 		inline static std::shared_ptr<ApplicationCore> Get()

@@ -166,7 +166,6 @@
     <ClInclude Include="bud_pch.h" />
     <ClInclude Include="Core\AppLayer.h" />
     <ClInclude Include="Core\ApplicationCore.h" />
-    <ClInclude Include="Core\ClientApp.h" />
     <ClInclude Include="Core\LayerStack.h" />
     <ClInclude Include="Utils\Clock.h" />
     <ClInclude Include="Utils\Random.h" />

@@ -1,8 +1,6 @@
 #include "bud_pch.h"
 #include "ApplicationCore.h"
 
-#include "ClientApp.h"
-
 #include <Utils/Clock.h>
 
 namespace BuD

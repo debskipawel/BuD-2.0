@@ -18,16 +18,14 @@ namespace BuD
 		void PushLayer(std::shared_ptr<AppLayer>);
 		void PopLayer(std::shared_ptr<AppLayer>);
 
-		inline std::shared_ptr<AppLayer>* begin()
+		inline std::vector<std::shared_ptr<AppLayer>>::iterator begin()
 		{
-			auto vectorStart = (std::shared_ptr<AppLayer>*)&m_LayerStack;
-			return vectorStart;
+			return m_LayerStack.begin();
 		}
 
-		inline std::shared_ptr<AppLayer>* end()
+		inline std::vector<std::shared_ptr<AppLayer>>::iterator end()
 		{
-			auto vectorStart = (std::shared_ptr<AppLayer>*)&m_LayerStack;
-			return vectorStart + m_LayerStack.size();
+			return m_LayerStack.end();
 		}
 	protected:
 		std::vector<std::shared_ptr<AppLayer>> m_LayerStack;
