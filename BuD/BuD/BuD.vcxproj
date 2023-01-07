@@ -159,6 +159,10 @@
     <ClCompile Include="Core\ApplicationCore.cpp" />
     <ClCompile Include="Core\EntryPoint.h" />
     <ClCompile Include="Core\LayerStack.cpp" />
+    <ClCompile Include="Event\EventEmitter.cpp" />
+    <ClCompile Include="Event\KeyboardEvents.cpp" />
+    <ClCompile Include="Event\MouseEvents.cpp" />
+    <ClCompile Include="Event\WindowEvents.cpp" />
     <ClCompile Include="Utils\Random.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +171,14 @@
     <ClInclude Include="Core\AppLayer.h" />
     <ClInclude Include="Core\ApplicationCore.h" />
     <ClInclude Include="Core\LayerStack.h" />
+    <ClInclude Include="Event\Event.h" />
+    <ClInclude Include="Event\EventEmitter.h" />
+    <ClInclude Include="Event\IEventDispatchable.h" />
+    <ClInclude Include="Event\KeyboardEvents.h" />
+    <ClInclude Include="Event\MouseEvents.h" />
+    <ClInclude Include="Event\WindowEvents.h" />
+    <ClInclude Include="Input\KeyboardKeys.h" />
+    <ClInclude Include="Input\MouseCode.h" />
     <ClInclude Include="Utils\Clock.h" />
     <ClInclude Include="Utils\Random.h" />
   </ItemGroup>

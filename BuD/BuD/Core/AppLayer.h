@@ -1,8 +1,10 @@
 #pragma once
 
+#include <Event/IEventDispatchable.h>
+
 namespace BuD
 {
-	class AppLayer
+	class AppLayer : public IEventDispatchable
 	{
 	public:
 		virtual ~AppLayer() = default;

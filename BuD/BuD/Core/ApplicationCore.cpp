@@ -12,7 +12,7 @@ namespace BuD
 
 	void ApplicationCore::Run()
 	{
-		m_LayerStack.PushLayer(CreateClientApp());
+		this->PushLayer(CreateClientApp());
 
 		Clock::Init();
 		m_ShouldRun = true;
@@ -33,6 +33,26 @@ namespace BuD
 			{
 				layer->OnRender();
 			}
+		}
+	}
+	
+	void ApplicationCore::PushLayer(std::shared_ptr<AppLayer> layer)
+	{
+		m_LayerStack.PushLayer(layer);
+	}
+	
+	void ApplicationCore::OnEvent(Event& e)
+	{
+		e.Visit(*this);
+
+		for (auto& layer : m_LayerStack)
+		{
+			if (e.m_Handled)
+			{
+				break;
+			}
+
+			layer->OnEvent(e);
 		}
 	}
 }

@@ -6,10 +6,14 @@ namespace BuD
 {
 	extern std::shared_ptr<AppLayer> CreateClientApp();
 
-	class ApplicationCore
+	class ApplicationCore : public IEventDispatchable
 	{
 	public:
 		void Run();
+
+		void PushLayer(std::shared_ptr<AppLayer> layer);
+
+		void OnEvent(Event& e) override;
 
 	private:
 		ApplicationCore();
