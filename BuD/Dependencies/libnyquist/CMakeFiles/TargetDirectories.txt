@@ -1,0 +1,5 @@
+C:/Users/p.debski/Desktop/libnyquist-master/libnyquist/CMakeFiles/libnyquist.dir
+C:/Users/p.debski/Desktop/libnyquist-master/libnyquist/CMakeFiles/libnyquist-examples.dir
+C:/Users/p.debski/Desktop/libnyquist-master/libnyquist/CMakeFiles/INSTALL.dir
+C:/Users/p.debski/Desktop/libnyquist-master/libnyquist/CMakeFiles/ALL_BUILD.dir
+C:/Users/p.debski/Desktop/libnyquist-master/libnyquist/CMakeFiles/ZERO_CHECK.dir

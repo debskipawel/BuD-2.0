@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{918BDBAD-7B89-37C3-A258-8CA1E9CDC0F5}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>libnyquist</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)bin\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">libnyquist.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">libnyquist_d</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)bin\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">libnyquist.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">libnyquist</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(ProjectDir)bin\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">libnyquist.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">libnyquist</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(ProjectDir)bin\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">libnyquist.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">libnyquist</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include\libnyquist;$(ProjectDir)third_party;$(ProjectDir)third_party\FLAC\src\include;$(ProjectDir)third_party\libogg\include;$(ProjectDir)third_party\libvorbis\include;$(ProjectDir)third_party\libvorbis\src;$(ProjectDir)third_party\musepack\include;$(ProjectDir)third_party\opus\celt;$(ProjectDir)third_party\opus\libopus\include;$(ProjectDir)third_party\opus\opusfile\include;$(ProjectDir)third_party\opus\opusfile\src\include;$(ProjectDir)third_party\opus\silk;$(ProjectDir)third_party\opus\silk\float;$(ProjectDir)third_party\wavpack\include;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include\libnyquist;$(ProjectDir)third_party;$(ProjectDir)third_party\FLAC\src\include;$(ProjectDir)third_party\libogg\include;$(ProjectDir)third_party\libvorbis\include;$(ProjectDir)third_party\libvorbis\src;$(ProjectDir)third_party\musepack\include;$(ProjectDir)third_party\opus\celt;$(ProjectDir)third_party\opus\libopus\include;$(ProjectDir)third_party\opus\opusfile\include;$(ProjectDir)third_party\opus\opusfile\src\include;$(ProjectDir)third_party\opus\silk;$(ProjectDir)third_party\opus\silk\float;$(ProjectDir)third_party\wavpack\include;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include\libnyquist;$(ProjectDir)third_party;$(ProjectDir)third_party\FLAC\src\include;$(ProjectDir)third_party\libogg\include;$(ProjectDir)third_party\libvorbis\include;$(ProjectDir)third_party\libvorbis\src;$(ProjectDir)third_party\musepack\include;$(ProjectDir)third_party\opus\celt;$(ProjectDir)third_party\opus\libopus\include;$(ProjectDir)third_party\opus\opusfile\include;$(ProjectDir)third_party\opus\opusfile\src\include;$(ProjectDir)third_party\opus\silk;$(ProjectDir)third_party\opus\silk\float;$(ProjectDir)third_party\wavpack\include;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include\libnyquist;$(ProjectDir)third_party;$(ProjectDir)third_party\FLAC\src\include;$(ProjectDir)third_party\libogg\include;$(ProjectDir)third_party\libvorbis\include;$(ProjectDir)third_party\libvorbis\src;$(ProjectDir)third_party\musepack\include;$(ProjectDir)third_party\opus\celt;$(ProjectDir)third_party\opus\libopus\include;$(ProjectDir)third_party\opus\opusfile\include;$(ProjectDir)third_party\opus\opusfile\src\include;$(ProjectDir)third_party\opus\silk;$(ProjectDir)third_party\opus\silk\float;$(ProjectDir)third_party\wavpack\include;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include\libnyquist;$(ProjectDir)third_party;$(ProjectDir)third_party\FLAC\src\include;$(ProjectDir)third_party\libogg\include;$(ProjectDir)third_party\libvorbis\include;$(ProjectDir)third_party\libvorbis\src;$(ProjectDir)third_party\musepack\include;$(ProjectDir)third_party\opus\celt;$(ProjectDir)third_party\opus\libopus\include;$(ProjectDir)third_party\opus\opusfile\include;$(ProjectDir)third_party\opus\opusfile\src\include;$(ProjectDir)third_party\opus\silk;$(ProjectDir)third_party\opus\silk\float;$(ProjectDir)third_party\wavpack\include;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include\libnyquist;$(ProjectDir)third_party;$(ProjectDir)third_party\FLAC\src\include;$(ProjectDir)third_party\libogg\include;$(ProjectDir)third_party\libvorbis\include;$(ProjectDir)third_party\libvorbis\src;$(ProjectDir)third_party\musepack\include;$(ProjectDir)third_party\opus\celt;$(ProjectDir)third_party\opus\libopus\include;$(ProjectDir)third_party\opus\opusfile\include;$(ProjectDir)third_party\opus\opusfile\src\include;$(ProjectDir)third_party\opus\silk;$(ProjectDir)third_party\opus\silk\float;$(ProjectDir)third_party\wavpack\include;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include\libnyquist;$(ProjectDir)third_party;$(ProjectDir)third_party\FLAC\src\include;$(ProjectDir)third_party\libogg\include;$(ProjectDir)third_party\libvorbis\include;$(ProjectDir)third_party\libvorbis\src;$(ProjectDir)third_party\musepack\include;$(ProjectDir)third_party\opus\celt;$(ProjectDir)third_party\opus\libopus\include;$(ProjectDir)third_party\opus\opusfile\include;$(ProjectDir)third_party\opus\opusfile\src\include;$(ProjectDir)third_party\opus\silk;$(ProjectDir)third_party\opus\silk\float;$(ProjectDir)third_party\wavpack\include;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include\libnyquist;$(ProjectDir)third_party;$(ProjectDir)third_party\FLAC\src\include;$(ProjectDir)third_party\libogg\include;$(ProjectDir)third_party\libvorbis\include;$(ProjectDir)third_party\libvorbis\src;$(ProjectDir)third_party\musepack\include;$(ProjectDir)third_party\opus\celt;$(ProjectDir)third_party\opus\libopus\include;$(ProjectDir)third_party\opus\opusfile\include;$(ProjectDir)third_party\opus\opusfile\src\include;$(ProjectDir)third_party\opus\silk;$(ProjectDir)third_party\opus\silk\float;$(ProjectDir)third_party\wavpack\include;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include\libnyquist;$(ProjectDir)third_party;$(ProjectDir)third_party\FLAC\src\include;$(ProjectDir)third_party\libogg\include;$(ProjectDir)third_party\libvorbis\include;$(ProjectDir)third_party\libvorbis\src;$(ProjectDir)third_party\musepack\include;$(ProjectDir)third_party\opus\celt;$(ProjectDir)third_party\opus\libopus\include;$(ProjectDir)third_party\opus\opusfile\include;$(ProjectDir)third_party\opus\opusfile\src\include;$(ProjectDir)third_party\opus\silk;$(ProjectDir)third_party\opus\silk\float;$(ProjectDir)third_party\wavpack\include;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include\libnyquist;$(ProjectDir)third_party;$(ProjectDir)third_party\FLAC\src\include;$(ProjectDir)third_party\libogg\include;$(ProjectDir)third_party\libvorbis\include;$(ProjectDir)third_party\libvorbis\src;$(ProjectDir)third_party\musepack\include;$(ProjectDir)third_party\opus\celt;$(ProjectDir)third_party\opus\libopus\include;$(ProjectDir)third_party\opus\opusfile\include;$(ProjectDir)third_party\opus\opusfile\src\include;$(ProjectDir)third_party\opus\silk;$(ProjectDir)third_party\opus\silk\float;$(ProjectDir)third_party\wavpack\include;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include\libnyquist;$(ProjectDir)third_party;$(ProjectDir)third_party\FLAC\src\include;$(ProjectDir)third_party\libogg\include;$(ProjectDir)third_party\libvorbis\include;$(ProjectDir)third_party\libvorbis\src;$(ProjectDir)third_party\musepack\include;$(ProjectDir)third_party\opus\celt;$(ProjectDir)third_party\opus\libopus\include;$(ProjectDir)third_party\opus\opusfile\include;$(ProjectDir)third_party\opus\opusfile\src\include;$(ProjectDir)third_party\opus\silk;$(ProjectDir)third_party\opus\silk\float;$(ProjectDir)third_party\wavpack\include;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)include\libnyquist;$(ProjectDir)third_party;$(ProjectDir)third_party\FLAC\src\include;$(ProjectDir)third_party\libogg\include;$(ProjectDir)third_party\libvorbis\include;$(ProjectDir)third_party\libvorbis\src;$(ProjectDir)third_party\musepack\include;$(ProjectDir)third_party\opus\celt;$(ProjectDir)third_party\opus\libopus\include;$(ProjectDir)third_party\opus\opusfile\include;$(ProjectDir)third_party\opus\opusfile\src\include;$(ProjectDir)third_party\opus\silk;$(ProjectDir)third_party\opus\silk\float;$(ProjectDir)third_party\wavpack\include;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="$(ProjectDir)CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/p.debski/Desktop/libnyquist-master/libnyquist/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/p.debski/Desktop/libnyquist-master/libnyquist -BC:/Users/p.debski/Desktop/libnyquist-master/libnyquist --check-stamp-file C:/Users/p.debski/Desktop/libnyquist-master/libnyquist/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)CMakeFiles\3.23.1\CMakeCCompiler.cmake;$(ProjectDir)CMakeFiles\3.23.1\CMakeCXXCompiler.cmake;$(ProjectDir)CMakeFiles\3.23.1\CMakeRCCompiler.cmake;$(ProjectDir)CMakeFiles\3.23.1\CMakeSystem.cmake;$(ProjectDir)cmake\CXXhelpers.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/p.debski/Desktop/libnyquist-master/libnyquist/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/p.debski/Desktop/libnyquist-master/libnyquist -BC:/Users/p.debski/Desktop/libnyquist-master/libnyquist --check-stamp-file C:/Users/p.debski/Desktop/libnyquist-master/libnyquist/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)CMakeFiles\3.23.1\CMakeCCompiler.cmake;$(ProjectDir)CMakeFiles\3.23.1\CMakeCXXCompiler.cmake;$(ProjectDir)CMakeFiles\3.23.1\CMakeRCCompiler.cmake;$(ProjectDir)CMakeFiles\3.23.1\CMakeSystem.cmake;$(ProjectDir)cmake\CXXhelpers.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/p.debski/Desktop/libnyquist-master/libnyquist/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/p.debski/Desktop/libnyquist-master/libnyquist -BC:/Users/p.debski/Desktop/libnyquist-master/libnyquist --check-stamp-file C:/Users/p.debski/Desktop/libnyquist-master/libnyquist/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)CMakeFiles\3.23.1\CMakeCCompiler.cmake;$(ProjectDir)CMakeFiles\3.23.1\CMakeCXXCompiler.cmake;$(ProjectDir)CMakeFiles\3.23.1\CMakeRCCompiler.cmake;$(ProjectDir)CMakeFiles\3.23.1\CMakeSystem.cmake;$(ProjectDir)cmake\CXXhelpers.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(ProjectDir)CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/p.debski/Desktop/libnyquist-master/libnyquist/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/p.debski/Desktop/libnyquist-master/libnyquist -BC:/Users/p.debski/Desktop/libnyquist-master/libnyquist --check-stamp-file C:/Users/p.debski/Desktop/libnyquist-master/libnyquist/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.23\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)CMakeFiles\3.23.1\CMakeCCompiler.cmake;$(ProjectDir)CMakeFiles\3.23.1\CMakeCXXCompiler.cmake;$(ProjectDir)CMakeFiles\3.23.1\CMakeRCCompiler.cmake;$(ProjectDir)CMakeFiles\3.23.1\CMakeSystem.cmake;$(ProjectDir)cmake\CXXhelpers.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(ProjectDir)CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(ProjectDir)include\libnyquist\Common.h" />
+    <ClInclude Include="$(ProjectDir)include\libnyquist\Decoders.h" />
+    <ClInclude Include="$(ProjectDir)include\libnyquist\Encoders.h" />
+    <ClCompile Include="$(ProjectDir)src\Common.cpp" />
+    <ClCompile Include="$(ProjectDir)src\Encoders.cpp" />
+    <ClCompile Include="$(ProjectDir)src\FlacDecoder.cpp" />
+    <ClCompile Include="$(ProjectDir)src\FlacDependencies.c" />
+    <ClCompile Include="$(ProjectDir)src\Mp3Decoder.cpp" />
+    <ClCompile Include="$(ProjectDir)src\MusepackDecoder.cpp" />
+    <ClCompile Include="$(ProjectDir)src\MusepackDependencies.c" />
+    <ClCompile Include="$(ProjectDir)src\OpusDecoder.cpp" />
+    <ClCompile Include="$(ProjectDir)src\OpusDependencies.c" />
+    <ClCompile Include="$(ProjectDir)src\VorbisDecoder.cpp" />
+    <ClCompile Include="$(ProjectDir)src\VorbisDependencies.c" />
+    <ClCompile Include="$(ProjectDir)src\WavDecoder.cpp" />
+    <ClCompile Include="$(ProjectDir)src\WavPackDecoder.cpp" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\common_utils.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\decorr_utils.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\entropy_utils.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\extra1.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\extra2.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\open_filename.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\open_legacy.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\open_raw.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\open_utils.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\pack.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\pack_dns.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\pack_dsd.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\pack_floats.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\pack_utils.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\read_words.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\tag_utils.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\tags.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\unpack.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\unpack3.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\unpack3_open.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\unpack3_seek.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\unpack_dsd.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\unpack_floats.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\unpack_seek.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\unpack_utils.c" />
+    <ClCompile Include="$(ProjectDir)third_party\wavpack\src\write_words.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(ProjectDir)ZERO_CHECK.vcxproj">
+      <Project>{CDE28C75-9231-31B8-AF3D-0FAAE791581F}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
