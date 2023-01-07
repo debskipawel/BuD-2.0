@@ -23,13 +23,11 @@ namespace BuD
 		ApplicationCore(const ApplicationCore& other) = delete;
 		ApplicationCore operator=(const ApplicationCore& other) = delete;
 
-		std::unique_ptr<Window> m_Window;
-
-		float m_LastFrameTime;
-
+		Timepoint m_LastFrameTime;
 		bool m_Minimized;
 		bool m_ShouldRun;
 
+		std::unique_ptr<Window> m_Window;
 		LayerStack m_LayerStack;
 
 		inline static std::shared_ptr<ApplicationCore> s_App = nullptr;
