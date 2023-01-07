@@ -38,6 +38,8 @@ namespace BuD
 			{
 				layer->OnRender();
 			}
+
+			m_Window->ProcessEvents();
 		}
 	}
 	
@@ -59,5 +61,10 @@ namespace BuD
 
 			layer->OnEvent(e);
 		}
+	}
+	
+	void ApplicationCore::OnConcreteEvent(WindowClosedEvent& e)
+	{
+		m_ShouldRun = false;
 	}
 }

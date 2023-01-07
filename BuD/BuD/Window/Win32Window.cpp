@@ -53,6 +53,7 @@ namespace BuD
 		ATOM wClass = RegisterClassExW(&wcex);
 		if (!wClass)
 		{
+			// TODO: log error
 			fprintf(stderr, "%s\n", "Couldn’t create Window Class");
 			return;
 		}
@@ -68,6 +69,7 @@ namespace BuD
 
 		if (!m_hwnd)
 		{
+			// TODO: log error
 			fprintf(stderr, "%ld\n", GetLastError());
 			fprintf(stderr, "%s\n", "Failed to create Window");
 			return;

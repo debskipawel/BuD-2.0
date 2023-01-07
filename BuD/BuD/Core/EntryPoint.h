@@ -9,10 +9,17 @@ int APIENTRY wWinMain(
     _In_ int       nCmdShow
 )
 {
-    auto app = BuD::ApplicationCore::Get();
-    app->Run();
+    try
+    {
+        auto app = BuD::ApplicationCore::Get();
+        app->Run();
 
-    BuD::ApplicationCore::Close();
+        BuD::ApplicationCore::Close();
+    }
+    catch (std::exception e)
+    {
+        // TODO: log error and dump logs into file
+    }
 
     return 0;
 }

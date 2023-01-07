@@ -16,6 +16,7 @@ namespace BuD
 		void PushLayer(std::shared_ptr<AppLayer> layer);
 
 		void OnEvent(Event& e) override;
+		void OnConcreteEvent(WindowClosedEvent& e) override;
 
 	private:
 		ApplicationCore();
@@ -31,27 +32,27 @@ namespace BuD
 
 		LayerStack m_LayerStack;
 
-		inline static std::shared_ptr<ApplicationCore> s_app = nullptr;
+		inline static std::shared_ptr<ApplicationCore> s_App = nullptr;
 
 	public:
 		inline static std::shared_ptr<ApplicationCore> Get()
 		{
-			if (!s_app)
+			if (!s_App)
 			{
-				s_app = std::shared_ptr<ApplicationCore>(new ApplicationCore());
+				s_App = std::shared_ptr<ApplicationCore>(new ApplicationCore());
 			}
 
-			return s_app;
+			return s_App;
 		}
 
 		inline static void Close()
 		{
-			if (!s_app)
+			if (!s_App)
 			{
 				return;
 			}
 
-			s_app.reset();
+			s_App.reset();
 		}
 	};
 }

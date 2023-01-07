@@ -26,7 +26,6 @@ namespace BuD
 
 	private:
 		HWND m_hwnd;
-		HINSTANCE m_hInstance;
 	};
 }
 
