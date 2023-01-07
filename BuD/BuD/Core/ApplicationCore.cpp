@@ -8,7 +8,7 @@
 namespace BuD
 {
 	ApplicationCore::ApplicationCore()
-		: m_Minimized(), m_LastFrameTime(), m_ShouldRun()
+		: m_Minimized(), m_LastFrameTime(0.0f), m_ShouldRun()
 	{
 	}
 
@@ -24,8 +24,8 @@ namespace BuD
 
 		while (m_ShouldRun)
 		{
-			float currentFrameTime = Clock::Now();
-			float deltaTime = currentFrameTime - m_LastFrameTime;
+			auto currentFrameTime = Clock::Now();
+			auto deltaTime = currentFrameTime - m_LastFrameTime;
 
 			m_LastFrameTime = currentFrameTime;
 
@@ -41,6 +41,10 @@ namespace BuD
 
 			m_Window->ProcessEvents();
 		}
+
+		Log::WriteInfo(L"Test info log");
+		Log::WriteWarning(L"Test warning log");
+		Log::WriteError(L"Test error log");
 	}
 	
 	void ApplicationCore::PushLayer(std::shared_ptr<AppLayer> layer)

@@ -5,7 +5,7 @@
 
 namespace BuD
 {
-	const std::queue<std::pair<Timepoint, std::wstring>>& BuD::Log::GetAllLogs()
+	const std::queue<Log::LogRecord>& Log::GetAllLogs()
 	{
 #ifdef _DEBUG
 		return s_LogMessagesQueue;
@@ -14,23 +14,23 @@ namespace BuD
 #endif
 	}
 
-	void Log::Write(std::wstring message)
+	void Log::Write(std::wstring message, LogSeverity severity)
 	{
 #ifdef _DEBUG
 		auto timepoint = Clock::Now();
 
-		auto formattedMessage = timepoint.Format() + L" " + message;
+		LogRecord logRecord{ timepoint, severity, message };
 
-		s_LogMessagesQueue.push(std::make_pair(timepoint, formattedMessage));
+		s_LogMessagesQueue.push(logRecord);
 
 		for (auto& handle : s_LogMessagesHandles)
 		{
-			handle(formattedMessage);
+			handle(logRecord);
 		}
 #endif
 	}
 	
-	void Log::RegisterLogHandle(std::function<void(std::wstring)> handle)
+	void Log::RegisterLogHandle(std::function<void(const LogRecord&)> handle)
 	{
 #ifdef _DEBUG
 		s_LogMessagesHandles.push_back(handle);

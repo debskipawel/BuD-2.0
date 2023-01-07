@@ -53,7 +53,7 @@ namespace BuD
 		ATOM wClass = RegisterClassExW(&wcex);
 		if (!wClass)
 		{
-			Log::Write(L"Couldn’t create Window Class");
+			Log::WriteError(L"Couldn’t create Window Class");
 			return;
 		}
 
@@ -68,7 +68,7 @@ namespace BuD
 
 		if (!m_hwnd)
 		{
-			Log::Write(L"Failed to create Window: " + std::to_wstring(GetLastError()));
+			Log::WriteError(L"Failed to create Window: " + std::to_wstring(GetLastError()));
 			return;
 		}
 	}
