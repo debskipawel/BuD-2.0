@@ -2,6 +2,8 @@
 
 #include <chrono>
 
+#include "Timepoint.h"
+
 namespace BuD
 {
 	class Clock
@@ -20,7 +22,7 @@ namespace BuD
 			}
 		}
 
-		static float Now()
+		static Timepoint Now()
 		{
 			if (!s_Initialized)
 			{

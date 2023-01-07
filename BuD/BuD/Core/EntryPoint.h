@@ -18,7 +18,7 @@ int APIENTRY wWinMain(
     }
     catch (std::exception e)
     {
-        // TODO: log error and dump logs into file
+        auto& logs = BuD::Log::GetAllLogs();
     }
 
     return 0;

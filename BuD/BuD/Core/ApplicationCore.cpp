@@ -41,6 +41,8 @@ namespace BuD
 
 			m_Window->ProcessEvents();
 		}
+
+		Log::Write(L"Dzielenuie przez zeero");
 	}
 	
 	void ApplicationCore::PushLayer(std::shared_ptr<AppLayer> layer)
