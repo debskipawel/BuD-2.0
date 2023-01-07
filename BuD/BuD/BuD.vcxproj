@@ -163,7 +163,10 @@
     <ClCompile Include="Event\KeyboardEvents.cpp" />
     <ClCompile Include="Event\MouseEvents.cpp" />
     <ClCompile Include="Event\WindowEvents.cpp" />
+    <ClCompile Include="Input\Keyboard.cpp" />
     <ClCompile Include="Utils\Random.cpp" />
+    <ClCompile Include="Window\Win32EventFactory.cpp" />
+    <ClCompile Include="Window\Win32Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BuD.h" />
@@ -177,10 +180,14 @@
     <ClInclude Include="Event\KeyboardEvents.h" />
     <ClInclude Include="Event\MouseEvents.h" />
     <ClInclude Include="Event\WindowEvents.h" />
+    <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Input\KeyboardKeys.h" />
     <ClInclude Include="Input\MouseCode.h" />
     <ClInclude Include="Utils\Clock.h" />
     <ClInclude Include="Utils\Random.h" />
+    <ClInclude Include="Window\Win32EventFactory.h" />
+    <ClInclude Include="Window\Win32Window.h" />
+    <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dependencies\DearImGui\DearImGui.vcxproj">

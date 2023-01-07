@@ -3,6 +3,8 @@
 
 #include <Utils/Clock.h>
 
+#include <Window/Win32Window.h>
+
 namespace BuD
 {
 	ApplicationCore::ApplicationCore()
@@ -12,7 +14,10 @@ namespace BuD
 
 	void ApplicationCore::Run()
 	{
-		this->PushLayer(CreateClientApp());
+		PushLayer(CreateClientApp());
+
+		m_Window = std::make_unique<Win32Window>();
+		m_Window->Show();
 
 		Clock::Init();
 		m_ShouldRun = true;

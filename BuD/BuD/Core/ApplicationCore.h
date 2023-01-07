@@ -2,6 +2,8 @@
 
 #include "LayerStack.h"
 
+#include <Window/Window.h>
+
 namespace BuD
 {
 	extern std::shared_ptr<AppLayer> CreateClientApp();
@@ -19,6 +21,8 @@ namespace BuD
 		ApplicationCore();
 		ApplicationCore(const ApplicationCore& other) = delete;
 		ApplicationCore operator=(const ApplicationCore& other) = delete;
+
+		std::unique_ptr<Window> m_Window;
 
 		float m_LastFrameTime;
 
