@@ -18,10 +18,6 @@ namespace BuD
 		Timepoint operator-(const Timepoint& other);
 		operator float();
 
-		friend Timepoint operator+(const Timepoint& t, float a);
-		friend Timepoint operator+(float a, const Timepoint& t);
-		friend Timepoint operator-(const Timepoint& t, float a);
-		friend Timepoint operator-(float a, const Timepoint& t);
 	private:
 		float m_Time;
 	};

@@ -33,22 +33,4 @@ namespace BuD
 	{
 		return m_Time;
 	}
-	Timepoint operator+(const Timepoint& t, float a)
-	{
-		return t + Timepoint(a);
-	}
-	Timepoint operator+(float a, const Timepoint& t)
-	{
-		return t + Timepoint(a);
-	}
-	
-	Timepoint operator-(const Timepoint& t, float a)
-	{
-		return t - Timepoint(a);
-	}
-	
-	Timepoint operator-(float a, const Timepoint& t)
-	{
-		return t - Timepoint(a);
-	}
 }
