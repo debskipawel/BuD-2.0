@@ -21,8 +21,13 @@ namespace BuD
 		Keyboard operator=(const Keyboard& other) = delete;
 		Keyboard& operator=(Keyboard& other) = default;
 
+		void Press(KeyboardKeys key);
+		void Release(KeyboardKeys key);
+
 		inline static std::unique_ptr<Keyboard> s_Instance = nullptr;
 
 		std::map<KeyboardKeys, bool> m_KeyPressedMap;
+
+		friend class Win32EventFactory;
 	};
 }

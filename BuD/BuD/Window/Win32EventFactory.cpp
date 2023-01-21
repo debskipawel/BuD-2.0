@@ -4,6 +4,8 @@
 
 #include "Win32EventFactory.h"
 
+#include <Input/Keyboard.h>
+
 #include <Event/KeyboardEvents.h>
 #include <Event/MouseEvents.h>
 #include <Event/WindowEvents.h>
@@ -32,11 +34,19 @@ namespace BuD
 			case WM_KEYDOWN:
 			{
 				auto key = static_cast<KeyboardKeys>(wParam);
+
+				auto& keyboard = Keyboard::Get();
+				keyboard.Press(key);
+
 				return std::make_unique<KeyDownEvent>(key);
 			}
 			case WM_KEYUP:
 			{
 				auto key = static_cast<KeyboardKeys>(wParam);
+				
+				auto& keyboard = Keyboard::Get();
+				keyboard.Release(key);
+
 				return std::make_unique<KeyReleaseEvent>(key);
 			}
 			// ----- MOUSE EVENTS -----
