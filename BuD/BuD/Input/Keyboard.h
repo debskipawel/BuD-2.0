@@ -16,7 +16,7 @@ namespace BuD
 		bool KeyReleased(KeyboardKeys key);
 
 	private:
-		Keyboard();
+		Keyboard() = default;
 		Keyboard(const Keyboard& other) = delete;
 		Keyboard operator=(const Keyboard& other) = delete;
 		Keyboard& operator=(Keyboard& other) = default;
