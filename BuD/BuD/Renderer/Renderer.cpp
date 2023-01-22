@@ -36,12 +36,11 @@ namespace BuD
 			return;
 		}
 
-		FLOAT color[] = { sinf(Clock::Now()), 0.0f, sinf(1.0f + Clock::Now()), 1.0f};
-		FLOAT nullcolor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+		FLOAT clearColor[] = { 0.0f, 0.0f, 0.0f, 1.0f};
 
 		auto& context = s_Device->Context();
 
-		context->ClearRenderTargetView(s_MainRTV.Get(), color);
+		context->ClearRenderTargetView(s_MainRTV.Get(), clearColor);
 		context->ClearDepthStencilView(s_DepthBuffer.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	}
 
