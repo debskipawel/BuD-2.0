@@ -13,7 +13,7 @@ namespace BuD
 	public:
 		Clock() = delete;
 
-		static void Init()
+		static void Initialize()
 		{
 			if (!s_Initialized)
 			{

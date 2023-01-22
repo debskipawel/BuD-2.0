@@ -2,7 +2,7 @@
 
 #include "LayerStack.h"
 
-#include <Window/Window.h>
+#include <Window/Win32Window.h>
 
 namespace BuD
 {
@@ -27,7 +27,7 @@ namespace BuD
 		bool m_Minimized;
 		bool m_ShouldRun;
 
-		std::unique_ptr<Window> m_Window;
+		std::shared_ptr<Win32Window> m_Window;
 		LayerStack m_LayerStack;
 
 		inline static std::shared_ptr<ApplicationCore> s_App = nullptr;

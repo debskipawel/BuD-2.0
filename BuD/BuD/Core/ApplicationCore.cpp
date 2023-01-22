@@ -3,7 +3,7 @@
 
 #include <Utils/Clock.h>
 
-#include <Window/Win32Window.h>
+#include <Renderer/Renderer.h>
 
 namespace BuD
 {
@@ -14,12 +14,15 @@ namespace BuD
 
 	void ApplicationCore::Run()
 	{
+		m_Window = std::make_shared<Win32Window>();
+
+		Renderer::Initialize(m_Window);
+		Clock::Initialize();
+
 		PushLayer(CreateClientApp());
 
-		m_Window = std::make_unique<Win32Window>();
 		m_Window->Show();
 
-		Clock::Init();
 		m_ShouldRun = true;
 
 		while (m_ShouldRun)
@@ -34,10 +37,14 @@ namespace BuD
 				layer->OnUpdate(deltaTime);
 			}
 
+			Renderer::BeginFrame();
+
 			for (auto& layer : m_LayerStack)
 			{
 				layer->OnRender();
 			}
+
+			Renderer::EndFrame();
 
 			m_Window->ProcessEvents();
 		}

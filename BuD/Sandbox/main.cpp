@@ -1,6 +1,9 @@
 #include <BuD.h>
 #include <Core/EntryPoint.h>
 
+#include <Scene/Scene.h>
+#include <Utils/UUID.h>
+
 class SandboxApp : public BuD::AppLayer
 {
 public:
@@ -22,6 +25,7 @@ public:
 
 protected:
 	int m_Counter;
+	BuD::Scene m_Scene;
 };
 
 std::shared_ptr<BuD::AppLayer> BuD::CreateClientApp()

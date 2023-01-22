@@ -164,9 +164,12 @@
     <ClCompile Include="Event\MouseEvents.cpp" />
     <ClCompile Include="Event\WindowEvents.cpp" />
     <ClCompile Include="Input\Keyboard.cpp" />
+    <ClCompile Include="Renderer\GraphicsDevice.cpp" />
+    <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Utils\Log.cpp" />
     <ClCompile Include="Utils\Random.cpp" />
     <ClCompile Include="Utils\Timepoint.cpp" />
+    <ClCompile Include="Utils\UUID.cpp" />
     <ClCompile Include="Window\Win32EventFactory.cpp" />
     <ClCompile Include="Window\Win32Window.cpp" />
   </ItemGroup>
@@ -185,10 +188,18 @@
     <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Input\KeyboardKeys.h" />
     <ClInclude Include="Input\MouseCode.h" />
+    <ClInclude Include="Renderer\GraphicsDevice.h" />
+    <ClInclude Include="Renderer\Renderer.h" />
+    <ClInclude Include="Renderer\Structures\SwapchainDesc.h" />
+    <ClInclude Include="Renderer\Structures\Texture2DDesc.h" />
+    <ClInclude Include="Renderer\Structures\ViewportDesc.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneEntity.h" />
     <ClInclude Include="Utils\Clock.h" />
     <ClInclude Include="Utils\Log.h" />
     <ClInclude Include="Utils\Random.h" />
     <ClInclude Include="Utils\Timepoint.h" />
+    <ClInclude Include="Utils\UUID.h" />
     <ClInclude Include="Window\Win32EventFactory.h" />
     <ClInclude Include="Window\Win32Window.h" />
     <ClInclude Include="Window\Window.h" />
