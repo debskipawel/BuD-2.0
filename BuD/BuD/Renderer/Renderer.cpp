@@ -52,6 +52,12 @@ namespace BuD
 
 	ComPtr<ID3D11ShaderResourceView> Renderer::GetTarget()
 	{
+		if (s_UsedRenderTargets.empty())
+		{
+			Log::WriteError(L"Attempting to retrieve a render target without starting it beforehand.");
+			return nullptr;
+		}
+		
 		RenderToSwapchain();
 
 		auto& activeRenderTarget = *s_UsedRenderTargets.rbegin();
