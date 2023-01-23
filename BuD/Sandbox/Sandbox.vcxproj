@@ -28,6 +28,9 @@
     <ProjectReference Include="..\Dependencies\DearImGui\DearImGui.vcxproj">
       <Project>{e86e8410-58d4-4f25-b37f-e22af5c65200}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Dependencies\DirectXTK\DirectXTK_Desktop_2022.vcxproj">
+      <Project>{e0b52ae7-e160-4d32-bf3f-910b785e5a8e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -88,7 +91,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)BuD\;$(SolutionDir)Dependencies\DearImGui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)BuD\;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -104,7 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)BuD\;$(SolutionDir)Dependencies\DearImGui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)BuD\;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -120,7 +123,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)BuD\;$(SolutionDir)Dependencies\DearImGui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)BuD\;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -136,7 +139,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)BuD\;$(SolutionDir)Dependencies\DearImGui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)BuD\;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>

@@ -23,4 +23,12 @@ namespace BuD
 		UINT Width, Height;
 		int FramesWithoutUsage;
 	};
+
+	struct RenderTargetInfo
+	{
+		ComPtr<ID3D11RenderTargetView> RenderTargetView;
+		ComPtr<ID3D11DepthStencilView> DepthStencilView;
+
+		UINT Width, Height;
+	};
 }

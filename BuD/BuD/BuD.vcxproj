@@ -156,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bud_pch.cpp" />
+    <ClCompile Include="Camera\OrbitCamera.cpp" />
     <ClCompile Include="Core\ApplicationCore.cpp" />
     <ClCompile Include="Core\EntryPoint.h" />
     <ClCompile Include="Core\GuiLayer.cpp" />
@@ -166,8 +167,10 @@
     <ClCompile Include="Event\WindowEvents.cpp" />
     <ClCompile Include="Input\Keyboard.cpp" />
     <ClCompile Include="Renderer\GraphicsDevice.cpp" />
+    <ClCompile Include="Renderer\Implementations\StandardRendererImpl.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\RenderTarget.cpp" />
+    <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Utils\Log.cpp" />
     <ClCompile Include="Utils\Random.cpp" />
     <ClCompile Include="Utils\Timepoint.cpp" />
@@ -178,6 +181,8 @@
   <ItemGroup>
     <ClInclude Include="BuD.h" />
     <ClInclude Include="bud_pch.h" />
+    <ClInclude Include="Camera\AbstractCamera.h" />
+    <ClInclude Include="Camera\OrbitCamera.h" />
     <ClInclude Include="Core\AppLayer.h" />
     <ClInclude Include="Core\ApplicationCore.h" />
     <ClInclude Include="Core\GuiLayer.h" />
@@ -192,6 +197,9 @@
     <ClInclude Include="Input\KeyboardKeys.h" />
     <ClInclude Include="Input\MouseCode.h" />
     <ClInclude Include="Renderer\GraphicsDevice.h" />
+    <ClInclude Include="Renderer\Implementations\BaseRendererImpl.h" />
+    <ClInclude Include="Renderer\Implementations\RenderingMode.h" />
+    <ClInclude Include="Renderer\Implementations\StandardRendererImpl.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\RenderTarget.h" />
     <ClInclude Include="Renderer\Structures\SwapchainDesc.h" />

@@ -4,6 +4,7 @@
 #include <Utils/Log.h>
 #include <Utils/Clock.h>
 
+#include "Implementations/StandardRendererImpl.h"
 #include "Structures/Texture2DDesc.h"
 #include "Structures/ViewportDesc.h"
 
@@ -12,6 +13,14 @@ namespace BuD
 	void Renderer::Initialize(std::shared_ptr<Win32Window> window)
 	{
 		s_Device = std::make_shared<GraphicsDevice>(window);
+
+		auto standardImpl = std::make_shared<StandardRendererImpl>(s_Device);
+		//auto anaglyphImpl = nullptr;
+
+		s_RenderingImplementations.emplace(RenderingMode::STANDARD, standardImpl);
+		//s_RenderingImplementations.emplace(RenderingMode::ANAGLYPH, anaglyphImpl);
+
+		s_ActiveRendererImpl = standardImpl;
 
 		auto width = window->Width();
 		auto height = window->Height();
@@ -28,7 +37,7 @@ namespace BuD
 		s_Device.reset();
 	}
 
-	void Renderer::StartTarget(int width, int height)
+	void Renderer::BeginTarget(int width, int height)
 	{
 		auto result = std::find_if(s_FreeRenderTargets.rbegin(), s_FreeRenderTargets.rend(),
 			[width, height](std::shared_ptr<RenderTarget> rt) { return rt->Width == width && rt->Height == height; }
@@ -50,7 +59,7 @@ namespace BuD
 		RenderToExternalTarget();
 	}
 
-	ComPtr<ID3D11ShaderResourceView> Renderer::GetTarget()
+	ComPtr<ID3D11ShaderResourceView> Renderer::EndTarget()
 	{
 		if (s_UsedRenderTargets.empty())
 		{
@@ -118,6 +127,27 @@ namespace BuD
 			Log::WriteWarning(L"Attempting to render scene without initializing the renderer.");
 			return;
 		}
+
+		RenderTargetInfo renderTarget;
+
+		if (s_RenderingToSwapchain)
+		{
+			renderTarget.RenderTargetView = s_MainRTV;
+			renderTarget.DepthStencilView = s_DepthBuffer;
+			renderTarget.Width = s_Device->BufferWidth();
+			renderTarget.Height = s_Device->BufferHeight();
+		}
+		else
+		{
+			auto& activeRenderTarget = *s_UsedRenderTargets.rbegin();
+
+			renderTarget.RenderTargetView = activeRenderTarget->RenderTargetView;
+			renderTarget.DepthStencilView = activeRenderTarget->DepthStencilView;
+			renderTarget.Width = activeRenderTarget->Width;
+			renderTarget.Height = activeRenderTarget->Height;
+		}
+
+		s_ActiveRendererImpl->Render(scene, renderTarget);
 	}
 
 	void Renderer::EndFrame()

@@ -2,8 +2,12 @@
 
 #include "GraphicsDevice.h"
 #include "RenderTarget.h"
+#include "Implementations/BaseRendererImpl.h"
+#include "Implementations/RenderingMode.h"
 
 #include <Scene/Scene.h>
+
+#include <map>
 
 namespace BuD
 {
@@ -13,8 +17,8 @@ namespace BuD
 		static void Initialize(std::shared_ptr<Win32Window> window);
 		static void Dispose();
 
-		static void StartTarget(int width, int height);
-		static ComPtr<ID3D11ShaderResourceView> GetTarget();
+		static void BeginTarget(int width, int height);
+		static ComPtr<ID3D11ShaderResourceView> EndTarget();
 
 		static void BeginFrame();
 		static void Clear(float r, float g, float b, float a);
@@ -29,6 +33,9 @@ namespace BuD
 		static void InitializeSwapchainBuffers(int width, int height);
 		static void RenderToSwapchain();
 		static void RenderToExternalTarget();
+
+		inline static std::map<RenderingMode, std::shared_ptr<BaseRendererImpl>> s_RenderingImplementations = {};
+		inline static std::shared_ptr<BaseRendererImpl> s_ActiveRendererImpl = nullptr;
 
 		// Device
 		inline static std::shared_ptr<GraphicsDevice> s_Device = nullptr;
