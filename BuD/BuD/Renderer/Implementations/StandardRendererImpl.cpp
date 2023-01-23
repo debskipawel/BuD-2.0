@@ -1,6 +1,9 @@
 #include "bud_pch.h"
 #include "StandardRendererImpl.h"
 
+#include <Scene/Point.h>
+
+#include <Renderer/IRenderable.h>
 #include <Renderer/Structures/ViewportDesc.h>
 
 namespace BuD
@@ -21,6 +24,7 @@ namespace BuD
 
 		for (auto& [uuid, sceneEntity] : scene.m_SceneEntities)
 		{
+
 		}
 	}
 }

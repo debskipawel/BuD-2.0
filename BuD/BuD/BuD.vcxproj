@@ -156,6 +156,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bud_pch.cpp" />
+    <ClCompile Include="Buffers\Buffer.cpp" />
+    <ClCompile Include="Buffers\ConstantBuffer.cpp" />
+    <ClCompile Include="Buffers\IndexBuffer.cpp" />
+    <ClCompile Include="Buffers\VertexBuffer.cpp" />
     <ClCompile Include="Camera\OrbitCamera.cpp" />
     <ClCompile Include="Core\ApplicationCore.cpp" />
     <ClCompile Include="Core\EntryPoint.h" />
@@ -171,6 +175,8 @@
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\RenderTarget.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Shaders\Loader\ShaderLoader.cpp" />
+    <ClCompile Include="Shaders\Shader.cpp" />
     <ClCompile Include="Utils\Log.cpp" />
     <ClCompile Include="Utils\Random.cpp" />
     <ClCompile Include="Utils\Timepoint.cpp" />
@@ -181,6 +187,10 @@
   <ItemGroup>
     <ClInclude Include="BuD.h" />
     <ClInclude Include="bud_pch.h" />
+    <ClInclude Include="Buffers\Buffer.h" />
+    <ClInclude Include="Buffers\ConstantBuffer.h" />
+    <ClInclude Include="Buffers\IndexBuffer.h" />
+    <ClInclude Include="Buffers\VertexBuffer.h" />
     <ClInclude Include="Camera\AbstractCamera.h" />
     <ClInclude Include="Camera\OrbitCamera.h" />
     <ClInclude Include="Core\AppLayer.h" />
@@ -200,13 +210,24 @@
     <ClInclude Include="Renderer\Implementations\BaseRendererImpl.h" />
     <ClInclude Include="Renderer\Implementations\RenderingMode.h" />
     <ClInclude Include="Renderer\Implementations\StandardRendererImpl.h" />
+    <ClInclude Include="Renderer\IRenderable.h" />
     <ClInclude Include="Renderer\Renderer.h" />
+    <ClInclude Include="Renderer\RenderingPass.h" />
     <ClInclude Include="Renderer\RenderTarget.h" />
+    <ClInclude Include="Renderer\Structures\BufferDesc.h" />
     <ClInclude Include="Renderer\Structures\SwapchainDesc.h" />
     <ClInclude Include="Renderer\Structures\Texture2DDesc.h" />
     <ClInclude Include="Renderer\Structures\ViewportDesc.h" />
+    <ClInclude Include="Scene\Point.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneEntity.h" />
+    <ClInclude Include="Shaders\DomainShader.h" />
+    <ClInclude Include="Shaders\GeometryShader.h" />
+    <ClInclude Include="Shaders\HullShader.h" />
+    <ClInclude Include="Shaders\Loader\ShaderLoader.h" />
+    <ClInclude Include="Shaders\PixelShader.h" />
+    <ClInclude Include="Shaders\Shader.h" />
+    <ClInclude Include="Shaders\VertexShader.h" />
     <ClInclude Include="Utils\Clock.h" />
     <ClInclude Include="Utils\Log.h" />
     <ClInclude Include="Utils\Random.h" />
