@@ -16,6 +16,8 @@ namespace BuD
 		static void Render(const Scene& scene);
 		static void EndFrame();
 
+		static void UpdateBuffersSize(int width, int height);
+
 		inline static std::shared_ptr<GraphicsDevice> Device() { return s_Device; }
 
 	private:

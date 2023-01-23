@@ -1,6 +1,7 @@
 #pragma once
 
 #include "LayerStack.h"
+#include "GuiLayer.h"
 
 #include <Window/Win32Window.h>
 
@@ -17,6 +18,7 @@ namespace BuD
 
 		void OnEvent(Event& e) override;
 		void OnConcreteEvent(WindowClosedEvent& e) override;
+		void OnConcreteEvent(WindowResizedEvent& e) override;
 
 	private:
 		ApplicationCore();
@@ -27,6 +29,7 @@ namespace BuD
 		bool m_Minimized;
 		bool m_ShouldRun;
 
+		std::unique_ptr<GuiLayer> m_GuiLayer;
 		std::shared_ptr<Win32Window> m_Window;
 		LayerStack m_LayerStack;
 

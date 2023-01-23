@@ -1,8 +1,7 @@
 #include <BuD.h>
 #include <Core/EntryPoint.h>
 
-#include <Scene/Scene.h>
-#include <Utils/UUID.h>
+#include "imgui.h"
 
 class SandboxApp : public BuD::AppLayer
 {
@@ -21,11 +20,12 @@ public:
 
 	void OnGuiRender() override
 	{
+		ImGui::ShowDemoWindow(&m_ShowDemoWindow);
 	}
 
 protected:
+	bool m_ShowDemoWindow = true;
 	int m_Counter;
-	BuD::Scene m_Scene;
 };
 
 std::shared_ptr<BuD::AppLayer> BuD::CreateClientApp()

@@ -158,6 +158,7 @@
     <ClCompile Include="bud_pch.cpp" />
     <ClCompile Include="Core\ApplicationCore.cpp" />
     <ClCompile Include="Core\EntryPoint.h" />
+    <ClCompile Include="Core\GuiLayer.cpp" />
     <ClCompile Include="Core\LayerStack.cpp" />
     <ClCompile Include="Event\EventEmitter.cpp" />
     <ClCompile Include="Event\KeyboardEvents.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="bud_pch.h" />
     <ClInclude Include="Core\AppLayer.h" />
     <ClInclude Include="Core\ApplicationCore.h" />
+    <ClInclude Include="Core\GuiLayer.h" />
     <ClInclude Include="Core\LayerStack.h" />
     <ClInclude Include="Event\Event.h" />
     <ClInclude Include="Event\EventEmitter.h" />

@@ -36,9 +36,10 @@ namespace BuD
 			return;
 		}
 
-		FLOAT clearColor[] = { 0.0f, 0.0f, 0.0f, 1.0f};
+		FLOAT clearColor[] = { sinf(Clock::Now()), 0.0f, 0.0f, 1.0f};
 
 		auto& context = s_Device->Context();
+		context->OMSetRenderTargets(1, s_MainRTV.GetAddressOf(), s_DepthBuffer.Get());
 
 		context->ClearRenderTargetView(s_MainRTV.Get(), clearColor);
 		context->ClearDepthStencilView(s_DepthBuffer.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
@@ -64,6 +65,26 @@ namespace BuD
 		auto& swapchain = s_Device->Swapchain();
 		swapchain->Present(0, 0);
 	}
+
+	void Renderer::UpdateBuffersSize(int width, int height)
+	{
+		s_Device->UpdateSize(width, height);
+
+		auto& context = s_Device->Context();
+		auto& swapchain = s_Device->Swapchain();
+
+		context->OMSetRenderTargets(0, nullptr, nullptr);
+
+		s_MainRTVTexture.Reset();
+		s_MainRTV.Reset();
+		s_DepthBuffer.Reset();
+
+		context->Flush();
+
+		auto hr = swapchain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
+
+		InitializeBuffers(width, height);
+	}
 	
 	void Renderer::InitializeBuffers(int width, int height)
 	{
@@ -75,24 +96,12 @@ namespace BuD
 
 		swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)s_MainRTVTexture.GetAddressOf());
 
-		ComPtr<ID3D11Texture2D> idTexture;
-		auto texDesc = Texture2DDesc(width, height);
-		texDesc.BindFlags |= D3D11_BIND_RENDER_TARGET;
-		texDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
-		
-		auto hr = device->CreateTexture2D(&texDesc, nullptr, idTexture.GetAddressOf());
-
 		s_MainRTV = s_Device->CreateRenderTargetView(s_MainRTVTexture);
 		s_DepthBuffer = s_Device->CreateDepthStencilBuffer(width, height);
 
 		context->OMSetRenderTargets(1, s_MainRTV.GetAddressOf(), s_DepthBuffer.Get());
 
-		D3D11_TEXTURE2D_DESC backBufferDesc = { 0 };
-		s_MainRTVTexture->GetDesc(&backBufferDesc);
-
-		ViewportDesc viewportDesc{ backBufferDesc.Width, backBufferDesc.Height };
-		s_Device->Context()->RSSetViewports(1, &viewportDesc);
-
-		idTexture.Reset();
+		ViewportDesc viewportDesc{ static_cast<UINT>(width), static_cast<UINT>(height) };
+		context->RSSetViewports(1, &viewportDesc);
 	}
 }

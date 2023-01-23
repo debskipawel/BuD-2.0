@@ -25,6 +25,9 @@
     <ProjectReference Include="..\BuD\BuD.vcxproj">
       <Project>{f37479f4-57c1-4c26-aaa9-b3951514890a}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Dependencies\DearImGui\DearImGui.vcxproj">
+      <Project>{e86e8410-58d4-4f25-b37f-e22af5c65200}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -85,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)BuD\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)BuD\;$(SolutionDir)Dependencies\DearImGui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -101,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)BuD\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)BuD\;$(SolutionDir)Dependencies\DearImGui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -117,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)BuD\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)BuD\;$(SolutionDir)Dependencies\DearImGui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -133,7 +136,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)BuD\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)BuD\;$(SolutionDir)Dependencies\DearImGui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
