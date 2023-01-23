@@ -167,6 +167,7 @@
     <ClCompile Include="Input\Keyboard.cpp" />
     <ClCompile Include="Renderer\GraphicsDevice.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
+    <ClCompile Include="Renderer\RenderTarget.cpp" />
     <ClCompile Include="Utils\Log.cpp" />
     <ClCompile Include="Utils\Random.cpp" />
     <ClCompile Include="Utils\Timepoint.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Input\MouseCode.h" />
     <ClInclude Include="Renderer\GraphicsDevice.h" />
     <ClInclude Include="Renderer\Renderer.h" />
+    <ClInclude Include="Renderer\RenderTarget.h" />
     <ClInclude Include="Renderer\Structures\SwapchainDesc.h" />
     <ClInclude Include="Renderer\Structures\Texture2DDesc.h" />
     <ClInclude Include="Renderer\Structures\ViewportDesc.h" />

@@ -93,7 +93,7 @@ namespace BuD
 
 		if (!m_Minimized)
 		{
-			Renderer::UpdateBuffersSize(e.m_Width, e.m_Height);
+			Renderer::WindowResized(e.m_Width, e.m_Height);
 		}
 	}
 }
