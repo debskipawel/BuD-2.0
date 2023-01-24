@@ -114,11 +114,8 @@ namespace BuD
 		}
 		else
 		{
-			std::filesystem::path compiledShaderName;
-			compiledShaderName += shaderPath.root_path();
-			compiledShaderName += shaderPath.relative_path();
-			compiledShaderName += shaderPath.filename();
-			compiledShaderName += L".cso";
+			std::filesystem::path sourceShaderPath = shaderPath;
+			std::filesystem::path compiledShaderName = shaderPath.replace_extension(L".cso");
 
 			try
 			{
@@ -129,7 +126,7 @@ namespace BuD
 			catch (std::exception e)
 			{
 				ID3DBlob* blob = nullptr;
-				auto hr = CompileShader(shaderPath.wstring().c_str(), mainFunName.c_str(), shaderVersion.c_str(), &blob);
+				auto hr = CompileShader(sourceShaderPath.c_str(), mainFunName.c_str(), shaderVersion.c_str(), &blob);
 
 				shader = std::make_shared<T>(blob->GetBufferPointer(), blob->GetBufferSize());
 
@@ -177,11 +174,8 @@ namespace BuD
 		}
 		else
 		{
-			std::filesystem::path compiledShaderName; 
-			compiledShaderName += shaderPath.root_path();
-			compiledShaderName += shaderPath.relative_path();
-			compiledShaderName += shaderPath.filename();
-			compiledShaderName += L".cso";
+			std::filesystem::path sourceShaderPath = shaderPath;
+			std::filesystem::path compiledShaderName = shaderPath.replace_extension(L".cso");
 
 			try
 			{
@@ -191,7 +185,7 @@ namespace BuD
 			catch (std::exception e)
 			{
 				ID3DBlob* vsBlob = nullptr;
-				auto hr = CompileShader(shaderPath.c_str(), mainFunName.c_str(), "vs_4_0_level_9_1", &vsBlob);
+				auto hr = CompileShader(sourceShaderPath.c_str(), mainFunName.c_str(), "vs_4_0_level_9_1", &vsBlob);
 				shader = std::make_shared<VertexShader>(vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), layout);
 				vsBlob->Release();
 

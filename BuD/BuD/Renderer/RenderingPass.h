@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <memory>
 
 #include <Buffers/VertexBuffer.h>
@@ -11,10 +12,14 @@
 #include <Shaders/GeometryShader.h>
 #include <Shaders/PixelShader.h>
 
+#include <Scene/SceneEntity.h>
+
 namespace BuD
 {
 	struct RenderingPass
 	{
+		std::function<void(const RenderingPass& renderPass)> PreRenderCallback;
+
 		std::shared_ptr<VertexBuffer>	VertexBuffer;
 		std::shared_ptr<IndexBuffer>	IndexBuffer;
 

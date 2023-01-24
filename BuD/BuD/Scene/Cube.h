@@ -6,8 +6,9 @@
 
 namespace BuD
 {
-	class Point : public SceneEntity, public IRenderable
+	class Cube : public SceneEntity, public IRenderable
 	{
-
+	public:
+		Cube(Scene& scene);
 	};
 }
