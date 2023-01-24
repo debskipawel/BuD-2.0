@@ -16,10 +16,10 @@ namespace BuD
 		uint64_t Id() const { return m_Id; }
 
 		template <typename T>
-		bool Implements() const { return dynamic_cast<const T*>(this); }
+		bool HasComponent() const { return dynamic_cast<const T*>(this); }
 
 		template <typename T>
-		const T* Component() { return dynamic_cast<const T*>(this); }
+		const T* GetComponent() { return dynamic_cast<const T*>(this); }
 
 	protected:
 		SceneEntity(Scene& scene);

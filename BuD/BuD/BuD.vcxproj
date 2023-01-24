@@ -79,7 +79,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>bud_pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\OBJ-Loader\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -100,7 +100,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>bud_pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\OBJ-Loader\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -121,7 +121,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>bud_pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\OBJ-Loader\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -142,7 +142,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>bud_pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\OBJ-Loader\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -170,11 +170,13 @@
     <ClCompile Include="Event\MouseEvents.cpp" />
     <ClCompile Include="Event\WindowEvents.cpp" />
     <ClCompile Include="Input\Keyboard.cpp" />
+    <ClCompile Include="Objects\MeshLoader\MeshLoader.cpp" />
+    <ClCompile Include="Objects\MeshLoader\ObjMeshFileLoader.cpp" />
     <ClCompile Include="Renderer\GraphicsDevice.cpp" />
     <ClCompile Include="Renderer\Implementations\StandardRendererImpl.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\RenderTarget.cpp" />
-    <ClCompile Include="Scene\Cube.cpp" />
+    <ClCompile Include="Objects\Cube.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneEntity.cpp" />
     <ClCompile Include="Shaders\Loader\ShaderLoader.cpp" />
@@ -209,6 +211,10 @@
     <ClInclude Include="Input\KeyboardKeys.h" />
     <ClInclude Include="Input\MouseCode.h" />
     <ClInclude Include="Objects\Interfaces\IState.h" />
+    <ClInclude Include="Objects\MeshLoader\BaseMeshFileLoader.h" />
+    <ClInclude Include="Objects\MeshLoader\MeshLoader.h" />
+    <ClInclude Include="Objects\MeshLoader\MeshSegment.h" />
+    <ClInclude Include="Objects\MeshLoader\ObjMeshFileLoader.h" />
     <ClInclude Include="Renderer\GraphicsDevice.h" />
     <ClInclude Include="Renderer\Implementations\BaseRendererImpl.h" />
     <ClInclude Include="Renderer\Implementations\RenderingMode.h" />
@@ -222,7 +228,7 @@
     <ClInclude Include="Renderer\Structures\Texture2DDesc.h" />
     <ClInclude Include="Renderer\Structures\ViewportDesc.h" />
     <ClInclude Include="Resources\Meshes\Cube.h" />
-    <ClInclude Include="Scene\Cube.h" />
+    <ClInclude Include="Objects\Cube.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneEntity.h" />
     <ClInclude Include="Shaders\DomainShader.h" />

@@ -6,6 +6,7 @@
 
 #include <map>
 #include <memory>
+#include <filesystem>
 
 namespace BuD
 {

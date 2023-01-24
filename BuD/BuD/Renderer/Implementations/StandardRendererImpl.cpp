@@ -33,12 +33,12 @@ namespace BuD
 
 		for (auto& [uuid, sceneEntity] : scene.m_SceneEntities)
 		{
-			if (!sceneEntity->Implements<IRenderable>())
+			if (!sceneEntity->HasComponent<IRenderable>())
 			{
 				continue;
 			}
 
-			auto renderable = sceneEntity->Component<IRenderable>();
+			auto renderable = sceneEntity->GetComponent<IRenderable>();
 
 			for (auto& renderingPass : renderable->RenderingPasses())
 			{
