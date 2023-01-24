@@ -23,6 +23,20 @@ namespace BuD
         renderPass.PreRenderCallback = [this](const RenderingPass& pass)
         {
             auto& vs = pass.VertexShader;
+
+            auto model = dxm::Matrix::CreateFromQuaternion(m_Rotation) * dxm::Matrix::CreateTranslation(m_Position);
+            auto view = m_Scene->ActiveCamera()->ViewMatrix();
+            auto proj = Renderer::ProjectionMatrix();
+
+            dxm::Matrix cb[] =
+            {
+                model,
+                view,
+                view.Invert(),
+                proj
+            };
+
+            vs->UpdateConstantBuffer(0, cb, 4 * sizeof(Matrix));
         };
 
         m_RenderingPasses.push_back(renderPass);

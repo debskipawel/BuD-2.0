@@ -1,12 +1,13 @@
 #pragma once
 
-#include <Renderer/IRenderable.h>
+#include <Objects/Interfaces/IRenderable.h>
+#include <Objects/Interfaces/IState.h>
 
 #include "SceneEntity.h"
 
 namespace BuD
 {
-	class Cube : public SceneEntity, public IRenderable
+	class Cube : public SceneEntity, public IRenderable, public IState
 	{
 	public:
 		Cube(Scene& scene);

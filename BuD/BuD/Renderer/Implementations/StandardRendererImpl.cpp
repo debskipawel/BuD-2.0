@@ -1,7 +1,7 @@
 #include "bud_pch.h"
 #include "StandardRendererImpl.h"
 
-#include <Renderer/IRenderable.h>
+#include <Objects/Interfaces/IRenderable.h>
 #include <Renderer/Structures/ViewportDesc.h>
 
 namespace BuD
@@ -11,8 +11,19 @@ namespace BuD
 	{
 	}
 
+	dxm::Matrix StandardRendererImpl::ProjectionMatrix()
+	{
+		return m_ProjectionMatrix;
+	}
+
 	void StandardRendererImpl::Render(const Scene& scene, const RenderTargetInfo& renderTarget)
 	{
+		m_ProjectionMatrix = dxm::Matrix::CreatePerspectiveFieldOfView(
+			DirectX::XMConvertToRadians(90.0f), 
+			static_cast<float>(renderTarget.Width) / renderTarget.Height, 
+			0.01f, 100.0f
+		);
+
 		auto& context = m_Device->Context();
 
 		ViewportDesc viewportDesc{ renderTarget.Width, renderTarget.Height };
@@ -52,7 +63,7 @@ namespace BuD
 				const auto stride = vb->Stride();
 				const auto offset = vb->Offset();
 
-				context->IASetInputLayout(renderingPass.VertexShader->GetLayout());
+				context->IASetInputLayout(vs->GetLayout());
 				context->IASetVertexBuffers(0, 1, &rawVertexBuffer, (const UINT*)(&stride), (const UINT*)(&offset));
 				context->IASetIndexBuffer(ib->Get(), ib->Format(), 0);
 				context->IASetPrimitiveTopology(ib->Topology());

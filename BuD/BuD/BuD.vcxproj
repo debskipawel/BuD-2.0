@@ -208,11 +208,12 @@
     <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Input\KeyboardKeys.h" />
     <ClInclude Include="Input\MouseCode.h" />
+    <ClInclude Include="Objects\Interfaces\IState.h" />
     <ClInclude Include="Renderer\GraphicsDevice.h" />
     <ClInclude Include="Renderer\Implementations\BaseRendererImpl.h" />
     <ClInclude Include="Renderer\Implementations\RenderingMode.h" />
     <ClInclude Include="Renderer\Implementations\StandardRendererImpl.h" />
-    <ClInclude Include="Renderer\IRenderable.h" />
+    <ClInclude Include="Objects\Interfaces\IRenderable.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\RenderingPass.h" />
     <ClInclude Include="Renderer\RenderTarget.h" />

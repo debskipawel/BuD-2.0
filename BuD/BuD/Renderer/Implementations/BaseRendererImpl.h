@@ -13,6 +13,7 @@ namespace BuD
 	class BaseRendererImpl
 	{
 	public:
+		virtual dxm::Matrix ProjectionMatrix() = 0;
 		virtual void Render(const Scene& scene, const RenderTargetInfo& renderTarget) = 0;
 	};
 }

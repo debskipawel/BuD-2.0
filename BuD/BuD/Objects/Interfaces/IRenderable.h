@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "RenderingPass.h"
+#include <Renderer/RenderingPass.h>
 
 namespace BuD
 {

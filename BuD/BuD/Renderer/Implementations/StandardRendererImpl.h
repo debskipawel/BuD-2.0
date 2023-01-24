@@ -11,9 +11,11 @@ namespace BuD
 	public:
 		StandardRendererImpl(std::shared_ptr<GraphicsDevice> device);
 
+		virtual dxm::Matrix ProjectionMatrix() override;
 		virtual void Render(const Scene& scene, const RenderTargetInfo& renderTarget) override;
 
 	protected:
 		std::shared_ptr<GraphicsDevice> m_Device;
+		dxm::Matrix m_ProjectionMatrix;
 	};
 }

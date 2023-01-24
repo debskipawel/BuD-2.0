@@ -218,7 +218,7 @@
     <ClInclude Include="Renderer\RenderingPass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\IRenderable.h">
+    <ClInclude Include="Objects\Interfaces\IRenderable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Buffers\Buffer.h">
@@ -261,6 +261,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resources\Meshes\Cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Interfaces\IState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

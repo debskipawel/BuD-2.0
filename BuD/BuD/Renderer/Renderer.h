@@ -20,6 +20,8 @@ namespace BuD
 		static void BeginTarget(int width, int height);
 		static ComPtr<ID3D11ShaderResourceView> EndTarget();
 
+		static dxm::Matrix ProjectionMatrix();
+
 		static void BeginFrame();
 		static void Clear(float r, float g, float b, float a);
 		static void Render(const Scene& scene);

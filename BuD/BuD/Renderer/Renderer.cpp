@@ -74,6 +74,11 @@ namespace BuD
 		return activeRenderTarget->ShaderResourceView;
 	}
 
+	dxm::Matrix Renderer::ProjectionMatrix()
+	{
+		return s_ActiveRendererImpl->ProjectionMatrix();
+	}
+
 	void Renderer::BeginFrame()
 	{
 		if (!s_Device)

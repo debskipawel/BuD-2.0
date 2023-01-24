@@ -20,9 +20,10 @@ public:
 
 	void OnRender() override
 	{
+		BuD::Renderer::Render(m_Scene);
+
 		BuD::Renderer::BeginTarget(400, 200);
 		BuD::Renderer::Clear(0.4f, 0.2f, 0.5f, 1.0f);
-		BuD::Renderer::Render(m_Scene);
 		m_Viewport = BuD::Renderer::EndTarget();
 
 		BuD::Renderer::BeginTarget(400, 200);
@@ -47,6 +48,13 @@ public:
 		ImGui::Begin("Viewport 3");
 		ImGui::Image(m_Viewport3.Get(), { 400, 200 });
 		ImGui::End();
+	}
+
+	void OnConcreteEvent(BuD::MouseMovedEvent& e) override
+	{
+		auto camera = m_Scene.ActiveCamera();
+
+		camera->RotateCamera(0.01 * e.m_OffsetX, 0.01 * e.m_OffsetY);
 	}
 
 protected:
