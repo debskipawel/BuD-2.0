@@ -9,11 +9,11 @@ namespace BuD
 
 	std::vector<MeshSegment> MeshLoader::LoadMesh(std::filesystem::path filepath)
 	{
-		std::unique_ptr<BaseMeshFileLoader> fileLoader;
+		std::unique_ptr<Internal::BaseMeshFileLoader> fileLoader;
 
 		if (filepath.extension() == OBJ_EXTENSION)
 		{
-			fileLoader = std::make_unique<ObjMeshFileLoader>();
+			fileLoader = std::make_unique<Internal::ObjMeshFileLoader>();
 		}
 		else
 		{

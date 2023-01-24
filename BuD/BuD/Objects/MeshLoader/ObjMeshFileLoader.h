@@ -4,9 +4,12 @@
 
 namespace BuD
 {
-	class ObjMeshFileLoader : public BaseMeshFileLoader
+	namespace Internal
 	{
-	public:
-		virtual std::vector<MeshSegment> LoadMesh(std::filesystem::path filepath) override;
-	};
+		class ObjMeshFileLoader : public BaseMeshFileLoader
+		{
+		public:
+			virtual std::vector<MeshSegment> LoadMesh(std::filesystem::path filepath) override;
+		};
+	}
 }

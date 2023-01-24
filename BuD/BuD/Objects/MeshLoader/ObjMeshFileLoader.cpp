@@ -4,7 +4,7 @@
 #include <d3d11.h>
 #include <OBJ_Loader.h>
 
-namespace BuD
+namespace BuD::Internal
 {
 	static const std::vector<D3D11_INPUT_ELEMENT_DESC> OBJ_FILE_LAYOUT
 	{
