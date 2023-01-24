@@ -1,8 +1,8 @@
 #pragma once
 
-#include "SceneEntity.h"
-
 #include <Camera/AbstractCamera.h>
+
+#include <entt/entt.hpp>
 
 #include <map>
 #include <memory>
@@ -15,13 +15,19 @@ namespace BuD
 	public:
 		Scene();
 
+		template<typename... Components>
+		auto GetAllEntitiesWith() const
+		{
+			return m_Registry.view<Components...>().each();
+		}
+
 		std::shared_ptr<AbstractCamera> ActiveCamera() const { return m_ActiveCamera; }
-
-		std::shared_ptr<SceneEntity> CreateCube();
-
-		std::map<uint64_t, std::shared_ptr<SceneEntity>> m_SceneEntities;
 
 	protected:
 		std::shared_ptr<AbstractCamera> m_ActiveCamera;
+
+		entt::registry m_Registry;
+
+		friend class SceneEntity;
 	};
 }

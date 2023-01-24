@@ -16,7 +16,7 @@ namespace BuD
 		return m_ProjectionMatrix;
 	}
 
-	void StandardRendererImpl::Render(const Scene& scene, const RenderTargetInfo& renderTarget)
+	void StandardRendererImpl::Render(Scene& scene, const RenderTargetInfo& renderTarget)
 	{
 		m_ProjectionMatrix = dxm::Matrix::CreatePerspectiveFieldOfView(
 			DirectX::XMConvertToRadians(90.0f), 
@@ -31,16 +31,12 @@ namespace BuD
 		context->OMSetRenderTargets(1, renderTarget.RenderTargetView.GetAddressOf(), renderTarget.DepthStencilView.Get());
 		context->RSSetViewports(1, &viewportDesc);
 
-		for (auto& [uuid, sceneEntity] : scene.m_SceneEntities)
+		for (auto [entity, renderable] : scene.GetAllEntitiesWith<IRenderable>())
 		{
-			if (!sceneEntity->HasComponent<IRenderable>())
-			{
-				continue;
-			}
+			auto id = entity;
+			SceneEntity entity(scene, id);
 
-			auto renderable = sceneEntity->GetComponent<IRenderable>();
-
-			for (auto& renderingPass : renderable->RenderingPasses())
+			for (auto& renderingPass : renderable.RenderingPasses)
 			{
 				auto& vb = renderingPass.VertexBuffer;
 				auto& ib = renderingPass.IndexBuffer;
@@ -57,7 +53,7 @@ namespace BuD
 					continue;
 				}
 
-				renderingPass.PreRenderCallback(renderingPass);
+				renderingPass.PreRenderCallback(renderingPass, entity);
 
 				auto rawVertexBuffer = vb->Get();
 				const auto stride = vb->Stride();

@@ -15,7 +15,6 @@ public:
 		: m_Scene()
 	{
 		auto face = std::make_shared<FaceMesh>(m_Scene);
-		m_Scene.m_SceneEntities.insert(std::make_pair(face->Id(), face));
 	}
 
 	void OnUpdate(float deltaTime) override

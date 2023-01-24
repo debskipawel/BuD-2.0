@@ -24,7 +24,7 @@ namespace BuD
 
 		static void BeginFrame();
 		static void Clear(float r, float g, float b, float a);
-		static void Render(const Scene& scene);
+		static void Render(Scene& scene);
 		static void EndFrame();
 
 		static void WindowResized(int width, int height);

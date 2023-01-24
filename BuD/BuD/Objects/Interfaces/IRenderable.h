@@ -9,9 +9,10 @@ namespace BuD
 	class IRenderable
 	{
 	public:
-		virtual std::vector<RenderingPass> RenderingPasses() const { return m_RenderingPasses; };
+		IRenderable(std::vector<RenderingPass> renderingPasses)
+			: RenderingPasses(renderingPasses)
+		{}
 
-	protected:
-		std::vector<RenderingPass> m_RenderingPasses;
+		std::vector<RenderingPass> RenderingPasses;
 	};
 }

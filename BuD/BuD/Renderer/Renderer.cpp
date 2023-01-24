@@ -125,7 +125,7 @@ namespace BuD
 		}
 	}
 
-	void Renderer::Render(const Scene& scene)
+	void Renderer::Render(Scene& scene)
 	{
 		if (!s_Device)
 		{

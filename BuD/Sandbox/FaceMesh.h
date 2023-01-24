@@ -4,8 +4,11 @@
 #include <Objects/Interfaces/IRenderable.h>
 #include <Objects/Interfaces/IState.h>
 
-class FaceMesh : public BuD::SceneEntity, public BuD::IRenderable, public BuD::IState 
+class FaceMesh
 {
 public:
 	FaceMesh(BuD::Scene& scene);
+
+protected:
+	BuD::SceneEntity m_Entity;
 };
