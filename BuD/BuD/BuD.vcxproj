@@ -177,6 +177,7 @@
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\RenderTarget.cpp" />
     <ClCompile Include="Objects\Cube.cpp" />
+    <ClCompile Include="Renderer\Texture.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneEntity.cpp" />
     <ClCompile Include="Shaders\Loader\ShaderLoader.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="Renderer\Structures\SwapchainDesc.h" />
     <ClInclude Include="Renderer\Structures\Texture2DDesc.h" />
     <ClInclude Include="Renderer\Structures\ViewportDesc.h" />
+    <ClInclude Include="Renderer\Texture.h" />
     <ClInclude Include="Resources\Meshes\Cube.h" />
     <ClInclude Include="Objects\Cube.h" />
     <ClInclude Include="Scene\Scene.h" />

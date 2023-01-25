@@ -32,9 +32,20 @@ namespace BuD::Internal
 
 			auto& vertices = mesh.Vertices;
 			auto& indices = mesh.Indices;
+			auto& material = mesh.MeshMaterial;
 
 			segment.SegmentName = mesh.MeshName;
 			segment.Layout = OBJ_FILE_LAYOUT;
+
+			segment.Material = MeshMaterial
+			{
+				material.name,
+				{ material.Ka.X, material.Ka.Y, material.Ka.Z }, 
+				{ material.Kd.X, material.Kd.Y, material.Kd.Z }, 
+				{ material.Ks.X, material.Ks.Y, material.Ks.Z },
+				material.Ns, material.Ni, material.d, material.illum,
+				material.map_Ka, material.map_Kd, material.map_Ks, material.map_Ns, material.map_d, material.map_bump
+			};
 
 			segment.VertexBuffer = std::make_shared<VertexBuffer>(vertices.size() * sizeof(objl::Vertex), OBJ_FILE_LAYOUT, vertices.data());
 			segment.IndexBuffer = std::make_shared<IndexBuffer>(DXGI_FORMAT_R32_UINT, indices.size() * sizeof(unsigned int), indices.data());

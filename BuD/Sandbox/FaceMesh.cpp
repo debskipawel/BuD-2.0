@@ -18,7 +18,7 @@ FaceMesh::FaceMesh(BuD::Scene& scene)
 	renderPass.VertexShader = BuD::ShaderLoader::VSLoad(L"../x64/Debug/mvp_pos_vs.hlsl", meshSegments[0].Layout, { 4 * sizeof(dxm::Matrix) });
 	renderPass.PixelShader = BuD::ShaderLoader::PSLoad(L"../x64/Debug/solid_white_ps.hlsl");
 
-	renderPass.PreRenderCallback = [this](const BuD::RenderingPass& pass, BuD::SceneEntity entity)
+	renderPass.PreRenderCallback = [](const BuD::RenderingPass& pass, BuD::SceneEntity entity)
 	{
 		auto& vs = pass.VertexShader;
 		auto& state = entity.GetComponent<BuD::IState>();

@@ -23,11 +23,17 @@ public:
 
 	void OnRender() override
 	{
+		BuD::Renderer::BeginTarget(500, 300);
+		BuD::Renderer::Clear(0.1f, 0.0f, 0.2f, 1.0f);
 		BuD::Renderer::Render(m_Scene);
+		m_Viewport = BuD::Renderer::EndTarget();
 	}
 
 	void OnGuiRender() override
 	{
+		ImGui::Begin("Viewport");
+		ImGui::Image(m_Viewport.SRV(), { 500, 300 });
+		ImGui::End();
 	}
 
 	void OnConcreteEvent(BuD::MouseMovedEvent& e) override
@@ -39,6 +45,7 @@ public:
 
 protected:
 	BuD::Scene m_Scene;
+	BuD::Texture m_Viewport;
 };
 
 std::shared_ptr<BuD::AppLayer> BuD::CreateClientApp()

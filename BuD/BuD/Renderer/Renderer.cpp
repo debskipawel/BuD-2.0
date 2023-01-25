@@ -59,19 +59,19 @@ namespace BuD
 		RenderToExternalTarget();
 	}
 
-	ComPtr<ID3D11ShaderResourceView> Renderer::EndTarget()
+	Texture Renderer::EndTarget()
 	{
 		if (s_UsedRenderTargets.empty())
 		{
 			Log::WriteError(L"Attempting to retrieve a render target without starting it beforehand.");
-			return nullptr;
+			return { nullptr };
 		}
 		
 		RenderToSwapchain();
 
 		auto& activeRenderTarget = *s_UsedRenderTargets.rbegin();
 
-		return activeRenderTarget->ShaderResourceView;
+		return { activeRenderTarget->ShaderResourceView };
 	}
 
 	dxm::Matrix Renderer::ProjectionMatrix()

@@ -1,6 +1,9 @@
 #include "bud_pch.h"
 #include "GraphicsDevice.h"
 
+#include <DDSTextureLoader.h>
+#include <WICTextureLoader.h>
+
 #include <Utils/Log.h>
 
 #include "Structures/SwapchainDesc.h"
@@ -28,7 +31,7 @@ namespace BuD
 		}
 	}
 	
-	ComPtr<ID3D11RenderTargetView> GraphicsDevice::CreateRenderTargetView(const ComPtr<ID3D11Texture2D>& texture)
+	ComPtr<ID3D11RenderTargetView> GraphicsDevice::CreateRenderTargetView(const ComPtr<ID3D11Texture2D>& texture) const
 	{
 		ComPtr<ID3D11RenderTargetView> result;
 		auto hr = m_Device->CreateRenderTargetView(texture.Get(), nullptr, result.GetAddressOf());
@@ -41,7 +44,7 @@ namespace BuD
 		return result;
 	}
 	
-	ComPtr<ID3D11DepthStencilView> GraphicsDevice::CreateDepthStencilBuffer(UINT width, UINT height)
+	ComPtr<ID3D11DepthStencilView> GraphicsDevice::CreateDepthStencilBuffer(UINT width, UINT height) const
 	{
 		auto textureDesc = Texture2DDesc::DepthStencilDescription(width, height);
 		auto texture = CreateTexture(textureDesc);
@@ -69,6 +72,28 @@ namespace BuD
 		}
 
 		return result;
+	}
+
+	ComPtr<ID3D11ShaderResourceView> GraphicsDevice::CreateShaderResourceView(std::filesystem::path filepath) const
+	{
+		HRESULT hr;
+		ComPtr<ID3D11ShaderResourceView> srv;
+
+		if (filepath.extension() == ".dds")
+		{
+			hr = DirectX::CreateDDSTextureFromFile(m_Device.Get(), m_Context.Get(), filepath.wstring().c_str(), nullptr, srv.GetAddressOf());
+		}
+		else
+		{
+			hr = DirectX::CreateWICTextureFromFile(m_Device.Get(), m_Context.Get(), filepath.wstring().c_str(), nullptr, srv.GetAddressOf());
+		}
+
+		if (FAILED(hr))
+		{
+			Log::WriteError(L"Error while creating SRV from file");
+		}
+
+		return srv;
 	}
 	
 	void GraphicsDevice::UpdateSize(uint32_t width, uint32_t height)

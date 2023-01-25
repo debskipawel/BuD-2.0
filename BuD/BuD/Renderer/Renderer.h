@@ -2,6 +2,8 @@
 
 #include "GraphicsDevice.h"
 #include "RenderTarget.h"
+#include "Texture.h"
+
 #include "Implementations/BaseRendererImpl.h"
 #include "Implementations/RenderingMode.h"
 
@@ -18,7 +20,7 @@ namespace BuD
 		static void Dispose();
 
 		static void BeginTarget(int width, int height);
-		static ComPtr<ID3D11ShaderResourceView> EndTarget();
+		static Texture EndTarget();
 
 		static dxm::Matrix ProjectionMatrix();
 
