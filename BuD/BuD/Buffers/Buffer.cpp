@@ -43,11 +43,17 @@ namespace BuD
         ZeroMemory(&sdata, sizeof sdata);
         sdata.pSysMem = data;
 
+        auto bufferDesc = desc;
+        if (bufferDesc.ByteWidth % 16 != 0)
+        {
+            bufferDesc.ByteWidth = (bufferDesc.ByteWidth / 16 + 1) * 16;
+        }
+
         auto graphicsDevice = Renderer::Device();
         auto& device = graphicsDevice->Device();
 
         ID3D11Buffer* temp;
-        if (FAILED(device->CreateBuffer(&desc, data ? &sdata : nullptr, &temp)))
+        if (FAILED(device->CreateBuffer(&bufferDesc, data ? &sdata : nullptr, &temp)))
         {
             Log::WriteError(L"Error while creating a buffer.");
         }

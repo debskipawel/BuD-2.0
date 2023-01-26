@@ -13,8 +13,6 @@ namespace BuD
 {
 	struct MeshMaterial
 	{
-		std::string Name;
-
 		dxm::Vector3 AmbientColor;
 		dxm::Vector3 DiffuseColor;
 		dxm::Vector3 SpecularColor;
@@ -23,13 +21,6 @@ namespace BuD
 		float OpticalDensity;
 		float Dissolve;
 		int Illumination;
-
-		std::string AmbientMapName;
-		std::string DiffuseMapName;
-		std::string SpecularMapName;
-		std::string SpecularHighlightMapName;
-		std::string AlphaMapName;
-		std::string BumpMapName;
 	};
 
 	struct MeshSegment

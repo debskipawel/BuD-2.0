@@ -172,6 +172,7 @@
     <ClCompile Include="Input\Keyboard.cpp" />
     <ClCompile Include="Objects\MeshLoader\MeshLoader.cpp" />
     <ClCompile Include="Objects\MeshLoader\ObjMeshFileLoader.cpp" />
+    <ClCompile Include="Objects\PointLight.cpp" />
     <ClCompile Include="Renderer\GraphicsDevice.cpp" />
     <ClCompile Include="Renderer\Implementations\StandardRendererImpl.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Buffers\Buffer.h" />
     <ClInclude Include="Buffers\ConstantBuffer.h" />
     <ClInclude Include="Buffers\IndexBuffer.h" />
+    <ClInclude Include="Buffers\StructuredBuffer.h" />
     <ClInclude Include="Buffers\VertexBuffer.h" />
     <ClInclude Include="Camera\AbstractCamera.h" />
     <ClInclude Include="Camera\OrbitCamera.h" />
@@ -211,11 +213,14 @@
     <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Input\KeyboardKeys.h" />
     <ClInclude Include="Input\MouseCode.h" />
+    <ClInclude Include="Objects\Interfaces\EmissiveComponent.h" />
+    <ClInclude Include="Objects\Interfaces\IEmissive.h" />
     <ClInclude Include="Objects\Interfaces\IState.h" />
     <ClInclude Include="Objects\MeshLoader\BaseMeshFileLoader.h" />
     <ClInclude Include="Objects\MeshLoader\MeshLoader.h" />
     <ClInclude Include="Objects\MeshLoader\MeshSegment.h" />
     <ClInclude Include="Objects\MeshLoader\ObjMeshFileLoader.h" />
+    <ClInclude Include="Objects\PointLight.h" />
     <ClInclude Include="Renderer\GraphicsDevice.h" />
     <ClInclude Include="Renderer\Implementations\BaseRendererImpl.h" />
     <ClInclude Include="Renderer\Implementations\RenderingMode.h" />
@@ -258,11 +263,41 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Resources\Shaders\depthMapAbsorption_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\depthMapAbsorption_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="Resources\Shaders\mvp_pos_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\objModel_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\objModel_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\solidColor_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\solid_white_ps.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

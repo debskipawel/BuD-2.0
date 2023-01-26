@@ -70,8 +70,9 @@ namespace BuD
 		RenderToSwapchain();
 
 		auto& activeRenderTarget = *s_UsedRenderTargets.rbegin();
+		Texture result(activeRenderTarget->ShaderResourceView);
 
-		return { activeRenderTarget->ShaderResourceView };
+		return result;
 	}
 
 	dxm::Matrix Renderer::ProjectionMatrix()

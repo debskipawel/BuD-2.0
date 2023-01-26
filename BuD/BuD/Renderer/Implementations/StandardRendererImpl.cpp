@@ -9,6 +9,12 @@ namespace BuD
 	StandardRendererImpl::StandardRendererImpl(std::shared_ptr<GraphicsDevice> device)
 		: m_Device(device)
 	{
+		D3D11_RASTERIZER_DESC rsDesc{};
+		rsDesc.CullMode = D3D11_CULL_BACK;
+		rsDesc.FillMode = D3D11_FILL_SOLID;
+		rsDesc.FrontCounterClockwise = true;
+
+		device->Device()->CreateRasterizerState(&rsDesc, m_RasterizerState.GetAddressOf());
 	}
 
 	dxm::Matrix StandardRendererImpl::ProjectionMatrix()
@@ -30,6 +36,7 @@ namespace BuD
 
 		context->OMSetRenderTargets(1, renderTarget.RenderTargetView.GetAddressOf(), renderTarget.DepthStencilView.Get());
 		context->RSSetViewports(1, &viewportDesc);
+		context->RSSetState(m_RasterizerState.Get());
 
 		for (auto [entity, renderable] : scene.GetAllEntitiesWith<IRenderable>())
 		{
@@ -73,6 +80,11 @@ namespace BuD
 				context->PSSetShader(ps->Shader(), nullptr, 0);
 
 				context->DrawIndexed(ib->Count(), 0, 0);
+
+				ID3D11ShaderResourceView* clean[] = { nullptr };
+
+				context->VSSetShaderResources(0, 1, clean);
+				context->PSSetShaderResources(9, 1, clean);
 			}
 		}
 	}

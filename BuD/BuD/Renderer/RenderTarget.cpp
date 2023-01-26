@@ -12,13 +12,21 @@ namespace BuD
 		auto& context = graphicsDevice->Context();
 
 		Texture2DDesc desc(width, height);
+		desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 		desc.BindFlags |= D3D11_BIND_RENDER_TARGET;
 
 		TargetTexture = graphicsDevice->CreateTexture(desc);
+
 		RenderTargetView = graphicsDevice->CreateRenderTargetView(TargetTexture);
 		DepthStencilView = graphicsDevice->CreateDepthStencilBuffer(width, height);
 
-		auto hr = device->CreateShaderResourceView(TargetTexture.Get(), nullptr, ShaderResourceView.GetAddressOf());
+		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc{};
+		srvDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+		srvDesc.Texture2D.MostDetailedMip = 0;
+		srvDesc.Texture2D.MipLevels = 1;
+
+		auto hr = device->CreateShaderResourceView(TargetTexture.Get(), &srvDesc, ShaderResourceView.GetAddressOf());
 
 		if (FAILED(hr))
 		{

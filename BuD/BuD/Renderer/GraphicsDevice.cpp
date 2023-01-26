@@ -29,11 +29,17 @@ namespace BuD
 		{
 			Log::WriteError(L"Error while creating a D3D11 device");
 		}
+
+		if (FAILED(CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED)))
+		{
+			Log::WriteWarning(L"Failed to initialize COM library, any texture load attempt will fail.");
+		}
 	}
 	
 	ComPtr<ID3D11RenderTargetView> GraphicsDevice::CreateRenderTargetView(const ComPtr<ID3D11Texture2D>& texture) const
 	{
 		ComPtr<ID3D11RenderTargetView> result;
+
 		auto hr = m_Device->CreateRenderTargetView(texture.Get(), nullptr, result.GetAddressOf());
 
 		if (FAILED(hr))
@@ -78,19 +84,20 @@ namespace BuD
 	{
 		HRESULT hr;
 		ComPtr<ID3D11ShaderResourceView> srv;
+		auto wPath = filepath.wstring();
 
 		if (filepath.extension() == ".dds")
 		{
-			hr = DirectX::CreateDDSTextureFromFile(m_Device.Get(), m_Context.Get(), filepath.wstring().c_str(), nullptr, srv.GetAddressOf());
+			hr = DirectX::CreateDDSTextureFromFile(m_Device.Get(), m_Context.Get(), wPath.c_str(), nullptr, srv.GetAddressOf());
 		}
 		else
 		{
-			hr = DirectX::CreateWICTextureFromFile(m_Device.Get(), m_Context.Get(), filepath.wstring().c_str(), nullptr, srv.GetAddressOf());
+			hr = DirectX::CreateWICTextureFromFile(m_Device.Get(), m_Context.Get(), wPath.c_str(), nullptr, srv.GetAddressOf());
 		}
 
 		if (FAILED(hr))
 		{
-			Log::WriteError(L"Error while creating SRV from file");
+			Log::WriteError(L"Error while creating SRV from file (check logs to see if COM library was properly initialized)");
 		}
 
 		return srv;

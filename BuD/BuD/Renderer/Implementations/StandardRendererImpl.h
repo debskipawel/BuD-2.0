@@ -17,5 +17,7 @@ namespace BuD
 	protected:
 		std::shared_ptr<GraphicsDevice> m_Device;
 		dxm::Matrix m_ProjectionMatrix;
+
+		ComPtr<ID3D11RasterizerState> m_RasterizerState;
 	};
 }

@@ -18,7 +18,7 @@ namespace BuD
 {
 	struct RenderingPass
 	{
-		std::function<void(const RenderingPass& renderPass, SceneEntity entity)> PreRenderCallback;
+		std::function<void(const RenderingPass& renderPass, SceneEntity entity)> PreRenderCallback = [](const RenderingPass& renderPass, SceneEntity entity) {};
 
 		std::shared_ptr<VertexBuffer>	VertexBuffer;
 		std::shared_ptr<IndexBuffer>	IndexBuffer;

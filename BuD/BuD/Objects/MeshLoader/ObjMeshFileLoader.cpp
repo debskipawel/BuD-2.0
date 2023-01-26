@@ -10,7 +10,7 @@ namespace BuD::Internal
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 3 * sizeof(float), D3D11_INPUT_PER_VERTEX_DATA, 0},
-		{ "TEXTURE", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 6 * sizeof(float), D3D11_INPUT_PER_VERTEX_DATA, 0},
+		{ "TEXCOORDS", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 6 * sizeof(float), D3D11_INPUT_PER_VERTEX_DATA, 0},
 	};
 
 	std::vector<MeshSegment> ObjMeshFileLoader::LoadMesh(std::filesystem::path filepath)
@@ -39,12 +39,10 @@ namespace BuD::Internal
 
 			segment.Material = MeshMaterial
 			{
-				material.name,
 				{ material.Ka.X, material.Ka.Y, material.Ka.Z }, 
 				{ material.Kd.X, material.Kd.Y, material.Kd.Z }, 
 				{ material.Ks.X, material.Ks.Y, material.Ks.Z },
-				material.Ns, material.Ni, material.d, material.illum,
-				material.map_Ka, material.map_Kd, material.map_Ks, material.map_Ns, material.map_d, material.map_bump
+				material.Ns, material.Ni, material.d, material.illum
 			};
 
 			segment.VertexBuffer = std::make_shared<VertexBuffer>(vertices.size() * sizeof(objl::Vertex), OBJ_FILE_LAYOUT, vertices.data());
