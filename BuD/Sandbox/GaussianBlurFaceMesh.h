@@ -11,7 +11,8 @@ class GaussianBlurFaceMesh : public FaceMesh
 public:
 	GaussianBlurFaceMesh(BuD::Scene& scene);
 
-protected:
-	BuD::Texture m_BlurredUVMap;
+	BuD::Texture m_LightMap;
+	BuD::Texture m_BakedLighting;
+	BuD::Texture m_BlurredBakedIrradiance;
 };
 

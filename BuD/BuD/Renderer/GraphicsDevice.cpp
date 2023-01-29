@@ -9,6 +9,10 @@
 #include "Structures/SwapchainDesc.h"
 #include "Structures/Texture2DDesc.h"
 
+#ifdef _DEBUG
+#include "PixDebugLayer.cpp"
+#endif
+
 namespace BuD
 {
 	GraphicsDevice::GraphicsDevice(std::shared_ptr<Win32Window> window)
@@ -20,6 +24,8 @@ namespace BuD
 
 #ifdef _DEBUG
 		flags |= D3D11_CREATE_DEVICE_DEBUG;
+		
+		LoadPixDebugLayer();
 #endif
 
 		auto hr = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, flags, nullptr, 0,

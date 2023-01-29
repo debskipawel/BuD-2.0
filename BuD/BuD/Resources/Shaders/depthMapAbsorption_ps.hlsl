@@ -1,6 +1,6 @@
 struct VSOutput
 {
-    float4 hpos : SV_POSITION;
+    float4 pos : SV_POSITION;
     float dist : TEXCOORD0; // distance from light 
 };
 

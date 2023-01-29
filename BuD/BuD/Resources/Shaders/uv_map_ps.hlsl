@@ -6,6 +6,7 @@ struct VSOutput
     float3 normal : NORMAL;
     float3 viewVector : VIEW_VECTOR;
     float2 tex : TEXCOORDS;
+    float2 lightTex : TEXCOORDS1;
 };
 
 Texture2D albedoMap             : register(t0);
@@ -13,6 +14,7 @@ Texture2D ambientOcclusionMap   : register(t1);
 Texture2D normalMap             : register(t2);
 Texture2D microNormalMap        : register(t3);
 Texture2D specularMap           : register(t4);
+Texture2D lightMap              : register(t5);
 
 SamplerState samplerState : register(s0);
 
@@ -38,8 +40,8 @@ float4 main(VSOutput o) : SV_TARGET
 {
     float3 finalColor = { 0.0f, 0.0f, 0.0f };
     
-    float3 pointToLight = lightPosition.xyz - o.worldPos.xyz;
-    float3 diffusedLightColor = lightColor.xyz / max(dot(pointToLight, pointToLight), 1);
+    float pointToLightDistance = length(lightPosition.xyz - o.worldPos.xyz);
+    float distanceDiffusion = 1.0f / max(pointToLightDistance * pointToLightDistance, 1);
     
     float3 V = normalize(o.viewVector);
     float3 N = normalize(o.normal);
@@ -50,26 +52,30 @@ float4 main(VSOutput o) : SV_TARGET
     float3 surfaceColor = albedoMap.Sample(samplerState, o.tex).xyz;
     
     // AMBIENT
-    float3 ambientColor = Ka * diffusedLightColor * surfaceColor;
-	
     float3 ambientOcclusionTexColor = ambientOcclusionMap.Sample(samplerState, o.tex);
-    ambientColor *= ambientOcclusionTexColor;
+    float3 ambientColor = Ka * ambientOcclusionTexColor;
     
     finalColor += ambientColor;
     
-    // DIFFUSE
-    float diffuseScalar = saturate(dot(N, L));
-    float3 diffuseColor = Kd * diffuseScalar * surfaceColor * diffusedLightColor;
+    float lightHitDistance = lightMap.Sample(samplerState, o.lightTex);
+    
+    // --- shadow mapping ---
+    if (pointToLightDistance <= lightHitDistance + 0.001)
+    {
+        // DIFFUSE
+        float diffuseScalar = saturate(dot(N, L));
+        float3 diffuseColor = Kd * diffuseScalar * distanceDiffusion;
 	
-    finalColor += diffuseColor;
+        finalColor += diffuseColor;
     
-    // SPECULAR
-    float NH = saturate(dot(N, H));
-    float specCoeff = pow(NH, Ns);
-    float3 specularMapColor = specularMap.Sample(samplerState, o.tex);
-    float3 specularColor = Ks * specCoeff * surfaceColor * specularMapColor;
+        // SPECULAR
+        float NH = saturate(dot(N, H));
+        float specCoeff = pow(NH, Ns);
+        float3 specularMapColor = specularMap.Sample(samplerState, o.tex);
+        float3 specularColor = Ks * specCoeff * specularMapColor * distanceDiffusion;
     
-    finalColor += specularColor;
+        finalColor += specularColor;
+    }
     
 	return float4(finalColor, 1.0f);
 }

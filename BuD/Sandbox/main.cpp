@@ -38,7 +38,6 @@ public:
 		BuD::Renderer::BeginTarget(m_ViewportSize.x, m_ViewportSize.y);
 		BuD::Renderer::Clear(0.0f, 0.0f, 0.0f, 1.0f);
 		BuD::Renderer::Render(m_Scene[m_ActiveScene]);
-		m_Map = BuD::Renderer::EndTarget();
 
 		m_Viewport = BuD::Renderer::EndTarget();
 	}
@@ -95,13 +94,37 @@ public:
 
 		if (auto face = dynamic_cast<GaussianBlurFaceMesh*>(m_Faces[m_ActiveScene].get()))
 		{
-			if (ImGui::CollapsingHeader("Depth map"))
+			if (ImGui::CollapsingHeader("Blurring passes"))
 			{
-				ImVec2 vMin = ImGui::GetWindowContentRegionMin();
-				ImVec2 vMax = ImGui::GetWindowContentRegionMax();
-				auto width = vMax.x - vMin.x;
+				if (ImGui::TreeNode("0. Light map"))
+				{
+					ImVec2 vMin = ImGui::GetWindowContentRegionMin();
+					ImVec2 vMax = ImGui::GetWindowContentRegionMax();
+					auto width = vMax.x - vMin.x - 20;
 
-				ImGui::Image(m_Map.SRV(), { width, width });
+					ImGui::Image(face->m_LightMap.SRV(), { width, width });
+					ImGui::TreePop();
+				}
+
+				if (ImGui::TreeNode("1. Baking irradiance"))
+				{
+					ImVec2 vMin = ImGui::GetWindowContentRegionMin();
+					ImVec2 vMax = ImGui::GetWindowContentRegionMax();
+					auto width = vMax.x - vMin.x - 20;
+
+					ImGui::Image(face->m_BakedLighting.SRV(), {width, width});
+					ImGui::TreePop();
+				}
+
+				if (ImGui::TreeNode("2. 12-tap Gaussian blur"))
+				{
+					ImVec2 vMin = ImGui::GetWindowContentRegionMin();
+					ImVec2 vMax = ImGui::GetWindowContentRegionMax();
+					auto width = vMax.x - vMin.x - 20;
+
+					ImGui::Image(face->m_BlurredBakedIrradiance.SRV(), { width, width });
+					ImGui::TreePop();
+				}
 			}
 
 			// TODO: gui for gaussian blur
@@ -116,19 +139,6 @@ public:
 				ImGui::ColorPicker3("Color", &emissive.Color.x);
 			}
 		}
-
-		//if (ImGui::CollapsingHeader("Use textures"))
-		//{
-		//	ImGui::Checkbox("Transmission map", &m_DepthMapFace->m_TransmissionMapOn);
-		//	ImGui::Checkbox("Specular map", &m_DepthMapFace->m_SpecularMapOn);
-		//	ImGui::Checkbox("SSS map", &m_DepthMapFace->m_SSSMapOn);
-		//	ImGui::Checkbox("Roughness map", &m_DepthMapFace->m_RoughnessMapOn);
-		//	ImGui::Checkbox("Normal map", &m_DepthMapFace->m_NormalMapOn);
-		//	ImGui::Checkbox("Micronormal map", &m_DepthMapFace->m_MicronormalMapOn);
-		//	ImGui::Checkbox("Micronormal mask", &m_DepthMapFace->m_MicronormalMaskOn);
-		//	ImGui::Checkbox("Diffuse map", &m_DepthMapFace->m_DiffuseMapOn);
-		//	ImGui::Checkbox("Ambient occlusion map", &m_DepthMapFace->m_AmbientOcclussionMapOn);
-		//}
 
 		ImGui::End();
 	}

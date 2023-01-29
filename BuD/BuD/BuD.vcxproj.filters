@@ -117,6 +117,9 @@
     <ClCompile Include="Objects\PointLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\PixDebugLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bud_pch.h">
@@ -319,5 +322,9 @@
     <FxCompile Include="Resources\Shaders\solidColor_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\uv_map_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\uv_map_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\f2_pos_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\gaussianBlur_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\lightMap_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\blurredIrradiance_ps.hlsl" />
   </ItemGroup>
 </Project>
