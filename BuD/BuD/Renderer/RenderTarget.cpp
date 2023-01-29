@@ -5,9 +5,17 @@
 
 namespace BuD
 {
-	RenderTarget::RenderTarget(std::shared_ptr<GraphicsDevice> graphicsDevice, UINT width, UINT height)
-		: Width(width), Height(height), FramesWithoutUsage(0)
+	RenderTarget::RenderTarget(std::shared_ptr<GraphicsDevice> graphicsDevice, int width, int height)
+		: Width(std::max(0, width)), Height(std::max(0, height)), FramesWithoutUsage(0)
 	{
+		if (Width == 0 || Height == 0)
+		{
+			RenderTargetView = nullptr;
+			DepthStencilView = nullptr;
+
+			return;
+		}
+
 		auto& device = graphicsDevice->Device();
 		auto& context = graphicsDevice->Context();
 

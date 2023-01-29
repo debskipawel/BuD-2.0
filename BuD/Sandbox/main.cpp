@@ -4,7 +4,8 @@
 #include <Objects/PointLight.h>
 #include <Renderer/Renderer.h>
 
-#include "FaceMesh.h"
+#include "DepthMapFaceMesh.h"
+#include "GaussianBlurFaceMesh.h"
 
 #include "imgui.h"
 
@@ -21,8 +22,11 @@ public:
 			}
 		);
 
-		m_Light = BuD::PointLight(m_Scene, { 1.0f, -1.0f, 0.0f }, dxm::Vector3::One);
-		m_Face = std::make_shared<FaceMesh>(m_Scene);
+		m_Light[0] = BuD::PointLight(m_Scene[0], { 1.0f, -1.0f, 0.0f }, dxm::Vector3::One);
+		m_Light[1] = BuD::PointLight(m_Scene[1], { 1.0f, -1.0f, 0.0f }, dxm::Vector3::One);
+		
+		m_Faces[0] = std::make_shared<DepthMapFaceMesh>(m_Scene[0]);
+		m_Faces[1] = std::make_shared<GaussianBlurFaceMesh>(m_Scene[1]);
 	}
 
 	void OnUpdate(float deltaTime) override
@@ -31,52 +35,107 @@ public:
 
 	void OnRender() override
 	{
+		BuD::Renderer::BeginTarget(m_ViewportSize.x, m_ViewportSize.y);
 		BuD::Renderer::Clear(0.0f, 0.0f, 0.0f, 1.0f);
-		BuD::Renderer::Render(m_Scene);
+		BuD::Renderer::Render(m_Scene[m_ActiveScene]);
+		m_Map = BuD::Renderer::EndTarget();
+
+		m_Viewport = BuD::Renderer::EndTarget();
 	}
 
 	void OnGuiRender() override
 	{
+		if (ImGui::Begin("Viewport"))
+		{
+			ImVec2 vMin = ImGui::GetWindowContentRegionMin();
+			ImVec2 vMax = ImGui::GetWindowContentRegionMax();
+			vMin.x += ImGui::GetWindowPos().x;
+			vMin.y += ImGui::GetWindowPos().y;
+			vMax.x += ImGui::GetWindowPos().x;
+			vMax.y += ImGui::GetWindowPos().y;
+
+			m_ViewportSize = { vMax.x - vMin.x, vMax.y - vMin.y };
+
+			ImGui::Image(m_Viewport.SRV(), m_ViewportSize);
+
+			ImGui::End();
+		}
+
 		ImGui::Begin("Controls");
 
-		if (ImGui::CollapsingHeader("Depth map"))
+		if (auto face = dynamic_cast<DepthMapFaceMesh*>(m_Faces[m_ActiveScene].get()))
 		{
-			ImGui::Checkbox("Use depth map", &m_Face->m_DepthMapAbsorptionOn);
-			ImGui::SliderFloat("Grow", &m_Face->m_Grow, 0.0f, 0.1f);
+			if (ImGui::CollapsingHeader("Depth map"))
+			{
+				ImGui::Checkbox("Use depth map", &face->m_DepthMapAbsorptionOn);
+				ImGui::SliderFloat("Grow", &face->m_Grow, 0.0f, 0.1f);
 
-			ImGui::DragFloat3("Passing light multiplier", &m_Face->m_PassingExpMultiplier.x, 1.0f, 0.0f, 300.0f);
+				ImGui::DragFloat3("Passing light multiplier", &face->m_PassingExpMultiplier.x, 1.0f, 0.0f, 300.0f);
+
+				ImGui::Separator();
+
+				ImVec2 vMin = ImGui::GetWindowContentRegionMin();
+				ImVec2 vMax = ImGui::GetWindowContentRegionMax();
+				auto width = vMax.x - vMin.x;
+
+				ImGui::Image(face->m_LightDepthMap.SRV(), { width, width });
+			}
+
+			if (ImGui::CollapsingHeader("Light"))
+			{
+				auto& state = m_Light[0].State();
+				auto& emissive = m_Light[0].Emissive();
+
+				ImGui::DragFloat3("Position ##position", &state.Position.x, 0.05f);
+				ImGui::Separator();
+
+				ImGui::ColorPicker3("Color", &emissive.Color.x);
+			}
 		}
 
-		if (ImGui::CollapsingHeader("Use textures"))
+		if (auto face = dynamic_cast<GaussianBlurFaceMesh*>(m_Faces[m_ActiveScene].get()))
 		{
-			ImGui::Checkbox("Transmission map", &m_Face->m_TransmissionMapOn);
-			ImGui::Checkbox("Specular map", &m_Face->m_SpecularMapOn);
-			ImGui::Checkbox("SSS map", &m_Face->m_SSSMapOn);
-			ImGui::Checkbox("Roughness map", &m_Face->m_RoughnessMapOn);
-			ImGui::Checkbox("Normal map", &m_Face->m_NormalMapOn);
-			ImGui::Checkbox("Micronormal map", &m_Face->m_MicronormalMapOn);
-			ImGui::Checkbox("Micronormal mask", &m_Face->m_MicronormalMaskOn);
-			ImGui::Checkbox("Diffuse map", &m_Face->m_DiffuseMapOn);
-			ImGui::Checkbox("Ambient occlusion map", &m_Face->m_AmbientOcclussionMapOn);
+			if (ImGui::CollapsingHeader("Depth map"))
+			{
+				ImVec2 vMin = ImGui::GetWindowContentRegionMin();
+				ImVec2 vMax = ImGui::GetWindowContentRegionMax();
+				auto width = vMax.x - vMin.x;
+
+				ImGui::Image(m_Map.SRV(), { width, width });
+			}
+
+			// TODO: gui for gaussian blur
+			if (ImGui::CollapsingHeader("Light"))
+			{
+				auto& state = m_Light[1].State();
+				auto& emissive = m_Light[1].Emissive();
+
+				ImGui::DragFloat3("Position ##position", &state.Position.x, 0.05f);
+				ImGui::Separator();
+
+				ImGui::ColorPicker3("Color", &emissive.Color.x);
+			}
 		}
 
-		if (ImGui::CollapsingHeader("Light"))
-		{
-			auto& state = m_Light.State();
-			auto& emissive = m_Light.Emissive();
-
-			ImGui::DragFloat3("Position ##position", &state.Position.x, 0.05f);
-			ImGui::Separator();
-
-			ImGui::ColorPicker3("Color", &emissive.Color.x);
-		}
+		//if (ImGui::CollapsingHeader("Use textures"))
+		//{
+		//	ImGui::Checkbox("Transmission map", &m_DepthMapFace->m_TransmissionMapOn);
+		//	ImGui::Checkbox("Specular map", &m_DepthMapFace->m_SpecularMapOn);
+		//	ImGui::Checkbox("SSS map", &m_DepthMapFace->m_SSSMapOn);
+		//	ImGui::Checkbox("Roughness map", &m_DepthMapFace->m_RoughnessMapOn);
+		//	ImGui::Checkbox("Normal map", &m_DepthMapFace->m_NormalMapOn);
+		//	ImGui::Checkbox("Micronormal map", &m_DepthMapFace->m_MicronormalMapOn);
+		//	ImGui::Checkbox("Micronormal mask", &m_DepthMapFace->m_MicronormalMaskOn);
+		//	ImGui::Checkbox("Diffuse map", &m_DepthMapFace->m_DiffuseMapOn);
+		//	ImGui::Checkbox("Ambient occlusion map", &m_DepthMapFace->m_AmbientOcclussionMapOn);
+		//}
 
 		ImGui::End();
 	}
 
 	void OnConcreteEvent(BuD::MouseMovedEvent& e) override
 	{
-		auto camera = m_Scene.ActiveCamera();
+		auto camera = m_Scene[m_ActiveScene].ActiveCamera();
 
 		if (m_MoveMouse)
 			camera->RotateCamera(0.01 * e.m_OffsetX, 0.01 * e.m_OffsetY);
@@ -84,7 +143,7 @@ public:
 
 	void OnConcreteEvent(BuD::MouseScrolledEvent& e) override
 	{
-		auto camera = m_Scene.ActiveCamera();
+		auto camera = m_Scene[m_ActiveScene].ActiveCamera();
 		camera->Zoom(-0.001f * e.m_WheelDelta);
 	}
 
@@ -105,10 +164,14 @@ public:
 	}
 
 protected:
-	BuD::Scene m_Scene;
-	BuD::PointLight m_Light;
+	BuD::Texture m_Viewport;
+	BuD::Texture m_Map;
+	ImVec2 m_ViewportSize = { 0, 0 };
 
-	std::shared_ptr<FaceMesh> m_Face;
+	int m_ActiveScene = 1;
+	BuD::Scene m_Scene[2];
+	BuD::PointLight m_Light[2];
+	std::shared_ptr<FaceMesh> m_Faces[2];
 
 	bool m_MoveMouse = false;
 };

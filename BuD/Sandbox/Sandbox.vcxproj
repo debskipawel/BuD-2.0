@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DepthMapFaceMesh.cpp" />
     <ClCompile Include="FaceMesh.cpp" />
+    <ClCompile Include="GaussianBlurFaceMesh.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -34,7 +36,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DepthMapFaceMesh.h" />
     <ClInclude Include="FaceMesh.h" />
+    <ClInclude Include="GaussianBlurFaceMesh.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

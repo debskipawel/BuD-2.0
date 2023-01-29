@@ -10,6 +10,7 @@
 #include <Scene/Scene.h>
 
 #include <map>
+#include <stack>
 
 namespace BuD
 {
@@ -51,6 +52,7 @@ namespace BuD
 		inline static bool s_RenderingToSwapchain = true;
 
 		// Collection of render targets
+		inline static std::stack<std::shared_ptr<RenderTarget>> s_ActiveRenderTargets = {};
 		inline static std::vector<std::shared_ptr<RenderTarget>> s_FreeRenderTargets = {};
 		inline static std::vector<std::shared_ptr<RenderTarget>> s_UsedRenderTargets = {};
 	};

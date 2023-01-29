@@ -3,6 +3,7 @@
 #include <Scene/Scene.h>
 #include <Objects/Interfaces/IRenderable.h>
 #include <Objects/Interfaces/IState.h>
+#include <Objects/MeshLoader/MeshLoader.h>
 
 class FaceMesh
 {
@@ -20,17 +21,13 @@ public:
 	bool m_AmbientOcclussionMapOn = true;
 	bool m_DepthMapAbsorptionOn = true;
 
-	float m_Grow;
-
-	dxm::Vector3 m_PassingExpMultiplier = { 50.0f, 50.0f, 100.0f };
-
 protected:
 
-	void LoadTextures(std::string meshName);
+	virtual void LoadTextures(std::string meshName);
 
 	BuD::SceneEntity m_Entity;
 	std::vector<BuD::RenderingPass> m_RenderingPasses;
-	BuD::Texture m_LightDepthMap;
+	std::vector<BuD::MeshSegment> m_MeshSegments;
 
 	BuD::Texture m_TransmissionMap;
 	BuD::Texture m_SpecularMap;
