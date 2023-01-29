@@ -5,7 +5,7 @@
 #include <Renderer/Renderer.h>
 
 #include "DepthMapFaceMesh.h"
-#include "GaussianBlurFaceMesh.h"
+#include "MergedFaceMesh.h"
 
 #include "imgui.h"
 
@@ -26,7 +26,7 @@ public:
 		m_Light[1] = BuD::PointLight(m_Scene[1], { 1.0f, -1.0f, 0.0f }, dxm::Vector3::One);
 		
 		m_Faces[0] = std::make_shared<DepthMapFaceMesh>(m_Scene[0]);
-		m_Faces[1] = std::make_shared<GaussianBlurFaceMesh>(m_Scene[1]);
+		m_Faces[1] = std::make_shared<MergedFaceMesh>(m_Scene[1]);
 	}
 
 	void OnUpdate(float deltaTime) override
@@ -92,20 +92,26 @@ public:
 			}
 		}
 
-		if (auto face = dynamic_cast<GaussianBlurFaceMesh*>(m_Faces[m_ActiveScene].get()))
+		if (auto face = dynamic_cast<MergedFaceMesh*>(m_Faces[m_ActiveScene].get()))
 		{
+			if (ImGui::CollapsingHeader("Depth map"))
+			{
+				ImGui::Checkbox("Use depth map", &face->m_DepthMapAbsorptionOn);
+				ImGui::SliderFloat("Grow", &face->m_Grow, 0.0f, 0.1f);
+
+				ImGui::DragFloat3("Passing light multiplier", &face->m_PassingExpMultiplier.x, 1.0f, 0.0f, 300.0f);
+
+				ImGui::Separator();
+
+				ImVec2 vMin = ImGui::GetWindowContentRegionMin();
+				ImVec2 vMax = ImGui::GetWindowContentRegionMax();
+				auto width = vMax.x - vMin.x;
+
+				ImGui::Image(face->m_LightDepthMap.SRV(), { width, width });
+			}
+
 			if (ImGui::CollapsingHeader("Blurring passes"))
 			{
-				if (ImGui::TreeNode("0. Light map"))
-				{
-					ImVec2 vMin = ImGui::GetWindowContentRegionMin();
-					ImVec2 vMax = ImGui::GetWindowContentRegionMax();
-					auto width = vMax.x - vMin.x - 20;
-
-					ImGui::Image(face->m_LightMap.SRV(), { width, width });
-					ImGui::TreePop();
-				}
-
 				if (ImGui::TreeNode("1. Baking irradiance"))
 				{
 					ImVec2 vMin = ImGui::GetWindowContentRegionMin();

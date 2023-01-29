@@ -326,5 +326,6 @@
     <FxCompile Include="Resources\Shaders\gaussianBlur_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\lightMap_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\blurredIrradiance_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\uv_map_with_subscattering_ps.hlsl" />
   </ItemGroup>
 </Project>

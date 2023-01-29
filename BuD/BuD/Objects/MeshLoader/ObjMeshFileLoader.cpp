@@ -10,7 +10,8 @@ namespace BuD::Internal
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 3 * sizeof(float), D3D11_INPUT_PER_VERTEX_DATA, 0},
-		{ "TEXCOORDS", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 6 * sizeof(float), D3D11_INPUT_PER_VERTEX_DATA, 0},
+		{ "TANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 6 * sizeof(float), D3D11_INPUT_PER_VERTEX_DATA, 0},
+		{ "TEXCOORDS", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 9 * sizeof(float), D3D11_INPUT_PER_VERTEX_DATA, 0},
 	};
 
 	std::vector<MeshSegment> ObjMeshFileLoader::LoadMesh(std::filesystem::path filepath)

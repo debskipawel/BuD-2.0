@@ -23,6 +23,7 @@
     <ClCompile Include="FaceMesh.cpp" />
     <ClCompile Include="GaussianBlurFaceMesh.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MergedFaceMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuD\BuD.vcxproj">
@@ -39,6 +40,7 @@
     <ClInclude Include="DepthMapFaceMesh.h" />
     <ClInclude Include="FaceMesh.h" />
     <ClInclude Include="GaussianBlurFaceMesh.h" />
+    <ClInclude Include="MergedFaceMesh.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

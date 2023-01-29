@@ -73,14 +73,15 @@ float4 main(VSOutput input) : SV_TARGET
 	}
 	
 	// NORMAL
-	float3 normal = input.normal;
+    float3 normal = normalize(input.normal);
 	
 	//if (normalMapOn)
 	//{
 	//    float3 normalTex = normalMap.Sample(samp, input.texCoords);
-	//    float3 bitangent = normalize(cross(input.normal, input.tangent));
-	//    float3 tangent = normalize(cross(bitangent, input.normal));
-	//    matrix tbn = matrix(
+	//       float3 tangent = normalize(input.tangent);
+	//       float3 bitangent = normalize(cross(normal, tangent));
+	    
+	//	matrix tbn = matrix(
 	//        tangent.x, bitangent.x, normal.x, 0,
 	//        tangent.y, bitangent.y, normal.y, 0,
 	//        tangent.z, bitangent.z, normal.z, 0,

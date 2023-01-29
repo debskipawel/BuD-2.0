@@ -2,6 +2,7 @@ struct VSObjModelIn
 {
     float3 pos : POSITION;
     float3 normal : NORMAL;
+    float3 tangent : TANGENT;
     float2 texCoords : TEXCOORDS;
 };
 
@@ -41,7 +42,7 @@ VSOutput main(VSObjModelIn input)
     o.surfaceToView = cameraPosition.xyz - worldPosition.xyz;
     
     o.normal = normalize(mul(worldMatrix, float4(input.normal, 0.0f)));
-    //o.tangent = input.tangent; //normalize(mul(worldMatrix, float4(input.tangent, 0.0f)));
+    o.tangent = normalize(input.tangent); //normalize(mul(worldMatrix, float4(input.tangent, 0.0f)));
 
     o.texCoords = input.texCoords * -1 + 1;
    
