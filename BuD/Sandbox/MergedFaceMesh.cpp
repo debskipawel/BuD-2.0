@@ -35,7 +35,7 @@ dxm::Vector4 to_v4(const dxm::Vector3& other)
 }
 
 MergedFaceMesh::MergedFaceMesh(BuD::Scene& scene)
-	: FaceMesh(scene), m_Grow(0.01f)
+	: FaceMesh(scene), m_Grow(0.f)
 {
 	auto material = m_MeshSegments[0].Material;
 

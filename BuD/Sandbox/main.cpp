@@ -71,7 +71,6 @@ public:
 		{
 			if (ImGui::CollapsingHeader("Depth map"))
 			{
-				ImGui::Checkbox("Use depth map", &face->m_DepthMapAbsorptionOn);
 				ImGui::SliderFloat("Grow", &face->m_Grow, 0.0f, 0.1f);
 
 				ImGui::DragFloat3("Passing light multiplier", &face->m_PassingExpMultiplier.x, 1.0f, 0.0f, 300.0f);
@@ -101,10 +100,7 @@ public:
 		{
 			if (ImGui::CollapsingHeader("Depth map"))
 			{
-				ImGui::Checkbox("Use depth map", &face->m_DepthMapAbsorptionOn);
-				ImGui::SliderFloat("Grow", &face->m_Grow, 0.0f, 0.1f);
-
-				ImGui::DragFloat3("Passing light multiplier", &face->m_PassingExpMultiplier.x, 1.0f, 0.0f, 300.0f);
+				ImGui::DragFloat3("Passing light multiplier", &face->m_PassingExpMultiplier.x, 1.0f, 0.0f, 500.0f);
 
 				ImGui::Separator();
 
@@ -156,16 +152,25 @@ public:
 
 	void OnConcreteEvent(BuD::MouseMovedEvent& e) override
 	{
-		auto camera = m_Scene[m_ActiveScene].ActiveCamera();
-
 		if (m_MoveMouse)
-			camera->RotateCamera(0.01 * e.m_OffsetX, 0.01 * e.m_OffsetY);
+		{
+			for (auto& scene : m_Scene)
+			{
+				auto camera = scene.ActiveCamera();
+
+				camera->RotateCamera(0.01 * e.m_OffsetX, 0.01 * e.m_OffsetY);
+			}
+		}
 	}
 
 	void OnConcreteEvent(BuD::MouseScrolledEvent& e) override
 	{
-		auto camera = m_Scene[m_ActiveScene].ActiveCamera();
-		camera->Zoom(-0.001f * e.m_WheelDelta);
+		for (auto& scene : m_Scene)
+		{
+			auto camera = scene.ActiveCamera();
+
+			camera->Zoom(-0.001f * e.m_WheelDelta);
+		}
 	}
 
 	void OnConcreteEvent(BuD::MouseButtonDownEvent& e) override
