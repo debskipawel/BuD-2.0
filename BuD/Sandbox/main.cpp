@@ -62,6 +62,11 @@ public:
 
 		ImGui::Begin("Controls");
 
+		const char* items[] = { "Light depth mapping", "Light depth & irradiance blurring" };
+		ImGui::Combo("Pick Scene", &m_ActiveScene, items, 2);
+
+		ImGui::Separator();
+
 		if (auto face = dynamic_cast<DepthMapFaceMesh*>(m_Faces[m_ActiveScene].get()))
 		{
 			if (ImGui::CollapsingHeader("Depth map"))
