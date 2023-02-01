@@ -74,23 +74,7 @@ float4 main(VSOutput input) : SV_TARGET
 	
 	// NORMAL
     float3 normal = normalize(input.normal);
-	
-	//if (normalMapOn)
-	//{
-	//    float3 normalTex = normalMap.Sample(samp, input.texCoords);
-	//       float3 tangent = normalize(input.tangent);
-	//       float3 bitangent = normalize(cross(normal, tangent));
-	    
-	//	matrix tbn = matrix(
-	//        tangent.x, bitangent.x, normal.x, 0,
-	//        tangent.y, bitangent.y, normal.y, 0,
-	//        tangent.z, bitangent.z, normal.z, 0,
-	//        0, 0, 0, 1
-	//    );
-	//    normal = normalize(mul(tbn, normalTex));
-	//}
-	
-    float3 viewVector = normalize(input.surfaceToView);
+    float3 viewVector = normalize(-input.surfaceToView);
     
 	float3 lightToPoint = lightPosition.xyz - input.worldPos;
     float3 lightToPointDistance = length(lightToPoint);
@@ -129,7 +113,7 @@ float4 main(VSOutput input) : SV_TARGET
 	// SPECULAR
 	float NdotH = saturate(dot(normal, halfVector));
 	float specPower = pow(NdotH, Ns);
-    float3 specularColor = Ks * specPower * surfaceColor;
+    float3 specularColor = 0.5 * Ks * specPower * surfaceColor * diffusedLightColor;
 	
 	if (specularMapOn)
 	{
@@ -139,34 +123,9 @@ float4 main(VSOutput input) : SV_TARGET
 
 	resultColor += float4(specularColor, 0);
 	// ^^ SPECULAR
-	
-	//if (transmissionMapOn)
-	{
-		float3 transmission = transmissionMap.Sample(samp, input.texCoords);
-	}
-	
-	//if (SSSMapOn)
-	{
-		float3 SSS = SSSMap.Sample(samp, input.texCoords);
-	}
-	
-	//if (roughnessMapOn)
-	{
-		float3 roughness = roughnessMap.Sample(samp, input.texCoords);
-	}
-   
-	//if (mikroNormalMaskOn)
-	{
-		float3 mikroNormalCoords = mikroNormalMask.Sample(samp, input.texCoords);
-	}
-	
-	//if (mikroNormalMapOn)
-	{
-		float3 mikroNormal = mikroNormalMap.Sample(samp, input.texCoords);
-	}
    
 	// AMBIENT
-	float3 ambientColor = Ka * lightColor.xyz * surfaceColor;
+	float3 ambientColor = 0.5 * Ka * lightColor.xyz * surfaceColor;
 	
 	if (ambientOcclusionMapOn)
 	{

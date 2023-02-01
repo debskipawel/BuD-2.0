@@ -53,7 +53,7 @@ float4 main(VSOutput o) : SV_TARGET
     
     // AMBIENT
     float3 ambientOcclusionTexColor = ambientOcclusionMap.Sample(samplerState, o.tex);
-    float3 ambientColor = Ka * ambientOcclusionTexColor;
+    float3 ambientColor = 0.2 * Ka * ambientOcclusionTexColor;
     
     finalColor += ambientColor;
     

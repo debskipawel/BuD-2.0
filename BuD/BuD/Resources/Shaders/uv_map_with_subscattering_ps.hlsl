@@ -45,7 +45,7 @@ float4 main(VSOutput o) : SV_TARGET
     float pointToLightDistance = length(lightPosition.xyz - o.worldPos.xyz);
     float distanceDiffusion = 1.0f / max(pointToLightDistance * pointToLightDistance, 1);
     
-    float3 V = normalize(o.viewVector);
+    float3 V = normalize(-o.viewVector);
     float3 N = normalize(o.normal);
     float3 L = normalize(lightPosition.xyz - o.worldPos.xyz);
     
@@ -55,48 +55,44 @@ float4 main(VSOutput o) : SV_TARGET
     
     // AMBIENT
     float3 ambientOcclusionTexColor = ambientOcclusionMap.Sample(samplerState, o.tex);
-    float3 ambientColor = Ka * ambientOcclusionTexColor;
+    float3 ambientColor = 0.5 * Ka * ambientOcclusionTexColor;
     
     finalColor += ambientColor;
     
     float lightHitDistance = lightMap.Sample(samplerState, o.lightTex);
     
-    // --- shadow mapping ---
-    //if (pointToLightDistance <= lightHitDistance + 0.001)
-    {
-        // DIFFUSE
-        float diffuseScalar = saturate(dot(N, L));
-        float3 diffuseColor = Kd * diffuseScalar * distanceDiffusion;
+    // DIFFUSE
+    float diffuseScalar = saturate(dot(N, L));
+    float3 diffuseColor = Kd * diffuseScalar * distanceDiffusion;
 	
-        if (dot(N, L) < 0) // te z ty³u
-        {
-            float inDistance = lightHitDistance;
-            float outDistance = pointToLightDistance;
-            float travel = outDistance - inDistance;
+    if (dot(N, L) < 0)
+    {
+        float inDistance = lightHitDistance;
+        float outDistance = pointToLightDistance;
+        float travel = outDistance - inDistance;
 			
-            if (travel > 0)
-            {
-                float3 lightPassing = exp(-travel * passingExpMultiplier);
-			
-                diffuseScalar = abs(dot(N, L));
-                diffuseColor = Kd * lightPassing * diffuseScalar;
-            }
-        }
-        else if (pointToLightDistance > lightHitDistance + 0.001)
+        if (travel > 0)
         {
-            diffuseColor = float3(0, 0, 0);
+            float3 lightPassing = exp(-travel * passingExpMultiplier);
+			
+            diffuseScalar = abs(dot(N, L));
+            diffuseColor = Kd * lightPassing * diffuseScalar * distanceDiffusion;
         }
-        
-        finalColor += diffuseColor;
-    
-        // SPECULAR
-        float NH = saturate(dot(N, H));
-        float specCoeff = pow(NH, Ns);
-        float3 specularMapColor = specularMap.Sample(samplerState, o.tex);
-        float3 specularColor = Ks * specCoeff * specularMapColor * distanceDiffusion;
-    
-        finalColor += specularColor;
     }
+    else if (pointToLightDistance > lightHitDistance + 0.001)
+    {
+        diffuseColor = float3(0, 0, 0);
+    }
+        
+    finalColor += diffuseColor;
+    
+    // SPECULAR
+    float NH = saturate(dot(N, H));
+    float specCoeff = pow(NH, Ns);
+    float3 specularMapColor = specularMap.Sample(samplerState, o.tex);
+    float3 specularColor = 0.5 * Ks * specCoeff * specularMapColor * distanceDiffusion;
+    
+    finalColor += specularColor;
     
     return float4(finalColor, 1.0f);
 }
