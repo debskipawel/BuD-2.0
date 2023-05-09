@@ -11,11 +11,10 @@ namespace BuD
 	public:
 		virtual ~IState() = default;
 
-	protected:
-		dxm::Vector3 m_Position;
-		dxm::Vector3 m_Velocity;
-		dxm::Quaternion m_Rotation;
-		dxm::Vector3 m_AngularVelocity;
+		dxm::Vector3 Position = dxm::Vector3::Zero;
+		dxm::Vector3 Velocity = dxm::Vector3::Zero;
+		dxm::Quaternion Rotation = dxm::Quaternion::Identity;
+		dxm::Vector3 AngularVelocity = dxm::Vector3::Zero;
 
 		IState() = default;
 	};

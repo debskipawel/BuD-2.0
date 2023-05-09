@@ -142,6 +142,9 @@ namespace objl
 		// Normal Vector
 		Vector3 Normal;
 
+		//Tangent Vector
+		Vector3 Tangent;
+
 		// Texture Coordinate Vector
 		Vector2 TextureCoordinate;
 	};
@@ -315,6 +318,40 @@ namespace objl
 				return true;
 			else
 				return false;
+		}
+
+		inline void CalculateTangent(objl::Mesh& mesh)
+		{
+			for (int i = 0; i < mesh.Indices.size(); i+=3)
+			{
+				auto i1 = mesh.Indices[i + 0];
+				auto i2 = mesh.Indices[i + 1];
+				auto i3 = mesh.Indices[i + 2];
+
+				auto& v0 = mesh.Vertices[i1];
+				auto& v1 = mesh.Vertices[i2];
+				auto& v2 = mesh.Vertices[i3];
+
+				auto dv1 = v1.Position - v0.Position;
+				auto dv2 = v2.Position - v0.Position;
+
+				auto duv1 = v1.TextureCoordinate - v0.TextureCoordinate;
+				auto duv2 = v2.TextureCoordinate - v0.TextureCoordinate;
+
+				auto r = 1.0f / (duv1.X * duv2.Y - duv1.Y * duv2.X);
+				auto tangent = (dv1 * duv2.Y - dv2 * duv1.Y) * r;
+
+				v0.Tangent = v0.Tangent + tangent;
+				v1.Tangent = v1.Tangent + tangent;
+				v2.Tangent = v2.Tangent + tangent;
+			}
+
+			for (int i = 0; i < mesh.Vertices.size(); i++)
+			{
+				auto t = mesh.Vertices[i].Tangent;
+				float length = std::sqrt(t.X * t.X + t.Y * t.Y + t.Z * t.Z);
+				mesh.Vertices[i].Tangent = mesh.Vertices[i].Tangent / length;
+			}
 		}
 
 		// Split a String into a string array at a given token
@@ -700,6 +737,11 @@ namespace objl
 						break;
 					}
 				}
+			}
+
+			for (int i = 0; i < LoadedMeshes.size(); i++)
+			{
+				algorithm::CalculateTangent(LoadedMeshes[i]);
 			}
 
 			if (LoadedMeshes.empty() && LoadedVertices.empty() && LoadedIndices.empty())

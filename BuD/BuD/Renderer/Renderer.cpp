@@ -48,30 +48,41 @@ namespace BuD
 			auto& renderTargetPointer = *result;
 			renderTargetPointer->FramesWithoutUsage = 0;
 
-			s_UsedRenderTargets.push_back(renderTargetPointer);
+			s_ActiveRenderTargets.push(renderTargetPointer);
 			s_FreeRenderTargets.erase(std::find(s_FreeRenderTargets.begin(), s_FreeRenderTargets.end(), renderTargetPointer));
 		}
 		else
 		{
-			s_UsedRenderTargets.push_back(std::make_shared<RenderTarget>(s_Device, width, height));
+			s_ActiveRenderTargets.push(std::make_shared<RenderTarget>(s_Device, width, height));
 		}
 
 		RenderToExternalTarget();
 	}
 
-	ComPtr<ID3D11ShaderResourceView> Renderer::EndTarget()
+	Texture Renderer::EndTarget()
 	{
-		if (s_UsedRenderTargets.empty())
+		if (s_ActiveRenderTargets.empty())
 		{
 			Log::WriteError(L"Attempting to retrieve a render target without starting it beforehand.");
-			return nullptr;
+			return { nullptr };
 		}
-		
-		RenderToSwapchain();
 
-		auto& activeRenderTarget = *s_UsedRenderTargets.rbegin();
+		std::shared_ptr<RenderTarget> activeRenderTarget = s_ActiveRenderTargets.top();
+		Texture result(activeRenderTarget->ShaderResourceView);
 
-		return activeRenderTarget->ShaderResourceView;
+		s_ActiveRenderTargets.pop();
+		s_UsedRenderTargets.push_back(activeRenderTarget);
+
+		if (s_ActiveRenderTargets.empty())
+		{
+			RenderToSwapchain();
+		}
+		else
+		{
+			RenderToExternalTarget();
+		}
+
+		return result;
 	}
 
 	dxm::Matrix Renderer::ProjectionMatrix()
@@ -101,6 +112,12 @@ namespace BuD
 		std::copy(s_UsedRenderTargets.begin(), s_UsedRenderTargets.end(), std::back_inserter(s_FreeRenderTargets));
 		s_UsedRenderTargets.clear();
 
+		while (!s_ActiveRenderTargets.empty())
+		{
+			s_FreeRenderTargets.push_back(s_ActiveRenderTargets.top());
+			s_ActiveRenderTargets.pop();
+		}
+
 		RenderToSwapchain();
 
 		Clear(0.0f, 0.0f, 0.0f, 0.0f);
@@ -118,14 +135,17 @@ namespace BuD
 		}
 		else
 		{
-			auto& renderTarget = *s_UsedRenderTargets.rbegin();
+			auto& renderTarget = s_ActiveRenderTargets.top();
 
-			context->ClearRenderTargetView(renderTarget->RenderTargetView.Get(), clearColor);
-			context->ClearDepthStencilView(renderTarget->DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+			if (renderTarget->RenderTargetView)
+				context->ClearRenderTargetView(renderTarget->RenderTargetView.Get(), clearColor);
+
+			if (renderTarget->DepthStencilView)
+				context->ClearDepthStencilView(renderTarget->DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 		}
 	}
 
-	void Renderer::Render(const Scene& scene)
+	void Renderer::Render(Scene& scene)
 	{
 		if (!s_Device)
 		{
@@ -144,7 +164,7 @@ namespace BuD
 		}
 		else
 		{
-			auto& activeRenderTarget = *s_UsedRenderTargets.rbegin();
+			auto& activeRenderTarget = s_ActiveRenderTargets.top();
 
 			renderTarget.RenderTargetView = activeRenderTarget->RenderTargetView;
 			renderTarget.DepthStencilView = activeRenderTarget->DepthStencilView;
@@ -161,6 +181,11 @@ namespace BuD
 		{
 			Log::WriteWarning(L"Attempting to end frame without initializing the renderer.");
 			return;
+		}
+
+		if (!s_ActiveRenderTargets.empty())
+		{
+			Log::WriteWarning(L"Not all render targets for this frame have been used");
 		}
 
 		if (!s_RenderingToSwapchain)
@@ -219,7 +244,7 @@ namespace BuD
 
 	void Renderer::RenderToExternalTarget()
 	{
-		auto& renderTarget = *s_UsedRenderTargets.rbegin();
+		auto& renderTarget = s_ActiveRenderTargets.top();
 		auto& context = s_Device->Context();
 		context->OMSetRenderTargets(1, renderTarget->RenderTargetView.GetAddressOf(), renderTarget->DepthStencilView.Get());
 

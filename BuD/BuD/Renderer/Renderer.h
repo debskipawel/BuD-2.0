@@ -2,12 +2,15 @@
 
 #include "GraphicsDevice.h"
 #include "RenderTarget.h"
+#include "Texture.h"
+
 #include "Implementations/BaseRendererImpl.h"
 #include "Implementations/RenderingMode.h"
 
 #include <Scene/Scene.h>
 
 #include <map>
+#include <stack>
 
 namespace BuD
 {
@@ -18,13 +21,13 @@ namespace BuD
 		static void Dispose();
 
 		static void BeginTarget(int width, int height);
-		static ComPtr<ID3D11ShaderResourceView> EndTarget();
+		static Texture EndTarget();
 
 		static dxm::Matrix ProjectionMatrix();
 
 		static void BeginFrame();
 		static void Clear(float r, float g, float b, float a);
-		static void Render(const Scene& scene);
+		static void Render(Scene& scene);
 		static void EndFrame();
 
 		static void WindowResized(int width, int height);
@@ -49,6 +52,7 @@ namespace BuD
 		inline static bool s_RenderingToSwapchain = true;
 
 		// Collection of render targets
+		inline static std::stack<std::shared_ptr<RenderTarget>> s_ActiveRenderTargets = {};
 		inline static std::vector<std::shared_ptr<RenderTarget>> s_FreeRenderTargets = {};
 		inline static std::vector<std::shared_ptr<RenderTarget>> s_UsedRenderTargets = {};
 	};

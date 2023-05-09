@@ -12,7 +12,7 @@ namespace BuD
 {
 	struct RenderTarget
 	{
-		RenderTarget(std::shared_ptr<GraphicsDevice> device, UINT width, UINT height);
+		RenderTarget(std::shared_ptr<GraphicsDevice> device, int width, int height);
 		~RenderTarget();
 
 		ComPtr<ID3D11Texture2D> TargetTexture;

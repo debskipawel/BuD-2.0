@@ -14,6 +14,6 @@ namespace BuD
 	{
 	public:
 		virtual dxm::Matrix ProjectionMatrix() = 0;
-		virtual void Render(const Scene& scene, const RenderTargetInfo& renderTarget) = 0;
+		virtual void Render(Scene& scene, const RenderTargetInfo& renderTarget) = 0;
 	};
 }

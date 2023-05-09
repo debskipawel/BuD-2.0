@@ -7,11 +7,14 @@
 
 namespace BuD
 {
-	class BaseMeshFileLoader
+	namespace Internal
 	{
-	public:
-		virtual ~BaseMeshFileLoader() = default;
+		class BaseMeshFileLoader
+		{
+		public:
+			virtual ~BaseMeshFileLoader() = default;
 
-		virtual std::vector<MeshSegment> LoadMesh(std::filesystem::path filepath) = 0;
-	};
+			virtual std::vector<MeshSegment> LoadMesh(std::filesystem::path filepath) = 0;
+		};
+	}
 }

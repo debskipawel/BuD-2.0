@@ -111,6 +111,15 @@
     <ClCompile Include="Objects\MeshLoader\ObjMeshFileLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\PointLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\PixDebugLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bud_pch.h">
@@ -284,9 +293,39 @@
     <ClInclude Include="Objects\MeshLoader\MeshSegment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffers\StructuredBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Interfaces\EmissiveComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Interfaces\IEmissive.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\PointLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Meshes\Quad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\mvp_pos_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\solid_white_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\depthMapAbsorption_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\depthMapAbsorption_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\objModel_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\objModel_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\solidColor_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\uv_map_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\uv_map_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\f2_pos_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\gaussianBlur_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\lightMap_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\blurredIrradiance_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\uv_map_with_subscattering_ps.hlsl" />
   </ItemGroup>
 </Project>
