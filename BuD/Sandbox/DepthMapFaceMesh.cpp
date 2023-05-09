@@ -120,7 +120,9 @@ DepthMapFaceMesh::DepthMapFaceMesh(BuD::Scene& scene)
 		dxm::Matrix vsCB1[] = 
 		{ 
 			lightProj, 
-			dxm::Matrix::CreateLookAt(state.Position, faceState.Position, { 0.0f, 0.0f, 1.0f })
+			state.Position == faceState.Position
+				? dxm::Matrix::Identity
+				: dxm::Matrix::CreateLookAt(state.Position, faceState.Position, { 0.0f, 0.0f, 1.0f })
 		};
 
 		int psCB0[] = {
