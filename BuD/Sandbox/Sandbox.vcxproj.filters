@@ -18,31 +18,17 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DepthMapFaceMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GaussianBlurFaceMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FaceMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MergedFaceMesh.cpp">
+    <ClCompile Include="BlackHoleQuad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DepthMapFaceMesh.h">
+    <ClInclude Include="BlackHoleQuad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GaussianBlurFaceMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FaceMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MergedFaceMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Resources\shaders\screenspace_quad_vs.hlsl" />
+    <FxCompile Include="Resources\shaders\blackhole_ps.hlsl" />
   </ItemGroup>
 </Project>

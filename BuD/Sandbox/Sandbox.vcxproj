@@ -19,11 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DepthMapFaceMesh.cpp" />
-    <ClCompile Include="FaceMesh.cpp" />
-    <ClCompile Include="GaussianBlurFaceMesh.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MergedFaceMesh.cpp" />
+    <ClCompile Include="BlackHoleQuad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuD\BuD.vcxproj">
@@ -37,10 +34,23 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DepthMapFaceMesh.h" />
-    <ClInclude Include="FaceMesh.h" />
-    <ClInclude Include="GaussianBlurFaceMesh.h" />
-    <ClInclude Include="MergedFaceMesh.h" />
+    <ClInclude Include="BlackHoleQuad.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Resources\shaders\blackhole_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\screenspace_quad_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

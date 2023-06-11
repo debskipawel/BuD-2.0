@@ -4,8 +4,7 @@
 #include <Objects/PointLight.h>
 #include <Renderer/Renderer.h>
 
-#include "DepthMapFaceMesh.h"
-#include "MergedFaceMesh.h"
+#include "BlackHoleQuad.h"
 
 #include "imgui.h"
 
@@ -22,11 +21,19 @@ public:
 			}
 		);
 
-		m_Light[0] = BuD::PointLight(m_Scene[0], { 1.0f, -1.0f, 0.0f }, dxm::Vector3::One);
-		m_Light[1] = BuD::PointLight(m_Scene[1], { 1.0f, -1.0f, 0.0f }, dxm::Vector3::One);
-		
-		m_Faces[0] = std::make_shared<DepthMapFaceMesh>(m_Scene[0]);
-		m_Faces[1] = std::make_shared<MergedFaceMesh>(m_Scene[1]);
+		m_BlackHole = std::make_unique<BlackHoleQuad>(m_Scene);
+
+		// set initial camera distance
+		const auto initialDistance = 250.0f;
+		auto camera = m_Scene.ActiveCamera();
+
+		auto blackHolePosition = m_BlackHole->Position();
+		auto cameraPosition = camera->EyePosition();
+		auto toCameraVector = cameraPosition - blackHolePosition;
+
+		float currentDistance = toCameraVector.Length();
+
+		camera->Zoom(initialDistance - currentDistance);
 	}
 
 	void OnUpdate(float deltaTime) override
@@ -37,7 +44,7 @@ public:
 	{
 		BuD::Renderer::BeginTarget(m_ViewportSize.x, m_ViewportSize.y);
 		BuD::Renderer::Clear(0.0f, 0.0f, 0.0f, 1.0f);
-		BuD::Renderer::Render(m_Scene[m_ActiveScene]);
+		BuD::Renderer::Render(m_Scene);
 
 		m_Viewport = BuD::Renderer::EndTarget();
 	}
@@ -62,90 +69,63 @@ public:
 
 		ImGui::Begin("Controls");
 
-		const char* items[] = { "Light depth mapping", "Light depth & irradiance blurring" };
-		ImGui::Combo("Pick Scene", &m_ActiveScene, items, 2);
+		auto camera = m_Scene.ActiveCamera();
+
+		auto blackHolePosition = m_BlackHole->Position();
+		auto cameraPosition = camera->EyePosition();
+
+		auto toCameraVector = cameraPosition - blackHolePosition;
+
+		// DISTANCE
+		float distance = toCameraVector.Length();
+		float distanceCopy = distance;
+
+		constexpr float MIN_DIST = 1.0f;
+		constexpr float MAX_DIST = 500.0f;
+
+		ImGui::DragFloat("Distance ##blackHoleDistance", &distance, 1.0f, MIN_DIST, MAX_DIST, "%.1f");
+
+		distance = min(distance, MAX_DIST);
+		distance = max(distance, MIN_DIST);
+
+		camera->Zoom(distance - distanceCopy);
+
+		// MASS
+		auto& mass = m_BlackHole->m_BlackHoleMass;
+
+		constexpr float MIN_MASS = 0.1f;
+		constexpr float MAX_MASS = 10.0f;
+
+		ImGui::DragFloat("Mass ##blackHoleMass", &mass, 0.1f, MIN_MASS, MAX_MASS, "%.1f");
+
+		mass = min(mass, MAX_MASS);
+		mass = max(mass, MIN_MASS);
 
 		ImGui::Separator();
 
-		if (auto face = dynamic_cast<DepthMapFaceMesh*>(m_Faces[m_ActiveScene].get()))
+		const char* items[] = { "Red Galaxy", "Linus Sebastian" };
+		static int item_current_idx = 0; // Here we store our selection data as an index.
+		const char* combo_preview_value = items[item_current_idx];
+
+		ImGui::Text("Choose skybox:");
+
+		if (ImGui::BeginCombo("##skyboxCombo", items[item_current_idx]))
 		{
-			if (ImGui::CollapsingHeader("Depth map"))
+			for (int n = 0; n < IM_ARRAYSIZE(items); n++)
 			{
-				ImGui::SliderFloat("Grow", &face->m_Grow, 0.0f, 0.1f);
+				const bool is_selected = (item_current_idx == n);
+				if (ImGui::Selectable(items[n], is_selected))
+					item_current_idx = n;
 
-				ImGui::DragFloat3("Passing light multiplier", &face->m_PassingExpMultiplier.x, 1.0f, 0.0f, 300.0f);
-
-				ImGui::Separator();
-
-				ImVec2 vMin = ImGui::GetWindowContentRegionMin();
-				ImVec2 vMax = ImGui::GetWindowContentRegionMax();
-				auto width = vMax.x - vMin.x;
-
-				ImGui::Image(face->m_LightDepthMap.SRV(), { width, width });
+				// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+				if (is_selected)
+					ImGui::SetItemDefaultFocus();
 			}
 
-			if (ImGui::CollapsingHeader("Light"))
-			{
-				auto& state = m_Light[0].State();
-				auto& emissive = m_Light[0].Emissive();
-
-				ImGui::DragFloat3("Position ##position", &state.Position.x, 0.05f);
-				ImGui::Separator();
-
-				ImGui::ColorPicker3("Color", &emissive.Color.x);
-			}
+			ImGui::EndCombo();
 		}
 
-		if (auto face = dynamic_cast<MergedFaceMesh*>(m_Faces[m_ActiveScene].get()))
-		{
-			if (ImGui::CollapsingHeader("Depth map"))
-			{
-				ImGui::DragFloat3("Passing light multiplier", &face->m_PassingExpMultiplier.x, 1.0f, 0.0f, 500.0f);
-
-				ImGui::Separator();
-
-				ImVec2 vMin = ImGui::GetWindowContentRegionMin();
-				ImVec2 vMax = ImGui::GetWindowContentRegionMax();
-				auto width = vMax.x - vMin.x;
-
-				ImGui::Image(face->m_LightDepthMap.SRV(), { width, width });
-			}
-
-			if (ImGui::CollapsingHeader("Blurring passes"))
-			{
-				if (ImGui::TreeNode("1. Baking irradiance"))
-				{
-					ImVec2 vMin = ImGui::GetWindowContentRegionMin();
-					ImVec2 vMax = ImGui::GetWindowContentRegionMax();
-					auto width = vMax.x - vMin.x - 20;
-
-					ImGui::Image(face->m_BakedLighting.SRV(), {width, width});
-					ImGui::TreePop();
-				}
-
-				if (ImGui::TreeNode("2. 12-tap Gaussian blur"))
-				{
-					ImVec2 vMin = ImGui::GetWindowContentRegionMin();
-					ImVec2 vMax = ImGui::GetWindowContentRegionMax();
-					auto width = vMax.x - vMin.x - 20;
-
-					ImGui::Image(face->m_BlurredBakedIrradiance.SRV(), { width, width });
-					ImGui::TreePop();
-				}
-			}
-
-			// TODO: gui for gaussian blur
-			if (ImGui::CollapsingHeader("Light"))
-			{
-				auto& state = m_Light[1].State();
-				auto& emissive = m_Light[1].Emissive();
-
-				ImGui::DragFloat3("Position ##position", &state.Position.x, 0.05f);
-				ImGui::Separator();
-
-				ImGui::ColorPicker3("Color", &emissive.Color.x);
-			}
-		}
+		m_BlackHole->m_ActiveCubemap = (ActiveCubemap)item_current_idx;
 
 		ImGui::End();
 	}
@@ -154,23 +134,17 @@ public:
 	{
 		if (m_MoveMouse)
 		{
-			for (auto& scene : m_Scene)
-			{
-				auto camera = scene.ActiveCamera();
+			auto camera = m_Scene.ActiveCamera();
 
-				camera->RotateCamera(0.01 * e.m_OffsetX, 0.01 * e.m_OffsetY);
-			}
+			camera->RotateCamera(0.005 * e.m_OffsetX, 0.005 * e.m_OffsetY);
 		}
 	}
 
 	void OnConcreteEvent(BuD::MouseScrolledEvent& e) override
 	{
-		for (auto& scene : m_Scene)
-		{
-			auto camera = scene.ActiveCamera();
+		auto camera = m_Scene.ActiveCamera();
 
-			camera->Zoom(-0.001f * e.m_WheelDelta);
-		}
+		camera->Zoom(-0.03f * e.m_WheelDelta);
 	}
 
 	void OnConcreteEvent(BuD::MouseButtonDownEvent& e) override
@@ -189,15 +163,29 @@ public:
 		}
 	}
 
+	void OnConcreteEvent(BuD::KeyDownEvent& e) override
+	{
+		if (e.m_Key == BuD::KeyboardKeys::Q)
+		{
+			m_MoveMouse = true;
+		}
+	}
+
+	void OnConcreteEvent(BuD::KeyReleaseEvent& e) override
+	{
+		if (e.m_Key == BuD::KeyboardKeys::Q)
+		{
+			m_MoveMouse = false;
+		}
+	}
+
 protected:
+
 	BuD::Texture m_Viewport;
-	BuD::Texture m_Map;
 	ImVec2 m_ViewportSize = { 0, 0 };
 
-	int m_ActiveScene = 1;
-	BuD::Scene m_Scene[2];
-	BuD::PointLight m_Light[2];
-	std::shared_ptr<FaceMesh> m_Faces[2];
+	BuD::Scene m_Scene;
+	std::unique_ptr<BlackHoleQuad> m_BlackHole;
 
 	bool m_MoveMouse = false;
 };

@@ -11,6 +11,6 @@ namespace BuD
 	Scene::Scene()
 		: m_Registry()
 	{
-		m_ActiveCamera = std::make_shared<OrbitCamera>(0.0f, 50.0f, 1.0f);
+		m_ActiveCamera = std::make_shared<OrbitCamera>(1.0f, 1000.0f, 1.0f);
 	}
 }
