@@ -46,9 +46,9 @@ cbuffer blackHole : register(b0)
 float3 BlackHoleToRay(Ray ray, BlackHole hole)
 {
     float3 originToHole = hole.WorldPos - ray.Origin;
-    float3 shortestR2H = originToHole - dot(ray.Dir, originToHole) * ray.Dir;
+    float3 shortestH2R = dot(ray.Dir, originToHole) * ray.Dir - originToHole;
     
-    return shortestR2H;
+    return shortestH2R;
 }
 
 float fun(float omega, float M, float b)
@@ -126,10 +126,10 @@ float4 main(VSOut i) : SV_TARGET
         return float4(0.0f, 0.0f, 0.0f, 1.0f);
     }
     
-    float3 right = normalize(blackHoleToRay);
+    float3 outer = normalize(blackHoleToRay);
     float3 front = ray.Dir;
     
-    float3 rotatedRay = cos(phi) * front - sin(phi) * right;
+    float3 rotatedRay = cos(phi) * front - sin(abs(phi)) * outer;
     
     color = colorMap.Sample(colorSampler, rotatedRay);
     
