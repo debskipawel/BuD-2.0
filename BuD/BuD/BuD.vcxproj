@@ -159,6 +159,7 @@
     <ClCompile Include="Buffers\Buffer.cpp" />
     <ClCompile Include="Buffers\ConstantBuffer.cpp" />
     <ClCompile Include="Buffers\IndexBuffer.cpp" />
+    <ClCompile Include="Buffers\InputLayout.cpp" />
     <ClCompile Include="Buffers\VertexBuffer.cpp" />
     <ClCompile Include="Camera\OrbitCamera.cpp" />
     <ClCompile Include="Core\ApplicationCore.cpp" />
@@ -184,6 +185,9 @@
     <ClCompile Include="Scene\SceneEntity.cpp" />
     <ClCompile Include="Shaders\Loader\ShaderLoader.cpp" />
     <ClCompile Include="Shaders\Shader.cpp" />
+    <ClCompile Include="Systems\InputLayoutDescription.cpp" />
+    <ClCompile Include="Systems\InputLayoutSystem.cpp" />
+    <ClCompile Include="Utils\HelperFunctions.cpp" />
     <ClCompile Include="Utils\Log.cpp" />
     <ClCompile Include="Utils\Random.cpp" />
     <ClCompile Include="Utils\Timepoint.cpp" />
@@ -197,6 +201,7 @@
     <ClInclude Include="Buffers\Buffer.h" />
     <ClInclude Include="Buffers\ConstantBuffer.h" />
     <ClInclude Include="Buffers\IndexBuffer.h" />
+    <ClInclude Include="Buffers\InputLayout.h" />
     <ClInclude Include="Buffers\StructuredBuffer.h" />
     <ClInclude Include="Buffers\VertexBuffer.h" />
     <ClInclude Include="Camera\AbstractCamera.h" />
@@ -247,7 +252,10 @@
     <ClInclude Include="Shaders\PixelShader.h" />
     <ClInclude Include="Shaders\Shader.h" />
     <ClInclude Include="Shaders\VertexShader.h" />
+    <ClInclude Include="Systems\InputLayoutDescription.h" />
+    <ClInclude Include="Systems\InputLayoutSystem.h" />
     <ClInclude Include="Utils\Clock.h" />
+    <ClInclude Include="Utils\HelperFunctions.h" />
     <ClInclude Include="Utils\Log.h" />
     <ClInclude Include="Utils\Random.h" />
     <ClInclude Include="Utils\Timepoint.h" />

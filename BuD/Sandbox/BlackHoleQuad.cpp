@@ -1,8 +1,11 @@
 #include "BlackHoleQuad.h"
 
+#include <Buffers/InputLayout.h>
 #include <Buffers/VertexBuffer.h>
 #include <Buffers/IndexBuffer.h>
 #include <Shaders/Loader/ShaderLoader.h>
+
+#include <Systems/InputLayoutSystem.h>
 
 std::vector<D3D11_INPUT_ELEMENT_DESC> quadLayout =
 {
@@ -40,6 +43,8 @@ BlackHoleQuad::BlackHoleQuad(BuD::Scene& scene)
 {
 	std::vector<BuD::RenderingPass> renderingPasses = {};
 	BuD::RenderingPass renderPass = {};
+
+	auto quad = BuD::InputLayoutSystem::GetInputLayout(quadLayout);
 
 	m_GalaxySkybox = BuD::Texture::LoadFromFile("Resources/textures/galaxy_red.dds");
 	m_LinusSkybox = BuD::Texture::LoadFromFile("Resources/textures/linus_cubemap.dds");

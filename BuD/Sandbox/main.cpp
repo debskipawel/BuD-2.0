@@ -18,6 +18,7 @@ public:
 			[](const BuD::Log::LogRecord& record)
 			{
 				OutputDebugStringW(record.message.c_str());
+				OutputDebugStringW(L"\n");
 			}
 		);
 
