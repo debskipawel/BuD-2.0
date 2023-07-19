@@ -3,8 +3,7 @@
 #include <map>
 #include <memory>
 
-#include <Buffers/InputLayout.h>
-#include <Systems/InputLayoutDescription.h>
+#include <Layout/InputLayout.h>
 
 namespace BuD
 {

@@ -20,13 +20,13 @@ float3 GetRayDirection(float2 uv)
     return normalize(worldPos.xyz - cameraPos.xyz);
 }
 
-VSOut main(float2 pos : POSITION)
+VSOut main(float3 pos : POSITION)
 {
     VSOut o = (VSOut) 0;
     
-    o.pos = float4(pos, 0.0, 1.0);
+    o.pos = float4(pos.xy, 0.0, 1.0);
     o.rayOrigin = cameraPos.xyz;
-    o.rayDir = GetRayDirection(pos);
+    o.rayDir = GetRayDirection(pos.xy);
     
     return o;
 }

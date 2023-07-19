@@ -156,52 +156,9 @@ namespace BuD
 		s_GeometryShaders.clear();
 	}
 
-	std::shared_ptr<VertexShader> ShaderLoader::VSLoad(std::filesystem::path shaderPath, const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout, const std::vector<size_t>& constants, std::string mainFunName)
+	std::shared_ptr<VertexShader> ShaderLoader::VSLoad(std::filesystem::path shaderPath, const std::vector<size_t>& constants, std::string mainFunName)
 	{
-		auto result = s_VertexShaders.find(shaderPath);
-
-		if (result != s_VertexShaders.end())
-		{
-			return result->second;
-		}
-
-		std::shared_ptr<VertexShader> shader;
-
-		if (shaderPath.extension() == L".cso")
-		{
-			auto bytecode = LoadByteCode(shaderPath);
-			shader = std::make_shared<VertexShader>(bytecode.data(), bytecode.size(), layout);
-		}
-		else
-		{
-			std::filesystem::path sourceShaderPath = shaderPath;
-			std::filesystem::path compiledShaderName = shaderPath.replace_extension(L".cso");
-
-			try
-			{
-				auto bytecode = LoadByteCode(compiledShaderName);
-				shader = std::make_shared<VertexShader>(bytecode.data(), bytecode.size(), layout);
-			}
-			catch (std::exception e)
-			{
-				ID3DBlob* vsBlob = nullptr;
-				auto hr = CompileShader(sourceShaderPath.c_str(), mainFunName.c_str(), "vs_4_0_level_9_1", &vsBlob);
-				shader = std::make_shared<VertexShader>(vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), layout);
-				vsBlob->Release();
-
-				SaveToFile(vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), compiledShaderName);
-			}
-		}
-
-		for (auto& size : constants)
-		{
-			auto cb = std::make_shared<ConstantBuffer>(size);
-			shader->AddConstantBuffer(cb);
-		}
-
-		s_VertexShaders.insert(std::make_pair(shaderPath, shader));
-
-		return shader;
+		return ShaderLoad(s_VertexShaders, shaderPath, constants, mainFunName, "vs_4_0_level_9_1");
 	}
 
 	std::shared_ptr<HullShader> ShaderLoader::HSLoad(std::filesystem::path shaderPath, const std::vector<size_t>& constants, std::string mainFunName)

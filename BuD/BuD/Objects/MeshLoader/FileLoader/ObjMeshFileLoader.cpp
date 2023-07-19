@@ -1,6 +1,8 @@
 #include "bud_pch.h"
 #include "ObjMeshFileLoader.h"
 
+#include <Objects/MeshLoader/MeshSegment.h>
+
 #include <d3d11.h>
 #include <OBJ_Loader.h>
 
@@ -35,10 +37,10 @@ namespace BuD::Internal
 			auto& indices = mesh.Indices;
 			auto& material = mesh.MeshMaterial;
 
-			segment.SegmentName = mesh.MeshName;
-			segment.Layout = OBJ_FILE_LAYOUT;
+			segment.m_Details.m_Name = mesh.MeshName;
+			segment.m_Details.m_InputLayout = std::make_shared<InputLayout>(OBJ_FILE_LAYOUT);
 
-			segment.Material = MeshMaterial
+			segment.m_Material = MeshMaterial
 			{
 				{ material.Ka.X, material.Ka.Y, material.Ka.Z }, 
 				{ material.Kd.X, material.Kd.Y, material.Kd.Z }, 
@@ -46,8 +48,8 @@ namespace BuD::Internal
 				material.Ns, material.Ni, material.d, material.illum
 			};
 
-			segment.VertexBuffer = std::make_shared<VertexBuffer>(vertices.size() * sizeof(objl::Vertex), OBJ_FILE_LAYOUT, vertices.data());
-			segment.IndexBuffer = std::make_shared<IndexBuffer>(DXGI_FORMAT_R32_UINT, indices.size() * sizeof(unsigned int), indices.data());
+			segment.m_Details.m_VertexBuffer = std::make_shared<VertexBuffer>(vertices.size() * sizeof(objl::Vertex), OBJ_FILE_LAYOUT, vertices.data());
+			segment.m_Details.m_IndexBuffer = std::make_shared<IndexBuffer>(DXGI_FORMAT_R32_UINT, indices.size() * sizeof(unsigned int), indices.data());
 
 			meshSegments.push_back(segment);
 		}

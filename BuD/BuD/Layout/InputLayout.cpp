@@ -12,13 +12,8 @@
 namespace BuD
 {
 	InputLayout::InputLayout(const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout)
-		: m_LayoutElements(layout)
+		: m_LayoutDescription(layout)
 	{
-		m_LayoutAccumulatedSize = std::accumulate(
-			m_LayoutElements.begin(), m_LayoutElements.end(), (size_t)0,
-			[](size_t a, D3D11_INPUT_ELEMENT_DESC desc) { return a + BytesPerFormat(desc.Format); }
-		);
-
 		auto graphicsDevice = Renderer::Device();
 		auto& device = graphicsDevice->Device();
 
@@ -30,7 +25,7 @@ namespace BuD
 		std::string suffixFakeVS = "}; float4 main(Vertex i) : SV_Position { return float4(0.0, 0.0, 0.0, 1.0); }";
 		
 		auto vertexDefinition = std::accumulate(
-			m_LayoutElements.begin(), m_LayoutElements.end(), std::string(),
+			layout.begin(), layout.end(), std::string(),
 			[&argumentCount](std::string s, D3D11_INPUT_ELEMENT_DESC desc)
 			{
 				auto byteSize = BytesPerFormat(desc.Format);
@@ -47,7 +42,7 @@ namespace BuD
 		auto hr = D3DCompile(fakeShader.c_str(), fakeShader.size(), NULL, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "main", "vs_4_0_level_9_1", 0, 0, compiledShaderCode.GetAddressOf(), compilerErrors.GetAddressOf());
 
 		auto inputLayoutRes = device->CreateInputLayout(
-			m_LayoutElements.data(), static_cast<UINT>(m_LayoutElements.size()), 
+			layout.data(), static_cast<UINT>(layout.size()),
 			compiledShaderCode->GetBufferPointer(), compiledShaderCode->GetBufferSize(), 
 			m_Layout.GetAddressOf()
 		);
@@ -56,5 +51,15 @@ namespace BuD
 		{
 			Log::WriteError(L"Error while creating input layout");
 		}
+	}
+
+	bool InputLayout::operator==(const InputLayout& other) const
+	{
+		return m_Layout == other.m_Layout && m_LayoutDescription == other.m_LayoutDescription;
+	}
+
+	bool InputLayout::operator!=(const InputLayout& other) const
+	{
+		return !(*this == other);
 	}
 }

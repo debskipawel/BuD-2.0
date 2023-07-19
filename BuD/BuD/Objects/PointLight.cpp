@@ -24,7 +24,7 @@ namespace BuD
 		renderPass.VertexBuffer = std::make_shared<VertexBuffer>(positions.size() * sizeof(Vector3), g_cubePositionLayout, positions.data());
 		renderPass.IndexBuffer = std::make_shared<IndexBuffer>(DXGI_FORMAT_R16_UINT, indices.size() * sizeof(unsigned short), indices.data());
 
-		renderPass.VertexShader = ShaderLoader::VSLoad(L"../x64/Debug/mvp_pos_vs.hlsl", g_cubePositionLayout, { 4 * sizeof(Matrix) });
+		renderPass.VertexShader = ShaderLoader::VSLoad(L"../x64/Debug/mvp_pos_vs.hlsl", { 4 * sizeof(Matrix) });
 		renderPass.PixelShader = ShaderLoader::PSLoad(L"../x64/Debug/solidColor_ps.hlsl", { sizeof(dxm::Vector3) });
 
 		renderPass.PreRenderCallback = [this, &emissive](const RenderingPass& pass, SceneEntity entity)

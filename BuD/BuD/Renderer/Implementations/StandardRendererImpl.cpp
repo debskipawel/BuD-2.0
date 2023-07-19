@@ -48,6 +48,8 @@ namespace BuD
 				auto& vb = renderingPass.VertexBuffer;
 				auto& ib = renderingPass.IndexBuffer;
 
+				auto& il = renderingPass.InputLayout;
+
 				auto& vs = renderingPass.VertexShader;
 				auto& hs = renderingPass.HullShader;
 				auto& ds = renderingPass.DomainShader;
@@ -66,7 +68,7 @@ namespace BuD
 				const auto stride = vb->Stride();
 				const auto offset = vb->Offset();
 
-				context->IASetInputLayout(vs->GetLayout());
+				context->IASetInputLayout(il->Layout());
 				context->IASetVertexBuffers(0, 1, &rawVertexBuffer, (const UINT*)(&stride), (const UINT*)(&offset));
 				context->IASetIndexBuffer(ib->Get(), ib->Format(), 0);
 				context->IASetPrimitiveTopology(ib->Topology());

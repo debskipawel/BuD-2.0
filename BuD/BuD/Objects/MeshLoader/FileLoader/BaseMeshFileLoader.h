@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <vector>
 
-#include "MeshSegment.h"
+#include <Objects/MeshLoader/MeshSegment.h>
 
 namespace BuD
 {

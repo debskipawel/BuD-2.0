@@ -19,7 +19,6 @@ namespace BuD
 
 		static std::shared_ptr<VertexShader> VSLoad(
 			std::filesystem::path shaderPath,
-			const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout,
 			const std::vector<size_t>& constants = {},
 			std::string mainFunName = "main"
 		);

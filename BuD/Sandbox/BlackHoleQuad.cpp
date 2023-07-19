@@ -1,30 +1,10 @@
 #include "BlackHoleQuad.h"
 
-#include <Buffers/InputLayout.h>
 #include <Buffers/VertexBuffer.h>
 #include <Buffers/IndexBuffer.h>
 #include <Shaders/Loader/ShaderLoader.h>
 
-#include <Systems/InputLayoutSystem.h>
-
-std::vector<D3D11_INPUT_ELEMENT_DESC> quadLayout =
-{
-	{ "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-};
-
-std::vector<dxm::Vector2> quadVertices =
-{
-	{ -1.0f, -1.0f },
-	{ -1.0f,  1.0f },
-	{  1.0f, -1.0f },
-	{  1.0f,  1.0f },
-};
-
-std::vector<unsigned short> quadIndices =
-{
-	0, 3, 1,
-	0, 2, 3
-};
+#include <Objects/MeshLoader/MeshLoader.h>
 
 struct CBufferVS
 {
@@ -44,15 +24,18 @@ BlackHoleQuad::BlackHoleQuad(BuD::Scene& scene)
 	std::vector<BuD::RenderingPass> renderingPasses = {};
 	BuD::RenderingPass renderPass = {};
 
-	auto quad = BuD::InputLayoutSystem::GetInputLayout(quadLayout);
-
 	m_GalaxySkybox = BuD::Texture::LoadFromFile("Resources/textures/galaxy_red.dds");
 	m_LinusSkybox = BuD::Texture::LoadFromFile("Resources/textures/linus_cubemap.dds");
 
-	renderPass.VertexBuffer = std::make_shared<BuD::VertexBuffer>(quadVertices.size() * sizeof(dxm::Vector2), quadLayout, quadVertices.data());
-	renderPass.IndexBuffer = std::make_shared<BuD::IndexBuffer>(DXGI_FORMAT_R16_UINT, quadIndices.size() * sizeof(unsigned short), quadIndices.data());
+	auto meshLoader = BuD::MeshLoader();
+	auto quadMesh = meshLoader.LoadPrimitiveMesh(BuD::MeshPrimitiveType::QUAD);
 
-	renderPass.VertexShader = BuD::ShaderLoader::VSLoad(L"../x64/Debug/screenspace_quad_vs.hlsl", quadLayout, { sizeof(CBufferVS) });
+	renderPass.VertexBuffer = quadMesh.m_VertexBuffer;
+	renderPass.IndexBuffer = quadMesh.m_IndexBuffer;
+
+	renderPass.InputLayout = quadMesh.m_InputLayout;
+
+	renderPass.VertexShader = BuD::ShaderLoader::VSLoad(L"../x64/Debug/screenspace_quad_vs.hlsl", { sizeof(CBufferVS) });
 	renderPass.PixelShader = BuD::ShaderLoader::PSLoad(L"../x64/Debug/blackhole_ps.hlsl", { sizeof(CBufferPS) });
 
 	renderPass.PreRenderCallback = [this](const BuD::RenderingPass& renderPass, BuD::SceneEntity entity)

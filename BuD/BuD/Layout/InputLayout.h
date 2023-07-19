@@ -5,8 +5,7 @@
 #include <d3d11.h>
 #include <wrl/client.h>
 
-#include <Renderer/GraphicsDevice.h>
-#include <Renderer/Structures/BufferDesc.h>
+#include <Layout/InputLayoutDescription.h>
 
 using namespace Microsoft::WRL;
 
@@ -17,10 +16,14 @@ namespace BuD
 	public:
 		InputLayout(const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout);
 
+		ID3D11InputLayout* Layout() const { return m_Layout.Get(); }
+
+		bool operator==(const InputLayout& other) const;
+		bool operator!=(const InputLayout& other) const;
+
 	private:
 		ComPtr<ID3D11InputLayout> m_Layout;
 		
-		std::vector<D3D11_INPUT_ELEMENT_DESC> m_LayoutElements;
-		size_t m_LayoutAccumulatedSize;
+		InputLayoutDescription m_LayoutDescription;
 	};
 }

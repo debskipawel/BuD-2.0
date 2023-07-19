@@ -108,7 +108,7 @@
     <ClCompile Include="Objects\MeshLoader\MeshLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\MeshLoader\ObjMeshFileLoader.cpp">
+    <ClCompile Include="Objects\MeshLoader\FileLoader\ObjMeshFileLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Texture.cpp">
@@ -120,16 +120,25 @@
     <ClCompile Include="Renderer\PixDebugLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Buffers\InputLayout.cpp">
+    <ClCompile Include="Layout\InputLayout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Utils\HelperFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Systems\InputLayoutDescription.cpp">
+    <ClCompile Include="Layout\InputLayoutDescription.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Systems\InputLayoutSystem.cpp">
+    <ClCompile Include="Layout\InputLayoutSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MeshDetails.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\QuadMeshPrimitiveLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\CubeMeshPrimitiveLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -296,10 +305,10 @@
     <ClInclude Include="Objects\MeshLoader\MeshLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\MeshLoader\BaseMeshFileLoader.h">
+    <ClInclude Include="Objects\MeshLoader\FileLoader\BaseMeshFileLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\MeshLoader\ObjMeshFileLoader.h">
+    <ClInclude Include="Objects\MeshLoader\FileLoader\ObjMeshFileLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Objects\MeshLoader\MeshSegment.h">
@@ -323,16 +332,31 @@
     <ClInclude Include="Resources\Meshes\Quad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Buffers\InputLayout.h">
+    <ClInclude Include="Layout\InputLayout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utils\HelperFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Systems\InputLayoutSystem.h">
+    <ClInclude Include="Layout\InputLayoutSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Systems\InputLayoutDescription.h">
+    <ClInclude Include="Layout\InputLayoutDescription.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MeshDetails.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MeshPrimitiveType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\BaseMeshPrimitiveLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\QuadMeshPrimitiveLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\CubeMeshPrimitiveLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
