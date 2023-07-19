@@ -30,8 +30,8 @@ namespace BuD::Internal
 
 	std::vector<unsigned short> m_QuadIndices =
 	{
-		0, 2, 3,
-		0, 1, 2,
+		0, 3, 2,
+		0, 2, 1
 	};
 
 	MeshDetails QuadMeshPrimitiveLoader::LoadMesh()

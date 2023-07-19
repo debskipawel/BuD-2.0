@@ -12,7 +12,7 @@ namespace BuD
 		D3D11_RASTERIZER_DESC rsDesc{};
 		rsDesc.CullMode = D3D11_CULL_BACK;
 		rsDesc.FillMode = D3D11_FILL_SOLID;
-		rsDesc.FrontCounterClockwise = true;
+		rsDesc.FrontCounterClockwise = false;
 
 		device->Device()->CreateRasterizerState(&rsDesc, m_RasterizerState.GetAddressOf());
 	}
