@@ -1,7 +1,6 @@
 #include <BuD.h>
 #include <Core/EntryPoint.h>
 
-#include <Objects/PointLight.h>
 #include <Renderer/Renderer.h>
 
 #include "BlackHoleQuad.h"

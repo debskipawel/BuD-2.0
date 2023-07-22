@@ -30,15 +30,15 @@ BlackHoleQuad::BlackHoleQuad(BuD::Scene& scene)
 	auto meshLoader = BuD::MeshLoader();
 	auto quadMesh = meshLoader.LoadPrimitiveMesh(BuD::MeshPrimitiveType::QUAD);
 
-	renderPass.VertexBuffer = quadMesh.m_VertexBuffer;
-	renderPass.IndexBuffer = quadMesh.m_IndexBuffer;
+	BuD::ShaderPipeline pipeline = {};
 
-	renderPass.InputLayout = quadMesh.m_InputLayout;
+	pipeline.m_VertexShader = BuD::ShaderLoader::VSLoad(L"../x64/Debug/screenspace_quad_vs.hlsl", { sizeof(CBufferVS) });
+	pipeline.m_PixelShader = BuD::ShaderLoader::PSLoad(L"../x64/Debug/blackhole_ps.hlsl", { sizeof(CBufferPS) });
 
-	renderPass.VertexShader = BuD::ShaderLoader::VSLoad(L"../x64/Debug/screenspace_quad_vs.hlsl", { sizeof(CBufferVS) });
-	renderPass.PixelShader = BuD::ShaderLoader::PSLoad(L"../x64/Debug/blackhole_ps.hlsl", { sizeof(CBufferPS) });
+	renderPass.m_Mesh = quadMesh;
+	renderPass.m_Pipeline = pipeline;
 
-	renderPass.PreRenderCallback = [this](const BuD::RenderingPass& renderPass, BuD::SceneEntity entity)
+	renderPass.m_PreRenderCallback = [this](const BuD::RenderingPass& renderPass, BuD::SceneEntity entity)
 	{
 		CBufferVS cbuffer = {};
 		
@@ -52,8 +52,8 @@ BlackHoleQuad::BlackHoleQuad(BuD::Scene& scene)
 		auto mvp = viewMtx * projMtx;
 		cbuffer.InverseMvp = mvp.Invert();
 
-		auto& vs = renderPass.VertexShader;
-		auto& ps = renderPass.PixelShader;
+		auto& vs = renderPass.m_Pipeline.m_VertexShader;
+		auto& ps = renderPass.m_Pipeline.m_PixelShader;
 
 		vs->UpdateConstantBuffer(0, &cbuffer, sizeof(CBufferVS));
 

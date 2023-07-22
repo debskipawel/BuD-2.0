@@ -114,9 +114,6 @@
     <ClCompile Include="Renderer\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\PointLight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer\PixDebugLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -139,6 +136,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\CubeMeshPrimitiveLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderingPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\ShaderPipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -326,9 +329,6 @@
     <ClInclude Include="Objects\Interfaces\IEmissive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\PointLight.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Resources\Meshes\Quad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -357,6 +357,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\CubeMeshPrimitiveLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\ShaderPipeline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

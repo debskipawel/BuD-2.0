@@ -45,16 +45,19 @@ namespace BuD
 
 			for (auto& renderingPass : renderable.RenderingPasses)
 			{
-				auto& vb = renderingPass.VertexBuffer;
-				auto& ib = renderingPass.IndexBuffer;
+				auto& pipeline = renderingPass.m_Pipeline;
+				auto& mesh = renderingPass.m_Mesh;
 
-				auto& il = renderingPass.InputLayout;
+				auto& vb = mesh.m_VertexBuffer;
+				auto& ib = mesh.m_IndexBuffer;
 
-				auto& vs = renderingPass.VertexShader;
-				auto& hs = renderingPass.HullShader;
-				auto& ds = renderingPass.DomainShader;
-				auto& gs = renderingPass.GeometryShader;
-				auto& ps = renderingPass.PixelShader;
+				auto& il = mesh.m_InputLayout;
+
+				auto& vs = pipeline.m_VertexShader;
+				auto& hs = pipeline.m_HullShader;
+				auto& ds = pipeline.m_DomainShader;
+				auto& gs = pipeline.m_GeometryShader;
+				auto& ps = pipeline.m_PixelShader;
 
 				if (!vb || !ib || !vs || !ps)
 				{
@@ -62,7 +65,7 @@ namespace BuD
 					continue;
 				}
 
-				renderingPass.PreRenderCallback(renderingPass, entity);
+				renderingPass.m_PreRenderCallback(renderingPass, entity);
 
 				auto rawVertexBuffer = vb->Get();
 				const auto stride = vb->Stride();

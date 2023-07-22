@@ -14,6 +14,11 @@ static std::wstring GetLatestWinPixGpuCapturerPath()
     std::filesystem::path pixInstallationPath = programFilesPath;
     pixInstallationPath /= "Microsoft PIX";
 
+    if (!std::filesystem::exists(pixInstallationPath))
+    {
+        return std::wstring();
+    }
+
     std::wstring newestVersionFound;
 
     for (auto const& directory_entry : std::filesystem::directory_iterator(pixInstallationPath))
@@ -29,7 +34,7 @@ static std::wstring GetLatestWinPixGpuCapturerPath()
 
     if (newestVersionFound.empty())
     {
-        // TODO: Error, no PIX installation found
+        return std::wstring();
     }
 
     return pixInstallationPath / newestVersionFound / L"WinPixGpuCapturer.dll";
@@ -39,9 +44,16 @@ static void LoadPixDebugLayer()
 {
     // Check to see if a copy of WinPixGpuCapturer.dll has already been injected into the application.
     // This may happen if the application is launched through the PIX UI. 
-    if (GetModuleHandle(L"WinPixGpuCapturer.dll") == 0)
+    if (GetModuleHandle(L"WinPixGpuCapturer.dll") != 0)
     {
-        LoadLibrary(GetLatestWinPixGpuCapturerPath().c_str());
+        return;
+    }
+
+    auto pixPath = GetLatestWinPixGpuCapturerPath();
+
+    if (!pixPath.empty())
+    {
+        LoadLibrary(pixPath.c_str());
     }
 }
 
