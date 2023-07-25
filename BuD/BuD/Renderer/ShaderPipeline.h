@@ -22,5 +22,9 @@ namespace BuD
 	public:
 		bool operator==(const ShaderPipeline& other) const;
 		bool operator!=(const ShaderPipeline& other) const;
+		bool operator<=(const ShaderPipeline& other) const;
+		bool operator>=(const ShaderPipeline& other) const;
+		bool operator<(const ShaderPipeline& other) const;
+		bool operator>(const ShaderPipeline& other) const;
 	};
 }

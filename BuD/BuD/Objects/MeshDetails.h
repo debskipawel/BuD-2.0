@@ -1,10 +1,13 @@
 #pragma once
 
+#include <functional>
+#include <optional>
 #include <string>
 
 #include <Buffers/VertexBuffer.h>
 #include <Buffers/IndexBuffer.h>
 #include <Layout/InputLayout.h>
+#include <Objects/AABB.h>
 
 namespace BuD
 {
@@ -18,8 +21,14 @@ namespace BuD
 
 		std::shared_ptr<InputLayout> m_InputLayout;
 
+		std::optional<std::function<AABB()>> m_BoundingBoxCallback;
+
 	public:
 		bool operator==(const MeshDetails& other) const;
 		bool operator!=(const MeshDetails& other) const;
+		bool operator<=(const MeshDetails& other) const;
+		bool operator>=(const MeshDetails& other) const;
+		bool operator<(const MeshDetails& other) const;
+		bool operator>(const MeshDetails& other) const;
 	};
 }

@@ -18,17 +18,30 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BlackHoleQuad.cpp">
+    <ClCompile Include="BlackHoleQuadStandard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackHoleQuadBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackHoleQuadInstanced.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BlackHoleQuad.h">
+    <ClInclude Include="BlackHoleQuadStandard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackHoleQuadInstanced.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackHoleQuadBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\screenspace_quad_vs.hlsl" />
     <FxCompile Include="Resources\shaders\blackhole_ps.hlsl" />
+    <FxCompile Include="Resources\shaders\screenspace_quad_instanced_vs.hlsl" />
   </ItemGroup>
 </Project>

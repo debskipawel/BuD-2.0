@@ -159,6 +159,8 @@
     <ClCompile Include="Buffers\Buffer.cpp" />
     <ClCompile Include="Buffers\ConstantBuffer.cpp" />
     <ClCompile Include="Buffers\IndexBuffer.cpp" />
+    <ClCompile Include="Buffers\InstanceBuffer.cpp" />
+    <ClCompile Include="Camera\Frustum.cpp" />
     <ClCompile Include="Layout\InputLayout.cpp" />
     <ClCompile Include="Buffers\VertexBuffer.cpp" />
     <ClCompile Include="Camera\OrbitCamera.cpp" />
@@ -178,11 +180,11 @@
     <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\QuadMeshPrimitiveLoader.cpp" />
     <ClCompile Include="Renderer\GraphicsDevice.cpp" />
     <ClCompile Include="Renderer\Implementations\StandardRendererImpl.cpp" />
+    <ClCompile Include="Renderer\InstanceData.cpp" />
     <ClCompile Include="Renderer\PixDebugLayer.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\RenderingPass.cpp" />
     <ClCompile Include="Renderer\RenderTarget.cpp" />
-    <ClCompile Include="Objects\Cube.cpp" />
     <ClCompile Include="Renderer\ShaderPipeline.cpp" />
     <ClCompile Include="Renderer\Texture.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
@@ -205,8 +207,9 @@
     <ClInclude Include="Buffers\Buffer.h" />
     <ClInclude Include="Buffers\ConstantBuffer.h" />
     <ClInclude Include="Buffers\IndexBuffer.h" />
+    <ClInclude Include="Buffers\InstanceBuffer.h" />
+    <ClInclude Include="Camera\Frustum.h" />
     <ClInclude Include="Layout\InputLayout.h" />
-    <ClInclude Include="Buffers\StructuredBuffer.h" />
     <ClInclude Include="Buffers\VertexBuffer.h" />
     <ClInclude Include="Camera\AbstractCamera.h" />
     <ClInclude Include="Camera\OrbitCamera.h" />
@@ -223,6 +226,7 @@
     <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Input\KeyboardKeys.h" />
     <ClInclude Include="Input\MouseCode.h" />
+    <ClInclude Include="Objects\AABB.h" />
     <ClInclude Include="Objects\Interfaces\EmissiveComponent.h" />
     <ClInclude Include="Objects\Interfaces\IEmissive.h" />
     <ClInclude Include="Objects\Interfaces\IState.h" />
@@ -240,6 +244,8 @@
     <ClInclude Include="Renderer\Implementations\RenderingMode.h" />
     <ClInclude Include="Renderer\Implementations\StandardRendererImpl.h" />
     <ClInclude Include="Objects\Interfaces\IRenderable.h" />
+    <ClInclude Include="Renderer\InstanceData.h" />
+    <ClInclude Include="Renderer\FramePerformanceData.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\RenderingPass.h" />
     <ClInclude Include="Renderer\RenderTarget.h" />
@@ -250,7 +256,6 @@
     <ClInclude Include="Renderer\Structures\ViewportDesc.h" />
     <ClInclude Include="Renderer\Texture.h" />
     <ClInclude Include="Resources\Meshes\Cube.h" />
-    <ClInclude Include="Objects\Cube.h" />
     <ClInclude Include="Resources\Meshes\Quad.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneEntity.h" />

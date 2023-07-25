@@ -1,9 +1,13 @@
 #include <BuD.h>
+
+#include <sstream>
+
 #include <Core/EntryPoint.h>
 
 #include <Renderer/Renderer.h>
 
-#include "BlackHoleQuad.h"
+#include "BlackHoleQuadStandard.h"
+#include "BlackHoleQuadInstanced.h"
 
 #include "imgui.h"
 
@@ -21,11 +25,13 @@ public:
 			}
 		);
 
-		m_BlackHole = std::make_unique<BlackHoleQuad>(m_Scene);
+		m_BlackHole = std::make_unique<BlackHoleQuadStandard>(m_Scene);
+		m_BlackHoleInstanced = std::make_unique<BlackHoleQuadInstanced>(m_SceneInstanced);
 
 		// set initial camera distance
 		const auto initialDistance = 250.0f;
 		auto camera = m_Scene.ActiveCamera();
+		auto cameraInstanced = m_SceneInstanced.ActiveCamera();
 
 		auto blackHolePosition = m_BlackHole->Position();
 		auto cameraPosition = camera->EyePosition();
@@ -34,6 +40,17 @@ public:
 		float currentDistance = toCameraVector.Length();
 
 		camera->Zoom(initialDistance - currentDistance);
+		cameraInstanced->Zoom(initialDistance - currentDistance);
+	}
+
+	template <typename T>
+	std::string ToStringWithPrecision(T value, unsigned int precision)
+	{
+		std::ostringstream out;
+		out.precision(precision);
+		out << std::fixed << value;
+
+		return std::move(out).str();
 	}
 
 	void OnUpdate(float deltaTime) override
@@ -44,7 +61,7 @@ public:
 	{
 		BuD::Renderer::BeginTarget(m_ViewportSize.x, m_ViewportSize.y);
 		BuD::Renderer::Clear(0.0f, 0.0f, 0.0f, 1.0f);
-		BuD::Renderer::Render(m_Scene);
+		BuD::Renderer::Render(m_DrawInstanced ? m_SceneInstanced : m_Scene);
 
 		m_Viewport = BuD::Renderer::EndTarget();
 	}
@@ -70,8 +87,9 @@ public:
 		ImGui::Begin("Controls");
 
 		auto camera = m_Scene.ActiveCamera();
+		auto cameraInstanced = m_SceneInstanced.ActiveCamera();
 
-		auto blackHolePosition = m_BlackHole->Position();
+		auto blackHolePosition = m_BlackHoleInstanced->Position();
 		auto cameraPosition = camera->EyePosition();
 
 		auto toCameraVector = cameraPosition - blackHolePosition;
@@ -89,9 +107,10 @@ public:
 		distance = max(distance, MIN_DIST);
 
 		camera->Zoom(distance - distanceCopy);
+		cameraInstanced->Zoom(distance - distanceCopy);
 
 		// MASS
-		auto& mass = m_BlackHole->m_BlackHoleMass;
+		auto& mass = m_BlackHoleInstanced->m_BlackHoleMass;
 
 		constexpr float MIN_MASS = 0.1f;
 		constexpr float MAX_MASS = 10.0f;
@@ -100,6 +119,8 @@ public:
 
 		mass = min(mass, MAX_MASS);
 		mass = max(mass, MIN_MASS);
+
+		m_BlackHole->m_BlackHoleMass = mass;
 
 		ImGui::Separator();
 
@@ -126,6 +147,20 @@ public:
 		}
 
 		m_BlackHole->m_ActiveCubemap = (ActiveCubemap)item_current_idx;
+		m_BlackHoleInstanced->m_ActiveCubemap = (ActiveCubemap)item_current_idx;
+
+		ImGui::Separator();
+
+		ImGui::Text("Performance");
+		ImGui::Checkbox("Instancing enabled ##draw_instanced", &m_DrawInstanced);
+
+		auto performanceData = BuD::Renderer::GetLastFramePerformance();
+
+		std::string performanceText = "Frame time: " + ToStringWithPrecision(performanceData.m_FrameTime, 1) + "[ms], FPS: " + ToStringWithPrecision(performanceData.m_FrameRate, 2);
+		ImGui::Text(performanceText.c_str());
+
+		performanceText = "Draw calls: " + std::to_string(performanceData.m_DrawCalls) + ", instances drawn: " + std::to_string(performanceData.m_InstancesDrawn);
+		ImGui::Text(performanceText.c_str());
 
 		ImGui::End();
 	}
@@ -135,16 +170,20 @@ public:
 		if (m_MoveMouse)
 		{
 			auto camera = m_Scene.ActiveCamera();
+			auto cameraInstanced = m_SceneInstanced.ActiveCamera();
 
 			camera->RotateCamera(0.005 * e.m_OffsetX, 0.005 * e.m_OffsetY);
+			cameraInstanced->RotateCamera(0.005 * e.m_OffsetX, 0.005 * e.m_OffsetY);
 		}
 	}
 
 	void OnConcreteEvent(BuD::MouseScrolledEvent& e) override
 	{
 		auto camera = m_Scene.ActiveCamera();
+		auto cameraInstanced = m_SceneInstanced.ActiveCamera();
 
 		camera->Zoom(-0.03f * e.m_WheelDelta);
+		cameraInstanced->Zoom(-0.03f * e.m_WheelDelta);
 	}
 
 	void OnConcreteEvent(BuD::MouseButtonDownEvent& e) override
@@ -185,9 +224,12 @@ protected:
 	ImVec2 m_ViewportSize = { 0, 0 };
 
 	BuD::Scene m_Scene;
-	std::unique_ptr<BlackHoleQuad> m_BlackHole;
+	BuD::Scene m_SceneInstanced;
+	std::unique_ptr<BlackHoleQuadBase> m_BlackHole;
+	std::unique_ptr<BlackHoleQuadBase> m_BlackHoleInstanced;
 
 	bool m_MoveMouse = false;
+	bool m_DrawInstanced = false;
 };
 
 std::shared_ptr<BuD::AppLayer> BuD::CreateClientApp()

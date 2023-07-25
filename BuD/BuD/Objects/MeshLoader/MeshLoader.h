@@ -16,11 +16,15 @@ namespace BuD
 	public:
 		MeshLoader() = default;
 
-		const std::vector<MeshSegment>& LoadMeshFromFile(std::filesystem::path filepath);
-		const MeshDetails& LoadPrimitiveMesh(MeshPrimitiveType meshType);
+		std::vector<MeshSegment> LoadMeshFromFile(std::filesystem::path filepath, std::initializer_list<D3D11_INPUT_ELEMENT_DESC> instanceDataDescription = {});
+		MeshDetails LoadPrimitiveMesh(MeshPrimitiveType meshType, std::initializer_list<D3D11_INPUT_ELEMENT_DESC> instanceDataDescription = {});
 
 	private:
-		static std::map<std::filesystem::path, std::vector<MeshSegment>> s_FileMeshes;
-		static std::map<MeshPrimitiveType, MeshDetails> s_PrimitiveMeshes;
+
+		std::vector<MeshSegment> LoadMeshFromFileInternal(std::filesystem::path filepath);
+		MeshDetails LoadPrimitiveMeshInternal(MeshPrimitiveType meshType);
+
+		static std::unordered_map<std::filesystem::path, std::vector<MeshSegment>> s_FileMeshes;
+		static std::unordered_map<MeshPrimitiveType, MeshDetails> s_PrimitiveMeshes;
 	};
 }

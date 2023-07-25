@@ -19,6 +19,8 @@ namespace BuD
 		bool operator<=(const InputLayoutDescription& other) const;
 		bool operator>=(const InputLayoutDescription& other) const;
 
+		const auto& GetLayoutElements() const { return m_LayoutElements; }
+
 	private:
 		void CalculateAccumulatedByteSize();
 

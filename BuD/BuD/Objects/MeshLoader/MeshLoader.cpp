@@ -1,6 +1,8 @@
 #include "bud_pch.h"
 #include "MeshLoader.h"
 
+#include <Layout/InputLayoutSystem.h>
+
 #include <Objects/MeshLoader/FileLoader/ObjMeshFileLoader.h>
 
 #include <Objects/MeshLoader/PrimitiveLoader/CubeMeshPrimitiveLoader.h>
@@ -12,7 +14,84 @@ namespace BuD
 
 	static const std::vector<MeshSegment> EMPTY = {};
 
-	const std::vector<MeshSegment>& MeshLoader::LoadMeshFromFile(std::filesystem::path filepath)
+	std::vector<MeshSegment> MeshLoader::LoadMeshFromFile(std::filesystem::path filepath, std::initializer_list<D3D11_INPUT_ELEMENT_DESC> instanceDataDescription)
+	{
+		auto meshElements = LoadMeshFromFileInternal(filepath);
+
+		if (instanceDataDescription.size() == 0)
+		{
+			return meshElements;
+		}
+
+		std::vector<D3D11_INPUT_ELEMENT_DESC> instanceLayoutsElements; 
+		instanceLayoutsElements.reserve(instanceDataDescription.size());
+
+		for (auto instanceLayoutElement : instanceDataDescription)
+		{
+			instanceLayoutElement.InputSlot = 1;
+			instanceLayoutElement.InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
+			instanceLayoutElement.InstanceDataStepRate = 1;
+
+			instanceLayoutsElements.push_back(instanceLayoutElement);
+		}
+
+		for (auto& meshElement : meshElements)
+		{
+			auto layout = meshElement.m_Details.m_InputLayout;
+			auto layoutElements = layout->GetDescription().GetLayoutElements();
+
+			auto currentSize = layoutElements.size();
+
+			layoutElements.resize(currentSize + instanceLayoutsElements.size());
+
+			std::memcpy(&layoutElements[currentSize], instanceLayoutsElements.data(), instanceLayoutsElements.size() * sizeof(D3D11_INPUT_ELEMENT_DESC));
+
+			auto newLayout = InputLayoutSystem::GetInputLayout(layoutElements);
+
+			meshElement.m_Details.m_InputLayout = newLayout;
+		}
+
+		return meshElements;
+	}
+
+	MeshDetails MeshLoader::LoadPrimitiveMesh(MeshPrimitiveType meshType, std::initializer_list<D3D11_INPUT_ELEMENT_DESC> instanceDataDescription)
+	{
+		auto meshDetails = LoadPrimitiveMeshInternal(meshType);
+
+		if (instanceDataDescription.size() == 0)
+		{
+			return meshDetails;
+		}
+
+		auto& inputLayoutDescription = meshDetails.m_InputLayout->GetDescription();
+		auto layoutElements = inputLayoutDescription.GetLayoutElements();
+
+		std::vector<D3D11_INPUT_ELEMENT_DESC> instanceLayoutsElements;
+		instanceLayoutsElements.reserve(instanceDataDescription.size());
+
+		for (auto instanceLayoutElement : instanceDataDescription)
+		{
+			instanceLayoutElement.InputSlot = 1;
+			instanceLayoutElement.InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
+			instanceLayoutElement.InstanceDataStepRate = 1;
+
+			instanceLayoutsElements.push_back(instanceLayoutElement);
+		}
+
+		auto currentSize = layoutElements.size();
+
+		layoutElements.resize(currentSize + instanceLayoutsElements.size());
+
+		std::memcpy(&layoutElements[currentSize], instanceLayoutsElements.data(), instanceLayoutsElements.size() * sizeof(D3D11_INPUT_ELEMENT_DESC));
+
+		auto newLayout = InputLayoutSystem::GetInputLayout(layoutElements);
+
+		meshDetails.m_InputLayout = newLayout;
+
+		return meshDetails;
+	}
+
+	std::vector<MeshSegment> MeshLoader::LoadMeshFromFileInternal(std::filesystem::path filepath)
 	{
 		auto searchResult = s_FileMeshes.find(filepath);
 
@@ -40,7 +119,7 @@ namespace BuD
 		return insertIter->second;
 	}
 
-	const MeshDetails& MeshLoader::LoadPrimitiveMesh(MeshPrimitiveType meshType)
+	MeshDetails MeshLoader::LoadPrimitiveMeshInternal(MeshPrimitiveType meshType)
 	{
 		auto searchResult = s_PrimitiveMeshes.find(meshType);
 
@@ -70,6 +149,6 @@ namespace BuD
 		return insertIter->second;
 	}
 
-	std::map<std::filesystem::path, std::vector<MeshSegment>> MeshLoader::s_FileMeshes = {};
-	std::map<MeshPrimitiveType, MeshDetails> MeshLoader::s_PrimitiveMeshes = {};
+	std::unordered_map<std::filesystem::path, std::vector<MeshSegment>> MeshLoader::s_FileMeshes = {};
+	std::unordered_map<MeshPrimitiveType, MeshDetails> MeshLoader::s_PrimitiveMeshes = {};
 }

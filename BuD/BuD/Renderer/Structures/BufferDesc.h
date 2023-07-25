@@ -13,9 +13,6 @@ namespace BuD
 			BindFlags = bindFlags;
 			ByteWidth = static_cast<UINT>(byteWidth);
 			Usage = D3D11_USAGE_DEFAULT;
-			//CPUAccessFlags = 0;
-			//MiscFlags = 0;
-			//StructureByteStride = 0;
 		}
 
 		inline static BufferDesc VertexBufferDescription(size_t byteWidth)

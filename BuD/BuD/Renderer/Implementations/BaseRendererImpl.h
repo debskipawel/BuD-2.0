@@ -5,6 +5,7 @@
 
 #include <Scene/Scene.h>
 #include <Renderer/RenderTarget.h>
+#include <Renderer/FramePerformanceData.h>
 
 using namespace Microsoft::WRL;
 
@@ -14,6 +15,6 @@ namespace BuD
 	{
 	public:
 		virtual dxm::Matrix ProjectionMatrix() = 0;
-		virtual void Render(Scene& scene, const RenderTargetInfo& renderTarget) = 0;
+		virtual FramePerformanceData Render(Scene& scene, const RenderTargetInfo& renderTarget) = 0;
 	};
 }

@@ -21,6 +21,8 @@ namespace BuD
 		bool operator==(const InputLayout& other) const;
 		bool operator!=(const InputLayout& other) const;
 
+		const auto& GetDescription() const { return m_LayoutDescription; }
+
 	private:
 		ComPtr<ID3D11InputLayout> m_Layout;
 		

@@ -10,22 +10,22 @@ enum ActiveCubemap
 	LINUS = 1
 };
 
-class BlackHoleQuad
+class BlackHoleQuadBase
 {
 public:
-	BlackHoleQuad(BuD::Scene& scene);
+	BlackHoleQuadBase(BuD::Scene& scene);
 
-	dxm::Vector3 Position() const { return m_BlackHolePosition; }
+	virtual dxm::Vector3 Position() const { return m_BlackHolePosition; }
 
 	float m_BlackHoleMass;
 
 	ActiveCubemap m_ActiveCubemap;
 
-private:
+protected:
 	BuD::SceneEntity m_BlackHoleEntity;
 
 	BuD::Texture m_GalaxySkybox;
 	BuD::Texture m_LinusSkybox;
-	
+
 	dxm::Vector3 m_BlackHolePosition = dxm::Vector3::Zero;
 };

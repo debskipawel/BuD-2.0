@@ -158,7 +158,7 @@ namespace BuD
 
 	std::shared_ptr<VertexShader> ShaderLoader::VSLoad(std::filesystem::path shaderPath, const std::vector<size_t>& constants, std::string mainFunName)
 	{
-		return ShaderLoad(s_VertexShaders, shaderPath, constants, mainFunName, "vs_4_0_level_9_1");
+		return ShaderLoad(s_VertexShaders, shaderPath, constants, mainFunName, "vs_5_1");
 	}
 
 	std::shared_ptr<HullShader> ShaderLoader::HSLoad(std::filesystem::path shaderPath, const std::vector<size_t>& constants, std::string mainFunName)

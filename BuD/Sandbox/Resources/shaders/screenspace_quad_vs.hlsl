@@ -2,6 +2,7 @@ cbuffer mat : register(b0)
 {
     float4 cameraPos;
     matrix invMvp;
+    matrix model;
 }
 
 struct VSOut
@@ -24,9 +25,9 @@ VSOut main(float3 pos : POSITION)
 {
     VSOut o = (VSOut) 0;
     
-    o.pos = float4(pos.xy, 0.0, 1.0);
+    o.pos = mul(model, float4(pos.xy, 0.0, 1.0));
     o.rayOrigin = cameraPos.xyz;
-    o.rayDir = GetRayDirection(pos.xy);
+    o.rayDir = GetRayDirection(o.pos.xy);
     
     return o;
 }
