@@ -27,8 +27,8 @@ BlackHoleQuadStandard::BlackHoleQuadStandard(BuD::Scene& scene)
 	auto meshLoader = BuD::MeshLoader();
 	auto quadMesh = meshLoader.LoadPrimitiveMesh(BuD::MeshPrimitiveType::QUAD);
 
-	auto vertexShader = BuD::ShaderLoader::VSLoad(L"../x64/Debug/screenspace_quad_vs.hlsl", { sizeof(CBufferVS) });
-	auto pixelShader = BuD::ShaderLoader::PSLoad(L"../x64/Debug/blackhole_ps.hlsl", { sizeof(CBufferPS) });
+	auto vertexShader = BuD::ShaderLoader::VSLoad(L"./Resources/shaders/screenspace_quad_vs.hlsl", { sizeof(CBufferVS) });
+	auto pixelShader = BuD::ShaderLoader::PSLoad(L"./Resources/shaders/blackhole_ps.hlsl", { sizeof(CBufferPS) });
 
 	for (int y = 0; y < GRID_SIZE; y++)
 	{

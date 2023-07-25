@@ -229,7 +229,7 @@ protected:
 	std::unique_ptr<BlackHoleQuadBase> m_BlackHoleInstanced;
 
 	bool m_MoveMouse = false;
-	bool m_DrawInstanced = false;
+	bool m_DrawInstanced = true;
 };
 
 std::shared_ptr<BuD::AppLayer> BuD::CreateClientApp()

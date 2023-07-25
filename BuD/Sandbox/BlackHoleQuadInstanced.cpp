@@ -35,8 +35,8 @@ BlackHoleQuadInstanced::BlackHoleQuadInstanced(BuD::Scene& scene)
 		}
 	);
 
-	auto vertexShader = BuD::ShaderLoader::VSLoad(L"../x64/Debug/screenspace_quad_instanced_vs.hlsl", { sizeof(CBufferInstancedVS) });
-	auto pixelShader = BuD::ShaderLoader::PSLoad(L"../x64/Debug/blackhole_ps.hlsl", { sizeof(CBufferInstancedPS) });
+	auto vertexShader = BuD::ShaderLoader::VSLoad(L"./Resources/shaders/screenspace_quad_instanced_vs.hlsl", { sizeof(CBufferInstancedVS) });
+	auto pixelShader = BuD::ShaderLoader::PSLoad(L"./Resources/shaders/blackhole_ps.hlsl", { sizeof(CBufferInstancedPS) });
 
 	BuD::ShaderPipeline pipeline;
 	pipeline.m_VertexShader = vertexShader;

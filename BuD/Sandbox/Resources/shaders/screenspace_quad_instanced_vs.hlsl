@@ -32,7 +32,7 @@ VSOut main(
 {
 	VSOut o = (VSOut) 0;
 	
-    float4x4 model = transpose(float4x4(xRow, yRow, zRow, wRow));
+	float4x4 model = transpose(float4x4(xRow, yRow, zRow, wRow));
 	
 	o.pos = mul(model, float4(pos.xy, 0.0, 1.0));
 	o.rayOrigin = cameraPos.xyz;

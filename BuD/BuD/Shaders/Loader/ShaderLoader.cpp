@@ -114,8 +114,9 @@ namespace BuD
 		}
 		else
 		{
-			std::filesystem::path sourceShaderPath = shaderPath;
-			std::filesystem::path compiledShaderName = shaderPath.replace_extension(L".cso");
+			std::filesystem::path currentPath = std::filesystem::current_path();
+			std::filesystem::path sourceShaderPath = currentPath / shaderPath;
+			std::filesystem::path compiledShaderName = (currentPath / shaderPath).replace_extension(L".cso");
 
 			try
 			{
@@ -158,26 +159,26 @@ namespace BuD
 
 	std::shared_ptr<VertexShader> ShaderLoader::VSLoad(std::filesystem::path shaderPath, const std::vector<size_t>& constants, std::string mainFunName)
 	{
-		return ShaderLoad(s_VertexShaders, shaderPath, constants, mainFunName, "vs_5_1");
+		return ShaderLoad(s_VertexShaders, shaderPath, constants, mainFunName, "vs_5_0");
 	}
 
 	std::shared_ptr<HullShader> ShaderLoader::HSLoad(std::filesystem::path shaderPath, const std::vector<size_t>& constants, std::string mainFunName)
 	{
-		return ShaderLoad(s_HullShaders, shaderPath, constants, mainFunName, "hs_4_0_level_9_1");
+		return ShaderLoad(s_HullShaders, shaderPath, constants, mainFunName, "hs_5_0");
 	}
 
 	std::shared_ptr<DomainShader> ShaderLoader::DSLoad(std::filesystem::path shaderPath, const std::vector<size_t>& constants, std::string mainFunName)
 	{
-		return ShaderLoad(s_DomainShaders, shaderPath, constants, mainFunName, "ds_4_0_level_9_1");
+		return ShaderLoad(s_DomainShaders, shaderPath, constants, mainFunName, "ds_5_0");
 	}
 
 	std::shared_ptr<GeometryShader> ShaderLoader::GSLoad(std::filesystem::path shaderPath, const std::vector<size_t>& constants, std::string mainFunName)
 	{
-		return ShaderLoad(s_GeometryShaders, shaderPath, constants, mainFunName, "gs_4_0_level_9_1");
+		return ShaderLoad(s_GeometryShaders, shaderPath, constants, mainFunName, "gs_5_0");
 	}
 
 	std::shared_ptr<PixelShader> ShaderLoader::PSLoad(std::filesystem::path shaderPath, const std::vector<size_t>& constants, std::string mainFunName)
 	{
-		return ShaderLoad(s_PixelShaders, shaderPath, constants, mainFunName, "ps_4_0_level_9_1");
+		return ShaderLoad(s_PixelShaders, shaderPath, constants, mainFunName, "ps_5_0");
 	}
 }
