@@ -18,7 +18,7 @@ struct CBufferInstancedPS
 BlackHoleQuadInstanced::BlackHoleQuadInstanced(BuD::Scene& scene)
 	: BlackHoleQuadBase(scene)
 {
-	constexpr int GRID_SIZE = 60;
+	constexpr int GRID_SIZE = 30;
 
 	std::vector<BuD::RenderingPass> renderingPasses = {};
 

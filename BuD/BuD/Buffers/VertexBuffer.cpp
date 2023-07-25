@@ -10,7 +10,7 @@ namespace BuD
 	{
 		auto strideBit = std::accumulate(
 			layout.begin(), layout.end(), (size_t)0, 
-			[](size_t a, D3D11_INPUT_ELEMENT_DESC desc) { return a + BitsPerFormat(desc.Format); }
+			[](size_t a, D3D11_INPUT_ELEMENT_DESC desc) { return a + HelperFunctions::BitsPerFormat(desc.Format); }
 		);
 
 		m_Stride = strideBit / 8;

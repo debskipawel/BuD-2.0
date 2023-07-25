@@ -4,7 +4,7 @@
 
 namespace BuD
 {
-    const size_t BitsPerFormat(DXGI_FORMAT fmt)
+    size_t HelperFunctions::BitsPerFormat(DXGI_FORMAT fmt)
     {
         switch (static_cast<int>(fmt))
         {
@@ -150,7 +150,7 @@ namespace BuD
         }
     }
 
-    const size_t BytesPerFormat(DXGI_FORMAT format)
+    size_t HelperFunctions::BytesPerFormat(DXGI_FORMAT format)
     {
         return BitsPerFormat(format) / 8;
     }

@@ -28,7 +28,7 @@ namespace BuD
 			layout.begin(), layout.end(), std::string(),
 			[&argumentCount](std::string s, D3D11_INPUT_ELEMENT_DESC desc)
 			{
-				auto byteSize = BytesPerFormat(desc.Format);
+				auto byteSize = HelperFunctions::BytesPerFormat(desc.Format);
 				std::string argument = "float" + std::to_string(byteSize / 4) + " arg" + std::to_string(argumentCount++) + " : " + desc.SemanticName + "; ";
 
 				return s + argument;

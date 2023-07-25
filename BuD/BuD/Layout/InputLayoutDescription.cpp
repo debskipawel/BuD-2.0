@@ -124,7 +124,7 @@ namespace BuD
 	{
 		m_AccumulatedByteSize = std::accumulate(
 			m_LayoutElements.begin(), m_LayoutElements.end(), (size_t)0,
-			[](size_t a, D3D11_INPUT_ELEMENT_DESC desc) { return a + BytesPerFormat(desc.Format); }
+			[](size_t a, D3D11_INPUT_ELEMENT_DESC desc) { return a + HelperFunctions::BytesPerFormat(desc.Format); }
 		);
 	}
 

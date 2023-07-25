@@ -8,7 +8,7 @@ namespace BuD
 	IndexBuffer::IndexBuffer(DXGI_FORMAT format, size_t size, const void* data, D3D_PRIMITIVE_TOPOLOGY topology)
 		: Buffer(data, GetBufferDesc(size)), m_Format(format), m_Topology(topology)
 	{
-		auto bpp = BytesPerFormat(format);
+		auto bpp = HelperFunctions::BytesPerFormat(format);
 		m_IndicesCount = size / bpp;
 	}
 
@@ -16,7 +16,7 @@ namespace BuD
 	{
 		Buffer::Update(data, size);
 
-		auto bpp = BytesPerFormat(m_Format);
+		auto bpp = HelperFunctions::BytesPerFormat(m_Format);
 		m_IndicesCount = size / bpp;
 	}
 
