@@ -6,6 +6,7 @@
 
 #include <Profiler/Profiler.h>
 #include <Renderer/Renderer.h>
+#include <Utils/HelperFunctions.h>
 
 #include "BlackHoleQuadStandard.h"
 #include "BlackHoleQuadInstanced.h"
@@ -172,7 +173,8 @@ public:
 			BuD::Profiler::InOrder(
 				[](std::shared_ptr<BuD::Profiler::ScopeNode> node, unsigned int recursionLevel, unsigned int childId, unsigned int selfId)
 				{
-					auto text = std::format("{} [{} ms]", node->m_Name, (float)node->DurationMs());
+					auto duration = BuD::HelperFunctions::FormatWithPrecision((float)node->DurationMs(), 2);
+					auto text = std::format("{} [{} ms]", node->m_Name, duration);
 
 					if (node->m_Children.size())
 					{
