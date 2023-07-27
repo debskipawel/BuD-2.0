@@ -16,7 +16,7 @@ namespace BuD
 		StandardRendererImpl(std::shared_ptr<GraphicsDevice> device);
 
 		virtual dxm::Matrix ProjectionMatrix() override;
-		virtual FramePerformanceData Render(Scene& scene, const RenderTargetInfo& renderTarget) override;
+		virtual RendererFrameStats Render(Scene& scene, const RenderTargetInfo& renderTarget) override;
 
 	protected:
 

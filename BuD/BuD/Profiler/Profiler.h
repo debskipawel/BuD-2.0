@@ -45,6 +45,8 @@ namespace BuD
 		static void BeginFrame();
 		static void EndFrame();
 
+		inline static float FrameTime() { return s_PreviousFrameResults ? s_PreviousFrameResults->DurationMs() : 0.0f; }
+
 		static void InOrder(
 			std::function<bool(std::shared_ptr<ScopeNode> node, unsigned int recursionLevel, unsigned int id, unsigned int parentId)> continueRecursionHandler, 
 			std::function<void(std::shared_ptr<ScopeNode> node, unsigned int recursionLevel, unsigned int id, unsigned int parentId)> afterRecursionHandler

@@ -14,6 +14,9 @@ namespace BuD
 	struct MeshDetails
 	{
 	public:
+		MeshDetails();
+		MeshDetails(const MeshDetails& other);
+
 		std::string m_Name;
 
 		std::shared_ptr<VertexBuffer> m_VertexBuffer;

@@ -18,7 +18,7 @@ namespace BuD
 		return m_ProjectionMatrix;
 	}
 
-	FramePerformanceData StandardRendererImpl::Render(Scene& scene, const RenderTargetInfo& renderTarget)
+	RendererFrameStats StandardRendererImpl::Render(Scene& scene, const RenderTargetInfo& renderTarget)
 	{
 		auto camera = scene.ActiveCamera();
 		
@@ -36,8 +36,6 @@ namespace BuD
 
 		m_DrawCallsThisFrame = 0;
 		m_InstancesDrawnThisFrame = 0;
-
-		auto startTime = Clock::Now();
 
 		auto& context = m_Device->Context();
 
@@ -85,13 +83,9 @@ namespace BuD
 		DeployInstancedQueue(scene);
 		ClearRenderQueue();
 
-		auto endTime = Clock::Now();
-
-		auto performanceData = FramePerformanceData{};
+		auto performanceData = RendererFrameStats{};
 		performanceData.m_DrawCalls = m_DrawCallsThisFrame;
 		performanceData.m_InstancesDrawn = m_InstancesDrawnThisFrame;
-		performanceData.m_FrameTime = 1000.0f * (endTime - startTime);
-		performanceData.m_FrameRate = 1000.0f / performanceData.m_FrameTime;
 
 		return performanceData;
 	}

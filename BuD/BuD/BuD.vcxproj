@@ -247,7 +247,7 @@
     <ClInclude Include="Renderer\Implementations\StandardRendererImpl.h" />
     <ClInclude Include="Objects\Interfaces\IRenderable.h" />
     <ClInclude Include="Renderer\InstanceData.h" />
-    <ClInclude Include="Renderer\FramePerformanceData.h" />
+    <ClInclude Include="Renderer\RendererFrameStats.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\RenderingPass.h" />
     <ClInclude Include="Renderer\RenderTarget.h" />

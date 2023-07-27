@@ -377,7 +377,7 @@
     <ClInclude Include="Camera\Frustum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\FramePerformanceData.h">
+    <ClInclude Include="Renderer\RendererFrameStats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Profiler\Profiler.h">

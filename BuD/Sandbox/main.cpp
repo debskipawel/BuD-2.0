@@ -162,12 +162,13 @@ public:
 		{
 			ImGui::Checkbox("Instancing enabled ##draw_instanced", &m_DrawInstanced);
 
-			auto performanceData = BuD::Renderer::GetLastFramePerformance();
+			auto frameStats = BuD::Renderer::GetLastFrameStats();
+			auto frameTime = BuD::Profiler::FrameTime();
 
-			std::string performanceText = "Frame time: " + ToStringWithPrecision(performanceData.m_FrameTime, 1) + "[ms], FPS: " + ToStringWithPrecision(performanceData.m_FrameRate, 2);
+			std::string performanceText = "Frame time: " + ToStringWithPrecision(frameTime, 1) + " [ms], FPS: " + ToStringWithPrecision(1000.0f / frameTime, 2);
 			ImGui::Text(performanceText.c_str());
 
-			performanceText = "Draw calls: " + std::to_string(performanceData.m_DrawCalls) + ", instances drawn: " + std::to_string(performanceData.m_InstancesDrawn);
+			performanceText = "Draw calls: " + std::to_string(frameStats.m_DrawCalls) + ", instances drawn: " + std::to_string(frameStats.m_InstancesDrawn);
 			ImGui::Text(performanceText.c_str());
 
 			BuD::Profiler::InOrder(

@@ -5,7 +5,7 @@
 
 #include <Scene/Scene.h>
 #include <Renderer/RenderTarget.h>
-#include <Renderer/FramePerformanceData.h>
+#include <Renderer/RendererFrameStats.h>
 
 using namespace Microsoft::WRL;
 
@@ -15,6 +15,6 @@ namespace BuD
 	{
 	public:
 		virtual dxm::Matrix ProjectionMatrix() = 0;
-		virtual FramePerformanceData Render(Scene& scene, const RenderTargetInfo& renderTarget) = 0;
+		virtual RendererFrameStats Render(Scene& scene, const RenderTargetInfo& renderTarget) = 0;
 	};
 }
