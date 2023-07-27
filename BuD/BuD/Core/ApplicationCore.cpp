@@ -2,6 +2,7 @@
 #include "ApplicationCore.h"
 
 #include <Utils/Clock.h>
+#include <Profiler/Profiler.h>
 
 #include <Event/WindowEvents.h>
 
@@ -30,6 +31,8 @@ namespace BuD
 
 		while (m_ShouldRun)
 		{
+			Profiler::BeginFrame();
+
 			auto currentFrameTime = Clock::Now();
 			auto deltaTime = currentFrameTime - m_LastFrameTime;
 
@@ -59,6 +62,8 @@ namespace BuD
 			Renderer::EndFrame();
 
 			m_Window->ProcessEvents();
+
+			Profiler::EndFrame();
 		}
 	}
 	

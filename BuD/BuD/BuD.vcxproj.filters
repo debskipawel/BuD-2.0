@@ -150,6 +150,9 @@
     <ClCompile Include="Camera\Frustum.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Profiler\Profiler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bud_pch.h">
@@ -377,21 +380,8 @@
     <ClInclude Include="Renderer\FramePerformanceData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Resources\Shaders\mvp_pos_vs.hlsl" />
-    <FxCompile Include="Resources\Shaders\solid_white_ps.hlsl" />
-    <FxCompile Include="Resources\Shaders\depthMapAbsorption_vs.hlsl" />
-    <FxCompile Include="Resources\Shaders\depthMapAbsorption_ps.hlsl" />
-    <FxCompile Include="Resources\Shaders\objModel_ps.hlsl" />
-    <FxCompile Include="Resources\Shaders\objModel_vs.hlsl" />
-    <FxCompile Include="Resources\Shaders\solidColor_ps.hlsl" />
-    <FxCompile Include="Resources\Shaders\uv_map_vs.hlsl" />
-    <FxCompile Include="Resources\Shaders\uv_map_ps.hlsl" />
-    <FxCompile Include="Resources\Shaders\f2_pos_vs.hlsl" />
-    <FxCompile Include="Resources\Shaders\gaussianBlur_ps.hlsl" />
-    <FxCompile Include="Resources\Shaders\lightMap_vs.hlsl" />
-    <FxCompile Include="Resources\Shaders\blurredIrradiance_ps.hlsl" />
-    <FxCompile Include="Resources\Shaders\uv_map_with_subscattering_ps.hlsl" />
+    <ClInclude Include="Profiler\Profiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

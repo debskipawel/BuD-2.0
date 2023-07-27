@@ -6,8 +6,8 @@ namespace BuD
 {
 	struct FramePerformanceData
 	{
-		float m_FrameTime;
-		float m_FrameRate;
+		Timepoint m_FrameTime;
+		Timepoint m_FrameRate;
 
 		unsigned int m_DrawCalls;
 		unsigned int m_InstancesDrawn;

@@ -4,6 +4,7 @@
 
 #include <Core/EntryPoint.h>
 
+#include <Profiler/Profiler.h>
 #include <Renderer/Renderer.h>
 
 #include "BlackHoleQuadStandard.h"
@@ -61,13 +62,18 @@ public:
 	{
 		BuD::Renderer::BeginTarget(m_ViewportSize.x, m_ViewportSize.y);
 		BuD::Renderer::Clear(0.0f, 0.0f, 0.0f, 1.0f);
+		
+		BuD::Profiler::BeginScope("Render");
 		BuD::Renderer::Render(m_DrawInstanced ? m_SceneInstanced : m_Scene);
+		BuD::Profiler::EndScope();
 
 		m_Viewport = BuD::Renderer::EndTarget();
 	}
 
 	void OnGuiRender() override
 	{
+		BuD::Profiler::BeginScope("Gui render");
+
 		if (ImGui::Begin("Viewport"))
 		{
 			ImVec2 vMin = ImGui::GetWindowContentRegionMin();
@@ -151,18 +157,44 @@ public:
 
 		ImGui::Separator();
 
-		ImGui::Text("Performance");
-		ImGui::Checkbox("Instancing enabled ##draw_instanced", &m_DrawInstanced);
+		if (ImGui::CollapsingHeader("Performance"))
+		{
+			ImGui::Checkbox("Instancing enabled ##draw_instanced", &m_DrawInstanced);
 
-		auto performanceData = BuD::Renderer::GetLastFramePerformance();
+			auto performanceData = BuD::Renderer::GetLastFramePerformance();
 
-		std::string performanceText = "Frame time: " + ToStringWithPrecision(performanceData.m_FrameTime, 1) + "[ms], FPS: " + ToStringWithPrecision(performanceData.m_FrameRate, 2);
-		ImGui::Text(performanceText.c_str());
+			std::string performanceText = "Frame time: " + ToStringWithPrecision(performanceData.m_FrameTime, 1) + "[ms], FPS: " + ToStringWithPrecision(performanceData.m_FrameRate, 2);
+			ImGui::Text(performanceText.c_str());
 
-		performanceText = "Draw calls: " + std::to_string(performanceData.m_DrawCalls) + ", instances drawn: " + std::to_string(performanceData.m_InstancesDrawn);
-		ImGui::Text(performanceText.c_str());
+			performanceText = "Draw calls: " + std::to_string(performanceData.m_DrawCalls) + ", instances drawn: " + std::to_string(performanceData.m_InstancesDrawn);
+			ImGui::Text(performanceText.c_str());
+
+			BuD::Profiler::InOrder(
+				[](std::shared_ptr<BuD::Profiler::ScopeNode> node, unsigned int recursionLevel, unsigned int childId, unsigned int selfId)
+				{
+					auto text = std::format("{} [{} ms]", node->m_Name, (float)node->DurationMs());
+
+					if (node->m_Children.size())
+					{
+						text += std::format("###tree_node_{}_{}_{}", recursionLevel, selfId, childId);
+						return ImGui::TreeNode(text.c_str());
+					}
+
+					ImGui::Text(text.c_str());
+				},
+				[](std::shared_ptr<BuD::Profiler::ScopeNode> node, unsigned int recursionLevel, unsigned int childId, unsigned int selfId)
+				{
+					if (node->m_Children.size())
+					{
+						ImGui::TreePop();
+					}
+				}
+			);
+		}
 
 		ImGui::End();
+
+		BuD::Profiler::EndScope();
 	}
 
 	void OnConcreteEvent(BuD::MouseMovedEvent& e) override
