@@ -2,7 +2,7 @@
 
 #include "Shader.h"
 
-#include <Renderer/Renderer.h>
+#include <Renderer/GraphicsDevice.h>
 #include <Utils/Log.h>
 
 namespace BuD
@@ -10,9 +10,8 @@ namespace BuD
 	class PixelShader : public Shader
 	{
 	public:
-		explicit PixelShader(void* code, size_t size)
+		explicit PixelShader(std::shared_ptr<GraphicsDevice> graphicsDevice, void* code, size_t size)
 		{
-			auto graphicsDevice = Renderer::Device();
 			auto& device = graphicsDevice->Device();
 
 			if (FAILED(device->CreatePixelShader(code, size, nullptr, m_Shader.GetAddressOf())))

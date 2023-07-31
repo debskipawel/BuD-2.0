@@ -159,6 +159,9 @@
     <ClCompile Include="Buffers\Buffer.cpp" />
     <ClCompile Include="Buffers\ConstantBuffer.cpp" />
     <ClCompile Include="Buffers\IndexBuffer.cpp" />
+    <ClCompile Include="Buffers\InstanceBuffer.cpp" />
+    <ClCompile Include="Camera\Frustum.cpp" />
+    <ClCompile Include="Layout\InputLayout.cpp" />
     <ClCompile Include="Buffers\VertexBuffer.cpp" />
     <ClCompile Include="Camera\OrbitCamera.cpp" />
     <ClCompile Include="Core\ApplicationCore.cpp" />
@@ -170,20 +173,31 @@
     <ClCompile Include="Event\MouseEvents.cpp" />
     <ClCompile Include="Event\WindowEvents.cpp" />
     <ClCompile Include="Input\Keyboard.cpp" />
+    <ClCompile Include="Objects\MeshDetails.cpp" />
     <ClCompile Include="Objects\MeshLoader\MeshLoader.cpp" />
-    <ClCompile Include="Objects\MeshLoader\ObjMeshFileLoader.cpp" />
-    <ClCompile Include="Objects\PointLight.cpp" />
+    <ClCompile Include="Objects\MeshLoader\FileLoader\ObjMeshFileLoader.cpp" />
+    <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\CubeMeshPrimitiveLoader.cpp" />
+    <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\PointMeshPrimitiveLoader.cpp" />
+    <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\QuadMeshPrimitiveLoader.cpp" />
+    <ClCompile Include="Profiler\Profiler.cpp" />
     <ClCompile Include="Renderer\GraphicsDevice.cpp" />
+    <ClCompile Include="Renderer\Implementations\BaseRendererImpl.cpp" />
     <ClCompile Include="Renderer\Implementations\StandardRendererImpl.cpp" />
+    <ClCompile Include="Renderer\InstanceData.cpp" />
+    <ClCompile Include="Renderer\InstanceRenderQueue\InstanceRenderQueue.cpp" />
     <ClCompile Include="Renderer\PixDebugLayer.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
+    <ClCompile Include="Renderer\RenderingPass.cpp" />
     <ClCompile Include="Renderer\RenderTarget.cpp" />
-    <ClCompile Include="Objects\Cube.cpp" />
+    <ClCompile Include="Renderer\ShaderPipeline.cpp" />
     <ClCompile Include="Renderer\Texture.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneEntity.cpp" />
     <ClCompile Include="Shaders\Loader\ShaderLoader.cpp" />
     <ClCompile Include="Shaders\Shader.cpp" />
+    <ClCompile Include="Layout\InputLayoutDescription.cpp" />
+    <ClCompile Include="Layout\InputLayoutSystem.cpp" />
+    <ClCompile Include="Utils\HelperFunctions.cpp" />
     <ClCompile Include="Utils\Log.cpp" />
     <ClCompile Include="Utils\Random.cpp" />
     <ClCompile Include="Utils\Timepoint.cpp" />
@@ -197,7 +211,9 @@
     <ClInclude Include="Buffers\Buffer.h" />
     <ClInclude Include="Buffers\ConstantBuffer.h" />
     <ClInclude Include="Buffers\IndexBuffer.h" />
-    <ClInclude Include="Buffers\StructuredBuffer.h" />
+    <ClInclude Include="Buffers\InstanceBuffer.h" />
+    <ClInclude Include="Camera\Frustum.h" />
+    <ClInclude Include="Layout\InputLayout.h" />
     <ClInclude Include="Buffers\VertexBuffer.h" />
     <ClInclude Include="Camera\AbstractCamera.h" />
     <ClInclude Include="Camera\OrbitCamera.h" />
@@ -214,29 +230,39 @@
     <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Input\KeyboardKeys.h" />
     <ClInclude Include="Input\MouseCode.h" />
+    <ClInclude Include="Objects\AABB.h" />
     <ClInclude Include="Objects\Interfaces\EmissiveComponent.h" />
     <ClInclude Include="Objects\Interfaces\IEmissive.h" />
     <ClInclude Include="Objects\Interfaces\IState.h" />
-    <ClInclude Include="Objects\MeshLoader\BaseMeshFileLoader.h" />
+    <ClInclude Include="Objects\MeshLoader\FileLoader\BaseMeshFileLoader.h" />
+    <ClInclude Include="Objects\MeshDetails.h" />
     <ClInclude Include="Objects\MeshLoader\MeshLoader.h" />
     <ClInclude Include="Objects\MeshLoader\MeshSegment.h" />
-    <ClInclude Include="Objects\MeshLoader\ObjMeshFileLoader.h" />
-    <ClInclude Include="Objects\PointLight.h" />
+    <ClInclude Include="Objects\MeshLoader\FileLoader\ObjMeshFileLoader.h" />
+    <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\BaseMeshPrimitiveLoader.h" />
+    <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\CubeMeshPrimitiveLoader.h" />
+    <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\PointMeshPrimitiveLoader.h" />
+    <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\QuadMeshPrimitiveLoader.h" />
+    <ClInclude Include="Objects\MeshPrimitiveType.h" />
+    <ClInclude Include="Profiler\Profiler.h" />
     <ClInclude Include="Renderer\GraphicsDevice.h" />
     <ClInclude Include="Renderer\Implementations\BaseRendererImpl.h" />
     <ClInclude Include="Renderer\Implementations\RenderingMode.h" />
     <ClInclude Include="Renderer\Implementations\StandardRendererImpl.h" />
     <ClInclude Include="Objects\Interfaces\IRenderable.h" />
+    <ClInclude Include="Renderer\InstanceData.h" />
+    <ClInclude Include="Renderer\InstanceRenderQueue\InstanceRenderQueue.h" />
+    <ClInclude Include="Renderer\RendererFrameStats.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\RenderingPass.h" />
     <ClInclude Include="Renderer\RenderTarget.h" />
+    <ClInclude Include="Renderer\ShaderPipeline.h" />
     <ClInclude Include="Renderer\Structures\BufferDesc.h" />
     <ClInclude Include="Renderer\Structures\SwapchainDesc.h" />
     <ClInclude Include="Renderer\Structures\Texture2DDesc.h" />
     <ClInclude Include="Renderer\Structures\ViewportDesc.h" />
     <ClInclude Include="Renderer\Texture.h" />
     <ClInclude Include="Resources\Meshes\Cube.h" />
-    <ClInclude Include="Objects\Cube.h" />
     <ClInclude Include="Resources\Meshes\Quad.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneEntity.h" />
@@ -247,7 +273,10 @@
     <ClInclude Include="Shaders\PixelShader.h" />
     <ClInclude Include="Shaders\Shader.h" />
     <ClInclude Include="Shaders\VertexShader.h" />
+    <ClInclude Include="Layout\InputLayoutDescription.h" />
+    <ClInclude Include="Layout\InputLayoutSystem.h" />
     <ClInclude Include="Utils\Clock.h" />
+    <ClInclude Include="Utils\HelperFunctions.h" />
     <ClInclude Include="Utils\Log.h" />
     <ClInclude Include="Utils\Random.h" />
     <ClInclude Include="Utils\Timepoint.h" />
@@ -263,92 +292,6 @@
     <ProjectReference Include="..\Dependencies\DirectXTK\DirectXTK_Desktop_2022.vcxproj">
       <Project>{e0b52ae7-e160-4d32-bf3f-910b785e5a8e}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Resources\Shaders\blurredIrradiance_ps.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\depthMapAbsorption_ps.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\depthMapAbsorption_vs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\f2_pos_vs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\gaussianBlur_ps.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\lightMap_vs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\mvp_pos_vs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\objModel_ps.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\objModel_vs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\solidColor_ps.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\solid_white_ps.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\uv_map_ps.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\uv_map_vs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\uv_map_with_subscattering_ps.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -28,6 +28,4 @@ namespace BuD
 		BufferDesc m_Description;
 		ComPtr<ID3D11Buffer> m_Buffer;
 	};
-
-	size_t BitsPerPixel(DXGI_FORMAT fmt);
 }

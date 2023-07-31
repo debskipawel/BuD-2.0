@@ -2,7 +2,6 @@
 #include "Scene.h"
 
 #include <Camera/OrbitCamera.h>
-#include <Objects/Cube.h>
 
 #include <Objects/MeshLoader/MeshLoader.h>
 

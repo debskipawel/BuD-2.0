@@ -4,8 +4,7 @@
 #include <SimpleMath.h>
 #include <string>
 
-#include <Buffers/VertexBuffer.h>
-#include <Buffers/IndexBuffer.h>
+#include <Objects/MeshDetails.h>
 
 namespace dxm = DirectX::SimpleMath;
 
@@ -25,13 +24,7 @@ namespace BuD
 
 	struct MeshSegment
 	{
-		std::string SegmentName;
-
-		std::shared_ptr<VertexBuffer> VertexBuffer;
-		std::shared_ptr<IndexBuffer> IndexBuffer;
-
-		MeshMaterial Material;
-
-		std::vector<D3D11_INPUT_ELEMENT_DESC> Layout;
+		MeshDetails m_Details;
+		MeshMaterial m_Material;
 	};
 }

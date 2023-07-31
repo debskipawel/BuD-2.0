@@ -2,6 +2,7 @@
 #include "ApplicationCore.h"
 
 #include <Utils/Clock.h>
+#include <Profiler/Profiler.h>
 
 #include <Event/WindowEvents.h>
 
@@ -30,15 +31,24 @@ namespace BuD
 
 		while (m_ShouldRun)
 		{
+			Profiler::BeginFrame();
+
 			auto currentFrameTime = Clock::Now();
 			auto deltaTime = currentFrameTime - m_LastFrameTime;
 
 			m_LastFrameTime = currentFrameTime;
 
+			Profiler::BeginScope("OnUpdate");
+
 			for (auto& layer : m_LayerStack)
 			{
 				layer->OnUpdate(deltaTime);
 			}
+
+			Profiler::EndScope();
+
+			Profiler::BeginScope("Rendering");
+			Profiler::BeginScope("Layer rendering");
 
 			Renderer::BeginFrame();
 
@@ -46,6 +56,9 @@ namespace BuD
 			{
 				layer->OnRender();
 			}
+
+			Profiler::EndScope();
+			Profiler::BeginScope("GUI rendering");
 
 			m_GuiLayer->BeginFrame();
 
@@ -56,9 +69,19 @@ namespace BuD
 
 			m_GuiLayer->EndFrame();
 
-			Renderer::EndFrame();
+			Profiler::EndScope();
 
+			Profiler::BeginScope("Presenting");
+			Renderer::EndFrame();
+			Profiler::EndScope();
+
+			Profiler::EndScope();
+
+			Profiler::BeginScope("Events processing");
 			m_Window->ProcessEvents();
+			Profiler::EndScope();
+
+			Profiler::EndFrame();
 		}
 	}
 	

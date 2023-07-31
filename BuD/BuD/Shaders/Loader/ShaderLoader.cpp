@@ -1,6 +1,8 @@
 #include "bud_pch.h"
 #include "ShaderLoader.h"
 
+#include <Renderer/Renderer.h>
+
 #include <fstream>
 
 #include <d3dcompiler.h>
@@ -105,30 +107,32 @@ namespace BuD
 			return result->second;
 		}
 
+		auto graphicsDevice = Renderer::Device();
 		std::shared_ptr<T> shader;
 
 		if (shaderPath.extension() == L".cso")
 		{
 			auto bytecode = LoadByteCode(shaderPath);
-			shader = std::make_shared<T>(bytecode.data(), bytecode.size());
+			shader = std::make_shared<T>(graphicsDevice, bytecode.data(), bytecode.size());
 		}
 		else
 		{
-			std::filesystem::path sourceShaderPath = shaderPath;
-			std::filesystem::path compiledShaderName = shaderPath.replace_extension(L".cso");
+			std::filesystem::path currentPath = std::filesystem::current_path();
+			std::filesystem::path sourceShaderPath = currentPath / shaderPath;
+			std::filesystem::path compiledShaderName = (currentPath / shaderPath).replace_extension(L".cso");
 
 			try
 			{
 				// try loading compiled shader if exists
 				auto bytecode = LoadByteCode(compiledShaderName);
-				shader = std::make_shared<T>(bytecode.data(), bytecode.size());
+				shader = std::make_shared<T>(graphicsDevice, bytecode.data(), bytecode.size());
 			}
 			catch (std::exception e)
 			{
 				ID3DBlob* blob = nullptr;
 				auto hr = CompileShader(sourceShaderPath.c_str(), mainFunName.c_str(), shaderVersion.c_str(), &blob);
 
-				shader = std::make_shared<T>(blob->GetBufferPointer(), blob->GetBufferSize());
+				shader = std::make_shared<T>(graphicsDevice, blob->GetBufferPointer(), blob->GetBufferSize());
 
 				SaveToFile(blob->GetBufferPointer(), blob->GetBufferSize(), compiledShaderName);
 
@@ -156,71 +160,28 @@ namespace BuD
 		s_GeometryShaders.clear();
 	}
 
-	std::shared_ptr<VertexShader> ShaderLoader::VSLoad(std::filesystem::path shaderPath, const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout, const std::vector<size_t>& constants, std::string mainFunName)
+	std::shared_ptr<VertexShader> ShaderLoader::VSLoad(std::filesystem::path shaderPath, const std::vector<size_t>& constants, std::string mainFunName)
 	{
-		auto result = s_VertexShaders.find(shaderPath);
-
-		if (result != s_VertexShaders.end())
-		{
-			return result->second;
-		}
-
-		std::shared_ptr<VertexShader> shader;
-
-		if (shaderPath.extension() == L".cso")
-		{
-			auto bytecode = LoadByteCode(shaderPath);
-			shader = std::make_shared<VertexShader>(bytecode.data(), bytecode.size(), layout);
-		}
-		else
-		{
-			std::filesystem::path sourceShaderPath = shaderPath;
-			std::filesystem::path compiledShaderName = shaderPath.replace_extension(L".cso");
-
-			try
-			{
-				auto bytecode = LoadByteCode(compiledShaderName);
-				shader = std::make_shared<VertexShader>(bytecode.data(), bytecode.size(), layout);
-			}
-			catch (std::exception e)
-			{
-				ID3DBlob* vsBlob = nullptr;
-				auto hr = CompileShader(sourceShaderPath.c_str(), mainFunName.c_str(), "vs_4_0_level_9_1", &vsBlob);
-				shader = std::make_shared<VertexShader>(vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), layout);
-				vsBlob->Release();
-
-				SaveToFile(vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), compiledShaderName);
-			}
-		}
-
-		for (auto& size : constants)
-		{
-			auto cb = std::make_shared<ConstantBuffer>(size);
-			shader->AddConstantBuffer(cb);
-		}
-
-		s_VertexShaders.insert(std::make_pair(shaderPath, shader));
-
-		return shader;
+		return ShaderLoad(s_VertexShaders, shaderPath, constants, mainFunName, "vs_5_0");
 	}
 
 	std::shared_ptr<HullShader> ShaderLoader::HSLoad(std::filesystem::path shaderPath, const std::vector<size_t>& constants, std::string mainFunName)
 	{
-		return ShaderLoad(s_HullShaders, shaderPath, constants, mainFunName, "hs_4_0_level_9_1");
+		return ShaderLoad(s_HullShaders, shaderPath, constants, mainFunName, "hs_5_0");
 	}
 
 	std::shared_ptr<DomainShader> ShaderLoader::DSLoad(std::filesystem::path shaderPath, const std::vector<size_t>& constants, std::string mainFunName)
 	{
-		return ShaderLoad(s_DomainShaders, shaderPath, constants, mainFunName, "ds_4_0_level_9_1");
+		return ShaderLoad(s_DomainShaders, shaderPath, constants, mainFunName, "ds_5_0");
 	}
 
 	std::shared_ptr<GeometryShader> ShaderLoader::GSLoad(std::filesystem::path shaderPath, const std::vector<size_t>& constants, std::string mainFunName)
 	{
-		return ShaderLoad(s_GeometryShaders, shaderPath, constants, mainFunName, "gs_4_0_level_9_1");
+		return ShaderLoad(s_GeometryShaders, shaderPath, constants, mainFunName, "gs_5_0");
 	}
 
 	std::shared_ptr<PixelShader> ShaderLoader::PSLoad(std::filesystem::path shaderPath, const std::vector<size_t>& constants, std::string mainFunName)
 	{
-		return ShaderLoad(s_PixelShaders, shaderPath, constants, mainFunName, "ps_4_0_level_9_1");
+		return ShaderLoad(s_PixelShaders, shaderPath, constants, mainFunName, "ps_5_0");
 	}
 }

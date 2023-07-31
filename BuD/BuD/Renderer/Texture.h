@@ -4,8 +4,6 @@
 #include <filesystem>
 #include <wrl/client.h>
 
-#include "GraphicsDevice.h"
-
 using namespace Microsoft::WRL;
 
 namespace BuD

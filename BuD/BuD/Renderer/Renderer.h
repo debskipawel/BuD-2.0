@@ -8,6 +8,7 @@
 #include "Implementations/RenderingMode.h"
 
 #include <Scene/Scene.h>
+#include <Utils/Timepoint.h>
 
 #include <map>
 #include <stack>
@@ -30,6 +31,8 @@ namespace BuD
 		static void Render(Scene& scene);
 		static void EndFrame();
 
+		inline static RendererFrameStats GetLastFrameStats() { return s_PerformanceData; }
+
 		static void WindowResized(int width, int height);
 
 		inline static std::shared_ptr<GraphicsDevice> Device() { return s_Device; }
@@ -41,6 +44,8 @@ namespace BuD
 
 		inline static std::map<RenderingMode, std::shared_ptr<BaseRendererImpl>> s_RenderingImplementations = {};
 		inline static std::shared_ptr<BaseRendererImpl> s_ActiveRendererImpl = nullptr;
+
+		inline static RendererFrameStats s_PerformanceData = {};
 
 		// Device
 		inline static std::shared_ptr<GraphicsDevice> s_Device = nullptr;

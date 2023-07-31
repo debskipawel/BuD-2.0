@@ -1,6 +1,8 @@
 #include "bud_pch.h"
 #include "VertexBuffer.h"
 
+#include <Utils/HelperFunctions.h>
+
 namespace BuD
 {
 	VertexBuffer::VertexBuffer(size_t size, const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout, const void* data)
@@ -8,7 +10,7 @@ namespace BuD
 	{
 		auto strideBit = std::accumulate(
 			layout.begin(), layout.end(), (size_t)0, 
-			[](size_t a, D3D11_INPUT_ELEMENT_DESC desc) { return a + BitsPerPixel(desc.Format); }
+			[](size_t a, D3D11_INPUT_ELEMENT_DESC desc) { return a + HelperFunctions::BitsPerFormat(desc.Format); }
 		);
 
 		m_Stride = strideBit / 8;

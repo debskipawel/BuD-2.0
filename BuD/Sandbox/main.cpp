@@ -1,10 +1,15 @@
 #include <BuD.h>
+
+#include <sstream>
+
 #include <Core/EntryPoint.h>
 
-#include <Objects/PointLight.h>
+#include <Profiler/Profiler.h>
 #include <Renderer/Renderer.h>
+#include <Utils/HelperFunctions.h>
 
-#include "BlackHoleQuad.h"
+#include "BlackHoleQuadStandard.h"
+#include "BlackHoleQuadInstanced.h"
 
 #include "imgui.h"
 
@@ -18,14 +23,17 @@ public:
 			[](const BuD::Log::LogRecord& record)
 			{
 				OutputDebugStringW(record.message.c_str());
+				OutputDebugStringW(L"\n");
 			}
 		);
 
-		m_BlackHole = std::make_unique<BlackHoleQuad>(m_Scene);
+		m_BlackHole = std::make_unique<BlackHoleQuadStandard>(m_Scene);
+		m_BlackHoleInstanced = std::make_unique<BlackHoleQuadInstanced>(m_SceneInstanced);
 
 		// set initial camera distance
 		const auto initialDistance = 250.0f;
 		auto camera = m_Scene.ActiveCamera();
+		auto cameraInstanced = m_SceneInstanced.ActiveCamera();
 
 		auto blackHolePosition = m_BlackHole->Position();
 		auto cameraPosition = camera->EyePosition();
@@ -34,6 +42,17 @@ public:
 		float currentDistance = toCameraVector.Length();
 
 		camera->Zoom(initialDistance - currentDistance);
+		cameraInstanced->Zoom(initialDistance - currentDistance);
+	}
+
+	template <typename T>
+	std::string ToStringWithPrecision(T value, unsigned int precision)
+	{
+		std::ostringstream out;
+		out.precision(precision);
+		out << std::fixed << value;
+
+		return std::move(out).str();
 	}
 
 	void OnUpdate(float deltaTime) override
@@ -44,13 +63,18 @@ public:
 	{
 		BuD::Renderer::BeginTarget(m_ViewportSize.x, m_ViewportSize.y);
 		BuD::Renderer::Clear(0.0f, 0.0f, 0.0f, 1.0f);
-		BuD::Renderer::Render(m_Scene);
+		
+		BuD::Profiler::BeginScope("Render");
+		BuD::Renderer::Render(m_DrawInstanced ? m_SceneInstanced : m_Scene);
+		BuD::Profiler::EndScope();
 
 		m_Viewport = BuD::Renderer::EndTarget();
 	}
 
 	void OnGuiRender() override
 	{
+		BuD::Profiler::BeginScope("Gui render");
+
 		if (ImGui::Begin("Viewport"))
 		{
 			ImVec2 vMin = ImGui::GetWindowContentRegionMin();
@@ -70,8 +94,9 @@ public:
 		ImGui::Begin("Controls");
 
 		auto camera = m_Scene.ActiveCamera();
+		auto cameraInstanced = m_SceneInstanced.ActiveCamera();
 
-		auto blackHolePosition = m_BlackHole->Position();
+		auto blackHolePosition = m_BlackHoleInstanced->Position();
 		auto cameraPosition = camera->EyePosition();
 
 		auto toCameraVector = cameraPosition - blackHolePosition;
@@ -89,9 +114,10 @@ public:
 		distance = max(distance, MIN_DIST);
 
 		camera->Zoom(distance - distanceCopy);
+		cameraInstanced->Zoom(distance - distanceCopy);
 
 		// MASS
-		auto& mass = m_BlackHole->m_BlackHoleMass;
+		auto& mass = m_BlackHoleInstanced->m_BlackHoleMass;
 
 		constexpr float MIN_MASS = 0.1f;
 		constexpr float MAX_MASS = 10.0f;
@@ -100,6 +126,8 @@ public:
 
 		mass = min(mass, MAX_MASS);
 		mass = max(mass, MIN_MASS);
+
+		m_BlackHole->m_BlackHoleMass = mass;
 
 		ImGui::Separator();
 
@@ -126,8 +154,50 @@ public:
 		}
 
 		m_BlackHole->m_ActiveCubemap = (ActiveCubemap)item_current_idx;
+		m_BlackHoleInstanced->m_ActiveCubemap = (ActiveCubemap)item_current_idx;
+
+		ImGui::Separator();
+
+		if (ImGui::CollapsingHeader("Performance"))
+		{
+			ImGui::Checkbox("Instancing enabled ##draw_instanced", &m_DrawInstanced);
+
+			auto frameStats = BuD::Renderer::GetLastFrameStats();
+			auto frameTime = BuD::Profiler::FrameTime();
+
+			std::string performanceText = "Frame time: " + ToStringWithPrecision(frameTime, 1) + " [ms], FPS: " + ToStringWithPrecision(1000.0f / frameTime, 2);
+			ImGui::Text(performanceText.c_str());
+
+			performanceText = "Draw calls: " + std::to_string(frameStats.m_DrawCalls) + ", instances drawn: " + std::to_string(frameStats.m_InstancesDrawn);
+			ImGui::Text(performanceText.c_str());
+
+			BuD::Profiler::InOrder(
+				[](std::shared_ptr<BuD::Profiler::ScopeNode> node, unsigned int recursionLevel, unsigned int childId, unsigned int selfId)
+				{
+					auto duration = BuD::HelperFunctions::FormatWithPrecision((float)node->DurationMs(), 2);
+					auto text = std::format("{} [{} ms]", node->m_Name, duration);
+
+					if (node->m_Children.size())
+					{
+						text += std::format("###tree_node_{}_{}_{}", recursionLevel, selfId, childId);
+						return ImGui::TreeNode(text.c_str());
+					}
+
+					ImGui::Text(text.c_str());
+				},
+				[](std::shared_ptr<BuD::Profiler::ScopeNode> node, unsigned int recursionLevel, unsigned int childId, unsigned int selfId)
+				{
+					if (node->m_Children.size())
+					{
+						ImGui::TreePop();
+					}
+				}
+			);
+		}
 
 		ImGui::End();
+
+		BuD::Profiler::EndScope();
 	}
 
 	void OnConcreteEvent(BuD::MouseMovedEvent& e) override
@@ -135,16 +205,20 @@ public:
 		if (m_MoveMouse)
 		{
 			auto camera = m_Scene.ActiveCamera();
+			auto cameraInstanced = m_SceneInstanced.ActiveCamera();
 
 			camera->RotateCamera(0.005 * e.m_OffsetX, 0.005 * e.m_OffsetY);
+			cameraInstanced->RotateCamera(0.005 * e.m_OffsetX, 0.005 * e.m_OffsetY);
 		}
 	}
 
 	void OnConcreteEvent(BuD::MouseScrolledEvent& e) override
 	{
 		auto camera = m_Scene.ActiveCamera();
+		auto cameraInstanced = m_SceneInstanced.ActiveCamera();
 
 		camera->Zoom(-0.03f * e.m_WheelDelta);
+		cameraInstanced->Zoom(-0.03f * e.m_WheelDelta);
 	}
 
 	void OnConcreteEvent(BuD::MouseButtonDownEvent& e) override
@@ -185,9 +259,12 @@ protected:
 	ImVec2 m_ViewportSize = { 0, 0 };
 
 	BuD::Scene m_Scene;
-	std::unique_ptr<BlackHoleQuad> m_BlackHole;
+	BuD::Scene m_SceneInstanced;
+	std::unique_ptr<BlackHoleQuadBase> m_BlackHole;
+	std::unique_ptr<BlackHoleQuadBase> m_BlackHoleInstanced;
 
 	bool m_MoveMouse = false;
+	bool m_DrawInstanced = true;
 };
 
 std::shared_ptr<BuD::AppLayer> BuD::CreateClientApp()

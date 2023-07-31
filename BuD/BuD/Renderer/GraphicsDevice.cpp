@@ -28,6 +28,8 @@ namespace BuD
 		LoadPixDebugLayer();
 #endif
 
+		D3D_FEATURE_LEVEL featureLevels[] = { D3D_FEATURE_LEVEL_12_0 };
+
 		auto hr = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, flags, nullptr, 0,
 			D3D11_SDK_VERSION, &swapchainDesc, m_Swapchain.GetAddressOf(), m_Device.GetAddressOf(), nullptr, m_Context.GetAddressOf());
 

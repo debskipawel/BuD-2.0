@@ -172,7 +172,7 @@ namespace BuD
 			renderTarget.Height = activeRenderTarget->Height;
 		}
 
-		s_ActiveRendererImpl->Render(scene, renderTarget);
+		s_PerformanceData = s_ActiveRendererImpl->Render(scene, renderTarget);
 	}
 
 	void Renderer::EndFrame()

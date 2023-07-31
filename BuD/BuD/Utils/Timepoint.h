@@ -7,6 +7,7 @@ namespace BuD
 	class Timepoint
 	{
 	public:
+		Timepoint() : Timepoint(0.0f) {}
 		Timepoint(float time) : m_Time(time) {}
 		Timepoint(const Timepoint& other) = default;
 		Timepoint& operator=(const Timepoint& other) = default;
@@ -14,8 +15,8 @@ namespace BuD
 
 		std::wstring Format();
 
-		Timepoint operator+(const Timepoint& other);
-		Timepoint operator-(const Timepoint& other);
+		Timepoint operator+(const Timepoint& other) const;
+		Timepoint operator-(const Timepoint& other) const;
 		operator float();
 
 	private:

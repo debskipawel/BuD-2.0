@@ -99,25 +99,67 @@
     <ClCompile Include="Shaders\Loader\ShaderLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\Cube.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Scene\SceneEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Objects\MeshLoader\MeshLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\MeshLoader\ObjMeshFileLoader.cpp">
+    <ClCompile Include="Objects\MeshLoader\FileLoader\ObjMeshFileLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\PointLight.cpp">
+    <ClCompile Include="Renderer\PixDebugLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\PixDebugLayer.cpp">
+    <ClCompile Include="Layout\InputLayout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\HelperFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Layout\InputLayoutDescription.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Layout\InputLayoutSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MeshDetails.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\QuadMeshPrimitiveLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\CubeMeshPrimitiveLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderingPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\ShaderPipeline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\InstanceData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Buffers\InstanceBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\Frustum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Profiler\Profiler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Implementations\BaseRendererImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\InstanceRenderQueue\InstanceRenderQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\PointMeshPrimitiveLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -269,9 +311,6 @@
     <ClInclude Include="Shaders\VertexShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\Cube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Shaders\Loader\ShaderLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -284,10 +323,10 @@
     <ClInclude Include="Objects\MeshLoader\MeshLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\MeshLoader\BaseMeshFileLoader.h">
+    <ClInclude Include="Objects\MeshLoader\FileLoader\BaseMeshFileLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\MeshLoader\ObjMeshFileLoader.h">
+    <ClInclude Include="Objects\MeshLoader\FileLoader\ObjMeshFileLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Objects\MeshLoader\MeshSegment.h">
@@ -296,36 +335,68 @@
     <ClInclude Include="Renderer\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Buffers\StructuredBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Objects\Interfaces\EmissiveComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Interfaces\IEmissive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\PointLight.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Resources\Meshes\Quad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Resources\Shaders\mvp_pos_vs.hlsl" />
-    <FxCompile Include="Resources\Shaders\solid_white_ps.hlsl" />
-    <FxCompile Include="Resources\Shaders\depthMapAbsorption_vs.hlsl" />
-    <FxCompile Include="Resources\Shaders\depthMapAbsorption_ps.hlsl" />
-    <FxCompile Include="Resources\Shaders\objModel_ps.hlsl" />
-    <FxCompile Include="Resources\Shaders\objModel_vs.hlsl" />
-    <FxCompile Include="Resources\Shaders\solidColor_ps.hlsl" />
-    <FxCompile Include="Resources\Shaders\uv_map_vs.hlsl" />
-    <FxCompile Include="Resources\Shaders\uv_map_ps.hlsl" />
-    <FxCompile Include="Resources\Shaders\f2_pos_vs.hlsl" />
-    <FxCompile Include="Resources\Shaders\gaussianBlur_ps.hlsl" />
-    <FxCompile Include="Resources\Shaders\lightMap_vs.hlsl" />
-    <FxCompile Include="Resources\Shaders\blurredIrradiance_ps.hlsl" />
-    <FxCompile Include="Resources\Shaders\uv_map_with_subscattering_ps.hlsl" />
+    <ClInclude Include="Layout\InputLayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\HelperFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Layout\InputLayoutSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Layout\InputLayoutDescription.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MeshDetails.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MeshPrimitiveType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\BaseMeshPrimitiveLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\QuadMeshPrimitiveLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\CubeMeshPrimitiveLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\ShaderPipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\InstanceData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\AABB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffers\InstanceBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\Frustum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RendererFrameStats.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Profiler\Profiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\InstanceRenderQueue\InstanceRenderQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\PointMeshPrimitiveLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
