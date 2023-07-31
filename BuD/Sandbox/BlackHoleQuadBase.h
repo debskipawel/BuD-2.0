@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Renderer/Texture.h>
+#include <Renderer/Renderer.h>
 #include <Scene/Scene.h>
 #include <Objects/Interfaces/IRenderable.h>
 #include <Objects/Interfaces/IState.h>

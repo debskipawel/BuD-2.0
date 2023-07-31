@@ -1,6 +1,8 @@
 #include "bud_pch.h"
 #include "ShaderLoader.h"
 
+#include <Renderer/Renderer.h>
+
 #include <fstream>
 
 #include <d3dcompiler.h>
@@ -105,12 +107,13 @@ namespace BuD
 			return result->second;
 		}
 
+		auto graphicsDevice = Renderer::Device();
 		std::shared_ptr<T> shader;
 
 		if (shaderPath.extension() == L".cso")
 		{
 			auto bytecode = LoadByteCode(shaderPath);
-			shader = std::make_shared<T>(bytecode.data(), bytecode.size());
+			shader = std::make_shared<T>(graphicsDevice, bytecode.data(), bytecode.size());
 		}
 		else
 		{
@@ -122,14 +125,14 @@ namespace BuD
 			{
 				// try loading compiled shader if exists
 				auto bytecode = LoadByteCode(compiledShaderName);
-				shader = std::make_shared<T>(bytecode.data(), bytecode.size());
+				shader = std::make_shared<T>(graphicsDevice, bytecode.data(), bytecode.size());
 			}
 			catch (std::exception e)
 			{
 				ID3DBlob* blob = nullptr;
 				auto hr = CompileShader(sourceShaderPath.c_str(), mainFunName.c_str(), shaderVersion.c_str(), &blob);
 
-				shader = std::make_shared<T>(blob->GetBufferPointer(), blob->GetBufferSize());
+				shader = std::make_shared<T>(graphicsDevice, blob->GetBufferPointer(), blob->GetBufferSize());
 
 				SaveToFile(blob->GetBufferPointer(), blob->GetBufferSize(), compiledShaderName);
 

@@ -2,7 +2,7 @@
 
 #include "Shader.h"
 
-#include <Renderer/Renderer.h>
+#include <Renderer/GraphicsDevice.h>
 #include <Utils/Log.h>
 
 namespace BuD
@@ -10,9 +10,8 @@ namespace BuD
 	class HullShader : public Shader
 	{
 	public:
-		explicit HullShader(void* code, size_t size)
+		explicit HullShader(std::shared_ptr<GraphicsDevice> graphicsDevice, void* code, size_t size)
 		{
-			auto graphicsDevice = Renderer::Device();
 			auto& device = graphicsDevice->Device();
 
 			if (FAILED(device->CreateHullShader(code, size, nullptr, m_Shader.GetAddressOf())))

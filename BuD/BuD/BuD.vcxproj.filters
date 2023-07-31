@@ -153,6 +153,12 @@
     <ClCompile Include="Profiler\Profiler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Implementations\BaseRendererImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\InstanceRenderQueue\InstanceRenderQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bud_pch.h">
@@ -381,6 +387,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Profiler\Profiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\InstanceRenderQueue\InstanceRenderQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

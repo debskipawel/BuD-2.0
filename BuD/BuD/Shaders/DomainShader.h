@@ -2,7 +2,7 @@
 
 #include "Shader.h"
 
-#include <Renderer/Renderer.h>
+#include <Renderer/GraphicsDevice.h>
 #include <Utils/Log.h>
 
 namespace BuD
@@ -10,9 +10,8 @@ namespace BuD
 	class DomainShader : public Shader
 	{
 	public:
-		explicit DomainShader(void* code, size_t size)
+		explicit DomainShader(std::shared_ptr<GraphicsDevice> graphicsDevice, void* code, size_t size)
 		{
-			auto graphicsDevice = Renderer::Device();
 			auto& device = graphicsDevice->Device();
 
 			if (FAILED(device->CreateDomainShader(code, size, nullptr, m_Shader.GetAddressOf())))

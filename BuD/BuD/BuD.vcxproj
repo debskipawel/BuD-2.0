@@ -180,8 +180,10 @@
     <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\QuadMeshPrimitiveLoader.cpp" />
     <ClCompile Include="Profiler\Profiler.cpp" />
     <ClCompile Include="Renderer\GraphicsDevice.cpp" />
+    <ClCompile Include="Renderer\Implementations\BaseRendererImpl.cpp" />
     <ClCompile Include="Renderer\Implementations\StandardRendererImpl.cpp" />
     <ClCompile Include="Renderer\InstanceData.cpp" />
+    <ClCompile Include="Renderer\InstanceRenderQueue\InstanceRenderQueue.cpp" />
     <ClCompile Include="Renderer\PixDebugLayer.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\RenderingPass.cpp" />
@@ -247,6 +249,7 @@
     <ClInclude Include="Renderer\Implementations\StandardRendererImpl.h" />
     <ClInclude Include="Objects\Interfaces\IRenderable.h" />
     <ClInclude Include="Renderer\InstanceData.h" />
+    <ClInclude Include="Renderer\InstanceRenderQueue\InstanceRenderQueue.h" />
     <ClInclude Include="Renderer\RendererFrameStats.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\RenderingPass.h" />

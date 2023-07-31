@@ -8,8 +8,6 @@
 #include <Renderer/ShaderPipeline.h>
 #include <Renderer/InstanceData.h>
 
-#include <Scene/SceneEntity.h>
-
 namespace BuD
 {
 	struct RenderingPass

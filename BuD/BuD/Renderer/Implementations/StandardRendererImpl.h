@@ -5,6 +5,8 @@
 #include <map>
 #include <vector>
 
+#include <Buffers/InstanceBuffer.h>
+#include <Renderer/InstanceRenderQueue/InstanceRenderQueue.h>
 #include <Renderer/GraphicsDevice.h>
 #include <Renderer/RenderingPass.h>
 
@@ -19,24 +21,11 @@ namespace BuD
 		virtual RendererFrameStats Render(Scene& scene, const RenderTargetInfo& renderTarget) override;
 
 	protected:
-
-		virtual void RenderIndividually(const RenderingPass& renderingPass, Scene& scene);
-		
-		virtual void ClearRenderQueue();
-
-		virtual void AddInstancedRenderToQueue(const RenderingPass& renderingPass);
 		virtual void DeployInstancedQueue(Scene& scene);
 
-		struct InstanceRawData
-		{
-			std::vector<uint8_t> m_Data;
-			unsigned int m_InstanceCount;
-		};
+		InstanceRenderQueue m_InstanceRenderQueue;
+		std::shared_ptr<InstanceBuffer> m_InstanceBuffer;
 
-		std::map<RenderingPass, unsigned int> m_InstanceRenderIndices;
-		std::vector<InstanceRawData> m_InstanceRenderingData;
-
-		std::shared_ptr<GraphicsDevice> m_Device;
 		dxm::Matrix m_ProjectionMatrix;
 
 		unsigned int m_DrawCallsThisFrame;
