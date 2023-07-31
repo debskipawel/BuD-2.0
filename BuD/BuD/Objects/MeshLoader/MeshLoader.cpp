@@ -6,6 +6,7 @@
 #include <Objects/MeshLoader/FileLoader/ObjMeshFileLoader.h>
 
 #include <Objects/MeshLoader/PrimitiveLoader/CubeMeshPrimitiveLoader.h>
+#include <Objects/MeshLoader/PrimitiveLoader/PointMeshPrimitiveLoader.h>
 #include <Objects/MeshLoader/PrimitiveLoader/QuadMeshPrimitiveLoader.h>
 
 namespace BuD
@@ -138,6 +139,8 @@ namespace BuD
 		case BuD::MeshPrimitiveType::CUBE:
 			primitiveLoader = std::make_unique<Internal::CubeMeshPrimitiveLoader>();
 			break;
+		case BuD::MeshPrimitiveType::POINT:
+			primitiveLoader = std::make_unique<Internal::PointMeshPrimitiveLoader>();
 		default:
 			break;
 		}
