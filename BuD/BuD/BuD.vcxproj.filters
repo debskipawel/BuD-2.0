@@ -159,6 +159,9 @@
     <ClCompile Include="Renderer\InstanceRenderQueue\InstanceRenderQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\PointMeshPrimitiveLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bud_pch.h">
@@ -390,6 +393,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\InstanceRenderQueue\InstanceRenderQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\PointMeshPrimitiveLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

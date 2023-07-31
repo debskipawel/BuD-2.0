@@ -6,6 +6,6 @@ namespace BuD
 	{
 		QUAD = 1,
 		CUBE = 2,
-		POINT = 3.
+		POINT = 3,
 	};
 }

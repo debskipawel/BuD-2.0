@@ -177,6 +177,7 @@
     <ClCompile Include="Objects\MeshLoader\MeshLoader.cpp" />
     <ClCompile Include="Objects\MeshLoader\FileLoader\ObjMeshFileLoader.cpp" />
     <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\CubeMeshPrimitiveLoader.cpp" />
+    <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\PointMeshPrimitiveLoader.cpp" />
     <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\QuadMeshPrimitiveLoader.cpp" />
     <ClCompile Include="Profiler\Profiler.cpp" />
     <ClCompile Include="Renderer\GraphicsDevice.cpp" />
@@ -240,6 +241,7 @@
     <ClInclude Include="Objects\MeshLoader\FileLoader\ObjMeshFileLoader.h" />
     <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\BaseMeshPrimitiveLoader.h" />
     <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\CubeMeshPrimitiveLoader.h" />
+    <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\PointMeshPrimitiveLoader.h" />
     <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\QuadMeshPrimitiveLoader.h" />
     <ClInclude Include="Objects\MeshPrimitiveType.h" />
     <ClInclude Include="Profiler\Profiler.h" />
