@@ -23,7 +23,7 @@ namespace BuD
 
 			std::string m_Name;
 
-			std::shared_ptr<ScopeNode> m_Parent;
+			ScopeNode* m_Parent;
 			std::vector<std::shared_ptr<ScopeNode>> m_Children;
 
 			float Duration() const { return m_ScopeEnded ? (float)(m_EndTime - m_StartTime) : 0.0f; }
@@ -48,21 +48,21 @@ namespace BuD
 		inline static float FrameTime() { return s_PreviousFrameResults ? s_PreviousFrameResults->DurationMs() : 0.0f; }
 
 		static void InOrder(
-			std::function<bool(std::shared_ptr<ScopeNode> node, unsigned int recursionLevel, unsigned int id, unsigned int parentId)> continueRecursionHandler, 
-			std::function<void(std::shared_ptr<ScopeNode> node, unsigned int recursionLevel, unsigned int id, unsigned int parentId)> afterRecursionHandler
+			std::function<bool(ScopeNode* node, unsigned int recursionLevel, unsigned int id, unsigned int parentId)> continueRecursionHandler, 
+			std::function<void(ScopeNode* node, unsigned int recursionLevel, unsigned int id, unsigned int parentId)> afterRecursionHandler
 		);
 
 	private:
 		static void InOrderInner(
-			std::function<bool(std::shared_ptr<ScopeNode> node, unsigned int recursionLevel, unsigned int id, unsigned int parentId)> continueRecursionHandler, 
-			std::function<void(std::shared_ptr<ScopeNode> node, unsigned int recursionLevel, unsigned int id, unsigned int parentId)> afterRecursionHandler, 
-			std::shared_ptr<ScopeNode> node, 
+			std::function<bool(ScopeNode* node, unsigned int recursionLevel, unsigned int id, unsigned int parentId)> continueRecursionHandler, 
+			std::function<void(ScopeNode* node, unsigned int recursionLevel, unsigned int id, unsigned int parentId)> afterRecursionHandler, 
+			ScopeNode* node, 
 			unsigned int recursionLevel,
 			unsigned int selfId
 		);
 
 		inline static bool s_CapturingFrame = false;
-		inline static std::shared_ptr<ScopeNode> s_ActiveProfilerNode = nullptr;
-		inline static std::shared_ptr<ScopeNode> s_PreviousFrameResults = nullptr;
+		inline static ScopeNode* s_ActiveProfilerNode = nullptr;
+		inline static ScopeNode* s_PreviousFrameResults = nullptr;
 	};
 }

@@ -5,15 +5,18 @@ namespace BuD
 {
 	void Profiler::BeginScope(std::string name)
 	{
-		auto profilerNode = std::make_shared<ScopeNode>(name);
-
-		if (s_ActiveProfilerNode)
+		if (!s_ActiveProfilerNode)
 		{
-			profilerNode->m_Parent = s_ActiveProfilerNode;
-			s_ActiveProfilerNode->m_Children.push_back(profilerNode);
+			s_ActiveProfilerNode = new ScopeNode(name);
+			return;
 		}
 
-		s_ActiveProfilerNode = profilerNode;
+		auto profilerNode = std::make_shared<ScopeNode>(name);
+
+		profilerNode->m_Parent = s_ActiveProfilerNode;
+		s_ActiveProfilerNode->m_Children.push_back(profilerNode);
+
+		s_ActiveProfilerNode = profilerNode.get();
 	}
 
 	void Profiler::EndScope()
@@ -31,6 +34,11 @@ namespace BuD
 			s_ActiveProfilerNode = s_ActiveProfilerNode->m_Parent;
 
 			return;
+		}
+
+		if (s_PreviousFrameResults)
+		{
+			delete s_PreviousFrameResults;
 		}
 
 		s_PreviousFrameResults = s_ActiveProfilerNode;
@@ -59,8 +67,8 @@ namespace BuD
 	}
 
 	void Profiler::InOrder(
-		std::function<bool(std::shared_ptr<ScopeNode> node, unsigned int recursionLevel, unsigned int childId, unsigned int parentId)> continueRecursionHandler, 
-		std::function<void(std::shared_ptr<ScopeNode> node, unsigned int recursionLevel, unsigned int childId, unsigned int parentId)> afterRecursionHandler
+		std::function<bool(ScopeNode* node, unsigned int recursionLevel, unsigned int childId, unsigned int parentId)> continueRecursionHandler, 
+		std::function<void(ScopeNode* node, unsigned int recursionLevel, unsigned int childId, unsigned int parentId)> afterRecursionHandler
 	)
 	{
 		if (!s_PreviousFrameResults)
@@ -77,9 +85,9 @@ namespace BuD
 	}
 
 	void Profiler::InOrderInner(
-		std::function<bool(std::shared_ptr<ScopeNode> node, unsigned int recursionLevel, unsigned int childId, unsigned int parentId)> continueRecursionHandler, 
-		std::function<void(std::shared_ptr<ScopeNode> node, unsigned int recursionLevel, unsigned int childId, unsigned int parentId)> afterRecursionHandler, 
-		std::shared_ptr<ScopeNode> node, 
+		std::function<bool(ScopeNode* node, unsigned int recursionLevel, unsigned int childId, unsigned int parentId)> continueRecursionHandler, 
+		std::function<void(ScopeNode* node, unsigned int recursionLevel, unsigned int childId, unsigned int parentId)> afterRecursionHandler, 
+		ScopeNode* node, 
 		unsigned int recursionLevel,
 		unsigned int selfId
 	)
@@ -88,11 +96,11 @@ namespace BuD
 
 		for (auto& child : node->m_Children)
 		{
-			if (continueRecursionHandler(child, recursionLevel, childId, selfId))
+			if (continueRecursionHandler(child.get(), recursionLevel, childId, selfId))
 			{
-				InOrderInner(continueRecursionHandler, afterRecursionHandler, child, recursionLevel + 1, childId);
+				InOrderInner(continueRecursionHandler, afterRecursionHandler, child.get(), recursionLevel + 1, childId);
 
-				afterRecursionHandler(child, recursionLevel, childId, selfId);
+				afterRecursionHandler(child.get(), recursionLevel, childId, selfId);
 			}
 
 			childId++;
@@ -100,7 +108,7 @@ namespace BuD
 	}
 
 	Profiler::ScopeNode::ScopeNode(std::string name)
-		: m_Name(name), m_ScopeEnded(false), m_StartTime(Clock::Now()), m_EndTime(Clock::Now())
+		: m_Name(name), m_ScopeEnded(false), m_StartTime(Clock::Now()), m_EndTime(Clock::Now()), m_Parent(nullptr)
 	{
 	}
 

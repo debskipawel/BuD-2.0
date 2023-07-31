@@ -1,3 +1,4 @@
+#pragma once
 #include <bud_pch.h>
 
 #include <Core/ApplicationCore.h>

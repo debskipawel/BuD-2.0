@@ -6,7 +6,7 @@
 
 namespace BuD
 {
-	std::wstring Timepoint::Format()
+	std::wstring Timepoint::Format() const
 	{
 		auto seconds = static_cast<int>(m_Time);
 		auto minutes = seconds / 60;
@@ -14,7 +14,7 @@ namespace BuD
 		auto millisecs = static_cast<int>((m_Time - seconds) * 1000); 
 
 		wchar_t buffer[15] = {};
-		swprintf_s(buffer, L"[%02d:%02d:%02d:%03d]\0", hours, minutes, seconds, millisecs);
+		swprintf_s(buffer, L"%02d:%02d:%02d:%03d\0", hours, minutes, seconds, millisecs);
 		
 		return std::wstring(buffer);
 	}

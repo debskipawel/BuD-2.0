@@ -172,7 +172,7 @@ public:
 			ImGui::Text(performanceText.c_str());
 
 			BuD::Profiler::InOrder(
-				[](std::shared_ptr<BuD::Profiler::ScopeNode> node, unsigned int recursionLevel, unsigned int childId, unsigned int selfId)
+				[](BuD::Profiler::ScopeNode* node, unsigned int recursionLevel, unsigned int childId, unsigned int selfId)
 				{
 					auto duration = BuD::HelperFunctions::FormatWithPrecision((float)node->DurationMs(), 2);
 					auto text = std::format("{} [{} ms]", node->m_Name, duration);
@@ -185,7 +185,7 @@ public:
 
 					ImGui::Text(text.c_str());
 				},
-				[](std::shared_ptr<BuD::Profiler::ScopeNode> node, unsigned int recursionLevel, unsigned int childId, unsigned int selfId)
+				[](BuD::Profiler::ScopeNode* node, unsigned int recursionLevel, unsigned int childId, unsigned int selfId)
 				{
 					if (node->m_Children.size())
 					{

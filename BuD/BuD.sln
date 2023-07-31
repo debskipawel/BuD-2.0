@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTK_Desktop_2022", "D
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{B1D00960-77C7-4019-9C28-089AD52D01D5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BuD-CAD", "BuD-CAD\BuD-CAD.vcxproj", "{E722D7F4-699F-4BD4-A85F-C26ADA28BB57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -53,6 +55,14 @@ Global
 		{B1D00960-77C7-4019-9C28-089AD52D01D5}.Release|x64.Build.0 = Release|x64
 		{B1D00960-77C7-4019-9C28-089AD52D01D5}.Release|x86.ActiveCfg = Release|Win32
 		{B1D00960-77C7-4019-9C28-089AD52D01D5}.Release|x86.Build.0 = Release|Win32
+		{E722D7F4-699F-4BD4-A85F-C26ADA28BB57}.Debug|x64.ActiveCfg = Debug|x64
+		{E722D7F4-699F-4BD4-A85F-C26ADA28BB57}.Debug|x64.Build.0 = Debug|x64
+		{E722D7F4-699F-4BD4-A85F-C26ADA28BB57}.Debug|x86.ActiveCfg = Debug|Win32
+		{E722D7F4-699F-4BD4-A85F-C26ADA28BB57}.Debug|x86.Build.0 = Debug|Win32
+		{E722D7F4-699F-4BD4-A85F-C26ADA28BB57}.Release|x64.ActiveCfg = Release|x64
+		{E722D7F4-699F-4BD4-A85F-C26ADA28BB57}.Release|x64.Build.0 = Release|x64
+		{E722D7F4-699F-4BD4-A85F-C26ADA28BB57}.Release|x86.ActiveCfg = Release|Win32
+		{E722D7F4-699F-4BD4-A85F-C26ADA28BB57}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
