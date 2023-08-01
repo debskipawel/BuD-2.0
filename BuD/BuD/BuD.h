@@ -1,5 +1,8 @@
 #pragma once
 
+#include <Core/ApplicationCore.h>
+#include <Core/AppLayer.h>
+
 #include <Event/KeyboardEvents.h>
 #include <Event/MouseEvents.h>
 #include <Event/WindowEvents.h>
@@ -14,5 +17,3 @@
 #include <Utils/Random.h>
 #include <Utils/Log.h>
 #include <Utils/HelperFunctions.h>
-
-#include <Core/EntryPoint.h>

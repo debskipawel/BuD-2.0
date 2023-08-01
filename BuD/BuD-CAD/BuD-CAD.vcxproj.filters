@@ -18,9 +18,21 @@
     <ClInclude Include="ApplicationCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GuiLayerCAD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewModels\MainViewModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewModels\ViewportViewModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiLayerCAD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
