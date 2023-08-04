@@ -161,6 +161,7 @@
     <ClCompile Include="Buffers\IndexBuffer.cpp" />
     <ClCompile Include="Buffers\InstanceBuffer.cpp" />
     <ClCompile Include="Camera\Frustum.cpp" />
+    <ClCompile Include="Layout\HlslTypeMap.cpp" />
     <ClCompile Include="Layout\InputLayout.cpp" />
     <ClCompile Include="Buffers\VertexBuffer.cpp" />
     <ClCompile Include="Camera\OrbitCamera.cpp" />

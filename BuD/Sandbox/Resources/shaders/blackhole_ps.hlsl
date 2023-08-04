@@ -36,7 +36,12 @@ struct Ray
 };
 
 TextureCube colorMap : register(t0);
-SamplerState colorSampler : register(s0);
+SamplerState colorSampler
+{
+    Filter = MIN_MAG_MIP_LINEAR;
+    AddressU = Wrap;
+    AddressV = Wrap;
+};
 
 cbuffer blackHole : register(b0)
 {

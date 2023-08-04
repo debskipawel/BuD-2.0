@@ -8,10 +8,13 @@
 #include <Event/WindowEvents.h>
 
 #include <Objects/MeshLoader/MeshLoader.h>
+#include <Objects/Interfaces/IRenderable.h>
 
 #include <Profiler/Profiler.h>
 
 #include <Renderer/Renderer.h>
+
+#include <Shaders/Loader/ShaderLoader.h>
 
 #include <Utils/Clock.h>
 #include <Utils/Random.h>

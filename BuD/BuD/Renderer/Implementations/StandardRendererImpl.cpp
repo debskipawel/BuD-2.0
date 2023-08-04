@@ -11,7 +11,7 @@ namespace BuD
 	StandardRendererImpl::StandardRendererImpl(std::shared_ptr<GraphicsDevice> device)
 		: BaseRendererImpl(device), m_DrawCallsThisFrame(), m_InstancesDrawnThisFrame()
 	{
-		m_InstanceBuffer = std::make_shared<InstanceBuffer>(0, nullptr);
+		m_InstanceBuffer = std::make_shared<InstanceBuffer>(64, nullptr);
 	}
 
 	dxm::Matrix StandardRendererImpl::ProjectionMatrix()
