@@ -5,6 +5,8 @@
 #include "SceneObjectCAD.h"
 #include "CompositeSceneObject.h"
 
+#include <Objects/Grid.h>
+
 class SceneCAD
 {
 public:
@@ -16,4 +18,7 @@ public:
 	CompositeSceneObject m_SelectedGroup;
 
 	BuD::Scene m_Scene;
+	
+protected:
+	std::unique_ptr<Grid> m_Grid;
 };

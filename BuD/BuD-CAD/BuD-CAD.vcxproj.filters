@@ -90,6 +90,9 @@
     <ClInclude Include="Components\TransformComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Grid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -140,6 +143,9 @@
     <ClCompile Include="GUI\Properties\ObjectGuiDrawerVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Grid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Torus\torus_instanced_vs.hlsl" />
@@ -148,5 +154,7 @@
     <FxCompile Include="Resources\Shaders\Torus\torus_instanced_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\Cube\cube_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\Cube\cube_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\Grid\grid_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\Grid\grid_ps.hlsl" />
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@
 SceneCAD::SceneCAD()
 	: m_Scene(), m_ObjectList()
 {
+	m_Grid = std::make_unique<Grid>(m_Scene);
 }
 
 std::shared_ptr<SceneObjectCAD> SceneCAD::CreateTorus(dxm::Vector3 position)
