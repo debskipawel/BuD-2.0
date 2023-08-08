@@ -2,6 +2,8 @@
 
 #include <BuD.h>
 
+#include <Components/TransformComponent.h>
+
 class AbstractVisitor;
 
 class SceneObjectCAD
@@ -13,6 +15,12 @@ public:
 
 	virtual ~SceneObjectCAD() = default;
 
+	uint32_t Id() const { return m_SceneEntity.Id(); }
+
 	BuD::SceneEntity m_SceneEntity;
+	
 	std::string m_Tag;
+
+	bool m_Selected;
+	TransformComponent m_Transform;
 };

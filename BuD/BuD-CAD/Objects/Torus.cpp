@@ -3,27 +3,28 @@
 #include <Visitors/AbstractVisitor.h>
 
 Torus::Torus(BuD::Scene& scene)
-	: Torus(scene, dxm::Vector3::Zero, dxm::Vector3::UnitZ)
+	: Torus(scene, dxm::Vector3::Zero)
 {
 }
 
-Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, dxm::Vector3 orientation)
-	: Torus(scene, position, orientation, 3.0f, 1.0f)
+Torus::Torus(BuD::Scene& scene, dxm::Vector3 position)
+	: Torus(scene, position, 3.0f, 1.0f)
 {
 }
 
-Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, dxm::Vector3 orientation, float outerRadius, float innerRadius)
-	: Torus(scene, position, orientation, outerRadius, innerRadius, 30, 15)
+Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, float outerRadius, float innerRadius)
+	: Torus(scene, position, outerRadius, innerRadius, 30, 15)
 {
 }
 
-Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, dxm::Vector3 orientation, float outerRadius, float innerRadius, unsigned int segmentsU, unsigned int segmentsV)
+Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, float outerRadius, float innerRadius, unsigned int segmentsU, unsigned int segmentsV)
 	: SceneObjectCAD(scene)
 {
 	m_Tag = "Torus";
 
-	m_InstanceData.m_Position = position;
-	m_InstanceData.m_Orientation = orientation;
+	m_Transform.m_Position = position;
+	m_InstanceData.m_ModelMatrix = dxm::Matrix::CreateTranslation(m_Transform.m_Position);
+
 	m_InstanceData.m_InnerRadius = innerRadius;
 	m_InstanceData.m_OuterRadius = outerRadius;
 	m_InstanceData.m_SegmentsU = segmentsU;
@@ -34,10 +35,12 @@ Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, dxm::Vector3 orientation,
 	auto pointMesh = meshLoader.LoadPrimitiveMesh(
 		BuD::MeshPrimitiveType::POINT,
 		{
-			{ "INS_POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
-			{ "INS_ORIENTATION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 3 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
-			{ "INS_RADIUS", 0, DXGI_FORMAT_R32G32_FLOAT, 1, 6 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
-			{ "INS_SEGMENTS", 0, DXGI_FORMAT_R32G32_UINT, 1, 8 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_MODEL_X", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_MODEL_Y", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 4 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1},
+			{ "INS_MODEL_Z", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 8 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_MODEL_W", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 12 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_RADIUS", 0, DXGI_FORMAT_R32G32_FLOAT, 1, 16 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_SEGMENTS", 0, DXGI_FORMAT_R32G32_UINT, 1, 18 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 		}
 	);
 

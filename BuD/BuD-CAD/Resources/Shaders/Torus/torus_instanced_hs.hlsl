@@ -1,16 +1,14 @@
 struct HSInput
 {
     float4 pos : SV_Position;
-    float3 insPos : INS_POSITION;
-    float3 insOrientation : INS_ORIENTATION;
+    matrix model : INS_MODEL;
     float2 radius : INS_RADIUS;
     uint2 segments : INS_SEGMENTS;
 };
 
 struct HS_CONTROL_POINT_OUTPUT
 {
-    float3 insPos : INS_POSITION;
-    float3 insOrientation : INS_ORIENTATION;
+    matrix model : INS_MODEL;
     float2 radius : INS_RADIUS;
 };
 
@@ -49,8 +47,7 @@ HS_CONTROL_POINT_OUTPUT main(
 {
 	HS_CONTROL_POINT_OUTPUT Output;
 
-    Output.insPos = ip[i].insPos;
-    Output.insOrientation = ip[i].insOrientation;
+    Output.model = ip[i].model;
     Output.radius = ip[i].radius;
 
 	return Output;

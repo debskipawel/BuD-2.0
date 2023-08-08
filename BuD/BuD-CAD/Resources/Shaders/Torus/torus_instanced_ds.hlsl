@@ -14,8 +14,7 @@ struct DS_OUTPUT
 
 struct HS_CONTROL_POINT_OUTPUT
 {
-    float3 insPos : INS_POSITION;
-    float3 insOrientation : INS_ORIENTATION;
+    matrix model : INS_MODEL;
     float2 radius : INS_RADIUS;
 };
 
@@ -51,19 +50,10 @@ DS_OUTPUT main(
     float3 dt = float3(-r * cp * st, -r * sp * st, -r * ct);
     float3 normal = cross(dp, dt);
 	
-    // scale
-    
-    // rotation
-    float3 origin = float3(0.0, 1.0, 0.0);
-    float3 orientation = normalize(patch[0].insOrientation);
-    
-    float3 rotationAxis = cross(origin, orientation);
-    float rotationAngle = dot(origin, orientation);
-    
-    // translation
-    position += patch[0].insPos;
+    // world position
+    float4 worldPos = mul(patch[0].model, float4(position, 1.0));
 	
-    Output.position = mul(projMtx, mul(viewMtx, float4(position, 1.0)));
+    Output.position = mul(projMtx, mul(viewMtx, worldPos));
     Output.normal = normalize(normal);
 	
 	return Output;

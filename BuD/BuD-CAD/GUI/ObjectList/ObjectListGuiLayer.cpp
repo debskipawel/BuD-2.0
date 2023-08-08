@@ -21,8 +21,18 @@ void ObjectListGuiLayer::DrawGui()
 			{
 				auto& cadObject = objectList[i];
 
-				auto id = std::format("{} {}", cadObject->m_Tag, i);
-				ImGui::Selectable(id.c_str());
+				auto id = std::format("{}, id: {}", cadObject->m_Tag, i);
+				
+				auto selected = cadObject->m_Selected;
+
+				ImGui::Selectable(id.c_str(), &cadObject->m_Selected);
+
+				if (selected != cadObject->m_Selected)
+				{
+					auto& composite = m_ViewModel.m_Scene.m_SelectedGroup;
+
+					cadObject->m_Selected ? composite.Add(cadObject) : composite.Remove(cadObject);
+				}
 			}
 		}
 

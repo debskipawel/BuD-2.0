@@ -10,7 +10,7 @@ SceneCAD::SceneCAD()
 
 std::shared_ptr<SceneObjectCAD> SceneCAD::CreateTorus(dxm::Vector3 position)
 {
-	auto torus = std::make_shared<Torus>(m_Scene, position, dxm::Vector3::UnitZ);
+	auto torus = std::make_shared<Torus>(m_Scene, position);
 	m_ObjectList.push_back(torus);
 
 	return torus;

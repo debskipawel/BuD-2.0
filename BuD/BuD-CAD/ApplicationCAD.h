@@ -4,6 +4,7 @@
 #include <Core/EntryPoint.h>
 
 #include <GUI/MainGuiLayer.h>
+#include <Scene/SceneCAD.h>
 #include <ViewModels/MainViewModel.h>
 
 class ApplicationCAD : public BuD::AppLayer
@@ -26,6 +27,7 @@ public:
 private:
 	std::unique_ptr<MainGuiLayer> m_GuiLayer;
 
+	SceneCAD m_Scene;
 	MainViewModel m_ViewModel;
 	bool m_MoveMouse;
 	bool m_InAction;

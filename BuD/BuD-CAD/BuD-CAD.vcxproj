@@ -170,22 +170,26 @@
     <ClInclude Include="ApplicationCAD.h" />
     <ClInclude Include="AppState.h" />
     <ClInclude Include="Behaviors\MouseBehaviorLayer.h" />
+    <ClInclude Include="Components\TransformComponent.h" />
     <ClInclude Include="GUI\AppState\AppStateGuiLayer.h" />
     <ClInclude Include="GUI\BaseGuiLayer.h" />
     <ClInclude Include="GUI\Console\ConsoleGuiLayer.h" />
     <ClInclude Include="GUI\MainGuiLayer.h" />
     <ClInclude Include="GUI\ObjectList\ObjectListGuiLayer.h" />
+    <ClInclude Include="GUI\Properties\ObjectGuiDrawerVisitor.h" />
     <ClInclude Include="GUI\Properties\PerformanceGuiLayer.h" />
     <ClInclude Include="GUI\Properties\PropertiesGuiLayer.h" />
     <ClInclude Include="GUI\Viewport\ViewportGuiLayer.h" />
     <ClInclude Include="Objects\Cube.h" />
     <ClInclude Include="Objects\Torus.h" />
+    <ClInclude Include="Scene\CompositeSceneObject.h" />
     <ClInclude Include="Scene\SceneCAD.h" />
     <ClInclude Include="Scene\SceneObjectCAD.h" />
     <ClInclude Include="ViewModels\AppStateViewModel.h" />
     <ClInclude Include="AxisLock.h" />
     <ClInclude Include="ViewModels\MainViewModel.h" />
     <ClInclude Include="ViewModels\ObjectListViewModel.h" />
+    <ClInclude Include="ViewModels\PropertiesViewModel.h" />
     <ClInclude Include="ViewModels\ViewportViewModel.h" />
     <ClInclude Include="Visitors\AbstractVisitor.h" />
   </ItemGroup>
@@ -195,13 +199,16 @@
     <ClCompile Include="GUI\Console\ConsoleGuiLayer.cpp" />
     <ClCompile Include="GUI\MainGuiLayer.cpp" />
     <ClCompile Include="GUI\ObjectList\ObjectListGuiLayer.cpp" />
+    <ClCompile Include="GUI\Properties\ObjectGuiDrawerVisitor.cpp" />
     <ClCompile Include="GUI\Properties\PerformanceGuiLayer.cpp" />
     <ClCompile Include="GUI\Properties\PropertiesGuiLayer.cpp" />
     <ClCompile Include="GUI\Viewport\ViewportGuiLayer.cpp" />
     <ClCompile Include="Objects\Cube.cpp" />
     <ClCompile Include="Objects\Torus.cpp" />
+    <ClCompile Include="Scene\CompositeSceneObject.cpp" />
     <ClCompile Include="Scene\SceneCAD.cpp" />
     <ClCompile Include="Scene\SceneObjectCAD.cpp" />
+    <ClCompile Include="ViewModels\MainViewModel.cpp" />
     <ClCompile Include="Visitors\AbstractVisitor.cpp" />
   </ItemGroup>
   <ItemGroup>

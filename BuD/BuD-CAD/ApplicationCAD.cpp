@@ -4,6 +4,7 @@
 #include <string>
 
 ApplicationCAD::ApplicationCAD()
+	: m_Scene(), m_ViewModel(m_Scene)
 {
 	m_GuiLayer = std::make_unique<MainGuiLayer>(m_ViewModel);
 
@@ -23,11 +24,11 @@ ApplicationCAD::ApplicationCAD()
 		}
 	);
 
-	auto torusCount = 1000;
+	constexpr auto torusCount = 8;
 	for (int i = 0; i < torusCount; i++)
 	{
 		auto position = dxm::Vector3::Zero + 2 * (i - torusCount / 2) * dxm::Vector3::UnitZ;
-		m_ViewModel.m_ObjectListViewModel.m_Scene.CreateTorus(position);
+		m_Scene.CreateTorus(position);
 	}
 }
 
@@ -42,7 +43,7 @@ void ApplicationCAD::OnRender()
 	BuD::Renderer::BeginTarget(viewportVM.m_ViewportWidth, viewportVM.m_ViewportHeight);
 	BuD::Renderer::Clear(0.0f, 0.0f, 0.0f, 1.0f);
 
-	auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
+	auto& scene = m_Scene;
 
 	BuD::Renderer::Render(scene.m_Scene);
 
@@ -58,7 +59,7 @@ void ApplicationCAD::OnConcreteEvent(BuD::MouseMovedEvent& e)
 {
 	if (m_MoveMouse)
 	{
-		auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene.m_Scene;
+		auto& scene = m_Scene.m_Scene;
 		auto camera = scene.ActiveCamera();
 
 		camera->RotateCamera(0.005 * e.m_OffsetX, 0.005 * e.m_OffsetY);
@@ -95,7 +96,7 @@ void ApplicationCAD::OnConcreteEvent(BuD::MouseButtonReleasedEvent& e)
 
 void ApplicationCAD::OnConcreteEvent(BuD::MouseScrolledEvent& e)
 {
-	auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene.m_Scene;
+	auto& scene = m_Scene.m_Scene;
 	auto camera = scene.ActiveCamera();
 
 	camera->Zoom(-0.03f * e.m_WheelDelta);
