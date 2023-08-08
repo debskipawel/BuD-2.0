@@ -1,6 +1,7 @@
 #include "bud_pch.h"
 #include "BaseRendererImpl.h"
 
+#include <Renderer/Structures/RasterizerDesc.h>
 #include <Utils/Log.h>
 
 namespace BuD
@@ -28,11 +29,39 @@ namespace BuD
 		context->IASetIndexBuffer(ib->Get(), ib->Format(), 0);
 		context->IASetPrimitiveTopology(ib->Topology());
 
+		SetupRasterizerState(renderingPass.m_RasterizerDescription);
 		SetupShaderPipeline(pipeline);
 
 		context->DrawIndexed(ib->Count(), 0, 0);
 
 		CleanAfterDrawing();
+	}
+
+	void BaseRendererImpl::SetupRasterizerState(RasterizerDescription rasterizerDescription)
+	{
+		auto& context = m_Device->Context();
+		auto result = m_RasterizerStates.find(rasterizerDescription);
+
+		if (result != m_RasterizerStates.end())
+		{
+			auto rastState = result->second.Get();
+
+			context->RSSetState(rastState);
+			return;
+		}
+
+		auto device = m_Device->Device();
+		
+		RasterizerDesc rasterizerDesc;
+		rasterizerDesc.CullMode = s_CullModeMap.at(rasterizerDescription.m_CullType);
+		rasterizerDesc.FillMode = s_FillModeMap.at(rasterizerDescription.m_FillMode);
+
+		ComPtr<ID3D11RasterizerState> state;
+		auto hr = device->CreateRasterizerState(&rasterizerDesc, state.GetAddressOf());
+
+		context->RSSetState(state.Get());
+
+		m_RasterizerStates.emplace(rasterizerDescription, state);
 	}
 
 	void BaseRendererImpl::SetupShaderPipeline(const ShaderPipeline& pipeline)
@@ -94,4 +123,17 @@ namespace BuD
 		context->HSSetShader(nullptr, nullptr, 0);
 		context->DSSetShader(nullptr, nullptr, 0);
 	}
+
+	std::unordered_map<CullType, D3D11_CULL_MODE> BaseRendererImpl::s_CullModeMap =
+	{
+		{ CullType::BACK, D3D11_CULL_BACK },
+		{ CullType::FRONT, D3D11_CULL_FRONT },
+		{ CullType::NONE, D3D11_CULL_NONE },
+	};
+
+	std::unordered_map<FillMode, D3D11_FILL_MODE> BaseRendererImpl::s_FillModeMap =
+	{
+		{ FillMode::SOLID, D3D11_FILL_SOLID },
+		{ FillMode::WIREFRAME, D3D11_FILL_WIREFRAME },
+	};
 }

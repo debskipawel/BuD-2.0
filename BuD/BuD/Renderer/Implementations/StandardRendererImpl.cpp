@@ -126,6 +126,7 @@ namespace BuD
 				context->IASetIndexBuffer(ib->Get(), ib->Format(), 0);
 				context->IASetPrimitiveTopology(ib->Topology());
 
+				SetupRasterizerState(renderingPass.m_RasterizerDescription);
 				SetupShaderPipeline(renderingPass.m_Pipeline);
 
 				context->DrawIndexedInstanced(ib->Count(), rawInstanceData.Count(), 0, 0, 0);

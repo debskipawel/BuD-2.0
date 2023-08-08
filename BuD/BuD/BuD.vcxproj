@@ -187,6 +187,7 @@
     <ClCompile Include="Renderer\InstanceData.cpp" />
     <ClCompile Include="Renderer\InstanceRenderQueue\InstanceRenderQueue.cpp" />
     <ClCompile Include="Renderer\PixDebugLayer.cpp" />
+    <ClCompile Include="Renderer\RasterizerDescription.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\RenderingPass.cpp" />
     <ClCompile Include="Renderer\RenderTarget.cpp" />
@@ -253,12 +254,14 @@
     <ClInclude Include="Objects\Interfaces\IRenderable.h" />
     <ClInclude Include="Renderer\InstanceData.h" />
     <ClInclude Include="Renderer\InstanceRenderQueue\InstanceRenderQueue.h" />
+    <ClInclude Include="Renderer\RasterizerDescription.h" />
     <ClInclude Include="Renderer\RendererFrameStats.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\RenderingPass.h" />
     <ClInclude Include="Renderer\RenderTarget.h" />
     <ClInclude Include="Renderer\ShaderPipeline.h" />
     <ClInclude Include="Renderer\Structures\BufferDesc.h" />
+    <ClInclude Include="Renderer\Structures\RasterizerDesc.h" />
     <ClInclude Include="Renderer\Structures\SwapchainDesc.h" />
     <ClInclude Include="Renderer\Structures\Texture2DDesc.h" />
     <ClInclude Include="Renderer\Structures\ViewportDesc.h" />

@@ -65,6 +65,8 @@ Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, float outerRadius, float 
 	renderingPass.m_Pipeline = pipeline;
 	renderingPass.m_Instancing = instancing;
 
+	renderingPass.m_RasterizerDescription.m_FillMode = BuD::FillMode::WIREFRAME;
+
 	renderingPass.m_PreRenderCallback = [](const BuD::RenderingPass& renderingPass, const BuD::Scene& scene)
 	{
 		auto camera = scene.ActiveCamera();
