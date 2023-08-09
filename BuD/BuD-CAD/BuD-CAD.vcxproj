@@ -169,7 +169,9 @@
   <ItemGroup>
     <ClInclude Include="ApplicationCAD.h" />
     <ClInclude Include="AppState.h" />
-    <ClInclude Include="Behaviors\MouseBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Keyboard\KeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Mouse\MouseBehaviorLayer.h" />
+    <ClInclude Include="Raycasting\RayFactory.h" />
     <ClInclude Include="Components\TransformComponent.h" />
     <ClInclude Include="GUI\AppState\AppStateGuiLayer.h" />
     <ClInclude Include="GUI\BaseGuiLayer.h" />
@@ -179,10 +181,12 @@
     <ClInclude Include="GUI\Properties\ObjectGuiDrawerVisitor.h" />
     <ClInclude Include="GUI\Properties\PerformanceGuiLayer.h" />
     <ClInclude Include="GUI\Properties\PropertiesGuiLayer.h" />
+    <ClInclude Include="Raycasting\RayIntersectionVisitor.h" />
     <ClInclude Include="GUI\Viewport\ViewportGuiLayer.h" />
-    <ClInclude Include="Objects\Cube.h" />
-    <ClInclude Include="Objects\Grid.h" />
-    <ClInclude Include="Objects\Torus.h" />
+    <ClInclude Include="Objects\Additional\Cube.h" />
+    <ClInclude Include="Objects\Additional\Grid.h" />
+    <ClInclude Include="Raycasting\Ray.h" />
+    <ClInclude Include="Objects\CAD\Torus.h" />
     <ClInclude Include="Scene\CompositeSceneObject.h" />
     <ClInclude Include="Scene\SceneCAD.h" />
     <ClInclude Include="Scene\SceneObjectCAD.h" />
@@ -196,6 +200,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\KeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Mouse\MouseBehaviorLayer.cpp" />
+    <ClCompile Include="Raycasting\RayFactory.cpp" />
     <ClCompile Include="GUI\AppState\AppStateGuiLayer.cpp" />
     <ClCompile Include="GUI\Console\ConsoleGuiLayer.cpp" />
     <ClCompile Include="GUI\MainGuiLayer.cpp" />
@@ -203,10 +210,11 @@
     <ClCompile Include="GUI\Properties\ObjectGuiDrawerVisitor.cpp" />
     <ClCompile Include="GUI\Properties\PerformanceGuiLayer.cpp" />
     <ClCompile Include="GUI\Properties\PropertiesGuiLayer.cpp" />
+    <ClCompile Include="Raycasting\RayIntersectionVisitor.cpp" />
     <ClCompile Include="GUI\Viewport\ViewportGuiLayer.cpp" />
-    <ClCompile Include="Objects\Cube.cpp" />
-    <ClCompile Include="Objects\Grid.cpp" />
-    <ClCompile Include="Objects\Torus.cpp" />
+    <ClCompile Include="Objects\Additional\Cube.cpp" />
+    <ClCompile Include="Objects\Additional\Grid.cpp" />
+    <ClCompile Include="Objects\CAD\Torus.cpp" />
     <ClCompile Include="Scene\CompositeSceneObject.cpp" />
     <ClCompile Include="Scene\SceneCAD.cpp" />
     <ClCompile Include="Scene\SceneObjectCAD.cpp" />

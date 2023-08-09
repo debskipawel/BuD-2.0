@@ -1,14 +1,14 @@
 #pragma once
 
-#include <Scene/CompositeSceneObject.h>
+#include <Scene/SceneCAD.h>
 
 struct PropertiesViewModel
 {
 public:
-	PropertiesViewModel(CompositeSceneObject& selectedObjects)
-		: m_SelectedObjects(selectedObjects)
+	PropertiesViewModel(SceneCAD& scene)
+		: m_SceneCAD(scene)
 	{
 	}
 
-	CompositeSceneObject& m_SelectedObjects;
+	SceneCAD& m_SceneCAD;
 };

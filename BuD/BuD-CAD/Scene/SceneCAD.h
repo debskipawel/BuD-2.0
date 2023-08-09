@@ -5,16 +5,19 @@
 #include "SceneObjectCAD.h"
 #include "CompositeSceneObject.h"
 
-#include <Objects/Grid.h>
+#include <Objects/Additional/Grid.h>
 
 class SceneCAD
 {
 public:
 	SceneCAD();
+	~SceneCAD();
+
+	void DeleteObject(SceneObjectCAD& object);
 
 	std::shared_ptr<SceneObjectCAD> CreateTorus(dxm::Vector3 position);
 
-	std::vector<std::shared_ptr<SceneObjectCAD>> m_ObjectList;
+	std::map<uint32_t, std::shared_ptr<SceneObjectCAD>> m_ObjectList;
 	CompositeSceneObject m_SelectedGroup;
 
 	BuD::Scene m_Scene;

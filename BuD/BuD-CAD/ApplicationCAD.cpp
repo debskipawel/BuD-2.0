@@ -7,6 +7,8 @@ ApplicationCAD::ApplicationCAD()
 	: m_Scene(), m_ViewModel(m_Scene)
 {
 	m_GuiLayer = std::make_unique<MainGuiLayer>(m_ViewModel);
+	m_MouseBehaviorLayer = std::make_unique<MouseBehaviorLayer>(m_ViewModel);
+	m_KeyboardBehaviorLayer = std::make_unique<KeyboardBehaviorLayer>(m_ViewModel);
 
 	auto currentPath = std::filesystem::current_path();
 
@@ -57,74 +59,72 @@ void ApplicationCAD::OnGuiRender()
 
 void ApplicationCAD::OnConcreteEvent(BuD::MouseMovedEvent& e)
 {
-	if (m_MoveMouse)
-	{
-		auto& scene = m_Scene.m_Scene;
-		auto camera = scene.ActiveCamera();
-
-		camera->RotateCamera(0.005 * e.m_OffsetX, 0.005 * e.m_OffsetY);
-	}
+	m_MouseBehaviorLayer->OnMouseMove(e.m_OffsetX, e.m_OffsetY);
 }
 
 void ApplicationCAD::OnConcreteEvent(BuD::MouseButtonDownEvent& e)
 {
-	if (e.m_Button == BuD::MouseCode::MIDDLE)
+	switch (e.m_Button)
 	{
-		m_MoveMouse = true;
-	}
-
-	auto& appState = m_ViewModel.m_AppStateViewModel;
-
-	if (e.m_Button == BuD::MouseCode::LEFT && appState.m_AppState != AppState::IDLE)
-	{
-		m_InAction = true;
+		case BuD::MouseCode::LEFT:
+		{
+			m_MouseBehaviorLayer->OnLeftButtonDown(e.m_PosX, e.m_PosY);
+			break;
+		}
+		case BuD::MouseCode::MIDDLE:
+		{
+			m_MouseBehaviorLayer->OnMiddleButtonDown(e.m_PosX, e.m_PosY);
+			break;
+		}
+		case BuD::MouseCode::RIGHT:
+		{
+			m_MouseBehaviorLayer->OnRightButtonDown(e.m_PosX, e.m_PosY);
+			break;
+		}
+		default:
+		{
+			break;
+		}
 	}
 }
 
 void ApplicationCAD::OnConcreteEvent(BuD::MouseButtonReleasedEvent& e)
 {
-	if (e.m_Button == BuD::MouseCode::MIDDLE)
+	switch (e.m_Button)
 	{
-		m_MoveMouse = false;
-	}
-
-	if (e.m_Button == BuD::MouseCode::LEFT)
-	{
-		m_InAction = false;
+		case BuD::MouseCode::LEFT:
+		{
+			m_MouseBehaviorLayer->OnLeftButtonUp(e.m_PosX, e.m_PosY);
+			break;
+		}
+		case BuD::MouseCode::MIDDLE:
+		{
+			m_MouseBehaviorLayer->OnMiddleButtonUp(e.m_PosX, e.m_PosY);
+			break;
+		}
+		case BuD::MouseCode::RIGHT:
+		{
+			m_MouseBehaviorLayer->OnRightButtonUp(e.m_PosX, e.m_PosY);
+			break;
+		}
+		default:
+		{
+			break;
+		}
 	}
 }
 
 void ApplicationCAD::OnConcreteEvent(BuD::MouseScrolledEvent& e)
 {
-	auto& scene = m_Scene.m_Scene;
-	auto camera = scene.ActiveCamera();
-
-	camera->Zoom(-0.03f * e.m_WheelDelta);
+	m_MouseBehaviorLayer->OnScroll(e.m_PosX, e.m_PosY, e.m_WheelDelta);
 }
 
 void ApplicationCAD::OnConcreteEvent(BuD::KeyDownEvent& e)
 {
-	if (!m_InAction)
-	{
-		std::map<BuD::KeyboardKeys, AppState> stateMap =
-		{
-			{ BuD::KeyboardKeys::D1, AppState::IDLE },
-			{ BuD::KeyboardKeys::D2, AppState::MOVE },
-			{ BuD::KeyboardKeys::D3, AppState::ROTATE },
-			{ BuD::KeyboardKeys::D4, AppState::SCALE },
-		};
-
-		for (auto& [key, state] : stateMap)
-		{
-			if (key == e.m_Key)
-			{
-				m_ViewModel.m_AppStateViewModel.m_AppState = state;
-				break;
-			}
-		}
-	}
+	m_KeyboardBehaviorLayer->OnKeyPress(e.m_Key);
 }
 
 void ApplicationCAD::OnConcreteEvent(BuD::KeyReleaseEvent& e)
 {
+	m_KeyboardBehaviorLayer->OnKeyRelease(e.m_Key);
 }

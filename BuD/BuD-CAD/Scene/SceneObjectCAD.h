@@ -10,10 +10,13 @@ class SceneObjectCAD
 {
 public:
 	SceneObjectCAD(BuD::Scene& scene);
+	virtual ~SceneObjectCAD();
+
+	virtual void OnDelete() {}
+	virtual void OnSelect() {}
+	virtual void OnUnselect() {}
 
 	virtual void Accept(AbstractVisitor& visitor) = 0;
-
-	virtual ~SceneObjectCAD() = default;
 
 	uint32_t Id() const { return m_SceneEntity.Id(); }
 

@@ -3,6 +3,8 @@
 #include <BuD.h>
 #include <Core/EntryPoint.h>
 
+#include <Behaviors/Mouse/MouseBehaviorLayer.h>
+#include <Behaviors/Keyboard/KeyboardBehaviorLayer.h>
 #include <GUI/MainGuiLayer.h>
 #include <Scene/SceneCAD.h>
 #include <ViewModels/MainViewModel.h>
@@ -26,11 +28,11 @@ public:
 
 private:
 	std::unique_ptr<MainGuiLayer> m_GuiLayer;
+	std::unique_ptr<MouseBehaviorLayer> m_MouseBehaviorLayer;
+	std::unique_ptr<KeyboardBehaviorLayer> m_KeyboardBehaviorLayer;
 
 	SceneCAD m_Scene;
 	MainViewModel m_ViewModel;
-	bool m_MoveMouse;
-	bool m_InAction;
 };
 
 std::shared_ptr<BuD::AppLayer> BuD::CreateClientApp()

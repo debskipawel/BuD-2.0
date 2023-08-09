@@ -1,23 +1,23 @@
 #include "CompositeSceneObject.h"
 
-void CompositeSceneObject::Add(std::shared_ptr<SceneObjectCAD> object)
+void CompositeSceneObject::Add(std::weak_ptr<SceneObjectCAD> object)
 {
-	if (m_Objects.find(object->Id()) != m_Objects.end())
+	auto objectShared = object.lock();
+
+	if (m_Objects.find(objectShared->Id()) != m_Objects.end())
 	{
 		return;
 	}
 
-	m_Objects.insert({ object->Id(), object});
+	m_Objects.emplace(objectShared->Id(), object);
 }
 
-void CompositeSceneObject::Remove(std::shared_ptr<SceneObjectCAD> object)
+void CompositeSceneObject::Remove(uint32_t objectId)
 {
-	m_Objects.erase(object->Id());
+	m_Objects.erase(objectId);
 }
 
-bool CompositeSceneObject::Has(std::shared_ptr<SceneObjectCAD> object)
+bool CompositeSceneObject::Has(uint32_t objectId)
 {
-	auto id = object->Id();
-
-	return m_Objects.find(id) != m_Objects.end();
+	return m_Objects.find(objectId) != m_Objects.end();
 }

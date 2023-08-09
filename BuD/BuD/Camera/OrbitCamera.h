@@ -30,7 +30,7 @@ namespace BuD
 
 		dxm::Vector3 m_Target;
 
-		float m_AngleX, m_AngleZ;
+		float m_AngleX, m_AngleY;
 		float m_Distance, m_MinDistance, m_MaxDistance;
 	};
 }

@@ -2,8 +2,8 @@
 
 #include <Scene/SceneObjectCAD.h>
 
-#include <Objects/Torus.h>
-#include <Objects/Cube.h>
+#include <Objects/CAD/Torus.h>
+#include <Objects/Additional/Cube.h>
 
 class AbstractVisitor
 {

@@ -17,9 +17,16 @@ void ObjectListGuiLayer::DrawGui()
 
 		while (clipper.Step())
 		{
+			auto objectPair = objectList.begin();
+
+			for (int i = 0; i < clipper.DisplayStart; i++)
+			{
+				objectPair++;
+			}
+
 			for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
 			{
-				auto& cadObject = objectList[i];
+				auto& cadObject = objectPair->second;
 
 				auto id = std::format("{}, id: {}", cadObject->m_Tag, i);
 				
@@ -31,7 +38,7 @@ void ObjectListGuiLayer::DrawGui()
 				{
 					auto& composite = m_ViewModel.m_Scene.m_SelectedGroup;
 
-					cadObject->m_Selected ? composite.Add(cadObject) : composite.Remove(cadObject);
+					cadObject->m_Selected ? composite.Add(cadObject) : composite.Remove(cadObject->Id());
 				}
 			}
 		}

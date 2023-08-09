@@ -11,12 +11,15 @@ void ViewportGuiLayer::DrawGui()
 {
 	if (ImGui::Begin("Viewport"))
 	{
+		auto windowPosition = ImGui::GetWindowPos();
+		m_ViewModel.m_ViewportPosition = { windowPosition.x, windowPosition.y };
+
 		ImVec2 vMin = ImGui::GetWindowContentRegionMin();
 		ImVec2 vMax = ImGui::GetWindowContentRegionMax();
-		vMin.x += ImGui::GetWindowPos().x;
-		vMin.y += ImGui::GetWindowPos().y;
-		vMax.x += ImGui::GetWindowPos().x;
-		vMax.y += ImGui::GetWindowPos().y;
+		vMin.x += windowPosition.x;
+		vMin.y += windowPosition.y;
+		vMax.x += windowPosition.x;
+		vMax.y += windowPosition.y;
 
 		m_ViewModel.m_ViewportWidth = vMax.x - vMin.x;
 		m_ViewModel.m_ViewportHeight = vMax.y - vMin.y;

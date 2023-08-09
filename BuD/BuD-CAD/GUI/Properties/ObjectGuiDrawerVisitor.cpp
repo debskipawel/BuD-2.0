@@ -2,6 +2,11 @@
 
 #include <imgui.h>
 
+ObjectGuiDrawerVisitor::ObjectGuiDrawerVisitor(PropertiesViewModel& viewModel)
+	: m_ViewModel(viewModel)
+{
+}
+
 void ObjectGuiDrawerVisitor::Visit(Torus& torus)
 {
 	if (DrawGuiForTransform(torus))
@@ -31,6 +36,10 @@ void ObjectGuiDrawerVisitor::Visit(Torus& torus)
 
 	instanceData.m_OuterRadius = max(instanceData.m_OuterRadius, instanceData.m_InnerRadius);
 	instanceData.m_InnerRadius = min(instanceData.m_OuterRadius, instanceData.m_InnerRadius);
+
+	ImGui::Separator();
+
+	DrawDeleteButton(torus);
 }
 
 void ObjectGuiDrawerVisitor::Visit(Cube& cube)
@@ -71,4 +80,16 @@ bool ObjectGuiDrawerVisitor::DrawGuiForTransform(SceneObjectCAD& object)
 	changeFlag = changeFlag || (transform.m_Scale != scaleCopy);
 
 	return changeFlag;
+}
+
+void ObjectGuiDrawerVisitor::DrawDeleteButton(SceneObjectCAD& object)
+{
+	auto max = ImGui::GetWindowContentRegionMax();
+	auto min = ImGui::GetWindowContentRegionMin();
+
+	if (ImGui::Button("Delete", ImVec2(max.x - min.x, 0)))
+	{
+		auto& scene = m_ViewModel.m_SceneCAD;
+		scene.DeleteObject(object);
+	}
 }

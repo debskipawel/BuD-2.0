@@ -87,3 +87,15 @@ void Torus::Accept(AbstractVisitor& visitor)
 {
 	visitor.Visit(*this);
 }
+
+void Torus::OnDelete()
+{
+}
+
+void Torus::OnSelect()
+{
+}
+
+void Torus::OnUnselect()
+{
+}

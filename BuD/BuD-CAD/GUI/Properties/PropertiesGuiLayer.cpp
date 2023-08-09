@@ -16,7 +16,7 @@ void PropertiesGuiLayer::DrawGui()
 {
 	if (ImGui::Begin("Properties"))
 	{
-		auto& composite = m_ViewModel.m_SelectedObjects;
+		auto& composite = m_ViewModel.m_SceneCAD.m_SelectedGroup;
 
 		switch (composite.m_Objects.size())
 		{
@@ -38,12 +38,14 @@ void PropertiesGuiLayer::DrawGui()
 
 void PropertiesGuiLayer::DrawGuiForSingularObject()
 {
-	std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ObjectGuiDrawerVisitor>();
-	auto& composite = m_ViewModel.m_SelectedObjects;
+	std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ObjectGuiDrawerVisitor>(m_ViewModel);
+	auto& composite = m_ViewModel.m_SceneCAD.m_SelectedGroup;
 
 	auto& [key, object] = *composite.m_Objects.begin();
 
-	visitor->Visit(*object);
+	auto objectShared = object.lock();
+
+	visitor->Visit(*objectShared);
 }
 
 void PropertiesGuiLayer::DrawGuiForComposite()

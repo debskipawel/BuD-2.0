@@ -22,29 +22,29 @@ struct PSOutput
 
 float4 Grid(float4 fragPos3D, float scale)
 {
-	float2 coord = fragPos3D.xy * scale;
+	float2 coord = fragPos3D.xz * scale;
 	float2 derivative = fwidth(coord);
 	float2 grid = abs(frac(coord - 0.5) - 0.5) / derivative;
 	
-	float yMin = min(derivative.y, 1);
+	float zMin = min(derivative.y, 1);
 	float xMin = min(derivative.x, 1);
 
 	float lineVar = min(grid.x, grid.y);
 	float4 color = float4(0.2, 0.2, 0.2, 1.0 - min(lineVar, 1.0));
 	
-	// y axis
+	// z axis
 	if (fragPos3D.x > -0.5 * xMin && fragPos3D.x < 0.5 * xMin)
 	{
-		color.y = 1.0;
+		color.z = 1.0;
 	}
 	
 	// x axis
-	if (fragPos3D.y > -0.5 * yMin && fragPos3D.y < 0.5 * yMin)
+	if (fragPos3D.z > -0.5 * zMin && fragPos3D.z < 0.5 * zMin)
 	{
 		color.x = 1.0;
 	}
 	
-		return color;
+	return color;
 }
 
 float ComputeDepth(float3 pos)
@@ -68,7 +68,7 @@ PSOutput main(VSOutput i)
 {
 	PSOutput o = (PSOutput) 0;
 	
-	float t = -i.eyePos.z / (i.farPoint.z - i.eyePos.z);
+	float t = -i.eyePos.y / (i.farPoint.y - i.eyePos.y);
 	float3 p = i.eyePos + t * (i.farPoint - i.eyePos);
 	
 	float linearDepth = ComputeLinearDepth(p);
