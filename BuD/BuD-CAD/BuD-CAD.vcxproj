@@ -171,6 +171,7 @@
     <ClInclude Include="AppState.h" />
     <ClInclude Include="Behaviors\Keyboard\KeyboardBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\MouseBehaviorLayer.h" />
+    <ClInclude Include="GUI\ObjectList\ObjectCreationGuiLayer.h" />
     <ClInclude Include="Raycasting\RayFactory.h" />
     <ClInclude Include="Components\TransformComponent.h" />
     <ClInclude Include="GUI\AppState\AppStateGuiLayer.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="ApplicationCAD.cpp" />
     <ClCompile Include="Behaviors\Keyboard\KeyboardBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Mouse\MouseBehaviorLayer.cpp" />
+    <ClCompile Include="GUI\ObjectList\ObjectCreationGuiLayer.cpp" />
     <ClCompile Include="Raycasting\RayFactory.cpp" />
     <ClCompile Include="GUI\AppState\AppStateGuiLayer.cpp" />
     <ClCompile Include="GUI\Console\ConsoleGuiLayer.cpp" />

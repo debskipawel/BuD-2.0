@@ -26,9 +26,9 @@ void ObjectListGuiLayer::DrawGui()
 
 			for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
 			{
-				auto& cadObject = objectPair->second;
+				auto& cadObject = (objectPair++)->second;
 
-				auto id = std::format("{}, id: {}", cadObject->m_Tag, i);
+				auto id = std::format("{}, id: {} ###{}", cadObject->m_Tag, cadObject->Id(), cadObject->Id());
 				
 				auto selected = cadObject->m_Selected;
 
