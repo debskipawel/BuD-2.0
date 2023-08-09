@@ -24,8 +24,6 @@ ApplicationCAD::ApplicationCAD()
 		}
 	);
 
-	m_Scene.m_Scene.ActiveCamera()->RotateCamera(0, 10);
-
 	constexpr auto torusCount = 1;
 	for (int i = 0; i < torusCount; i++)
 	{
