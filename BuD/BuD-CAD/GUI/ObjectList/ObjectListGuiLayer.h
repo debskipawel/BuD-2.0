@@ -14,8 +14,6 @@ public:
 protected:
 	virtual void DrawGuiForFilters();
 
-	AppState m_PreviousAppState;
-
 	AppStateViewModel& m_AppStateViewModel;
 	ObjectListViewModel& m_ObjectListViewModel;
 };
