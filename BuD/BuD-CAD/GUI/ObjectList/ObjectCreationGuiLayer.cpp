@@ -44,9 +44,7 @@ void ObjectCreationGuiLayer::DrawGui()
 void ObjectCreationGuiLayer::CreateTorus()
 {
 	auto& scene = m_ViewModel.m_Scene;
-
-	// TODO: after adding cursor change position to that of the cursor
-	auto position = dxm::Vector3(0.0f, 0.0f, 0.0f);
+	auto position = scene.m_MainCursor->GetPosition();
 
 	scene.CreateTorus(position);
 }

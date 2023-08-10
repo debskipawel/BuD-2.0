@@ -6,6 +6,7 @@ SceneCAD::SceneCAD()
 	: m_Scene(), m_ObjectList()
 {
 	m_Grid = std::make_unique<Grid>(m_Scene);
+	m_MainCursor = std::make_unique<Cursor>(m_Scene);
 }
 
 SceneCAD::~SceneCAD()

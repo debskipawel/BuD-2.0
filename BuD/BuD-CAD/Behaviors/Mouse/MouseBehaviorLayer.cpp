@@ -24,6 +24,8 @@ void MouseBehaviorLayer::OnLeftButtonDown(int x, int y)
 
 		auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
 
+		bool anyHit = false;
+
 		for (auto& [id, object] : scene.m_ObjectList)
 		{
 			visitor->Visit(*object.get());
@@ -31,9 +33,21 @@ void MouseBehaviorLayer::OnLeftButtonDown(int x, int y)
 
 			if (results.m_Hit)
 			{
+				anyHit = true;
 				object->m_Selected = true;
 				scene.m_SelectedGroup.Add(object);
 			}
+		}
+
+		if (!anyHit)
+		{
+			auto& cursor = scene.m_MainCursor;
+			auto camera = scene.m_Scene.ActiveCamera();
+
+			auto distance = (cursor->GetPosition() - camera->EyePosition()).Length();
+			auto newCursorPosition = ray.m_Origin + distance * ray.m_Direction;
+
+			cursor->SetPosition(newCursorPosition);
 		}
 	}
 }

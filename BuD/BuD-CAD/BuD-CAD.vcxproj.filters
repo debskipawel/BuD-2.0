@@ -108,6 +108,9 @@
     <ClInclude Include="GUI\ObjectList\ObjectCreationGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Additional\Cursor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -176,6 +179,9 @@
     <ClCompile Include="GUI\ObjectList\ObjectCreationGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Additional\Cursor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Torus\torus_instanced_vs.hlsl" />
@@ -186,5 +192,7 @@
     <FxCompile Include="Resources\Shaders\Cube\cube_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\Grid\grid_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\Grid\grid_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\Cursor\cursor_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\Cursor\cursor_ps.hlsl" />
   </ItemGroup>
 </Project>

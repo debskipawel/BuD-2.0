@@ -172,6 +172,7 @@
     <ClInclude Include="Behaviors\Keyboard\KeyboardBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\MouseBehaviorLayer.h" />
     <ClInclude Include="GUI\ObjectList\ObjectCreationGuiLayer.h" />
+    <ClInclude Include="Objects\Additional\Cursor.h" />
     <ClInclude Include="Raycasting\RayFactory.h" />
     <ClInclude Include="Components\TransformComponent.h" />
     <ClInclude Include="GUI\AppState\AppStateGuiLayer.h" />
@@ -204,6 +205,7 @@
     <ClCompile Include="Behaviors\Keyboard\KeyboardBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Mouse\MouseBehaviorLayer.cpp" />
     <ClCompile Include="GUI\ObjectList\ObjectCreationGuiLayer.cpp" />
+    <ClCompile Include="Objects\Additional\Cursor.cpp" />
     <ClCompile Include="Raycasting\RayFactory.cpp" />
     <ClCompile Include="GUI\AppState\AppStateGuiLayer.cpp" />
     <ClCompile Include="GUI\Console\ConsoleGuiLayer.cpp" />
@@ -242,6 +244,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\Cube\cube_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Cursor\cursor_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Cursor\cursor_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
