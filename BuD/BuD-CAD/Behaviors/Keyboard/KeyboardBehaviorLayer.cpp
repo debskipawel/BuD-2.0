@@ -17,6 +17,7 @@ void KeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
 	HandleAppStateChange(key);
 	HandleAxisLockEnable(key);
 	HandleMultiselectEnable(key);
+	HandleCameraMovementEnable(key);
 }
 
 void KeyboardBehaviorLayer::OnKeyRelease(BuD::KeyboardKeys key)
@@ -25,6 +26,7 @@ void KeyboardBehaviorLayer::OnKeyRelease(BuD::KeyboardKeys key)
 
 	HandleAxisLockDisable(key);
 	HandleMultiselectDisable(key);
+	HandleCameraMovementDisable(key);
 }
 
 void KeyboardBehaviorLayer::HandleMultiselectEnable(BuD::KeyboardKeys key)
@@ -40,6 +42,22 @@ void KeyboardBehaviorLayer::HandleMultiselectDisable(BuD::KeyboardKeys key)
 	if (key == BuD::KeyboardKeys::Control)
 	{
 		m_ViewModel.m_AppStateViewModel.m_MultiselectOn = false;
+	}
+}
+
+void KeyboardBehaviorLayer::HandleCameraMovementEnable(BuD::KeyboardKeys key)
+{
+	if (key == BuD::KeyboardKeys::Shift)
+	{
+		m_ViewModel.m_AppStateViewModel.m_CameraReadyToMove = true;
+	}
+}
+
+void KeyboardBehaviorLayer::HandleCameraMovementDisable(BuD::KeyboardKeys key)
+{
+	if (key == BuD::KeyboardKeys::Shift)
+	{
+		m_ViewModel.m_AppStateViewModel.m_CameraReadyToMove = false;
 	}
 }
 

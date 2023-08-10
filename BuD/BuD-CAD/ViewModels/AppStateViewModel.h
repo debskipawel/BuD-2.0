@@ -9,6 +9,9 @@ struct AppStateViewModel
 	AxisLock m_AxisLock = AxisLock::NONE;
 
 	bool m_MultiselectOn = false;
+	bool m_CameraReadyToMove = false;
+	bool m_CameraRotating = false;
+	bool m_InAction = false;
 
 	void Freeze();
 	void Unfreeze();

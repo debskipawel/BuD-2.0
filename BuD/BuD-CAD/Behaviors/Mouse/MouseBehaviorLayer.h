@@ -20,6 +20,13 @@ public:
 	virtual void OnMouseMove(int dx, int dy);
 
 protected:
+	virtual void HandleSelection(int x, int y);
+	virtual void HandleActionStart();
+	virtual void HandleActionEnd();
+
+	virtual void HandleCameraRotate(int dx, int dy);
+	virtual void HandleCameraMove(int dx, int dy);
+
 	virtual std::shared_ptr<SceneObjectCAD> GetClosestIntersecting(const Ray& ray);
 	virtual std::vector<std::shared_ptr<SceneObjectCAD>> GetAllIntersecting(const Ray& ray);
 
@@ -27,8 +34,6 @@ protected:
 
 	virtual bool IsMouseOnViewport(int x, int y);
 	virtual dxm::Vector2 ViewportScreenSpaceCoords(int x, int y);
-
-	bool m_MoveMouse;
 
 	std::unique_ptr<RayFactory> m_RayFactory;
 	MainViewModel& m_ViewModel;

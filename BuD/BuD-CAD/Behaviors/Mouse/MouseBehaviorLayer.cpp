@@ -3,7 +3,7 @@
 #include <Raycasting/RayIntersectionVisitor.h>
 
 MouseBehaviorLayer::MouseBehaviorLayer(MainViewModel& viewModel)
-	: m_ViewModel(viewModel), m_MoveMouse(false)
+	: m_ViewModel(viewModel)
 {
 	m_RayFactory = std::make_unique<RayFactory>(viewModel.m_ViewportViewModel, viewModel.m_ObjectListViewModel);
 }
@@ -17,33 +17,11 @@ void MouseBehaviorLayer::OnLeftButtonDown(int x, int y)
 
 	if (m_ViewModel.m_AppStateViewModel.m_AppState == AppState::IDLE)
 	{
-		if (!IsMouseOnViewport(x, y))
-		{
-			return;
-		}
-
-		auto screenSpace = ViewportScreenSpaceCoords(x, y);
-		auto ray = m_RayFactory->CreateRay(screenSpace);
-
-		auto closestObject = GetClosestIntersecting(ray);
-
-		if (closestObject)
-		{
-			auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
-			
-			if (!m_ViewModel.m_AppStateViewModel.m_MultiselectOn)
-			{
-				scene.m_SelectedGroup.Clear();
-			}
-
-			closestObject->OnSelect();
-
-			scene.m_SelectedGroup.Add(closestObject);
-		}
-		else
-		{
-			MoveCursorAlong(ray);
-		}
+		HandleSelection(x, y);
+	}
+	else
+	{
+		HandleActionStart();
 	}
 }
 
@@ -62,11 +40,12 @@ void MouseBehaviorLayer::OnMiddleButtonDown(int x, int y)
 		return;
 	}
 
-	m_MoveMouse = true;
+	m_ViewModel.m_AppStateViewModel.m_CameraRotating = true;
 }
 
 void MouseBehaviorLayer::OnLeftButtonUp(int x, int y)
 {
+	HandleActionEnd();
 }
 
 void MouseBehaviorLayer::OnRightButtonUp(int x, int y)
@@ -75,7 +54,7 @@ void MouseBehaviorLayer::OnRightButtonUp(int x, int y)
 
 void MouseBehaviorLayer::OnMiddleButtonUp(int x, int y)
 {
-	m_MoveMouse = false;
+	m_ViewModel.m_AppStateViewModel.m_CameraRotating = false;
 }
 
 void MouseBehaviorLayer::OnScroll(int x, int y, int delta)
@@ -101,13 +80,78 @@ void MouseBehaviorLayer::OnMouseMove(int dx, int dy)
 		return;
 	}
 
-	if (m_MoveMouse)
+	if (m_ViewModel.m_AppStateViewModel.m_CameraRotating)
 	{
-		auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene.m_Scene;
-		auto camera = scene.ActiveCamera();
-
-		camera->RotateCamera(0.005 * dx, 0.005 * dy);
+		if (m_ViewModel.m_AppStateViewModel.m_CameraReadyToMove)
+		{
+			HandleCameraMove(dx, dy);
+		}
+		else
+		{
+			HandleCameraRotate(dx, dy);
+		}
 	}
+}
+
+void MouseBehaviorLayer::HandleSelection(int x, int y)
+{
+	if (!IsMouseOnViewport(x, y))
+	{
+		return;
+	}
+
+	auto screenSpace = ViewportScreenSpaceCoords(x, y);
+	auto ray = m_RayFactory->CreateRay(screenSpace);
+
+	auto closestObject = GetClosestIntersecting(ray);
+
+	if (closestObject)
+	{
+		auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
+
+		if (!m_ViewModel.m_AppStateViewModel.m_MultiselectOn)
+		{
+			scene.m_SelectedGroup.Clear();
+		}
+
+		closestObject->OnSelect();
+
+		scene.m_SelectedGroup.Add(closestObject);
+	}
+	else
+	{
+		MoveCursorAlong(ray);
+	}
+}
+
+void MouseBehaviorLayer::HandleActionStart()
+{
+}
+
+void MouseBehaviorLayer::HandleActionEnd()
+{
+	m_ViewModel.m_AppStateViewModel.m_InAction = false;
+}
+
+void MouseBehaviorLayer::HandleCameraRotate(int dx, int dy)
+{
+	auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene.m_Scene;
+	auto camera = scene.ActiveCamera();
+
+	camera->RotateCamera(0.005 * dx, 0.005 * dy);
+}
+
+void MouseBehaviorLayer::HandleCameraMove(int dx, int dy)
+{
+	auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene.m_Scene;
+	auto camera = scene.ActiveCamera();
+
+	auto right = camera->Right();
+	auto up = camera->Up();
+
+	auto direction = -0.05f * (dx * right - dy * up);
+
+	camera->Move(direction);
 }
 
 std::shared_ptr<SceneObjectCAD> MouseBehaviorLayer::GetClosestIntersecting(const Ray& ray)
