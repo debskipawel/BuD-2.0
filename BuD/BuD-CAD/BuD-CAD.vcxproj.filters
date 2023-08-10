@@ -36,9 +36,6 @@
     <ClInclude Include="Objects\CAD\Torus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Behaviors\Mouse\MouseBehaviorLayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AppState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -99,9 +96,6 @@
     <ClInclude Include="Raycasting\RayIntersectionVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Behaviors\Keyboard\KeyboardBehaviorLayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Raycasting\RayFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -115,6 +109,39 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ViewModels\CursorViewModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Mouse\BaseMouseBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Mouse\Action\ActionMouseBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Keyboard\Multiselect\MultiselectKeyboardBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -173,12 +200,6 @@
     <ClCompile Include="Raycasting\RayIntersectionVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Behaviors\Mouse\MouseBehaviorLayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Behaviors\Keyboard\KeyboardBehaviorLayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Raycasting\RayFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -192,6 +213,39 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GUI\Cursor\CursorGuiLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Mouse\MainMouseBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Mouse\Action\ActionMouseBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Mouse\BaseMouseBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Keyboard\Multiselect\MultiselectKeyboardBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -169,8 +169,17 @@
   <ItemGroup>
     <ClInclude Include="ApplicationCAD.h" />
     <ClInclude Include="AppState.h" />
-    <ClInclude Include="Behaviors\Keyboard\KeyboardBehaviorLayer.h" />
-    <ClInclude Include="Behaviors\Mouse\MouseBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Keyboard\Multiselect\MultiselectKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Mouse\Action\ActionMouseBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Mouse\BaseMouseBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.h" />
     <ClInclude Include="GUI\Cursor\CursorGuiLayer.h" />
     <ClInclude Include="GUI\ObjectList\ObjectCreationGuiLayer.h" />
     <ClInclude Include="Objects\Additional\Cursor.h" />
@@ -204,8 +213,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp" />
-    <ClCompile Include="Behaviors\Keyboard\KeyboardBehaviorLayer.cpp" />
-    <ClCompile Include="Behaviors\Mouse\MouseBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\Multiselect\MultiselectKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Mouse\Action\ActionMouseBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Mouse\BaseMouseBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Mouse\MainMouseBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.cpp" />
     <ClCompile Include="GUI\Cursor\CursorGuiLayer.cpp" />
     <ClCompile Include="GUI\ObjectList\ObjectCreationGuiLayer.cpp" />
     <ClCompile Include="Objects\Additional\Cursor.cpp" />

@@ -3,12 +3,18 @@
 #include <filesystem>
 #include <string>
 
+#include <Behaviors/Mouse/MainMouseBehaviorLayer.h>
+#include <Behaviors/Keyboard/MainKeyboardBehaviorLayer.h>
+
+#include <GUI/MainGuiLayer.h>
+
 ApplicationCAD::ApplicationCAD()
 	: m_Scene(), m_ViewModel(m_Scene)
 {
 	m_GuiLayer = std::make_unique<MainGuiLayer>(m_ViewModel);
-	m_MouseBehaviorLayer = std::make_unique<MouseBehaviorLayer>(m_ViewModel);
-	m_KeyboardBehaviorLayer = std::make_unique<KeyboardBehaviorLayer>(m_ViewModel);
+
+	m_MouseBehaviorLayer = std::make_unique<MainMouseBehaviorLayer>(m_ViewModel);
+	m_KeyboardBehaviorLayer = std::make_unique<MainKeyboardBehaviorLayer>(m_ViewModel);
 
 	auto currentPath = std::filesystem::current_path();
 
@@ -26,6 +32,7 @@ ApplicationCAD::ApplicationCAD()
 		}
 	);
 
+	// TODO: delete this code. just temporary startup benchmarking stuff.
 	constexpr auto torusCount = 1;
 	for (int i = 0; i < torusCount; i++)
 	{

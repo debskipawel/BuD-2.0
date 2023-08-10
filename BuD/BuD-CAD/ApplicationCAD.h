@@ -3,9 +3,10 @@
 #include <BuD.h>
 #include <Core/EntryPoint.h>
 
-#include <Behaviors/Mouse/MouseBehaviorLayer.h>
-#include <Behaviors/Keyboard/KeyboardBehaviorLayer.h>
-#include <GUI/MainGuiLayer.h>
+#include <Behaviors/Mouse/BaseMouseBehaviorLayer.h>
+#include <Behaviors/Keyboard/BaseKeyboardBehaviorLayer.h>
+#include <GUI/BaseGuiLayer.h>
+
 #include <Scene/SceneCAD.h>
 #include <ViewModels/MainViewModel.h>
 
@@ -27,9 +28,9 @@ public:
 	virtual void OnConcreteEvent(BuD::KeyReleaseEvent& e) override;
 
 private:
-	std::unique_ptr<MainGuiLayer> m_GuiLayer;
-	std::unique_ptr<MouseBehaviorLayer> m_MouseBehaviorLayer;
-	std::unique_ptr<KeyboardBehaviorLayer> m_KeyboardBehaviorLayer;
+	std::unique_ptr<BaseGuiLayer> m_GuiLayer;
+	std::unique_ptr<BaseMouseBehaviorLayer> m_MouseBehaviorLayer;
+	std::unique_ptr<BaseKeyboardBehaviorLayer> m_KeyboardBehaviorLayer;
 
 	SceneCAD m_Scene;
 	MainViewModel m_ViewModel;
