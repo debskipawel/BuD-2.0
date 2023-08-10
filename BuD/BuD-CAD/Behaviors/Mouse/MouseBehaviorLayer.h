@@ -24,6 +24,8 @@ protected:
 	virtual void HandleActionStart();
 	virtual void HandleActionEnd();
 
+	virtual void HandleActionPerform(int dx, int dy);
+
 	virtual void HandleCameraRotate(int dx, int dy);
 	virtual void HandleCameraMove(int dx, int dy);
 

@@ -91,6 +91,11 @@ void MouseBehaviorLayer::OnMouseMove(int dx, int dy)
 			HandleCameraRotate(dx, dy);
 		}
 	}
+
+	if (m_ViewModel.m_AppStateViewModel.m_InAction)
+	{
+		HandleActionPerform(dx, dy);
+	}
 }
 
 void MouseBehaviorLayer::HandleSelection(int x, int y)
@@ -114,23 +119,31 @@ void MouseBehaviorLayer::HandleSelection(int x, int y)
 			scene.m_SelectedGroup.Clear();
 		}
 
-		closestObject->OnSelect();
-
 		scene.m_SelectedGroup.Add(closestObject);
 	}
 	else
 	{
+		auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
+
+		scene.m_SelectedGroup.Clear();
+
 		MoveCursorAlong(ray);
 	}
 }
 
 void MouseBehaviorLayer::HandleActionStart()
 {
+	m_ViewModel.m_AppStateViewModel.m_InAction = !m_ViewModel.m_AppStateViewModel.m_CameraRotating;
 }
 
 void MouseBehaviorLayer::HandleActionEnd()
 {
 	m_ViewModel.m_AppStateViewModel.m_InAction = false;
+}
+
+void MouseBehaviorLayer::HandleActionPerform(int dx, int dy)
+{
+	// TODO: logic for transforming selected objects
 }
 
 void MouseBehaviorLayer::HandleCameraRotate(int dx, int dy)
@@ -202,8 +215,6 @@ std::vector<std::shared_ptr<SceneObjectCAD>> MouseBehaviorLayer::GetAllIntersect
 void MouseBehaviorLayer::MoveCursorAlong(const Ray& ray)
 {
 	auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
-
-	scene.m_SelectedGroup.Clear();
 
 	auto& cursor = scene.m_MainCursor;
 	auto camera = scene.m_Scene.ActiveCamera();
