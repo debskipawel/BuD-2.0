@@ -48,6 +48,7 @@ void RayIntersectionVisitor::Visit(Torus& torus)
 		return;
 	}
 
+	// TODO: finish logic for intersection with torus
 	m_LatestResults.m_Hit = true;
 	return;
 
