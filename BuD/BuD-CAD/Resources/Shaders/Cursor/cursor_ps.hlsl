@@ -81,7 +81,25 @@ PSOutput main(VSOutput i)
 {
     PSOutput o = (PSOutput) 0;
     
-    float3 color = IdleCursor(i.tex);
+    float3 color;
+    
+    switch (i.appState)
+    {
+        case 1:
+            color = IdleCursor(i.tex);
+            break;
+        case 2:
+            color = ArrowCursor(i.tex);
+            break;
+        case 3:
+            color = RotationCursor(i.tex);
+            break;
+        case 4:
+            color = ScaleCursor(i.tex);
+            break;
+        default:
+            break;
+    }
     
     float4 screenSpacePosition = mul(projMtx, mul(viewMtx, float4(i.worldPos, 1.0)));
     float standardDepth = screenSpacePosition.z / screenSpacePosition.w;

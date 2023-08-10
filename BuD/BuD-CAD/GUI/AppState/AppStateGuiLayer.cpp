@@ -4,8 +4,8 @@
 
 #include <AppState.h>
 
-AppStateGuiLayer::AppStateGuiLayer(AppStateViewModel& viewModel)
-	: m_ViewModel(viewModel)
+AppStateGuiLayer::AppStateGuiLayer(AppStateViewModel& appState, ObjectListViewModel& objectList)
+	: m_AppStateViewModel(appState), m_ObjectListViewModel(objectList)
 {
 	m_IdleIcon = BuD::Texture::LoadFromFile("Resources/Sprites/idle_icon.png");
 	m_MoveIcon = BuD::Texture::LoadFromFile("Resources/Sprites/move_icon.png");
@@ -29,11 +29,15 @@ void AppStateGuiLayer::DrawGui()
 
 		for (auto& [state, icon] : iconMap)
 		{
-			auto color = m_ViewModel.m_AppState == state ? selectedColor : normalColor;
+			auto color = m_AppStateViewModel.m_AppState == state ? selectedColor : normalColor;
 
 			if (ImGui::ImageButton(icon.SRV(), { 32, 32 }, { 0, 0 }, { 1, 1 }, -1, color))
 			{
-				m_ViewModel.m_AppState = state;
+				auto& scene = m_ObjectListViewModel.m_Scene;
+				auto& cursor = scene.m_MainCursor;
+				cursor->SetAppState(state);
+
+				m_AppStateViewModel.m_AppState = state;
 			}
 
 			ImGui::SameLine();

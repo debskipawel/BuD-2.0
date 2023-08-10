@@ -19,6 +19,11 @@ void KeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
 
 	if (result != stateMap.end())
 	{
+		auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
+
+		auto& cursor = scene.m_MainCursor;
+		cursor->SetAppState(result->second);
+
 		m_ViewModel.m_AppStateViewModel.m_AppState = result->second;
 	}
 }

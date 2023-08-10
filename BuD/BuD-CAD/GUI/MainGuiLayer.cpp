@@ -12,7 +12,7 @@
 MainGuiLayer::MainGuiLayer(MainViewModel& viewModel)
 	: m_ViewModel(viewModel)
 {
-	m_GuiLayers.emplace_back(std::make_unique<AppStateGuiLayer>(m_ViewModel.m_AppStateViewModel));
+	m_GuiLayers.emplace_back(std::make_unique<AppStateGuiLayer>(m_ViewModel.m_AppStateViewModel, m_ViewModel.m_ObjectListViewModel));
 	m_GuiLayers.emplace_back(std::make_unique<ConsoleGuiLayer>());
 	m_GuiLayers.emplace_back(std::make_unique<ObjectListGuiLayer>(m_ViewModel.m_ObjectListViewModel));
 	m_GuiLayers.emplace_back(std::make_unique<ObjectCreationGuiLayer>(m_ViewModel.m_ObjectListViewModel));
