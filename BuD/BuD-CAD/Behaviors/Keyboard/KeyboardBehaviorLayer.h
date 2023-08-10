@@ -12,5 +12,11 @@ public:
 	virtual void OnKeyRelease(BuD::KeyboardKeys key);
 
 protected:
+	virtual void HandleAppStateChange(BuD::KeyboardKeys key);
+	virtual void HandleAxisLockEnable(BuD::KeyboardKeys key);
+	virtual void HandleAxisLockDisable(BuD::KeyboardKeys key);
+
+	void SetAxisLock(AxisLock axisLock);
+
 	MainViewModel& m_ViewModel;
 };
