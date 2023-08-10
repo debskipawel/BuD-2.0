@@ -30,17 +30,35 @@ void ObjectListGuiLayer::DrawGui()
 			{
 				auto& cadObject = (objectPair++)->second;
 
-				auto id = std::format("{} ({}) ###{}", cadObject->m_Tag, cadObject->Id(), cadObject->Id());
+				auto id = std::format("{}###{}", cadObject->m_Tag, cadObject->Id());
 				
 				auto selected = cadObject->m_Selected;
-
-				ImGui::Selectable(id.c_str(), &cadObject->m_Selected);
-
-				if (selected != cadObject->m_Selected)
+				
+				if (!ImGui::Selectable(id.c_str(), selected))
 				{
-					auto& composite = m_ObjectListViewModel.m_Scene.m_SelectedGroup;
+					continue;
+				}
 
-					cadObject->m_Selected ? composite.Add(cadObject) : composite.Remove(cadObject->Id());
+				auto& composite = m_ObjectListViewModel.m_Scene.m_SelectedGroup;
+				
+				auto multiselect = m_AppStateViewModel.m_MultiselectOn;
+				auto newSelected = !selected;
+
+				if (!multiselect)
+				{
+					composite.Clear();
+					composite.Add(cadObject);
+
+					continue;
+				}
+
+				if (newSelected)
+				{
+					composite.Add(cadObject);
+				}
+				else
+				{
+					composite.Remove(cadObject->Id());
 				}
 			}
 		}

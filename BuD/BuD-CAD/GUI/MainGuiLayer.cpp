@@ -3,6 +3,7 @@
 #include <imgui.h>
 
 #include <GUI/AppState/AppStateGuiLayer.h>
+#include <GUI/Cursor/CursorGuiLayer.h>
 #include <GUI/Console/ConsoleGuiLayer.h>
 #include <GUI/ObjectList/ObjectListGuiLayer.h>
 #include <GUI/ObjectList/ObjectCreationGuiLayer.h>
@@ -13,6 +14,7 @@ MainGuiLayer::MainGuiLayer(MainViewModel& viewModel)
 	: m_ViewModel(viewModel)
 {
 	m_GuiLayers.emplace_back(std::make_unique<AppStateGuiLayer>(m_ViewModel.m_AppStateViewModel, m_ViewModel.m_ObjectListViewModel));
+	m_GuiLayers.emplace_back(std::make_unique<CursorGuiLayer>(m_ViewModel.m_CursorViewModel));
 	m_GuiLayers.emplace_back(std::make_unique<ConsoleGuiLayer>());
 	m_GuiLayers.emplace_back(std::make_unique<ObjectListGuiLayer>(m_ViewModel.m_ObjectListViewModel, m_ViewModel.m_AppStateViewModel));
 	m_GuiLayers.emplace_back(std::make_unique<ObjectCreationGuiLayer>(m_ViewModel.m_ObjectListViewModel));

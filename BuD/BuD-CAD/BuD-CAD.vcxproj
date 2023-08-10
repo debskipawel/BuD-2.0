@@ -171,6 +171,7 @@
     <ClInclude Include="AppState.h" />
     <ClInclude Include="Behaviors\Keyboard\KeyboardBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\MouseBehaviorLayer.h" />
+    <ClInclude Include="GUI\Cursor\CursorGuiLayer.h" />
     <ClInclude Include="GUI\ObjectList\ObjectCreationGuiLayer.h" />
     <ClInclude Include="Objects\Additional\Cursor.h" />
     <ClInclude Include="Raycasting\RayFactory.h" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Scene\SceneObjectCAD.h" />
     <ClInclude Include="ViewModels\AppStateViewModel.h" />
     <ClInclude Include="AxisLock.h" />
+    <ClInclude Include="ViewModels\CursorViewModel.h" />
     <ClInclude Include="ViewModels\MainViewModel.h" />
     <ClInclude Include="ViewModels\ObjectListViewModel.h" />
     <ClInclude Include="ViewModels\PropertiesViewModel.h" />
@@ -204,6 +206,7 @@
     <ClCompile Include="ApplicationCAD.cpp" />
     <ClCompile Include="Behaviors\Keyboard\KeyboardBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Mouse\MouseBehaviorLayer.cpp" />
+    <ClCompile Include="GUI\Cursor\CursorGuiLayer.cpp" />
     <ClCompile Include="GUI\ObjectList\ObjectCreationGuiLayer.cpp" />
     <ClCompile Include="Objects\Additional\Cursor.cpp" />
     <ClCompile Include="Raycasting\RayFactory.cpp" />

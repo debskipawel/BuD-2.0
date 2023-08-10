@@ -20,6 +20,11 @@ public:
 	virtual void OnMouseMove(int dx, int dy);
 
 protected:
+	virtual std::shared_ptr<SceneObjectCAD> GetClosestIntersecting(const Ray& ray);
+	virtual std::vector<std::shared_ptr<SceneObjectCAD>> GetAllIntersecting(const Ray& ray);
+
+	virtual void MoveCursorAlong(const Ray& ray);
+
 	virtual bool IsMouseOnViewport(int x, int y);
 	virtual dxm::Vector2 ViewportScreenSpaceCoords(int x, int y);
 

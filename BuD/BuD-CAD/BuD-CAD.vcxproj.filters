@@ -111,6 +111,12 @@
     <ClInclude Include="Objects\Additional\Cursor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GUI\Cursor\CursorGuiLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewModels\CursorViewModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -183,6 +189,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ViewModels\AppStateViewModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Cursor\CursorGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

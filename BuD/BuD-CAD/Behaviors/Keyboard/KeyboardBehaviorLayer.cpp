@@ -16,6 +16,7 @@ void KeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
 
 	HandleAppStateChange(key);
 	HandleAxisLockEnable(key);
+	HandleMultiselectEnable(key);
 }
 
 void KeyboardBehaviorLayer::OnKeyRelease(BuD::KeyboardKeys key)
@@ -23,6 +24,23 @@ void KeyboardBehaviorLayer::OnKeyRelease(BuD::KeyboardKeys key)
 	auto& appStateVM = m_ViewModel.m_AppStateViewModel;
 
 	HandleAxisLockDisable(key);
+	HandleMultiselectDisable(key);
+}
+
+void KeyboardBehaviorLayer::HandleMultiselectEnable(BuD::KeyboardKeys key)
+{
+	if (key == BuD::KeyboardKeys::Control)
+	{
+		m_ViewModel.m_AppStateViewModel.m_MultiselectOn = true;
+	}
+}
+
+void KeyboardBehaviorLayer::HandleMultiselectDisable(BuD::KeyboardKeys key)
+{
+	if (key == BuD::KeyboardKeys::Control)
+	{
+		m_ViewModel.m_AppStateViewModel.m_MultiselectOn = false;
+	}
 }
 
 void KeyboardBehaviorLayer::HandleAppStateChange(BuD::KeyboardKeys key)

@@ -25,34 +25,24 @@ void MouseBehaviorLayer::OnLeftButtonDown(int x, int y)
 		auto screenSpace = ViewportScreenSpaceCoords(x, y);
 		auto ray = m_RayFactory->CreateRay(screenSpace);
 
-		auto visitor = std::make_unique<RayIntersectionVisitor>(ray);
+		auto closestObject = GetClosestIntersecting(ray);
 
-		auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
-
-		bool anyHit = false;
-
-		for (auto& [id, object] : scene.m_ObjectList)
+		if (closestObject)
 		{
-			visitor->Visit(*object.get());
-			auto results = visitor->GetLatestResults();
-
-			if (results.m_Hit)
+			auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
+			
+			if (!m_ViewModel.m_AppStateViewModel.m_MultiselectOn)
 			{
-				anyHit = true;
-				object->m_Selected = true;
-				scene.m_SelectedGroup.Add(object);
+				scene.m_SelectedGroup.Clear();
 			}
+
+			closestObject->OnSelect();
+
+			scene.m_SelectedGroup.Add(closestObject);
 		}
-
-		if (!anyHit)
+		else
 		{
-			auto& cursor = scene.m_MainCursor;
-			auto camera = scene.m_Scene.ActiveCamera();
-
-			auto distance = (cursor->GetPosition() - camera->EyePosition()).Length();
-			auto newCursorPosition = ray.m_Origin + distance * ray.m_Direction;
-
-			cursor->SetPosition(newCursorPosition);
+			MoveCursorAlong(ray);
 		}
 	}
 }
@@ -118,6 +108,66 @@ void MouseBehaviorLayer::OnMouseMove(int dx, int dy)
 
 		camera->RotateCamera(0.005 * dx, 0.005 * dy);
 	}
+}
+
+std::shared_ptr<SceneObjectCAD> MouseBehaviorLayer::GetClosestIntersecting(const Ray& ray)
+{
+	std::shared_ptr<SceneObjectCAD> closestObject = nullptr;
+
+	auto visitor = std::make_unique<RayIntersectionVisitor>(ray);
+	auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
+
+	float minDistance = FLT_MAX;
+
+	for (auto& [id, object] : scene.m_ObjectList)
+	{
+		visitor->Visit(*object.get());
+		auto results = visitor->GetLatestResults();
+
+		if (results.m_Hit && results.m_Distance < minDistance)
+		{
+			closestObject = object;
+			minDistance = results.m_Distance;
+		}
+	}
+
+	return closestObject;
+}
+
+std::vector<std::shared_ptr<SceneObjectCAD>> MouseBehaviorLayer::GetAllIntersecting(const Ray& ray)
+{
+	auto objectsIntersecting = std::vector<std::shared_ptr<SceneObjectCAD>>();
+
+	auto visitor = std::make_unique<RayIntersectionVisitor>(ray);
+	auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
+
+	for (auto& [id, object] : scene.m_ObjectList)
+	{
+		visitor->Visit(*object.get());
+		auto results = visitor->GetLatestResults();
+
+		if (results.m_Hit)
+		{
+			objectsIntersecting.push_back(object);
+		}
+	}
+
+	return objectsIntersecting;
+}
+
+void MouseBehaviorLayer::MoveCursorAlong(const Ray& ray)
+{
+	auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
+
+	scene.m_SelectedGroup.Clear();
+
+	auto& cursor = scene.m_MainCursor;
+	auto camera = scene.m_Scene.ActiveCamera();
+
+	auto distance = (cursor->GetPosition() - camera->EyePosition()).Length();
+	auto newCursorPosition = ray.m_Origin + distance * ray.m_Direction;
+
+	cursor->SetPosition(newCursorPosition);
 }
 
 bool MouseBehaviorLayer::IsMouseOnViewport(int x, int y)

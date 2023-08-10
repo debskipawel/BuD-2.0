@@ -11,6 +11,9 @@ namespace BuD
 
         Enter = 0xd,
 
+        Shift = 0x10,
+        Control = 0x11,
+
         Pause = 0x13,
         CapsLock = 0x14,
         Kana = 0x15,
