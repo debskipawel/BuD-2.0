@@ -1,6 +1,7 @@
 #include "ObjectGuiDrawerVisitor.h"
 
 #include <imgui.h>
+#include <misc/cpp/imgui_stdlib.h>
 
 ObjectGuiDrawerVisitor::ObjectGuiDrawerVisitor(PropertiesViewModel& viewModel)
 	: m_ViewModel(viewModel)
@@ -9,6 +10,10 @@ ObjectGuiDrawerVisitor::ObjectGuiDrawerVisitor(PropertiesViewModel& viewModel)
 
 void ObjectGuiDrawerVisitor::Visit(Torus& torus)
 {
+	DrawGuiForTag(torus);
+
+	ImGui::Separator();
+
 	if (DrawGuiForTransform(torus))
 	{
 		const auto& transform = torus.m_Transform;
@@ -44,6 +49,12 @@ void ObjectGuiDrawerVisitor::Visit(Torus& torus)
 
 void ObjectGuiDrawerVisitor::Visit(Cube& cube)
 {
+}
+
+bool ObjectGuiDrawerVisitor::DrawGuiForTag(SceneObjectCAD& object)
+{
+	auto& tag = object.m_Tag;
+	return ImGui::InputText("Tag###tag", &tag);
 }
 
 bool ObjectGuiDrawerVisitor::DrawGuiForTransform(SceneObjectCAD& object)

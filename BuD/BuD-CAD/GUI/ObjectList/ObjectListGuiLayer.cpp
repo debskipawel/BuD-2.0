@@ -28,7 +28,7 @@ void ObjectListGuiLayer::DrawGui()
 			{
 				auto& cadObject = (objectPair++)->second;
 
-				auto id = std::format("{}, id: {} ###{}", cadObject->m_Tag, cadObject->Id(), cadObject->Id());
+				auto id = std::format("{} ({}) ###{}", cadObject->m_Tag, cadObject->Id(), cadObject->Id());
 				
 				auto selected = cadObject->m_Selected;
 

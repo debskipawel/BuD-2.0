@@ -12,6 +12,7 @@ public:
 	virtual void Visit(Cube& cube) override;
 
 protected:
+	virtual bool DrawGuiForTag(SceneObjectCAD& object);
 	virtual bool DrawGuiForTransform(SceneObjectCAD& object);
 	virtual void DrawDeleteButton(SceneObjectCAD& object);
 
