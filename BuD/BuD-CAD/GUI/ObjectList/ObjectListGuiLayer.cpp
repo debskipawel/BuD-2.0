@@ -2,8 +2,8 @@
 
 #include <imgui.h>
 
-ObjectListGuiLayer::ObjectListGuiLayer(ObjectListViewModel& viewModel)
-	: m_ViewModel(viewModel)
+ObjectListGuiLayer::ObjectListGuiLayer(ObjectListViewModel& objectList, AppStateViewModel& appState)
+	: m_ObjectListViewModel(objectList), m_AppStateViewModel(appState)
 {
 }
 
@@ -11,7 +11,9 @@ void ObjectListGuiLayer::DrawGui()
 {
 	if (ImGui::Begin("Object list"))
 	{
-		auto& objectList = m_ViewModel.m_Scene.m_ObjectList;
+		DrawGuiForFilters();
+
+		auto& objectList = m_ObjectListViewModel.m_Scene.m_ObjectList;
 
 		ImGuiListClipper clipper(objectList.size(), ImGui::GetTextLineHeightWithSpacing());
 
@@ -36,7 +38,7 @@ void ObjectListGuiLayer::DrawGui()
 
 				if (selected != cadObject->m_Selected)
 				{
-					auto& composite = m_ViewModel.m_Scene.m_SelectedGroup;
+					auto& composite = m_ObjectListViewModel.m_Scene.m_SelectedGroup;
 
 					cadObject->m_Selected ? composite.Add(cadObject) : composite.Remove(cadObject->Id());
 				}
@@ -46,5 +48,43 @@ void ObjectListGuiLayer::DrawGui()
 		clipper.End();
 
 		ImGui::End();
+	}
+}
+
+void ObjectListGuiLayer::DrawGuiForFilters()
+{
+	auto objectListMin = ImGui::GetWindowContentRegionMin();
+	auto objectListMax = ImGui::GetWindowContentRegionMax();
+
+	ImVec2 filtersButtonSize = { objectListMax.x - objectListMin.x, 0 };
+
+	if (ImGui::Button("Open filters menu", filtersButtonSize))
+	{
+		m_AppStateViewModel.Freeze();
+		ImGui::OpenPopup("###filters_popup");
+	}
+
+	ImGui::Separator();
+
+	if (ImGui::BeginPopupModal("Filters ###filters_popup"))
+	{
+		ImGui::Text("TODO: No filters implemented yet.");
+
+		auto windowPosition = ImGui::GetWindowPos();
+		auto min = ImGui::GetWindowContentRegionMin();
+		auto max = ImGui::GetWindowContentRegionMax();
+
+		ImVec2 buttonSize = { max.x - min.x, 20 };
+		ImVec2 position = { min.x, max.y - buttonSize.y };
+
+		ImGui::SetCursorPos(position);
+		
+		if (ImGui::Button("Close filters menu", buttonSize))
+		{
+			m_AppStateViewModel.Unfreeze();
+			ImGui::CloseCurrentPopup();
+		}
+
+		ImGui::EndPopup();
 	}
 }

@@ -6,4 +6,5 @@ enum class AppState : int
 	MOVE = 2,
 	ROTATE = 3,
 	SCALE = 4,
+	FROZEN = 5,
 };

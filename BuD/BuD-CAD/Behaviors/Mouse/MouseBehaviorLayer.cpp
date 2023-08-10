@@ -10,6 +10,11 @@ MouseBehaviorLayer::MouseBehaviorLayer(MainViewModel& viewModel)
 
 void MouseBehaviorLayer::OnLeftButtonDown(int x, int y)
 {
+	if (m_ViewModel.m_AppStateViewModel.m_AppState == AppState::FROZEN)
+	{
+		return;
+	}
+
 	if (m_ViewModel.m_AppStateViewModel.m_AppState == AppState::IDLE)
 	{
 		if (!IsMouseOnViewport(x, y))
@@ -54,10 +59,19 @@ void MouseBehaviorLayer::OnLeftButtonDown(int x, int y)
 
 void MouseBehaviorLayer::OnRightButtonDown(int x, int y)
 {
+	if (m_ViewModel.m_AppStateViewModel.m_AppState == AppState::FROZEN)
+	{
+		return;
+	}
 }
 
 void MouseBehaviorLayer::OnMiddleButtonDown(int x, int y)
 {
+	if (m_ViewModel.m_AppStateViewModel.m_AppState == AppState::FROZEN)
+	{
+		return;
+	}
+
 	m_MoveMouse = true;
 }
 
@@ -76,6 +90,11 @@ void MouseBehaviorLayer::OnMiddleButtonUp(int x, int y)
 
 void MouseBehaviorLayer::OnScroll(int x, int y, int delta)
 {
+	if (m_ViewModel.m_AppStateViewModel.m_AppState == AppState::FROZEN)
+	{
+		return;
+	}
+
 	if (IsMouseOnViewport(x, y))
 	{
 		auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene.m_Scene;
@@ -87,6 +106,11 @@ void MouseBehaviorLayer::OnScroll(int x, int y, int delta)
 
 void MouseBehaviorLayer::OnMouseMove(int dx, int dy)
 {
+	if (m_ViewModel.m_AppStateViewModel.m_AppState == AppState::FROZEN)
+	{
+		return;
+	}
+
 	if (m_MoveMouse)
 	{
 		auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene.m_Scene;

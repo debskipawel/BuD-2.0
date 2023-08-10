@@ -98,7 +98,14 @@ void ObjectGuiDrawerVisitor::DrawDeleteButton(SceneObjectCAD& object)
 	auto max = ImGui::GetWindowContentRegionMax();
 	auto min = ImGui::GetWindowContentRegionMin();
 
-	if (ImGui::Button("Delete", ImVec2(max.x - min.x, 0)))
+	auto cursorPos = ImGui::GetCursorPos();
+
+	if (max.y - 20 > cursorPos.y)
+	{
+		ImGui::SetCursorPos({ min.x, max.y - 20 });
+	}
+
+	if (ImGui::Button("Delete", ImVec2(max.x - min.x, 20)))
 	{
 		auto& scene = m_ViewModel.m_SceneCAD;
 		scene.DeleteObject(object);

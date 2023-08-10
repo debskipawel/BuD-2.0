@@ -7,12 +7,21 @@ KeyboardBehaviorLayer::KeyboardBehaviorLayer(MainViewModel& viewModel)
 
 void KeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
 {
+	auto& appStateVM = m_ViewModel.m_AppStateViewModel;
+
+	if (appStateVM.m_AppState == AppState::FROZEN)
+	{
+		return;
+	}
+
 	HandleAppStateChange(key);
 	HandleAxisLockEnable(key);
 }
 
 void KeyboardBehaviorLayer::OnKeyRelease(BuD::KeyboardKeys key)
 {
+	auto& appStateVM = m_ViewModel.m_AppStateViewModel;
+
 	HandleAxisLockDisable(key);
 }
 

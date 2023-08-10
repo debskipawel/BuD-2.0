@@ -182,6 +182,9 @@
     <ClCompile Include="Objects\Additional\Cursor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ViewModels\AppStateViewModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Torus\torus_instanced_vs.hlsl" />

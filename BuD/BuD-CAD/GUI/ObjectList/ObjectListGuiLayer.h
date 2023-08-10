@@ -1,15 +1,21 @@
 #pragma once
 
 #include <GUI/BaseGuiLayer.h>
+#include <ViewModels/AppStateViewModel.h>
 #include <ViewModels/ObjectListViewModel.h>
 
 class ObjectListGuiLayer : public BaseGuiLayer
 {
 public:
-	ObjectListGuiLayer(ObjectListViewModel& viewModel);
+	ObjectListGuiLayer(ObjectListViewModel& objectList, AppStateViewModel& appState);
 
 	virtual void DrawGui() override;
 
 protected:
-	ObjectListViewModel& m_ViewModel;
+	virtual void DrawGuiForFilters();
+
+	AppState m_PreviousAppState;
+
+	AppStateViewModel& m_AppStateViewModel;
+	ObjectListViewModel& m_ObjectListViewModel;
 };

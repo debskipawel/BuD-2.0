@@ -43,6 +43,7 @@ void ApplicationCAD::OnRender()
 	auto& viewportVM = m_ViewModel.m_ViewportViewModel;
 
 	BuD::Renderer::BeginTarget(viewportVM.m_ViewportWidth, viewportVM.m_ViewportHeight);
+	
 	BuD::Renderer::Clear(0.0f, 0.0f, 0.0f, 1.0f);
 
 	auto& scene = m_Scene;

@@ -222,6 +222,7 @@
     <ClCompile Include="Scene\CompositeSceneObject.cpp" />
     <ClCompile Include="Scene\SceneCAD.cpp" />
     <ClCompile Include="Scene\SceneObjectCAD.cpp" />
+    <ClCompile Include="ViewModels\AppStateViewModel.cpp" />
     <ClCompile Include="ViewModels\MainViewModel.cpp" />
     <ClCompile Include="Visitors\AbstractVisitor.cpp" />
   </ItemGroup>
