@@ -11,6 +11,7 @@ public:
 	virtual void OnLeftButtonDown(int x, int y);
 
 protected:
+	void ClearSelected();
 	void HandleSelection(int x, int y);
 
 	virtual void MoveCursorAlong(const Ray& ray);

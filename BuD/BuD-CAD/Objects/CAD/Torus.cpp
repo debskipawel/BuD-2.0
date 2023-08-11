@@ -103,13 +103,3 @@ void Torus::Accept(AbstractVisitor& visitor)
 void Torus::OnDelete()
 {
 }
-
-void Torus::OnSelect()
-{
-	m_Selected = true;
-}
-
-void Torus::OnUnselect()
-{
-	m_Selected = false;
-}

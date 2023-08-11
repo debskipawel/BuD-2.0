@@ -45,9 +45,6 @@
     <ClInclude Include="AxisLock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\Additional\Cube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Visitors\AbstractVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -72,13 +69,10 @@
     <ClInclude Include="GUI\ObjectList\ObjectListGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\CompositeSceneObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DataLayers\SceneDataLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Properties\ObjectGuiDrawerVisitor.h">
+    <ClInclude Include="Visitors\ObjectGui\ObjectGuiDrawerVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Components\TransformComponent.h">
@@ -90,7 +84,7 @@
     <ClInclude Include="Raycasting\Ray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Raycasting\RayIntersectionVisitor.h">
+    <ClInclude Include="Visitors\RayIntersection\RayIntersectionVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Raycasting\RayFactory.h">
@@ -144,6 +138,18 @@
     <ClInclude Include="Objects\CAD\PointBased\PointBasedObjectCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Visitors\Selection\ObjectSelectVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Visitors\Selection\ObjectUnselectVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SelectedGroup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Visitors\Deletion\ObjectDeletionVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -159,9 +165,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Objects\CAD\Torus.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Additional\Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Visitors\AbstractVisitor.cpp">
@@ -185,19 +188,13 @@
     <ClCompile Include="GUI\ObjectList\ObjectListGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\CompositeSceneObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DataLayers\MainDataLayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI\Properties\ObjectGuiDrawerVisitor.cpp">
+    <ClCompile Include="Visitors\ObjectGui\ObjectGuiDrawerVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Additional\Grid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Raycasting\RayIntersectionVisitor.cpp">
+    <ClCompile Include="Visitors\RayIntersection\RayIntersectionVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Raycasting\RayFactory.cpp">
@@ -258,6 +255,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DataLayers\ViewportDataLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Visitors\Selection\ObjectSelectVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Visitors\Selection\ObjectUnselectVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SelectedGroup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Visitors\Deletion\ObjectDeletionVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

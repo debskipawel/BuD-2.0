@@ -192,16 +192,16 @@
     <ClInclude Include="GUI\Console\ConsoleGuiLayer.h" />
     <ClInclude Include="GUI\MainGuiLayer.h" />
     <ClInclude Include="GUI\ObjectList\ObjectListGuiLayer.h" />
-    <ClInclude Include="GUI\Properties\ObjectGuiDrawerVisitor.h" />
+    <ClInclude Include="Scene\SelectedGroup.h" />
+    <ClInclude Include="Visitors\Deletion\ObjectDeletionVisitor.h" />
+    <ClInclude Include="Visitors\ObjectGui\ObjectGuiDrawerVisitor.h" />
     <ClInclude Include="GUI\Performance\PerformanceGuiLayer.h" />
     <ClInclude Include="GUI\Properties\PropertiesGuiLayer.h" />
-    <ClInclude Include="Raycasting\RayIntersectionVisitor.h" />
+    <ClInclude Include="Visitors\RayIntersection\RayIntersectionVisitor.h" />
     <ClInclude Include="GUI\Viewport\ViewportGuiLayer.h" />
-    <ClInclude Include="Objects\Additional\Cube.h" />
     <ClInclude Include="Objects\Additional\Grid.h" />
     <ClInclude Include="Raycasting\Ray.h" />
     <ClInclude Include="Objects\CAD\Torus.h" />
-    <ClInclude Include="Scene\CompositeSceneObject.h" />
     <ClInclude Include="Scene\SceneCAD.h" />
     <ClInclude Include="Scene\SceneObjectCAD.h" />
     <ClInclude Include="DataLayers\AppStateDataLayer.h" />
@@ -210,6 +210,8 @@
     <ClInclude Include="DataLayers\SceneDataLayer.h" />
     <ClInclude Include="DataLayers\ViewportDataLayer.h" />
     <ClInclude Include="Visitors\AbstractVisitor.h" />
+    <ClInclude Include="Visitors\Selection\ObjectSelectVisitor.h" />
+    <ClInclude Include="Visitors\Selection\ObjectUnselectVisitor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp" />
@@ -236,20 +238,21 @@
     <ClCompile Include="GUI\Console\ConsoleGuiLayer.cpp" />
     <ClCompile Include="GUI\MainGuiLayer.cpp" />
     <ClCompile Include="GUI\ObjectList\ObjectListGuiLayer.cpp" />
-    <ClCompile Include="GUI\Properties\ObjectGuiDrawerVisitor.cpp" />
+    <ClCompile Include="Scene\SelectedGroup.cpp" />
+    <ClCompile Include="Visitors\Deletion\ObjectDeletionVisitor.cpp" />
+    <ClCompile Include="Visitors\ObjectGui\ObjectGuiDrawerVisitor.cpp" />
     <ClCompile Include="GUI\Performance\PerformanceGuiLayer.cpp" />
     <ClCompile Include="GUI\Properties\PropertiesGuiLayer.cpp" />
-    <ClCompile Include="Raycasting\RayIntersectionVisitor.cpp" />
+    <ClCompile Include="Visitors\RayIntersection\RayIntersectionVisitor.cpp" />
     <ClCompile Include="GUI\Viewport\ViewportGuiLayer.cpp" />
-    <ClCompile Include="Objects\Additional\Cube.cpp" />
     <ClCompile Include="Objects\Additional\Grid.cpp" />
     <ClCompile Include="Objects\CAD\Torus.cpp" />
-    <ClCompile Include="Scene\CompositeSceneObject.cpp" />
     <ClCompile Include="Scene\SceneCAD.cpp" />
     <ClCompile Include="Scene\SceneObjectCAD.cpp" />
     <ClCompile Include="DataLayers\AppStateDataLayer.cpp" />
-    <ClCompile Include="DataLayers\MainDataLayer.cpp" />
     <ClCompile Include="Visitors\AbstractVisitor.cpp" />
+    <ClCompile Include="Visitors\Selection\ObjectSelectVisitor.cpp" />
+    <ClCompile Include="Visitors\Selection\ObjectUnselectVisitor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuD\BuD.vcxproj">

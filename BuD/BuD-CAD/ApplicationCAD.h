@@ -32,8 +32,7 @@ private:
 	std::unique_ptr<BaseMouseBehaviorLayer> m_MouseBehaviorLayer;
 	std::unique_ptr<BaseKeyboardBehaviorLayer> m_KeyboardBehaviorLayer;
 
-	SceneCAD m_Scene;
-	MainDataLayer m_ViewModel;
+	MainDataLayer m_MainDataLayer;
 };
 
 std::shared_ptr<BuD::AppLayer> BuD::CreateClientApp()

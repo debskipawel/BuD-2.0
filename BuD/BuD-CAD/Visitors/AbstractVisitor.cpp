@@ -1,6 +1,13 @@
 #include "AbstractVisitor.h"
 
-void AbstractVisitor::Visit(SceneObjectCAD& object)
+void AbstractVisitor::Visit(std::weak_ptr<SceneObjectCAD> object)
 {
-	object.Accept(*this);
+	m_Caller = object;
+
+	auto objectShared = object.lock();
+
+	if (objectShared)
+	{
+		objectShared->Accept(*this);
+	}
 }

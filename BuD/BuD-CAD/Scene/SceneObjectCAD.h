@@ -13,8 +13,6 @@ public:
 	virtual ~SceneObjectCAD();
 
 	virtual void OnDelete() {}
-	virtual void OnSelect() {}
-	virtual void OnUnselect() {}
 
 	virtual void Accept(AbstractVisitor& visitor) = 0;
 

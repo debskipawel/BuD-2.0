@@ -9,8 +9,6 @@
 struct MainDataLayer
 {
 public:
-	MainDataLayer(SceneCAD& scene);
-
 	AppStateDataLayer m_AppStateDataLayer;
 	SceneDataLayer m_SceneDataLayer;
 	ViewportDataLayer m_ViewportDataLayer;

@@ -84,13 +84,3 @@ void Point::OnDelete()
 		objectShared->OnPointRemove(Id());
 	}
 }
-
-void Point::OnSelect()
-{
-	m_Selected = true;
-}
-
-void Point::OnUnselect()
-{
-	m_Selected = false;
-}

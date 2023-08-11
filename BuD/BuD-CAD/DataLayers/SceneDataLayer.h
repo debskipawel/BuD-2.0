@@ -1,14 +1,11 @@
 #pragma once
 
 #include <Scene/SceneCAD.h>
+#include <Scene/SelectedGroup.h>
 
 struct SceneDataLayer
 {
 public:
-	SceneDataLayer(SceneCAD& scene)
-		: m_SceneCAD(scene)
-	{
-	}
-
-	SceneCAD& m_SceneCAD;
+	SceneCAD m_SceneCAD;
+	SelectedGroup m_SelectedGroup;
 };

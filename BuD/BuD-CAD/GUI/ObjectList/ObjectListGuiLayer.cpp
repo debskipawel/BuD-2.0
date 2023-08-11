@@ -2,6 +2,9 @@
 
 #include <imgui.h>
 
+#include <Visitors/Selection/ObjectSelectVisitor.h>
+#include <Visitors/Selection/ObjectUnselectVisitor.h>
+
 ObjectListGuiLayer::ObjectListGuiLayer(MainDataLayer& dataLayer)
 	: BaseGuiLayer(dataLayer)
 {
@@ -29,39 +32,49 @@ void ObjectListGuiLayer::DrawGui()
 				objectPair++;
 			}
 
+			auto& selectedGroup = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup;
+
 			for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
 			{
 				auto& cadObject = (objectPair++)->second;
 
-				auto id = std::format("{}###{}", cadObject->m_Tag, cadObject->Id());
+				auto id = cadObject->Id();
+				auto tag = std::format("{}###{}", cadObject->m_Tag, id);
 				
-				auto selected = cadObject->m_Selected;
+				auto selected = selectedGroup.m_SelectedObjects.contains(id);
 				
-				if (!ImGui::Selectable(id.c_str(), selected))
+				if (!ImGui::Selectable(tag.c_str(), selected))
 				{
 					continue;
 				}
 
-				auto& composite = scene.m_SelectedGroup;
-				
 				auto multiselect = appState.m_MultiselectOn;
 				auto newSelected = !selected;
 
+				std::unique_ptr<AbstractVisitor> selectVisitor = std::make_unique<ObjectSelectVisitor>(m_MainDataLayer.m_SceneDataLayer);
+				std::unique_ptr<AbstractVisitor> unselectVisitor = std::make_unique<ObjectUnselectVisitor>(m_MainDataLayer.m_SceneDataLayer);
+
 				if (!multiselect)
 				{
-					composite.Clear();
-					composite.Add(cadObject);
+					while (!selectedGroup.m_SelectedObjects.empty())
+					{
+						auto& id = *selectedGroup.m_SelectedObjects.begin();
+						auto& object = scene.m_ObjectList[id];
+						unselectVisitor->Visit(object);
+					}
+
+					selectVisitor->Visit(cadObject);
 
 					continue;
 				}
 
 				if (newSelected)
 				{
-					composite.Add(cadObject);
+					selectVisitor->Visit(cadObject);
 				}
 				else
 				{
-					composite.Remove(cadObject->Id());
+					unselectVisitor->Visit(cadObject);
 				}
 			}
 		}

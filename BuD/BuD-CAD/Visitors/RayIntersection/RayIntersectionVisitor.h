@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Ray.h"
+#include <Raycasting/Ray.h>
 
 #include <Visitors/AbstractVisitor.h>
 
@@ -17,11 +17,10 @@ public:
 
 	inline IntersectionResults GetLatestResults() { return m_LatestResults; }
 
-	virtual void Visit(SceneObjectCAD& object) override;
+	virtual void Visit(std::weak_ptr<SceneObjectCAD> object) override;
 
-	virtual void Visit(Point& point) override;
 	virtual void Visit(Torus& torus) override;
-	virtual void Visit(Cube& cube) override;
+	virtual void Visit(Point& point) override;
 
 protected:
 	Ray m_Ray;

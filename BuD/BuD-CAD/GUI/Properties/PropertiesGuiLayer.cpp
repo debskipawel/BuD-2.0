@@ -3,7 +3,8 @@
 #include <BuD.h>
 #include <imgui.h>
 
-#include "ObjectGuiDrawerVisitor.h"
+#include <Visitors/Deletion/ObjectDeletionVisitor.h>
+#include <Visitors/ObjectGui/ObjectGuiDrawerVisitor.h>
 
 PropertiesGuiLayer::PropertiesGuiLayer(MainDataLayer& dataLayer)
 	: BaseGuiLayer(dataLayer)
@@ -14,9 +15,9 @@ void PropertiesGuiLayer::DrawGui()
 {
 	if (ImGui::Begin("Properties"))
 	{
-		auto& composite = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_SelectedGroup;
+		auto selectedCount = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup.m_SelectedObjects.size();
 
-		switch (composite.m_Objects.size())
+		switch (selectedCount)
 		{
 		case 0:
 			break;
@@ -35,18 +36,19 @@ void PropertiesGuiLayer::DrawGui()
 void PropertiesGuiLayer::DrawGuiForSingularObject()
 {
 	std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ObjectGuiDrawerVisitor>(m_MainDataLayer.m_SceneDataLayer);
-	auto& composite = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_SelectedGroup;
+	
+	auto& selectedGroup = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup;
+	auto& selectedId = *selectedGroup.m_SelectedObjects.begin();
 
-	auto& [key, object] = *composite.m_Objects.begin();
+	auto& object = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_ObjectList[selectedId];
 
-	auto objectShared = object.lock();
-
-	visitor->Visit(*objectShared);
+	visitor->Visit(object);
 }
 
 void PropertiesGuiLayer::DrawGuiForComposite()
 {
-	auto& composite = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_SelectedGroup;
+	auto& selectedGroup = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup;
+	auto groupTransform = selectedGroup.m_GroupTransform;
 
 	auto max = ImGui::GetWindowContentRegionMax();
 	auto min = ImGui::GetWindowContentRegionMin();
@@ -82,8 +84,16 @@ void PropertiesGuiLayer::DrawGuiForComposite()
 
 		if (ImGui::Button("Yes###delete_yes_button", { 150, 0 }))
 		{
-			auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
-			scene.DeleteSelected();
+			std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ObjectDeletionVisitor>(m_MainDataLayer.m_SceneDataLayer);
+
+			while (!m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup.m_SelectedObjects.empty())
+			{
+				auto& id = *m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup.m_SelectedObjects.begin();
+				auto& object = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_ObjectList[id];
+				
+				visitor->Visit(object);
+			}
+
 			ImGui::CloseCurrentPopup();
 			m_MainDataLayer.m_AppStateDataLayer.Unfreeze();
 		}

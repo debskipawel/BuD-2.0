@@ -9,12 +9,12 @@
 #include <GUI/MainGuiLayer.h>
 
 ApplicationCAD::ApplicationCAD()
-	: m_Scene(), m_ViewModel(m_Scene)
+	: m_MainDataLayer()
 {
-	m_GuiLayer = std::make_unique<MainGuiLayer>(m_ViewModel);
+	m_GuiLayer = std::make_unique<MainGuiLayer>(m_MainDataLayer);
 
-	m_MouseBehaviorLayer = std::make_unique<MainMouseBehaviorLayer>(m_ViewModel);
-	m_KeyboardBehaviorLayer = std::make_unique<MainKeyboardBehaviorLayer>(m_ViewModel);
+	m_MouseBehaviorLayer = std::make_unique<MainMouseBehaviorLayer>(m_MainDataLayer);
+	m_KeyboardBehaviorLayer = std::make_unique<MainKeyboardBehaviorLayer>(m_MainDataLayer);
 
 	auto currentPath = std::filesystem::current_path();
 
@@ -37,7 +37,7 @@ ApplicationCAD::ApplicationCAD()
 	for (int i = 0; i < torusCount; i++)
 	{
 		auto position = dxm::Vector3::Zero + 2 * (i - torusCount / 2) * dxm::Vector3::UnitZ;
-		m_Scene.CreatePoint(position);
+		m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreatePoint(position);
 	}
 }
 
@@ -47,13 +47,13 @@ void ApplicationCAD::OnUpdate(float deltaTime)
 
 void ApplicationCAD::OnRender()
 {
-	auto& viewportVM = m_ViewModel.m_ViewportDataLayer;
+	auto& viewportVM = m_MainDataLayer.m_ViewportDataLayer;
 
 	BuD::Renderer::BeginTarget(viewportVM.m_ViewportWidth, viewportVM.m_ViewportHeight);
 	
 	BuD::Renderer::Clear(0.0f, 0.0f, 0.0f, 1.0f);
 
-	auto& scene = m_Scene;
+	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
 
 	BuD::Renderer::Render(scene.m_Scene);
 

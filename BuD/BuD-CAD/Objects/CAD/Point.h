@@ -13,8 +13,6 @@ public:
 	virtual void Accept(AbstractVisitor& visitor) override;
 
 	virtual void OnDelete() override;
-	virtual void OnSelect() override;
-	virtual void OnUnselect() override;
 
 	struct PointInstanceData
 	{

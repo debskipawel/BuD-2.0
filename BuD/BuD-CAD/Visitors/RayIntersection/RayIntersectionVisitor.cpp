@@ -5,7 +5,7 @@ RayIntersectionVisitor::RayIntersectionVisitor(const Ray& ray)
 {
 }
 
-void RayIntersectionVisitor::Visit(SceneObjectCAD& object)
+void RayIntersectionVisitor::Visit(std::weak_ptr<SceneObjectCAD> object)
 {
 	m_LatestResults = {};
 
@@ -66,8 +66,4 @@ void RayIntersectionVisitor::Visit(Torus& torus)
 	// TODO: finish logic for intersection with torus
 	m_LatestResults.m_Hit = true;
 	return;
-}
-
-void RayIntersectionVisitor::Visit(Cube& cube)
-{
 }

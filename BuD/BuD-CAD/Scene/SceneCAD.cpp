@@ -17,13 +17,6 @@ SceneCAD::~SceneCAD()
 
 void SceneCAD::DeleteObject(SceneObjectCAD& object)
 {
-	if (m_SelectedGroup.Has(object.Id()))
-	{
-		m_SelectedGroup.Remove(object.Id());
-	}
-	
-	object.OnDelete();
-
 	auto id = object.Id();
 	auto result = m_ObjectList.find(id);
 
@@ -35,25 +28,8 @@ void SceneCAD::DeleteObject(SceneObjectCAD& object)
 	auto& objectPtr = result->second;
 
 	objectPtr.reset();
+
 	m_ObjectList.erase(id);
-}
-
-void SceneCAD::DeleteSelected()
-{
-	while (!m_SelectedGroup.m_Objects.empty())
-	{
-		auto& [id, object] = *m_SelectedGroup.m_Objects.begin();
-
-		auto objectShared = object.lock();
-
-		if (objectShared)
-		{
-			DeleteObject(*objectShared);
-			continue;
-		}
-
-		m_SelectedGroup.Remove(id);
-	}
 }
 
 std::shared_ptr<SceneObjectCAD> SceneCAD::CreateTorus(dxm::Vector3 position)
