@@ -43,6 +43,18 @@ Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, float outerRadius, float 
 			{ "INS_SEGMENTS", 0, DXGI_FORMAT_R32G32_UINT, 1, 18 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 		}
 	);
+	pointMesh.m_BoundingBoxCallback = [this]()
+	{
+		BuD::AABB aabb;
+
+		auto scale = m_Transform.m_Scale;
+		auto maxScale = max(max(scale.x, scale.y), scale.z);
+		auto position = m_Transform.m_Position;
+		aabb.m_Max = position + maxScale * dxm::Vector3(m_InstanceData.m_OuterRadius + m_InstanceData.m_InnerRadius);
+		aabb.m_Min = position - maxScale * dxm::Vector3(m_InstanceData.m_OuterRadius + m_InstanceData.m_InnerRadius);
+
+		return aabb;
+	};
 
 	BuD::ShaderPipeline pipeline;
 	pipeline.m_VertexShader = BuD::ShaderLoader::VSLoad("Resources/Shaders/Torus/torus_instanced_vs.hlsl");

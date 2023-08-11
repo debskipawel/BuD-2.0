@@ -70,9 +70,8 @@ namespace BuD
 					auto& aabbCallback = mesh.m_BoundingBoxCallback.value();
 					auto aabb = aabbCallback();
 
-					if (frustum.IsInside(aabb))
+					if (!frustum.IsInside(aabb))
 					{
-						Log::WriteInfo(L"Object outside view frustum, culling.");
 						continue;
 					}
 				}
@@ -89,7 +88,6 @@ namespace BuD
 		}
 
 		DeployInstancedQueue(scene);
-		m_InstanceRenderQueue.Clear();
 
 		auto performanceData = RendererFrameStats{};
 		performanceData.m_DrawCalls = m_DrawCallsThisFrame;
@@ -137,5 +135,7 @@ namespace BuD
 				CleanAfterDrawing();
 			}
 		);
+
+		m_InstanceRenderQueue.Clear();
 	}
 }
