@@ -17,6 +17,7 @@ public:
 	void DeleteObject(SceneObjectCAD& object);
 
 	std::shared_ptr<SceneObjectCAD> CreateTorus(dxm::Vector3 position);
+	std::shared_ptr<SceneObjectCAD> CreatePoint(dxm::Vector3 position);
 
 	std::shared_ptr<Cursor> m_MainCursor;
 

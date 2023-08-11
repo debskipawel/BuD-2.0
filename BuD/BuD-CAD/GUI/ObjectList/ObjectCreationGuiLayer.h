@@ -12,6 +12,7 @@ public:
 
 protected:
 	void CreateTorus();
+	void CreatePoint();
 
 	struct ButtonInfo
 	{

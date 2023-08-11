@@ -9,7 +9,7 @@ public:
 	ObjectGuiDrawerVisitor(PropertiesViewModel& viewModel);
 
 	virtual void Visit(Torus& torus) override;
-	virtual void Visit(Cube& cube) override;
+	virtual void Visit(Point& point) override;
 
 protected:
 	virtual bool DrawGuiForTag(SceneObjectCAD& object);

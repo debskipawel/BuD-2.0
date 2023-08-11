@@ -144,6 +144,12 @@
     <ClInclude Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\CAD\Point.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\CAD\PointBased\PointBasedObjectCAD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -248,6 +254,12 @@
     <ClCompile Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\CAD\Point.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\CAD\PointBased\PointBasedObjectCAD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Torus\torus_instanced_vs.hlsl" />
@@ -260,5 +272,7 @@
     <FxCompile Include="Resources\Shaders\Grid\grid_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\Cursor\cursor_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\Cursor\cursor_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\Point\point_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\Point\point_ps.hlsl" />
   </ItemGroup>
 </Project>

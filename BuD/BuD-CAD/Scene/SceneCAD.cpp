@@ -1,6 +1,7 @@
 #include "SceneCAD.h"
 
 #include <Objects/CAD/Torus.h>
+#include <Objects/CAD/Point.h>
 
 SceneCAD::SceneCAD()
 	: m_Scene(), m_ObjectList()
@@ -43,4 +44,12 @@ std::shared_ptr<SceneObjectCAD> SceneCAD::CreateTorus(dxm::Vector3 position)
 	m_ObjectList.emplace(torus->Id(), torus);
 
 	return torus;
+}
+
+std::shared_ptr<SceneObjectCAD> SceneCAD::CreatePoint(dxm::Vector3 position)
+{
+	auto point = std::make_shared<Point>(m_Scene, position);
+	m_ObjectList.emplace(point->Id(), point);
+
+	return point;
 }

@@ -33,11 +33,11 @@ ApplicationCAD::ApplicationCAD()
 	);
 
 	// TODO: delete this code. just temporary startup benchmarking stuff.
-	constexpr auto torusCount = 1;
+	constexpr auto torusCount = 1000;
 	for (int i = 0; i < torusCount; i++)
 	{
 		auto position = dxm::Vector3::Zero + 2 * (i - torusCount / 2) * dxm::Vector3::UnitZ;
-		m_Scene.CreateTorus(position);
+		m_Scene.CreatePoint(position);
 	}
 }
 

@@ -19,6 +19,7 @@ public:
 
 	virtual void Visit(SceneObjectCAD& object) override;
 
+	virtual void Visit(Point& point) override;
 	virtual void Visit(Torus& torus) override;
 	virtual void Visit(Cube& cube) override;
 

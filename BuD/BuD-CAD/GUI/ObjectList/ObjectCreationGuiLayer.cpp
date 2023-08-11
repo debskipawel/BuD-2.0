@@ -6,6 +6,7 @@ ObjectCreationGuiLayer::ObjectCreationGuiLayer(ObjectListViewModel& viewModel)
 	: m_ViewModel(viewModel)
 {
 	m_Buttons.emplace_back(ButtonInfo{ "Create torus", [this]() { CreateTorus(); } });
+	m_Buttons.emplace_back(ButtonInfo{ "Create point", [this]() { CreatePoint(); } });
 }
 
 void ObjectCreationGuiLayer::DrawGui()
@@ -47,4 +48,12 @@ void ObjectCreationGuiLayer::CreateTorus()
 	auto position = scene.m_MainCursor->GetPosition();
 
 	scene.CreateTorus(position);
+}
+
+void ObjectCreationGuiLayer::CreatePoint()
+{
+	auto& scene = m_ViewModel.m_Scene;
+	auto position = scene.m_MainCursor->GetPosition();
+
+	scene.CreatePoint(position);
 }

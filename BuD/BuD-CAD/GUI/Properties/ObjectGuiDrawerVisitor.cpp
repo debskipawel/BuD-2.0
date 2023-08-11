@@ -3,6 +3,8 @@
 #include <imgui.h>
 #include <misc/cpp/imgui_stdlib.h>
 
+#include <Objects/CAD/PointBased/PointBasedObjectCAD.h>
+
 ObjectGuiDrawerVisitor::ObjectGuiDrawerVisitor(PropertiesViewModel& viewModel)
 	: m_ViewModel(viewModel)
 {
@@ -47,8 +49,28 @@ void ObjectGuiDrawerVisitor::Visit(Torus& torus)
 	DrawDeleteButton(torus);
 }
 
-void ObjectGuiDrawerVisitor::Visit(Cube& cube)
+void ObjectGuiDrawerVisitor::Visit(Point& point)
 {
+	DrawGuiForTag(point);
+
+	ImGui::Separator();
+
+	if (DrawGuiForTransform(point))
+	{
+		const auto& transform = point.m_Transform;
+
+		point.m_InstanceData.m_Position = transform.m_Position;
+
+		for (auto& object : point.m_PointBasedObjects)
+		{
+			auto sharedObj = object.lock();
+
+			if (sharedObj)
+			{
+				sharedObj->OnPointModify();
+			}
+		}
+	}
 }
 
 bool ObjectGuiDrawerVisitor::DrawGuiForTag(SceneObjectCAD& object)

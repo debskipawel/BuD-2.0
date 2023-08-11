@@ -12,6 +12,21 @@ void RayIntersectionVisitor::Visit(SceneObjectCAD& object)
 	AbstractVisitor::Visit(object);
 }
 
+void RayIntersectionVisitor::Visit(Point& point)
+{
+	auto position = point.m_Transform.m_Position;
+
+	auto t = m_Ray.m_Direction.Dot(position - m_Ray.m_Origin);
+	auto shortestToPoint = m_Ray.m_Origin + t * m_Ray.m_Direction - position;
+	auto originToPoint = position - m_Ray.m_Origin;
+
+	if (shortestToPoint.LengthSquared() < 0.0025f * originToPoint.LengthSquared())
+	{
+		m_LatestResults.m_Hit = true;
+		m_LatestResults.m_Distance = t;
+	}
+}
+
 void RayIntersectionVisitor::Visit(Torus& torus)
 {
 	auto& instanceData = torus.m_InstanceData;
