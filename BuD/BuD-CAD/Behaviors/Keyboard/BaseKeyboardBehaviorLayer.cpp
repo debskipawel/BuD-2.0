@@ -1,7 +1,7 @@
 #include "BaseKeyboardBehaviorLayer.h"
 
-BaseKeyboardBehaviorLayer::BaseKeyboardBehaviorLayer(MainViewModel& viewModel)
-	: m_ViewModel(viewModel)
+BaseKeyboardBehaviorLayer::BaseKeyboardBehaviorLayer(MainDataLayer& dataLayer)
+	: m_MainDataLayer(dataLayer)
 {
 }
 

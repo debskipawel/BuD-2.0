@@ -4,7 +4,7 @@
 
 #include <BuD.h>
 
-struct ViewportViewModel
+struct ViewportDataLayer
 {
 	BuD::Texture m_ViewportImage;
 
@@ -12,4 +12,7 @@ struct ViewportViewModel
 
 	float m_ViewportWidth;
 	float m_ViewportHeight;
+
+public:
+	bool IsMouseOnViewport(int x, int y);
 };

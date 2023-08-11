@@ -5,7 +5,7 @@
 class ActionMouseBehaviorLayer : public BaseMouseBehaviorLayer
 {
 public:
-	ActionMouseBehaviorLayer(MainViewModel& viewModel);
+	ActionMouseBehaviorLayer(MainDataLayer& dataLayer);
 
 	virtual void OnLeftButtonDown(int x, int y) override;
 	virtual void OnLeftButtonUp(int x, int y) override;

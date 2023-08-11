@@ -1,7 +1,7 @@
 #include "BaseMouseBehaviorLayer.h"
 
-BaseMouseBehaviorLayer::BaseMouseBehaviorLayer(MainViewModel& viewModel)
-    : m_ViewModel(viewModel)
+BaseMouseBehaviorLayer::BaseMouseBehaviorLayer(MainDataLayer& dataLayer)
+    : m_MainDataLayer(dataLayer)
 {
 }
 
@@ -9,9 +9,10 @@ dxm::Vector2 BaseMouseBehaviorLayer::ViewportScreenSpaceCoords(int x, int y)
 {
 	dxm::Vector2 result = { -1.0f, -1.0f };
 
-	if (IsMouseOnViewport(x, y))
+	auto& viewport = m_MainDataLayer.m_ViewportDataLayer;
+
+	if (viewport.IsMouseOnViewport(x, y))
 	{
-		auto& viewport = m_ViewModel.m_ViewportViewModel;
 		auto viewportPosX = x - viewport.m_ViewportPosition.x;
 		auto viewportPosY = y - viewport.m_ViewportPosition.y;
 
@@ -20,14 +21,4 @@ dxm::Vector2 BaseMouseBehaviorLayer::ViewportScreenSpaceCoords(int x, int y)
 	}
 
 	return result;
-}
-
-bool BaseMouseBehaviorLayer::IsMouseOnViewport(int x, int y)
-{
-	auto& viewport = m_ViewModel.m_ViewportViewModel;
-	auto viewportPosX = x - viewport.m_ViewportPosition.x;
-	auto viewportPosY = y - viewport.m_ViewportPosition.y;
-
-	return (viewportPosX >= 0 && viewportPosX < viewport.m_ViewportWidth)
-		&& (viewportPosY >= 0 && viewportPosY < viewport.m_ViewportHeight);
 }

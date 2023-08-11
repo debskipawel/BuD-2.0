@@ -2,19 +2,19 @@
 
 #include <Raycasting/RayIntersectionVisitor.h>
 
-SelectionMouseBehaviorLayer::SelectionMouseBehaviorLayer(MainViewModel& viewModel)
-	: BaseMouseBehaviorLayer(viewModel)
+SelectionMouseBehaviorLayer::SelectionMouseBehaviorLayer(MainDataLayer& dataLayer)
+	: BaseMouseBehaviorLayer(dataLayer)
 {
 }
 
 void SelectionMouseBehaviorLayer::OnLeftButtonDown(int x, int y)
 {
-	if (m_ViewModel.m_AppStateViewModel.m_AppState == AppState::FROZEN)
+	if (m_MainDataLayer.m_AppStateDataLayer.m_AppState == AppState::FROZEN)
 	{
 		return;
 	}
 
-	if (m_ViewModel.m_AppStateViewModel.m_AppState == AppState::IDLE)
+	if (m_MainDataLayer.m_AppStateDataLayer.m_AppState == AppState::IDLE)
 	{
 		HandleSelection(x, y);
 	}
@@ -22,23 +22,23 @@ void SelectionMouseBehaviorLayer::OnLeftButtonDown(int x, int y)
 
 void SelectionMouseBehaviorLayer::HandleSelection(int x, int y)
 {
-	if (!IsMouseOnViewport(x, y))
+	if (!m_MainDataLayer.m_ViewportDataLayer.IsMouseOnViewport(x, y))
 	{
 		return;
 	}
 
+	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
+	auto camera = scene.m_Scene.ActiveCamera();
 	auto screenSpace = ViewportScreenSpaceCoords(x, y);
 	
-	auto rayFactory = RayFactory(m_ViewModel.m_ViewportViewModel, m_ViewModel.m_ObjectListViewModel);
+	auto rayFactory = RayFactory(camera);
 	auto ray = rayFactory.CreateRay(screenSpace);
 
 	auto closestObject = GetClosestIntersecting(ray);
 
 	if (closestObject)
 	{
-		auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
-
-		if (!m_ViewModel.m_AppStateViewModel.m_MultiselectOn)
+		if (!m_MainDataLayer.m_AppStateDataLayer.m_MultiselectOn)
 		{
 			scene.m_SelectedGroup.Clear();
 		}
@@ -47,8 +47,6 @@ void SelectionMouseBehaviorLayer::HandleSelection(int x, int y)
 	}
 	else
 	{
-		auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
-
 		scene.m_SelectedGroup.Clear();
 
 		MoveCursorAlong(ray);
@@ -57,7 +55,7 @@ void SelectionMouseBehaviorLayer::HandleSelection(int x, int y)
 
 void SelectionMouseBehaviorLayer::MoveCursorAlong(const Ray& ray)
 {
-	auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
+	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
 
 	auto& cursor = scene.m_MainCursor;
 	auto camera = scene.m_Scene.ActiveCamera();
@@ -73,7 +71,7 @@ std::shared_ptr<SceneObjectCAD> SelectionMouseBehaviorLayer::GetClosestIntersect
 	std::shared_ptr<SceneObjectCAD> closestObject = nullptr;
 
 	auto visitor = std::make_unique<RayIntersectionVisitor>(ray);
-	auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
+	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
 
 	float minDistance = FLT_MAX;
 
@@ -97,7 +95,7 @@ std::vector<std::shared_ptr<SceneObjectCAD>> SelectionMouseBehaviorLayer::GetAll
 	auto objectsIntersecting = std::vector<std::shared_ptr<SceneObjectCAD>>();
 
 	auto visitor = std::make_unique<RayIntersectionVisitor>(ray);
-	auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
+	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
 
 	for (auto& [id, object] : scene.m_ObjectList)
 	{

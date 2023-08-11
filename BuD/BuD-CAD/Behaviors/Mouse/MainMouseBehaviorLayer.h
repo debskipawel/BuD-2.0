@@ -2,12 +2,10 @@
 
 #include "BaseMouseBehaviorLayer.h"
 
-#include <ViewModels/MainViewModel.h>
-
 class MainMouseBehaviorLayer : public BaseMouseBehaviorLayer
 {
 public:
-	MainMouseBehaviorLayer(MainViewModel& viewModel);
+	MainMouseBehaviorLayer(MainDataLayer& dataLayer);
 
 	virtual void OnLeftButtonDown(int x, int y) override;
 	virtual void OnRightButtonDown(int x, int y) override;

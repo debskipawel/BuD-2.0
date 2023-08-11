@@ -1,12 +1,12 @@
 #pragma once
 
-#include <ViewModels/PropertiesViewModel.h>
+#include <DataLayers/SceneDataLayer.h>
 #include <Visitors/AbstractVisitor.h>
 
 class ObjectGuiDrawerVisitor : public AbstractVisitor
 {
 public:
-	ObjectGuiDrawerVisitor(PropertiesViewModel& viewModel);
+	ObjectGuiDrawerVisitor(SceneDataLayer& dataLayer);
 
 	virtual void Visit(Torus& torus) override;
 	virtual void Visit(Point& point) override;
@@ -16,5 +16,5 @@ protected:
 	virtual bool DrawGuiForTransform(SceneObjectCAD& object);
 	virtual void DrawDeleteButton(SceneObjectCAD& object);
 
-	PropertiesViewModel& m_ViewModel;
+	SceneDataLayer& m_SceneDataLayer;
 };

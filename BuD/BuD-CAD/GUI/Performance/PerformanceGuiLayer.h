@@ -5,7 +5,7 @@
 class PerformanceGuiLayer : public BaseGuiLayer
 {
 public:
-	PerformanceGuiLayer();
+	PerformanceGuiLayer(MainDataLayer& dataLayer);
 
 	virtual void DrawGui() override;
 };

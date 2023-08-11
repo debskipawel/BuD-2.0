@@ -2,17 +2,15 @@
 
 #include "Ray.h"
 
-#include <ViewModels/ViewportViewModel.h>
-#include <ViewModels/ObjectListViewModel.h>
+#include <BuD.h>
 
 class RayFactory
 {
 public:
-	RayFactory(ViewportViewModel& viewport, ObjectListViewModel& objectList);
+	RayFactory(std::shared_ptr<BuD::AbstractCamera> camera);
 
 	Ray CreateRay(dxm::Vector2 screenSpace);
 
 protected:
-	ViewportViewModel& m_Viewport;
-	ObjectListViewModel& m_ObjectList;
+	std::shared_ptr<BuD::AbstractCamera> m_Camera;
 };

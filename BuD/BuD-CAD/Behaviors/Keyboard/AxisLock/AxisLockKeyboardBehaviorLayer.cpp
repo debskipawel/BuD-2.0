@@ -1,13 +1,13 @@
 #include "AxisLockKeyboardBehaviorLayer.h"
 
-AxisLockKeyboardBehaviorLayer::AxisLockKeyboardBehaviorLayer(MainViewModel& viewModel)
-	: BaseKeyboardBehaviorLayer(viewModel)
+AxisLockKeyboardBehaviorLayer::AxisLockKeyboardBehaviorLayer(MainDataLayer& dataLayer)
+	: BaseKeyboardBehaviorLayer(dataLayer)
 {
 }
 
 void AxisLockKeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
 {
-	if (m_ViewModel.m_AppStateViewModel.m_AppState == AppState::FROZEN)
+	if (m_MainDataLayer.m_AppStateDataLayer.m_AppState == AppState::FROZEN)
 	{
 		return;
 	}
@@ -110,10 +110,10 @@ void AxisLockKeyboardBehaviorLayer::HandleAxisLockDisable(BuD::KeyboardKeys key)
 
 void AxisLockKeyboardBehaviorLayer::SetAxisLock(AxisLock axisLock)
 {
-	auto& appState = m_ViewModel.m_AppStateViewModel;
-	appState.m_AxisLock = axisLock;
+	auto& appState = m_MainDataLayer.m_AppStateDataLayer;
+	appState.SetAxisLock(axisLock);
 
-	auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
+	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
 	auto& cursor = scene.m_MainCursor;
 
 	cursor->SetAxisLock(axisLock);

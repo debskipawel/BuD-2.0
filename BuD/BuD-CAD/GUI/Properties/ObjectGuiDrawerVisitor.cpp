@@ -5,8 +5,8 @@
 
 #include <Objects/CAD/PointBased/PointBasedObjectCAD.h>
 
-ObjectGuiDrawerVisitor::ObjectGuiDrawerVisitor(PropertiesViewModel& viewModel)
-	: m_ViewModel(viewModel)
+ObjectGuiDrawerVisitor::ObjectGuiDrawerVisitor(SceneDataLayer& dataLayer)
+	: m_SceneDataLayer(dataLayer)
 {
 }
 
@@ -129,7 +129,7 @@ void ObjectGuiDrawerVisitor::DrawDeleteButton(SceneObjectCAD& object)
 
 	if (ImGui::Button("Delete", ImVec2(max.x - min.x, 20)))
 	{
-		auto& scene = m_ViewModel.m_SceneCAD;
+		auto& scene = m_SceneDataLayer.m_SceneCAD;
 		scene.DeleteObject(object);
 	}
 }

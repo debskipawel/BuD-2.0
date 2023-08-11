@@ -2,17 +2,16 @@
 
 #include "BaseGuiLayer.h"
 
-#include <ViewModels/MainViewModel.h>
+#include <DataLayers/MainDataLayer.h>
 
 class MainGuiLayer : public BaseGuiLayer
 {
 public:
-	MainGuiLayer(MainViewModel& viewModel);
+	MainGuiLayer(MainDataLayer& viewModel);
 
 	virtual void DrawGui() override;
 
 protected:
 
-	MainViewModel& m_ViewModel;
 	std::vector<std::unique_ptr<BaseGuiLayer>> m_GuiLayers;
 };

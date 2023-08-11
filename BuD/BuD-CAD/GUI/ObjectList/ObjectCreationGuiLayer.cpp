@@ -2,8 +2,8 @@
 
 #include <imgui.h>
 
-ObjectCreationGuiLayer::ObjectCreationGuiLayer(ObjectListViewModel& viewModel)
-	: m_ViewModel(viewModel)
+ObjectCreationGuiLayer::ObjectCreationGuiLayer(MainDataLayer& dataLayer)
+	: BaseGuiLayer(dataLayer)
 {
 	m_Buttons.emplace_back(ButtonInfo{ "Create torus", [this]() { CreateTorus(); } });
 	m_Buttons.emplace_back(ButtonInfo{ "Create point", [this]() { CreatePoint(); } });
@@ -44,7 +44,7 @@ void ObjectCreationGuiLayer::DrawGui()
 
 void ObjectCreationGuiLayer::CreateTorus()
 {
-	auto& scene = m_ViewModel.m_Scene;
+	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
 	auto position = scene.m_MainCursor->GetPosition();
 
 	scene.CreateTorus(position);
@@ -52,7 +52,7 @@ void ObjectCreationGuiLayer::CreateTorus()
 
 void ObjectCreationGuiLayer::CreatePoint()
 {
-	auto& scene = m_ViewModel.m_Scene;
+	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
 	auto position = scene.m_MainCursor->GetPosition();
 
 	scene.CreatePoint(position);

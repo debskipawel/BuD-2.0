@@ -2,14 +2,21 @@
 
 #include <imgui.h>
 
-CursorGuiLayer::CursorGuiLayer(CursorViewModel& cursor)
-	: m_CursorViewModel(cursor)
+CursorGuiLayer::CursorGuiLayer(MainDataLayer& dataLayer)
+	: BaseGuiLayer(dataLayer)
 {
 }
 
 void CursorGuiLayer::DrawGui()
 {
-	auto& cursor = m_CursorViewModel.m_Cursor;
+	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
+
+	if (scene.m_SelectedGroup.m_Objects.size() > 1)
+	{
+		return;
+	}
+
+	auto& cursor = scene.m_MainCursor;
 
 	if (ImGui::Begin("Cursor ###cursor_panel"))
 	{

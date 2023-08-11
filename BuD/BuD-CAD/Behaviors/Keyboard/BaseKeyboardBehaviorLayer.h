@@ -1,16 +1,16 @@
 #pragma once
 
 #include <BuD.h>
-#include <ViewModels/MainViewModel.h>
+#include <DataLayers/MainDataLayer.h>
 
 class BaseKeyboardBehaviorLayer
 {
 public:
-	BaseKeyboardBehaviorLayer(MainViewModel& viewModel);
+	BaseKeyboardBehaviorLayer(MainDataLayer& dataLayer);
 
 	virtual void OnKeyPress(BuD::KeyboardKeys key);
 	virtual void OnKeyRelease(BuD::KeyboardKeys key);
 
 protected:
-	MainViewModel& m_ViewModel;
+	MainDataLayer& m_MainDataLayer;
 };

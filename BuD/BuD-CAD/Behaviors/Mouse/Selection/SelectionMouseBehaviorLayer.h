@@ -6,7 +6,7 @@
 class SelectionMouseBehaviorLayer : public BaseMouseBehaviorLayer
 {
 public:
-	SelectionMouseBehaviorLayer(MainViewModel& viewModel);
+	SelectionMouseBehaviorLayer(MainDataLayer& dataLayer);
 
 	virtual void OnLeftButtonDown(int x, int y);
 

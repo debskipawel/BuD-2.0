@@ -3,7 +3,8 @@
 #include <BuD.h>
 #include <imgui.h>
 
-PerformanceGuiLayer::PerformanceGuiLayer()
+PerformanceGuiLayer::PerformanceGuiLayer(MainDataLayer& dataLayer)
+	: BaseGuiLayer(dataLayer)
 {
 }
 

@@ -1,13 +1,13 @@
 #include "AppStateHeyboardBehaviorLayer.h"
 
-AppStateKeyboardBehaviorLayer::AppStateKeyboardBehaviorLayer(MainViewModel& viewModel)
-	: BaseKeyboardBehaviorLayer(viewModel)
+AppStateKeyboardBehaviorLayer::AppStateKeyboardBehaviorLayer(MainDataLayer& dataLayer)
+	: BaseKeyboardBehaviorLayer(dataLayer)
 {
 }
 
 void AppStateKeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
 {
-	if (m_ViewModel.m_AppStateViewModel.m_AppState == AppState::FROZEN)
+	if (m_MainDataLayer.m_AppStateDataLayer.m_AppState == AppState::FROZEN)
 	{
 		return;
 	}
@@ -21,11 +21,11 @@ void AppStateKeyboardBehaviorLayer::HandleAppStateChange(BuD::KeyboardKeys key)
 
 	if (result != s_AppStateMap.end())
 	{
-		auto& scene = m_ViewModel.m_ObjectListViewModel.m_Scene;
+		auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
 
 		auto& cursor = scene.m_MainCursor;
 		cursor->SetAppState(result->second);
 
-		m_ViewModel.m_AppStateViewModel.m_AppState = result->second;
+		m_MainDataLayer.m_AppStateDataLayer.SetAppState(result->second);
 	}
 }

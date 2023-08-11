@@ -66,18 +66,6 @@ void RayIntersectionVisitor::Visit(Torus& torus)
 	// TODO: finish logic for intersection with torus
 	m_LatestResults.m_Hit = true;
 	return;
-
-	auto xa = localRay.m_Origin;
-	auto s = localRay.m_Direction;
-
-	auto alpha = s.Dot(s);
-	auto beta = s.Dot(xa);
-	auto gamma = xa.Dot(xa);
-	auto delta = gamma + pow(instanceData.m_OuterRadius, 2.0f) - pow(instanceData.m_InnerRadius, 2.0f);
-	auto sigma = gamma - pow(instanceData.m_OuterRadius, 2.0f) - pow(instanceData.m_InnerRadius, 2.0f);
-
-	auto a = alpha * alpha;
-	auto b = 4 * alpha * beta;
 }
 
 void RayIntersectionVisitor::Visit(Cube& cube)

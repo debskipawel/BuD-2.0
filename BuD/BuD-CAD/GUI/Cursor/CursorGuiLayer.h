@@ -2,15 +2,10 @@
 
 #include <GUI/BaseGuiLayer.h>
 
-#include <ViewModels/CursorViewModel.h>
-
 class CursorGuiLayer : public BaseGuiLayer
 {
 public:
-	CursorGuiLayer(CursorViewModel& cursor);
+	CursorGuiLayer(MainDataLayer& dataLayer);
 
 	virtual void DrawGui() override;
-
-protected:
-	CursorViewModel& m_CursorViewModel;
 };

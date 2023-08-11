@@ -47,7 +47,7 @@ void ApplicationCAD::OnUpdate(float deltaTime)
 
 void ApplicationCAD::OnRender()
 {
-	auto& viewportVM = m_ViewModel.m_ViewportViewModel;
+	auto& viewportVM = m_ViewModel.m_ViewportDataLayer;
 
 	BuD::Renderer::BeginTarget(viewportVM.m_ViewportWidth, viewportVM.m_ViewportHeight);
 	

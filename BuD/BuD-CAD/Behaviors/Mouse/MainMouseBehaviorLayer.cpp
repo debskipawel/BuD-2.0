@@ -4,12 +4,12 @@
 #include <Behaviors/Mouse/Selection/SelectionMouseBehaviorLayer.h>
 #include <Behaviors/Mouse/Camera/CameraMouseBehaviorLayer.h>
 
-MainMouseBehaviorLayer::MainMouseBehaviorLayer(MainViewModel& viewModel)
-	: BaseMouseBehaviorLayer(viewModel)
+MainMouseBehaviorLayer::MainMouseBehaviorLayer(MainDataLayer& dataLayer)
+	: BaseMouseBehaviorLayer(dataLayer)
 {
-	m_BehaviorLayers.emplace_back(std::make_unique<ActionMouseBehaviorLayer>(viewModel));
-	m_BehaviorLayers.emplace_back(std::make_unique<SelectionMouseBehaviorLayer>(viewModel));
-	m_BehaviorLayers.emplace_back(std::make_unique<CameraMouseBehaviorLayer>(viewModel));
+	m_BehaviorLayers.emplace_back(std::make_unique<ActionMouseBehaviorLayer>(dataLayer));
+	m_BehaviorLayers.emplace_back(std::make_unique<SelectionMouseBehaviorLayer>(dataLayer));
+	m_BehaviorLayers.emplace_back(std::make_unique<CameraMouseBehaviorLayer>(dataLayer));
 }
 
 void MainMouseBehaviorLayer::OnLeftButtonDown(int x, int y)

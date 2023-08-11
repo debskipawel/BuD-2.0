@@ -5,13 +5,13 @@
 #include <Behaviors/Keyboard/Camera/CameraKeyboardBehaviorLayer.h>
 #include <Behaviors/Keyboard/Multiselect/MultiselectKeyboardBehaviorLayer.h>
 
-MainKeyboardBehaviorLayer::MainKeyboardBehaviorLayer(MainViewModel& viewModel)
-	: BaseKeyboardBehaviorLayer(viewModel)
+MainKeyboardBehaviorLayer::MainKeyboardBehaviorLayer(MainDataLayer& dataLayer)
+	: BaseKeyboardBehaviorLayer(dataLayer)
 {
-	m_BehaviorLayers.emplace_back(std::make_unique<AppStateKeyboardBehaviorLayer>(viewModel));
-	m_BehaviorLayers.emplace_back(std::make_unique<AxisLockKeyboardBehaviorLayer>(viewModel));
-	m_BehaviorLayers.emplace_back(std::make_unique<CameraKeyboardBehaviorLayer>(viewModel));
-	m_BehaviorLayers.emplace_back(std::make_unique<MultiselectKeyboardBehaviorLayer>(viewModel));
+	m_BehaviorLayers.emplace_back(std::make_unique<AppStateKeyboardBehaviorLayer>(dataLayer));
+	m_BehaviorLayers.emplace_back(std::make_unique<AxisLockKeyboardBehaviorLayer>(dataLayer));
+	m_BehaviorLayers.emplace_back(std::make_unique<CameraKeyboardBehaviorLayer>(dataLayer));
+	m_BehaviorLayers.emplace_back(std::make_unique<MultiselectKeyboardBehaviorLayer>(dataLayer));
 }
 
 void MainKeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)

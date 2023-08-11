@@ -8,7 +8,7 @@
 #include <GUI/BaseGuiLayer.h>
 
 #include <Scene/SceneCAD.h>
-#include <ViewModels/MainViewModel.h>
+#include <DataLayers/MainDataLayer.h>
 
 class ApplicationCAD : public BuD::AppLayer
 {
@@ -33,7 +33,7 @@ private:
 	std::unique_ptr<BaseKeyboardBehaviorLayer> m_KeyboardBehaviorLayer;
 
 	SceneCAD m_Scene;
-	MainViewModel m_ViewModel;
+	MainDataLayer m_ViewModel;
 };
 
 std::shared_ptr<BuD::AppLayer> BuD::CreateClientApp()

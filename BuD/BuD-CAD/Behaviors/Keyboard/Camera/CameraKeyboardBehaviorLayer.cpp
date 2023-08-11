@@ -1,15 +1,15 @@
 #include "CameraKeyboardBehaviorLayer.h"
 
-CameraKeyboardBehaviorLayer::CameraKeyboardBehaviorLayer(MainViewModel& viewModel)
-	: BaseKeyboardBehaviorLayer(viewModel)
+CameraKeyboardBehaviorLayer::CameraKeyboardBehaviorLayer(MainDataLayer& dataLayer)
+	: BaseKeyboardBehaviorLayer(dataLayer)
 {
 }
 
 void CameraKeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
 {
-	auto& appStateVM = m_ViewModel.m_AppStateViewModel;
+	auto& appState = m_MainDataLayer.m_AppStateDataLayer;
 
-	if (appStateVM.m_AppState == AppState::FROZEN)
+	if (appState.m_AppState == AppState::FROZEN)
 	{
 		return;
 	}
@@ -26,7 +26,7 @@ void CameraKeyboardBehaviorLayer::HandleCameraMovementEnable(BuD::KeyboardKeys k
 {
 	if (key == BuD::KeyboardKeys::Shift)
 	{
-		m_ViewModel.m_AppStateViewModel.m_CameraReadyToMove = true;
+		m_MainDataLayer.m_AppStateDataLayer.m_CameraReadyToMove = true;
 	}
 }
 
@@ -34,6 +34,6 @@ void CameraKeyboardBehaviorLayer::HandleCameraMovementDisable(BuD::KeyboardKeys 
 {
 	if (key == BuD::KeyboardKeys::Shift)
 	{
-		m_ViewModel.m_AppStateViewModel.m_CameraReadyToMove = false;
+		m_MainDataLayer.m_AppStateDataLayer.m_CameraReadyToMove = false;
 	}
 }

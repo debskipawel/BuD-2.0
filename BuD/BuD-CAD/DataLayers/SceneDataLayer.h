@@ -2,10 +2,10 @@
 
 #include <Scene/SceneCAD.h>
 
-struct PropertiesViewModel
+struct SceneDataLayer
 {
 public:
-	PropertiesViewModel(SceneCAD& scene)
+	SceneDataLayer(SceneCAD& scene)
 		: m_SceneCAD(scene)
 	{
 	}

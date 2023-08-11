@@ -1,15 +1,15 @@
 #include "MultiselectKeyboardBehaviorLayer.h"
 
-MultiselectKeyboardBehaviorLayer::MultiselectKeyboardBehaviorLayer(MainViewModel& viewModel)
-	: BaseKeyboardBehaviorLayer(viewModel)
+MultiselectKeyboardBehaviorLayer::MultiselectKeyboardBehaviorLayer(MainDataLayer& dataLayer)
+	: BaseKeyboardBehaviorLayer(dataLayer)
 {
 }
 
 void MultiselectKeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
 {
-	auto& appStateVM = m_ViewModel.m_AppStateViewModel;
+	auto& appState = m_MainDataLayer.m_AppStateDataLayer;
 
-	if (appStateVM.m_AppState == AppState::FROZEN)
+	if (appState.m_AppState == AppState::FROZEN)
 	{
 		return;
 	}
@@ -26,7 +26,7 @@ void MultiselectKeyboardBehaviorLayer::HandleMultiselectEnable(BuD::KeyboardKeys
 {
 	if (key == BuD::KeyboardKeys::Control)
 	{
-		m_ViewModel.m_AppStateViewModel.m_MultiselectOn = true;
+		m_MainDataLayer.m_AppStateDataLayer.m_MultiselectOn = true;
 	}
 }
 
@@ -34,6 +34,6 @@ void MultiselectKeyboardBehaviorLayer::HandleMultiselectDisable(BuD::KeyboardKey
 {
 	if (key == BuD::KeyboardKeys::Control)
 	{
-		m_ViewModel.m_AppStateViewModel.m_MultiselectOn = false;
+		m_MainDataLayer.m_AppStateDataLayer.m_MultiselectOn = false;
 	}
 }

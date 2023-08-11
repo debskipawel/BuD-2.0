@@ -2,8 +2,8 @@
 
 #include <imgui.h>
 
-ObjectListGuiLayer::ObjectListGuiLayer(ObjectListViewModel& objectList, AppStateViewModel& appState)
-	: m_ObjectListViewModel(objectList), m_AppStateViewModel(appState)
+ObjectListGuiLayer::ObjectListGuiLayer(MainDataLayer& dataLayer)
+	: BaseGuiLayer(dataLayer)
 {
 }
 
@@ -13,7 +13,10 @@ void ObjectListGuiLayer::DrawGui()
 	{
 		DrawGuiForFilters();
 
-		auto& objectList = m_ObjectListViewModel.m_Scene.m_ObjectList;
+		auto& appState = m_MainDataLayer.m_AppStateDataLayer;
+
+		auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
+		auto& objectList = scene.m_ObjectList;
 
 		ImGuiListClipper clipper(objectList.size(), ImGui::GetTextLineHeightWithSpacing());
 
@@ -39,9 +42,9 @@ void ObjectListGuiLayer::DrawGui()
 					continue;
 				}
 
-				auto& composite = m_ObjectListViewModel.m_Scene.m_SelectedGroup;
+				auto& composite = scene.m_SelectedGroup;
 				
-				auto multiselect = m_AppStateViewModel.m_MultiselectOn;
+				auto multiselect = appState.m_MultiselectOn;
 				auto newSelected = !selected;
 
 				if (!multiselect)
@@ -76,9 +79,11 @@ void ObjectListGuiLayer::DrawGuiForFilters()
 
 	ImVec2 filtersButtonSize = { objectListMax.x - objectListMin.x, 0 };
 
+	auto& appState = m_MainDataLayer.m_AppStateDataLayer;
+
 	if (ImGui::Button("Open filters menu", filtersButtonSize))
 	{
-		m_AppStateViewModel.Freeze();
+		appState.Freeze();
 		ImGui::OpenPopup("###filters_popup");
 	}
 
@@ -99,7 +104,7 @@ void ObjectListGuiLayer::DrawGuiForFilters()
 		
 		if (ImGui::Button("Close filters menu", buttonSize))
 		{
-			m_AppStateViewModel.Unfreeze();
+			appState.Unfreeze();
 			ImGui::CloseCurrentPopup();
 		}
 

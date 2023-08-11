@@ -1,12 +1,11 @@
 #pragma once
 
 #include <GUI/BaseGuiLayer.h>
-#include <ViewModels/ObjectListViewModel.h>
 
 class ObjectCreationGuiLayer : public BaseGuiLayer
 {
 public:
-	ObjectCreationGuiLayer(ObjectListViewModel& viewModel);
+	ObjectCreationGuiLayer(MainDataLayer& dataLayer);
 
 	virtual void DrawGui() override;
 
@@ -21,6 +20,4 @@ protected:
 	};
 
 	std::vector<ButtonInfo> m_Buttons;
-
-	ObjectListViewModel& m_ViewModel;
 };

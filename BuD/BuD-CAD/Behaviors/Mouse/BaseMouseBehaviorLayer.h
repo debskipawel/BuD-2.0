@@ -1,11 +1,11 @@
 #pragma once
 
-#include <ViewModels/MainViewModel.h>
+#include <DataLayers/MainDataLayer.h>
 
 class BaseMouseBehaviorLayer
 {
 public:
-	BaseMouseBehaviorLayer(MainViewModel& viewModel);
+	BaseMouseBehaviorLayer(MainDataLayer& dataLayer);
 
 	virtual void OnLeftButtonDown(int x, int y) {}
 	virtual void OnRightButtonDown(int x, int y) {}
@@ -20,7 +20,6 @@ public:
 
 protected:
 	virtual dxm::Vector2 ViewportScreenSpaceCoords(int x, int y);
-	virtual bool IsMouseOnViewport(int x, int y);
 
-	MainViewModel& m_ViewModel;
+	MainDataLayer& m_MainDataLayer;
 };

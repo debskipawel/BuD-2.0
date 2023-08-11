@@ -5,7 +5,7 @@
 class CameraMouseBehaviorLayer : public BaseMouseBehaviorLayer
 {
 public:
-	CameraMouseBehaviorLayer(MainViewModel& viewModel);
+	CameraMouseBehaviorLayer(MainDataLayer& dataLayer);
 
 	virtual void OnMiddleButtonDown(int x, int y);
 	virtual void OnMiddleButtonUp(int x, int y);

@@ -5,7 +5,7 @@
 class MainKeyboardBehaviorLayer : public BaseKeyboardBehaviorLayer
 {
 public:
-	MainKeyboardBehaviorLayer(MainViewModel& viewModel);
+	MainKeyboardBehaviorLayer(MainDataLayer& dataLayer);
 
 	virtual void OnKeyPress(BuD::KeyboardKeys key) override;
 	virtual void OnKeyRelease(BuD::KeyboardKeys key) override;

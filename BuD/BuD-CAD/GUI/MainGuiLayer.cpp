@@ -7,19 +7,21 @@
 #include <GUI/Console/ConsoleGuiLayer.h>
 #include <GUI/ObjectList/ObjectListGuiLayer.h>
 #include <GUI/ObjectList/ObjectCreationGuiLayer.h>
+#include <GUI/Performance/PerformanceGuiLayer.h>
 #include <GUI/Properties/PropertiesGuiLayer.h>
 #include <GUI/Viewport/ViewportGuiLayer.h>
 
-MainGuiLayer::MainGuiLayer(MainViewModel& viewModel)
-	: m_ViewModel(viewModel)
+MainGuiLayer::MainGuiLayer(MainDataLayer& dataLayer)
+	: BaseGuiLayer(dataLayer)
 {
-	m_GuiLayers.emplace_back(std::make_unique<AppStateGuiLayer>(m_ViewModel.m_AppStateViewModel, m_ViewModel.m_ObjectListViewModel));
-	m_GuiLayers.emplace_back(std::make_unique<CursorGuiLayer>(m_ViewModel.m_CursorViewModel));
-	m_GuiLayers.emplace_back(std::make_unique<ConsoleGuiLayer>());
-	m_GuiLayers.emplace_back(std::make_unique<ObjectListGuiLayer>(m_ViewModel.m_ObjectListViewModel, m_ViewModel.m_AppStateViewModel));
-	m_GuiLayers.emplace_back(std::make_unique<ObjectCreationGuiLayer>(m_ViewModel.m_ObjectListViewModel));
-	m_GuiLayers.emplace_back(std::make_unique<PropertiesGuiLayer>(m_ViewModel.m_PropertiesViewModel, m_ViewModel.m_AppStateViewModel));
-	m_GuiLayers.emplace_back(std::make_unique<ViewportGuiLayer>(m_ViewModel.m_ViewportViewModel));
+	m_GuiLayers.emplace_back(std::make_unique<AppStateGuiLayer>(m_MainDataLayer));
+	m_GuiLayers.emplace_back(std::make_unique<CursorGuiLayer>(m_MainDataLayer));
+	m_GuiLayers.emplace_back(std::make_unique<ConsoleGuiLayer>(m_MainDataLayer));
+	m_GuiLayers.emplace_back(std::make_unique<ObjectListGuiLayer>(m_MainDataLayer));
+	m_GuiLayers.emplace_back(std::make_unique<ObjectCreationGuiLayer>(m_MainDataLayer));
+	m_GuiLayers.emplace_back(std::make_unique<PerformanceGuiLayer>(m_MainDataLayer));
+	m_GuiLayers.emplace_back(std::make_unique<PropertiesGuiLayer>(m_MainDataLayer));
+	m_GuiLayers.emplace_back(std::make_unique<ViewportGuiLayer>(m_MainDataLayer));
 }
 
 void MainGuiLayer::DrawGui()

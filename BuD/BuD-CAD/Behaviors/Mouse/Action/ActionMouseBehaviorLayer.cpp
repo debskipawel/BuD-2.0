@@ -2,8 +2,8 @@
 
 #include <set>
 
-ActionMouseBehaviorLayer::ActionMouseBehaviorLayer(MainViewModel& viewModel)
-	: BaseMouseBehaviorLayer(viewModel)
+ActionMouseBehaviorLayer::ActionMouseBehaviorLayer(MainDataLayer& dataLayer)
+	: BaseMouseBehaviorLayer(dataLayer)
 {
 }
 
@@ -11,7 +11,10 @@ void ActionMouseBehaviorLayer::OnLeftButtonDown(int x, int y)
 {
 	static std::set<AppState> actionableAppStates = { AppState::MOVE, AppState::ROTATE, AppState::SCALE };
 
-	if (actionableAppStates.contains(m_ViewModel.m_AppStateViewModel.m_AppState) && IsMouseOnViewport(x, y))
+	if (
+		actionableAppStates.contains(m_MainDataLayer.m_AppStateDataLayer.m_AppState) 
+		&& m_MainDataLayer.m_ViewportDataLayer.IsMouseOnViewport(x, y)
+	)
 	{
 		HandleActionStart();
 	}
@@ -24,12 +27,12 @@ void ActionMouseBehaviorLayer::OnLeftButtonUp(int x, int y)
 
 void ActionMouseBehaviorLayer::OnMouseMove(int dx, int dy)
 {
-	if (m_ViewModel.m_AppStateViewModel.m_AppState == AppState::FROZEN)
+	if (m_MainDataLayer.m_AppStateDataLayer.m_AppState == AppState::FROZEN)
 	{
 		return;
 	}
 
-	if (m_ViewModel.m_AppStateViewModel.m_InAction)
+	if (m_MainDataLayer.m_AppStateDataLayer.m_InAction)
 	{
 		HandleActionPerform(dx, dy);
 	}
@@ -37,12 +40,12 @@ void ActionMouseBehaviorLayer::OnMouseMove(int dx, int dy)
 
 void ActionMouseBehaviorLayer::HandleActionStart()
 {
-	m_ViewModel.m_AppStateViewModel.m_InAction = !m_ViewModel.m_AppStateViewModel.m_CameraRotating;
+	m_MainDataLayer.m_AppStateDataLayer.m_InAction = !m_MainDataLayer.m_AppStateDataLayer.m_CameraRotating;
 }
 
 void ActionMouseBehaviorLayer::HandleActionEnd()
 {
-	m_ViewModel.m_AppStateViewModel.m_InAction = false;
+	m_MainDataLayer.m_AppStateDataLayer.m_InAction = false;
 }
 
 void ActionMouseBehaviorLayer::HandleActionPerform(int dx, int dy)

@@ -4,8 +4,8 @@
 
 #include <AppState.h>
 
-AppStateGuiLayer::AppStateGuiLayer(AppStateViewModel& appState, ObjectListViewModel& objectList)
-	: m_AppStateViewModel(appState), m_ObjectListViewModel(objectList)
+AppStateGuiLayer::AppStateGuiLayer(MainDataLayer& dataLayer)
+	: BaseGuiLayer(dataLayer)
 {
 	m_IdleIcon = BuD::Texture::LoadFromFile("Resources/Sprites/idle_icon.png");
 	m_MoveIcon = BuD::Texture::LoadFromFile("Resources/Sprites/move_icon.png");
@@ -27,17 +27,20 @@ void AppStateGuiLayer::DrawGui()
 			{ AppState::SCALE, m_ScaleIcon },
 		};
 
+		const auto& appState = m_MainDataLayer.m_AppStateDataLayer.m_AppState;
+		const auto& sceneCAD = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
+
 		for (auto& [state, icon] : iconMap)
 		{
-			auto color = m_AppStateViewModel.m_AppState == state ? selectedColor : normalColor;
+			auto color = appState == state ? selectedColor : normalColor;
 
 			if (ImGui::ImageButton(icon.SRV(), { 32, 32 }, { 0, 0 }, { 1, 1 }, -1, color))
 			{
-				auto& scene = m_ObjectListViewModel.m_Scene;
-				auto& cursor = scene.m_MainCursor;
+				const auto& scene = sceneCAD.m_Scene;
+				const auto& cursor = sceneCAD.m_MainCursor;
+				
 				cursor->SetAppState(state);
-
-				m_AppStateViewModel.m_AppState = state;
+				m_MainDataLayer.m_AppStateDataLayer.SetAppState(state);
 			}
 
 			ImGui::SameLine();

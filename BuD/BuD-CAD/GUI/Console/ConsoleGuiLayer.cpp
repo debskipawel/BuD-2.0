@@ -2,7 +2,8 @@
 
 #include <imgui.h>
 
-ConsoleGuiLayer::ConsoleGuiLayer()
+ConsoleGuiLayer::ConsoleGuiLayer(MainDataLayer& dataLayer)
+	: BaseGuiLayer(dataLayer)
 {
 }
 
