@@ -15,6 +15,7 @@ public:
 	~SceneCAD();
 
 	void DeleteObject(SceneObjectCAD& object);
+	void DeleteSelected();
 
 	std::shared_ptr<SceneObjectCAD> CreateTorus(dxm::Vector3 position);
 	std::shared_ptr<SceneObjectCAD> CreatePoint(dxm::Vector3 position);
