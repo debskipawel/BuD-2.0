@@ -26,7 +26,7 @@ float ScalePoint(float3 pointPosition)
     float distanceToPoint = length(pointPosition - eyePosition);
     
     return 1.0 / (distanceToPoint + 10.0);
-    return sqrt(10.0 * max(-0.05 * log(distanceToPoint + 1.0) + 0.1, 0.0));
+    return sqrt(40.0 * max(-0.05 * log(distanceToPoint + 1.0) + 0.1, 0.0));
 }
 
 VSOutput main(VSInput i)
