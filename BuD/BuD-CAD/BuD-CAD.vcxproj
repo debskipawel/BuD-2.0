@@ -167,6 +167,8 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Actions\Action.h" />
+    <ClInclude Include="Actions\ActionList.h" />
     <ClInclude Include="ApplicationCAD.h" />
     <ClInclude Include="AppState.h" />
     <ClInclude Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.h" />
@@ -212,8 +214,10 @@
     <ClInclude Include="Visitors\AbstractVisitor.h" />
     <ClInclude Include="Visitors\Selection\ObjectSelectVisitor.h" />
     <ClInclude Include="Visitors\Selection\ObjectUnselectVisitor.h" />
+    <ClInclude Include="Visitors\Transform\ApplyTransformVisitor.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Actions\ActionList.cpp" />
     <ClCompile Include="ApplicationCAD.cpp" />
     <ClCompile Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.cpp" />
@@ -226,6 +230,7 @@
     <ClCompile Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Mouse\MainMouseBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.cpp" />
+    <ClCompile Include="Components\TransformComponent.cpp" />
     <ClCompile Include="DataLayers\ViewportDataLayer.cpp" />
     <ClCompile Include="GUI\BaseGuiLayer.cpp" />
     <ClCompile Include="GUI\Cursor\CursorGuiLayer.cpp" />
@@ -253,6 +258,7 @@
     <ClCompile Include="Visitors\AbstractVisitor.cpp" />
     <ClCompile Include="Visitors\Selection\ObjectSelectVisitor.cpp" />
     <ClCompile Include="Visitors\Selection\ObjectUnselectVisitor.cpp" />
+    <ClCompile Include="Visitors\Transform\ApplyTransformVisitor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuD\BuD.vcxproj">

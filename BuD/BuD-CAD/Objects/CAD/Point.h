@@ -12,8 +12,6 @@ public:
 
 	virtual void Accept(AbstractVisitor& visitor) override;
 
-	virtual void OnDelete() override;
-
 	struct PointInstanceData
 	{
 		dxm::Vector3 m_Position;

@@ -99,7 +99,3 @@ void Torus::Accept(AbstractVisitor& visitor)
 {
 	visitor.Visit(*this);
 }
-
-void Torus::OnDelete()
-{
-}

@@ -12,5 +12,7 @@ public:
 	virtual void Visit(Point& point) override;
 
 protected:
+	virtual void UniversalUnselect(SceneObjectCAD& object);
+
 	SceneDataLayer& m_SceneDataLayer;
 };

@@ -12,8 +12,6 @@ public:
 
 	virtual void Accept(AbstractVisitor& visitor) override;
 
-	virtual void OnDelete() override;
-
 	struct TorusInstanceData
 	{
 		dxm::Matrix m_ModelMatrix;

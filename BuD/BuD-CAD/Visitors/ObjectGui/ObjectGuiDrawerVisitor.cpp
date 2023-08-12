@@ -16,21 +16,21 @@ void ObjectGuiDrawerVisitor::Visit(Torus& torus)
 
 	ImGui::Separator();
 
-	if (DrawGuiForTransform(torus))
-	{
-		const auto& transform = torus.m_Transform;
+	//if (DrawGuiForTransform(torus))
+	//{
+	//	const auto& transform = torus.m_Transform;
 
-		auto rotation = transform.m_Rotation;
-		rotation.x = DirectX::XMConvertToRadians(rotation.x);
-		rotation.y = DirectX::XMConvertToRadians(rotation.y);
-		rotation.z = DirectX::XMConvertToRadians(rotation.z);
+	//	auto rotation = transform.m_Rotation;
+	//	rotation.x = DirectX::XMConvertToRadians(rotation.x);
+	//	rotation.y = DirectX::XMConvertToRadians(rotation.y);
+	//	rotation.z = DirectX::XMConvertToRadians(rotation.z);
 
-		auto model = dxm::Matrix::CreateScale(transform.m_Scale) * dxm::Matrix::CreateFromYawPitchRoll(rotation) * dxm::Matrix::CreateTranslation(transform.m_Position);
+	//	auto model = dxm::Matrix::CreateScale(transform.m_Scale) * dxm::Matrix::CreateFromYawPitchRoll(rotation) * dxm::Matrix::CreateTranslation(transform.m_Position);
 
-		torus.m_InstanceData.m_ModelMatrix = model;
-	}
+	//	torus.m_InstanceData.m_ModelMatrix = model;
+	//}
 
-	ImGui::Separator();
+	//ImGui::Separator();
 
 	auto& instanceData = torus.m_InstanceData;
 
@@ -53,24 +53,24 @@ void ObjectGuiDrawerVisitor::Visit(Point& point)
 {
 	DrawGuiForTag(point);
 
-	ImGui::Separator();
+	//ImGui::Separator();
 
-	if (DrawGuiForTransform(point))
-	{
-		const auto& transform = point.m_Transform;
+	//if (DrawGuiForTransform(point))
+	//{
+	//	const auto& transform = point.m_Transform;
 
-		point.m_InstanceData.m_Position = transform.m_Position;
+	//	point.m_InstanceData.m_Position = transform.m_Position;
 
-		for (auto& object : point.m_PointBasedObjects)
-		{
-			auto sharedObj = object.lock();
+	//	for (auto& object : point.m_PointBasedObjects)
+	//	{
+	//		auto sharedObj = object.lock();
 
-			if (sharedObj)
-			{
-				sharedObj->OnPointModify();
-			}
-		}
-	}
+	//		if (sharedObj)
+	//		{
+	//			sharedObj->OnPointModify();
+	//		}
+	//	}
+	//}
 }
 
 bool ObjectGuiDrawerVisitor::DrawGuiForTag(SceneObjectCAD& object)

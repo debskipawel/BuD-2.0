@@ -12,6 +12,7 @@ public:
 	virtual void DrawGui() override;
 
 protected:
+	virtual void DrawGuiForSelectedTransform();
 	virtual void DrawGuiForSingularObject();
-	virtual void DrawGuiForComposite();
+	virtual void DrawDeleteButton();
 };

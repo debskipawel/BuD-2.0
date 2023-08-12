@@ -5,6 +5,7 @@
 
 #include <Visitors/Deletion/ObjectDeletionVisitor.h>
 #include <Visitors/ObjectGui/ObjectGuiDrawerVisitor.h>
+#include <Visitors/Transform/ApplyTransformVisitor.h>
 
 PropertiesGuiLayer::PropertiesGuiLayer(MainDataLayer& dataLayer)
 	: BaseGuiLayer(dataLayer)
@@ -17,20 +18,72 @@ void PropertiesGuiLayer::DrawGui()
 	{
 		auto selectedCount = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup.m_SelectedObjects.size();
 
-		switch (selectedCount)
+		if (selectedCount)
 		{
-		case 0:
-			break;
-		case 1:
-			DrawGuiForSingularObject();
-			break;
-		default:
-			DrawGuiForComposite();
-			break;
+			DrawGuiForSelectedTransform();
+
+			if (selectedCount == 1)
+			{
+				DrawGuiForSingularObject();
+			}
+
+			DrawDeleteButton();
 		}
 
 		ImGui::End();
 	}
+}
+
+void PropertiesGuiLayer::DrawGuiForSelectedTransform()
+{
+	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
+	auto& selectedGroup = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup;
+
+	auto initialGroupTransform = selectedGroup.m_GroupTransform;
+	auto& groupTransform = selectedGroup.m_GroupTransform;
+
+	std::string labelPrefix = "##scene_object_{}";
+
+	// POSITION LOGIC
+	std::string positionLabel = "Position" + labelPrefix;
+	ImGui::DragFloat3(positionLabel.c_str(), (float*)&groupTransform.m_Position, 0.1f);
+
+	// ROTATION LOGIC
+	std::string rotationLabel = "Rotation" + labelPrefix;
+	ImGui::DragFloat3(rotationLabel.c_str(), (float*)&groupTransform.m_Rotation, 0.1f);
+
+	// SCALE LOGIC
+	std::string scaleLabel = "Scale" + labelPrefix;
+	ImGui::DragFloat3(scaleLabel.c_str(), (float*)&groupTransform.m_Scale, 0.1f);
+
+	if (initialGroupTransform != groupTransform)
+	{
+		// ----- logic for setting cursor position -----
+		auto cursorPosition = groupTransform.m_Position;
+
+		auto lastAction = m_MainDataLayer.m_SceneDataLayer.m_ActionList.Last();
+		auto lastActionShared = lastAction.lock();
+
+		if (lastActionShared)
+		{
+			cursorPosition += lastActionShared->m_Centroid;
+		}
+
+		auto& cursor = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_MainCursor;
+		cursor->SetPosition(cursorPosition);
+		// ---------------------------------------------
+
+		for (auto& id : selectedGroup.m_SelectedObjects)
+		{
+			auto& object = scene.m_ObjectList[id];
+			auto& initialTransform = selectedGroup.m_InitialTransformCopies[id];
+
+			std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ApplyTransformVisitor>(initialTransform, groupTransform, lastActionShared->m_Centroid);
+			visitor->Visit(object);
+		}
+	}
+
+	ImGui::Separator();
 }
 
 void PropertiesGuiLayer::DrawGuiForSingularObject()
@@ -45,7 +98,7 @@ void PropertiesGuiLayer::DrawGuiForSingularObject()
 	visitor->Visit(object);
 }
 
-void PropertiesGuiLayer::DrawGuiForComposite()
+void PropertiesGuiLayer::DrawDeleteButton()
 {
 	auto& selectedGroup = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup;
 	auto groupTransform = selectedGroup.m_GroupTransform;
@@ -56,17 +109,12 @@ void PropertiesGuiLayer::DrawGuiForComposite()
 	auto cursorPos = ImGui::GetCursorPos();
 	auto style = ImGui::GetStyle();
 
-	auto buttonHeight = 20 + style.ItemInnerSpacing.y;
-	auto fullHeight = 2 * buttonHeight + 2 * style.ItemInnerSpacing.y;
+	auto buttonHeight = 20 + 2 * style.ItemInnerSpacing.y;
+	auto fullHeight = buttonHeight;
 
 	if (max.y - fullHeight > cursorPos.y)
 	{
 		ImGui::SetCursorPos({ min.x, max.y - fullHeight });
-	}
-
-	if (ImGui::Button("Apply transform", ImVec2(max.x - min.x, buttonHeight)))
-	{
-		// zero the transform and apply
 	}
 
 	ImGui::Separator();
@@ -90,7 +138,7 @@ void PropertiesGuiLayer::DrawGuiForComposite()
 			{
 				auto& id = *m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup.m_SelectedObjects.begin();
 				auto& object = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_ObjectList[id];
-				
+
 				visitor->Visit(object);
 			}
 

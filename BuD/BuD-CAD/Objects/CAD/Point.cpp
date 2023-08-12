@@ -69,18 +69,3 @@ void Point::Accept(AbstractVisitor& visitor)
 {
 	visitor.Visit(*this);
 }
-
-void Point::OnDelete()
-{
-	for (auto& object : m_PointBasedObjects)
-	{
-		auto objectShared = object.lock();
-
-		if (!objectShared)
-		{
-			continue;
-		}
-
-		objectShared->OnPointRemove(Id());
-	}
-}
