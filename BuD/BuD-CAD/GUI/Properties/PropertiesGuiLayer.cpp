@@ -38,13 +38,13 @@ bool PropertiesGuiLayer::DrawGuiForTransform(TransformComponent& transform)
 {
 	auto transformCopy = transform;
 
-	std::string positionLabel = "Position ##transform_position";
+	std::string positionLabel = std::format("Position ##transform_position_{}", (int)&transform);
 	ImGui::DragFloat3(positionLabel.c_str(), (float*)&transform.m_Position, 0.1f);
 
-	std::string rotationLabel = "Rotation ##transform_rotation";
+	std::string rotationLabel = std::format("Rotation ##transform_rotation_{}", (int)&transform);
 	ImGui::DragFloat3(rotationLabel.c_str(), (float*)&transform.m_Rotation, 0.1f);
 
-	std::string scaleLabel = "Scale ##transform_scale";
+	std::string scaleLabel = std::format("Scale ##transform_scale_{}", (int)&transform);
 	ImGui::DragFloat3(scaleLabel.c_str(), (float*)&transform.m_Scale, 0.1f);
 
 	return transform != transformCopy;
@@ -90,12 +90,20 @@ void PropertiesGuiLayer::DrawGuiForSelectedTransform()
 
 void PropertiesGuiLayer::DrawGuiForSingularObject()
 {
-	std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ObjectGuiDrawerVisitor>(m_MainDataLayer.m_SceneDataLayer);
-	
 	auto& selectedGroup = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup;
 	auto& selectedId = *selectedGroup.m_SelectedObjects.begin();
 
 	auto& object = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_ObjectList[selectedId];
+
+	auto transformCopy = object->m_Transform;
+	
+	ImGui::Text("Preview of object local transform");
+
+	DrawGuiForTransform(transformCopy);
+	
+	ImGui::Separator();
+
+	std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ObjectGuiDrawerVisitor>(m_MainDataLayer.m_SceneDataLayer);
 
 	visitor->Visit(object);
 }
