@@ -85,6 +85,13 @@ void PropertiesGuiLayer::DrawGuiForSelectedTransform()
 		}
 	}
 
+	if (groupTransform.m_Scale.x == 0.0f || groupTransform.m_Scale.y == 0.0f || groupTransform.m_Scale.z == 0.0f)
+	{
+		ImGui::TextColored({ 1.0f, 0.0f, 0.0f, 1.0f }, "WARNING: ");
+		ImGui::SameLine();
+		ImGui::TextWrapped("Zero scale. Selecting/unselecting now may lead to unrecoverable detail loss.");
+	}
+
 	ImGui::Separator();
 }
 
