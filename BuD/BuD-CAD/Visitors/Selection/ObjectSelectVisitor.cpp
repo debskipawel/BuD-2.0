@@ -30,15 +30,17 @@ void ObjectSelectVisitor::UniversalSelect(SceneObjectCAD& object)
 		return;
 	}
 
+	auto actionToBeApplied = actionList.m_GroupTransform != TransformComponent::IDENTITY;
+
 	auto newAction = actionList.NewAction();
 	auto newActionShared = newAction.lock();
 
-	newActionShared->m_NewlySelectedObjects.insert(id);
-
-	if (actionList.m_GroupTransform != TransformComponent::IDENTITY)
+	if (actionToBeApplied)
 	{
 		ApplyAction(newActionShared);
 	}
+
+	newActionShared->m_NewlySelectedObjects.insert(id);
 
 	auto selectedObjectsCount = newActionShared->SelectedCount();
 	newActionShared->m_Centroid = ((selectedObjectsCount - 1) * newActionShared->m_Centroid + object.m_Transform.m_Position) / selectedObjectsCount;

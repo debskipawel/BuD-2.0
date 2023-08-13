@@ -61,7 +61,7 @@ std::weak_ptr<Action> ActionList::NewAction()
 	auto& previouslyNewlyUnselected = lastAction->m_NewlyUnselectedObjects;
 
 	action->m_CurrentlySelectedObjects = previouslySelected;
-	action->m_Centroid = lastAction->m_Centroid + m_GroupTransform.m_Position;
+	action->m_Centroid = lastAction->m_Centroid;
 
 	for (auto& id : previouslyNewlySelected)
 	{

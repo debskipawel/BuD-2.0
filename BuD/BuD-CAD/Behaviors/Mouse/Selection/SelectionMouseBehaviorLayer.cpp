@@ -60,6 +60,13 @@ void SelectionMouseBehaviorLayer::HandleSelection(int x, int y)
 		{
 			ClearSelected();
 		}
+		else if (m_MainDataLayer.m_SceneDataLayer.m_ActionList.Selected(closestObject->Id()))
+		{
+			std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ObjectUnselectVisitor>(m_MainDataLayer.m_SceneDataLayer);
+			visitor->Visit(closestObject);
+			
+			return;
+		}
 
 		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ObjectSelectVisitor>(m_MainDataLayer.m_SceneDataLayer);
 		visitor->Visit(closestObject);

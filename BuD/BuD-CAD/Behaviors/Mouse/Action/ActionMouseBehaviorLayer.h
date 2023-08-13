@@ -17,4 +17,10 @@ protected:
 	virtual void HandleActionEnd();
 
 	virtual void HandleActionPerform(int dx, int dy);
+
+	virtual void Move(int dx, int dy);
+	virtual void Rotate(int dx, int dy);
+	virtual void Scale(int dx, int dy);
+
+	virtual void ApplyMouseAction();
 };

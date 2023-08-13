@@ -30,15 +30,17 @@ void ObjectUnselectVisitor::UniversalUnselect(SceneObjectCAD& object)
 		return;
 	}
 
+	auto actionToBeApplied = actionList.m_GroupTransform != TransformComponent::IDENTITY;
+
 	auto newAction = actionList.NewAction();
 	auto newActionShared = newAction.lock();
 
-	newActionShared->m_NewlyUnselectedObjects.insert(id);
-
-	if (actionList.m_GroupTransform != TransformComponent::IDENTITY)
+	if (actionToBeApplied)
 	{
 		ApplyAction(newActionShared);
 	}
+
+	newActionShared->m_NewlyUnselectedObjects.insert(id);
 
 	auto selectedObjectsCount = newActionShared->SelectedCount();
 
