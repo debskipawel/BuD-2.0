@@ -34,29 +34,31 @@ void PropertiesGuiLayer::DrawGui()
 	}
 }
 
+bool PropertiesGuiLayer::DrawGuiForTransform(TransformComponent& transform)
+{
+	auto transformCopy = transform;
+
+	std::string positionLabel = "Position ##transform_position";
+	ImGui::DragFloat3(positionLabel.c_str(), (float*)&transform.m_Position, 0.1f);
+
+	std::string rotationLabel = "Rotation ##transform_rotation";
+	ImGui::DragFloat3(rotationLabel.c_str(), (float*)&transform.m_Rotation, 0.1f);
+
+	std::string scaleLabel = "Scale ##transform_scale";
+	ImGui::DragFloat3(scaleLabel.c_str(), (float*)&transform.m_Scale, 0.1f);
+
+	return transform != transformCopy;
+}
+
 void PropertiesGuiLayer::DrawGuiForSelectedTransform()
 {
+	auto& actionList = m_MainDataLayer.m_SceneDataLayer.m_ActionList;
 	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
 	auto& selectedGroup = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup;
 
-	auto initialGroupTransform = selectedGroup.m_GroupTransform;
-	auto& groupTransform = selectedGroup.m_GroupTransform;
+	auto& groupTransform = actionList.m_GroupTransform;
 
-	std::string labelPrefix = "##scene_object_{}";
-
-	// POSITION LOGIC
-	std::string positionLabel = "Position" + labelPrefix;
-	ImGui::DragFloat3(positionLabel.c_str(), (float*)&groupTransform.m_Position, 0.1f);
-
-	// ROTATION LOGIC
-	std::string rotationLabel = "Rotation" + labelPrefix;
-	ImGui::DragFloat3(rotationLabel.c_str(), (float*)&groupTransform.m_Rotation, 0.1f);
-
-	// SCALE LOGIC
-	std::string scaleLabel = "Scale" + labelPrefix;
-	ImGui::DragFloat3(scaleLabel.c_str(), (float*)&groupTransform.m_Scale, 0.1f);
-
-	if (initialGroupTransform != groupTransform)
+	if (DrawGuiForTransform(groupTransform))
 	{
 		// ----- logic for setting cursor position -----
 		auto cursorPosition = groupTransform.m_Position;
@@ -101,7 +103,6 @@ void PropertiesGuiLayer::DrawGuiForSingularObject()
 void PropertiesGuiLayer::DrawDeleteButton()
 {
 	auto& selectedGroup = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup;
-	auto groupTransform = selectedGroup.m_GroupTransform;
 
 	auto max = ImGui::GetWindowContentRegionMax();
 	auto min = ImGui::GetWindowContentRegionMin();

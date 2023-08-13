@@ -10,14 +10,23 @@ class ActionList
 public:
 	ActionList();
 
-	void Add(std::shared_ptr<Action> action);
+	bool Selected(uint32_t id) const;
+	uint32_t SelectedCount() const;
+
+	std::weak_ptr<Action> NewAction();
 
 	std::weak_ptr<Action> Undo();
 	std::weak_ptr<Action> Redo();
 
 	std::weak_ptr<Action> Last() const;
 
+	TransformComponent m_GroupTransform;
+
 protected:
+	void Add(std::shared_ptr<Action> action);
+
+	std::shared_ptr<Action> InternalLast() const;
+
 	int m_CurrentActionIndex;
 	int m_UsableActionListSize;
 

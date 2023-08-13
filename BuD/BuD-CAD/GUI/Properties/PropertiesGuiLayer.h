@@ -12,6 +12,8 @@ public:
 	virtual void DrawGui() override;
 
 protected:
+	virtual bool DrawGuiForTransform(TransformComponent& transform);
+
 	virtual void DrawGuiForSelectedTransform();
 	virtual void DrawGuiForSingularObject();
 	virtual void DrawDeleteButton();

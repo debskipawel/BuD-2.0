@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include <set>
 
 #include <Components/TransformComponent.h>
@@ -10,6 +11,9 @@ struct Action
 		: m_TransformComponent(transform), m_CurrentlySelectedObjects(), m_NewlySelectedObjects(), m_NewlyUnselectedObjects()
 	{
 	}
+
+	uint32_t SelectedCount() const;
+	bool Selected(uint32_t id) const;
 
 	std::set<uint32_t> m_CurrentlySelectedObjects;
 	std::set<uint32_t> m_NewlySelectedObjects;

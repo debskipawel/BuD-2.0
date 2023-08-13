@@ -48,6 +48,7 @@ void ApplyTransformVisitor::Visit(Torus& torus)
 void ApplyTransformVisitor::Visit(Point& point)
 {
 	auto centroidToPoint = m_OriginalTransform.m_Position - m_Centroid;
+	
 	auto rotation = m_AdditionalTransform.m_Rotation;
 	rotation.x = DirectX::XMConvertToRadians(rotation.x);
 	rotation.y = DirectX::XMConvertToRadians(rotation.y);

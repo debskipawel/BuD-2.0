@@ -33,6 +33,7 @@ void ObjectListGuiLayer::DrawGui()
 			}
 
 			auto& selectedGroup = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup;
+			auto& actionList = m_MainDataLayer.m_SceneDataLayer.m_ActionList;
 
 			for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
 			{
@@ -41,7 +42,7 @@ void ObjectListGuiLayer::DrawGui()
 				auto id = cadObject->Id();
 				auto tag = std::format("{}###{}", cadObject->m_Tag, id);
 				
-				auto selected = selectedGroup.m_SelectedObjects.contains(id);
+				auto selected = actionList.Selected(id);
 				
 				if (!ImGui::Selectable(tag.c_str(), selected))
 				{
@@ -56,7 +57,7 @@ void ObjectListGuiLayer::DrawGui()
 
 				if (!multiselect)
 				{
-					while (!selectedGroup.m_SelectedObjects.empty())
+					while (actionList.SelectedCount() > 0)
 					{
 						auto& id = *selectedGroup.m_SelectedObjects.begin();
 						auto& object = scene.m_ObjectList[id];

@@ -3,7 +3,7 @@
 #include <Visitors/Transform/ApplyTransformVisitor.h>
 
 ObjectUnselectVisitor::ObjectUnselectVisitor(SceneDataLayer& sceneDataLayer)
-	: m_SceneDataLayer(sceneDataLayer)
+	: BaseObjectSelectionVisitor(sceneDataLayer)
 {
 }
 
@@ -25,66 +25,29 @@ void ObjectUnselectVisitor::UniversalUnselect(SceneObjectCAD& object)
 
 	auto id = object.Id();
 
-	auto& groupTransform = selectedGroup.m_GroupTransform;
-
-	auto lastAction = actionList.Last();
-	auto lastActionShared = lastAction.lock();
-
-	// No transformation was performed since last select/unselect
-	// Just need to add newly selected object to the previous action
-	// (or create a new action if no other object was previously selected)
-	if (groupTransform == TransformComponent::IDENTITY)
+	if (!actionList.Selected(id))
 	{
-		lastActionShared->m_NewlyUnselectedObjects.insert(id);
-		selectedGroup.Remove(m_Caller);
-
-		auto selectedObjectsCount = lastActionShared->m_CurrentlySelectedObjects.size() + lastActionShared->m_NewlySelectedObjects.size() - lastActionShared->m_NewlyUnselectedObjects.size();
-		
-		if (selectedObjectsCount)
-		{
-			lastActionShared->m_Centroid = ((selectedObjectsCount + 1) * lastActionShared->m_Centroid - object.m_Transform.m_Position) / selectedObjectsCount;
-
-			m_SceneDataLayer.m_SceneCAD.m_MainCursor->SetPosition(lastActionShared->m_Centroid);
-		}
-
 		return;
 	}
 
-	auto action = std::make_shared<Action>(groupTransform);
+	auto newAction = actionList.NewAction();
+	auto newActionShared = newAction.lock();
 
-	// To future me: YES - it should be here. If we got here, then it means that some transformation has been made.
-	auto& previouslySelected = lastActionShared->m_CurrentlySelectedObjects;
-	auto& previouslyNewlySelected = lastActionShared->m_NewlySelectedObjects;
-	auto& previouslyNewlyUnselected = lastActionShared->m_NewlyUnselectedObjects;
+	newActionShared->m_NewlyUnselectedObjects.insert(id);
 
-	action->m_CurrentlySelectedObjects = previouslySelected;
-
-	for (auto& id : previouslyNewlySelected)
+	if (actionList.m_GroupTransform != TransformComponent::IDENTITY)
 	{
-		action->m_CurrentlySelectedObjects.insert(id);
+		ApplyAction(newActionShared);
 	}
 
-	std::erase_if(action->m_CurrentlySelectedObjects, [&previouslyNewlyUnselected](uint32_t objectId) { return previouslyNewlyUnselected.contains(objectId); });
+	auto selectedObjectsCount = newActionShared->SelectedCount();
 
-	action->m_NewlyUnselectedObjects.insert(id);
-	action->m_Centroid = lastActionShared->m_Centroid + groupTransform.m_Position;
-
-	m_SceneDataLayer.m_SceneCAD.m_MainCursor->SetPosition(action->m_Centroid);
-
-	actionList.Add(action);
-
-	for (auto& id : action->m_CurrentlySelectedObjects)
+	if (selectedObjectsCount)
 	{
-		auto& originalTransform = selectedGroup.m_InitialTransformCopies[id];
-		auto& object = scene.m_ObjectList[id];
-
-		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ApplyTransformVisitor>(originalTransform, groupTransform, lastActionShared->m_Centroid);
-		visitor->Visit(object);
-
-		selectedGroup.m_InitialTransformCopies[id] = object->m_Transform;
+		newActionShared->m_Centroid = ((selectedObjectsCount + 1) * newActionShared->m_Centroid - object.m_Transform.m_Position) / selectedObjectsCount;
 	}
 
-	selectedGroup.m_GroupTransform = TransformComponent::IDENTITY;
+	m_SceneDataLayer.m_SceneCAD.m_MainCursor->SetPosition(newActionShared->m_Centroid);
 
 	selectedGroup.Remove(m_Caller);
 }

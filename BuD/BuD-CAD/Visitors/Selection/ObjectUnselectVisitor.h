@@ -1,9 +1,8 @@
 #pragma once
 
-#include <DataLayers/SceneDataLayer.h>
-#include <Visitors/AbstractVisitor.h>
+#include <Visitors/Selection/BaseObjectSelectionVisitor.h>
 
-class ObjectUnselectVisitor : public AbstractVisitor
+class ObjectUnselectVisitor : public BaseObjectSelectionVisitor
 {
 public:
 	ObjectUnselectVisitor(SceneDataLayer& sceneDataLayer);
@@ -13,6 +12,4 @@ public:
 
 protected:
 	virtual void UniversalUnselect(SceneObjectCAD& object);
-
-	SceneDataLayer& m_SceneDataLayer;
 };

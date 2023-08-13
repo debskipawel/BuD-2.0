@@ -181,6 +181,7 @@
     <ClInclude Include="Behaviors\Mouse\BaseMouseBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h" />
+    <ClInclude Include="Visitors\Selection\BaseObjectSelectionVisitor.h" />
     <ClInclude Include="Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.h" />
     <ClInclude Include="GUI\Cursor\CursorGuiLayer.h" />
     <ClInclude Include="GUI\ObjectList\ObjectCreationGuiLayer.h" />
@@ -217,6 +218,7 @@
     <ClInclude Include="Visitors\Transform\ApplyTransformVisitor.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Actions\Action.cpp" />
     <ClCompile Include="Actions\ActionList.cpp" />
     <ClCompile Include="ApplicationCAD.cpp" />
     <ClCompile Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.cpp" />
@@ -256,6 +258,7 @@
     <ClCompile Include="Scene\SceneObjectCAD.cpp" />
     <ClCompile Include="DataLayers\AppStateDataLayer.cpp" />
     <ClCompile Include="Visitors\AbstractVisitor.cpp" />
+    <ClCompile Include="Visitors\Selection\BaseObjectSelectionVisitor.cpp" />
     <ClCompile Include="Visitors\Selection\ObjectSelectVisitor.cpp" />
     <ClCompile Include="Visitors\Selection\ObjectUnselectVisitor.cpp" />
     <ClCompile Include="Visitors\Transform\ApplyTransformVisitor.cpp" />

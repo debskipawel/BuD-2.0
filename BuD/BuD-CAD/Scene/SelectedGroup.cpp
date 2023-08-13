@@ -17,7 +17,3 @@ void SelectedGroup::Remove(std::weak_ptr<SceneObjectCAD> object)
 	m_SelectedObjects.erase(id);
 	m_InitialTransformCopies.erase(id);
 }
-
-void SelectedGroup::Clear()
-{
-}
