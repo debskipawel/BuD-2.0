@@ -38,13 +38,13 @@ bool PropertiesGuiLayer::DrawGuiForTransform(TransformComponent& transform)
 {
 	auto transformCopy = transform;
 
-	std::string positionLabel = std::format("Position ##transform_position_{}", (int)&transform);
+	std::string positionLabel = std::format("Position ##transform_position_{}", reinterpret_cast<int>(&transform));
 	ImGui::DragFloat3(positionLabel.c_str(), (float*)&transform.m_Position, 0.1f);
 
-	std::string rotationLabel = std::format("Rotation ##transform_rotation_{}", (int)&transform);
+	std::string rotationLabel = std::format("Rotation ##transform_rotation_{}", reinterpret_cast<int>(&transform));
 	ImGui::DragFloat3(rotationLabel.c_str(), (float*)&transform.m_Rotation, 0.1f);
 
-	std::string scaleLabel = std::format("Scale ##transform_scale_{}", (int)&transform);
+	std::string scaleLabel = std::format("Scale ##transform_scale_{}", reinterpret_cast<int>(&transform));
 	ImGui::DragFloat3(scaleLabel.c_str(), (float*)&transform.m_Scale, 0.1f);
 
 	return transform != transformCopy;

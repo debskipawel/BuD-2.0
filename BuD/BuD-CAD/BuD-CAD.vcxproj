@@ -181,6 +181,7 @@
     <ClInclude Include="Behaviors\Mouse\BaseMouseBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h" />
+    <ClInclude Include="GUI\MenuBar\MenuBarGuiLayer.h" />
     <ClInclude Include="Visitors\Selection\BaseObjectSelectionVisitor.h" />
     <ClInclude Include="Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.h" />
     <ClInclude Include="GUI\Cursor\CursorGuiLayer.h" />
@@ -236,6 +237,7 @@
     <ClCompile Include="DataLayers\ViewportDataLayer.cpp" />
     <ClCompile Include="GUI\BaseGuiLayer.cpp" />
     <ClCompile Include="GUI\Cursor\CursorGuiLayer.cpp" />
+    <ClCompile Include="GUI\MenuBar\MenuBarGuiLayer.cpp" />
     <ClCompile Include="GUI\ObjectList\ObjectCreationGuiLayer.cpp" />
     <ClCompile Include="Objects\Additional\Cursor.cpp" />
     <ClCompile Include="Objects\CAD\Point.cpp" />

@@ -52,6 +52,6 @@ namespace BuD
 		m_Data.resize(currentSize + instanceData.m_Size);
 
 		std::memcpy(m_Data.data() + currentSize, instanceData.m_Data, instanceData.m_Size);
-		m_InstanceCount++;
+		m_InstanceCount += instanceData.m_InstancesCount;
 	}
 }

@@ -162,6 +162,9 @@
     <ClInclude Include="Visitors\Selection\BaseObjectSelectionVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GUI\MenuBar\MenuBarGuiLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -294,6 +297,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Visitors\Selection\BaseObjectSelectionVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\MenuBar\MenuBarGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

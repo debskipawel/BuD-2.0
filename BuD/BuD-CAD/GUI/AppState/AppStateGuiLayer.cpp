@@ -15,7 +15,7 @@ AppStateGuiLayer::AppStateGuiLayer(MainDataLayer& dataLayer)
 
 void AppStateGuiLayer::DrawGui()
 {
-	if (ImGui::Begin("State"))
+	if (ImGui::Begin("State", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoResize))
 	{
 		ImVec4 normalColor = ImVec4(0.4f, 0.4f, 0.4f, 1.0f);
 		ImVec4 selectedColor = ImVec4(0.7f, 0.7f, 0.7f, 1.0f);
