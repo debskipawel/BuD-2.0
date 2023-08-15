@@ -11,6 +11,9 @@ public:
 
 	virtual void OnPointModify() override;
 
+	virtual void RenderBorder(bool borderOn);
+	virtual bool RenderBorder() const;
+
 	dxm::Vector3 m_Color = dxm::Vector3::One;
 
 	static dxm::Vector3 SELECTED_COLOR;
@@ -28,4 +31,7 @@ public:
 	};
 
 	InstanceDataBezierCurveC0 m_InstanceData;
+
+protected:
+	bool m_Border = false;
 };

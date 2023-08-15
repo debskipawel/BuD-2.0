@@ -4,6 +4,7 @@
 #include <misc/cpp/imgui_stdlib.h>
 
 #include <Objects/CAD/PointBased/PointBasedObjectCAD.h>
+#include <Visitors/Transform/ApplyGroupTransformVisitor.h>
 
 ObjectGuiDrawerVisitor::ObjectGuiDrawerVisitor(SceneDataLayer& dataLayer)
 	: m_SceneDataLayer(dataLayer)
@@ -16,21 +17,21 @@ void ObjectGuiDrawerVisitor::Visit(Torus& torus)
 
 	ImGui::Separator();
 
-	//if (DrawGuiForTransform(torus))
-	//{
-	//	const auto& transform = torus.m_Transform;
+	if (DrawGuiForTransform(torus.m_Transform))
+	{
+		const auto& transform = torus.m_Transform;
 
-	//	auto rotation = transform.m_Rotation;
-	//	rotation.x = DirectX::XMConvertToRadians(rotation.x);
-	//	rotation.y = DirectX::XMConvertToRadians(rotation.y);
-	//	rotation.z = DirectX::XMConvertToRadians(rotation.z);
+		auto rotation = transform.m_Rotation;
+		rotation.x = DirectX::XMConvertToRadians(rotation.x);
+		rotation.y = DirectX::XMConvertToRadians(rotation.y);
+		rotation.z = DirectX::XMConvertToRadians(rotation.z);
 
-	//	auto model = dxm::Matrix::CreateScale(transform.m_Scale) * dxm::Matrix::CreateFromYawPitchRoll(rotation) * dxm::Matrix::CreateTranslation(transform.m_Position);
+		auto model = dxm::Matrix::CreateScale(transform.m_Scale) * dxm::Matrix::CreateFromYawPitchRoll(rotation) * dxm::Matrix::CreateTranslation(transform.m_Position);
 
-	//	torus.m_InstanceData.m_ModelMatrix = model;
-	//}
+		torus.m_InstanceData.m_ModelMatrix = model;
+	}
 
-	//ImGui::Separator();
+	ImGui::Separator();
 
 	auto& instanceData = torus.m_InstanceData;
 
@@ -49,24 +50,66 @@ void ObjectGuiDrawerVisitor::Visit(Point& point)
 {
 	DrawGuiForTag(point);
 
-	//ImGui::Separator();
+	ImGui::Separator();
 
-	//if (DrawGuiForTransform(point))
-	//{
-	//	const auto& transform = point.m_Transform;
+	auto& transform = point.m_Transform;
+	auto position = transform.m_Position;
 
-	//	point.m_InstanceData.m_Position = transform.m_Position;
+	ImGui::DragFloat3("Position", (float*)&transform.m_Position, 0.1f);
 
-	//	for (auto& object : point.m_PointBasedObjects)
-	//	{
-	//		auto sharedObj = object.lock();
+	if (position != transform.m_Position)
+	{
+		point.m_InstanceData.m_Position = transform.m_Position;
 
-	//		if (sharedObj)
-	//		{
-	//			sharedObj->OnPointModify();
-	//		}
-	//	}
-	//}
+		for (auto& object : point.m_PointBasedObjects)
+		{
+			auto sharedObj = object.lock();
+
+			if (sharedObj)
+			{
+				sharedObj->OnPointModify();
+			}
+		}
+	}
+}
+
+void ObjectGuiDrawerVisitor::Visit(BezierCurveC0& curve)
+{
+	DrawGuiForSelectedTransform();
+	
+	ImGui::Separator();
+
+	DrawGuiForTag(curve);
+
+	ImGui::Separator();
+
+	auto borderOn = curve.RenderBorder();
+	ImGui::Checkbox("Toggle border", &borderOn);
+
+	curve.RenderBorder(borderOn);
+}
+
+void ObjectGuiDrawerVisitor::DrawGuiForSelectedTransform()
+{
+	auto& selectedForTransform = m_SceneDataLayer.m_SelectedForTransform;
+	auto& groupTransform = selectedForTransform.GroupTransform();
+
+	if (DrawGuiForTransform(groupTransform))
+	{
+		auto centroid = selectedForTransform.Centroid();
+
+		auto& cursor = m_SceneDataLayer.m_SceneCAD.m_MainCursor;
+		cursor->SetPosition(centroid);
+
+		selectedForTransform.ForEachSelected(
+			[centroid, &groupTransform, &selectedForTransform](std::shared_ptr<SceneObjectCAD> object)
+			{
+				auto initialTransform = selectedForTransform.InitialTransform(object->Id());
+
+				std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ApplyGroupTransformVisitor>(initialTransform, groupTransform, centroid - groupTransform.m_Position);
+				visitor->Visit(object);
+			});
+	}
 }
 
 bool ObjectGuiDrawerVisitor::DrawGuiForTag(SceneObjectCAD& object)
@@ -75,13 +118,11 @@ bool ObjectGuiDrawerVisitor::DrawGuiForTag(SceneObjectCAD& object)
 	return ImGui::InputText("Tag###tag", &tag);
 }
 
-bool ObjectGuiDrawerVisitor::DrawGuiForTransform(SceneObjectCAD& object)
+bool ObjectGuiDrawerVisitor::DrawGuiForTransform(TransformComponent& transform)
 {
 	bool changeFlag = false;
 
-	auto& transform = object.m_Transform;
-
-	auto labelPrefix = std::format("##scene_object_{}", object.Id());
+	std::string labelPrefix = "##scene_object";
 	
 	// POSITION LOGIC
 	std::string positionLabel = "Position" + labelPrefix;

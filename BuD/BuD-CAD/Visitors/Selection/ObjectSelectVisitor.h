@@ -13,5 +13,6 @@ public:
 	virtual void Visit(BezierCurveC0& curve) override;
 
 protected:
-	virtual void UniversalSelect(SceneObjectCAD& object);
+	virtual void SelectManually(std::weak_ptr<SceneObjectCAD> object);
+	virtual void SelectForTransform(std::weak_ptr<SceneObjectCAD> object);
 };

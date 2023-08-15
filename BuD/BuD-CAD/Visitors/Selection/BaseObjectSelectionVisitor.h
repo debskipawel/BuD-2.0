@@ -9,7 +9,7 @@ public:
 	BaseObjectSelectionVisitor(SceneDataLayer& sceneDataLayer);
 
 protected:
-	void ApplyAction(std::shared_ptr<Action> action);
+	virtual void SetCursorToCentroid();
 
 	SceneDataLayer& m_SceneDataLayer;
 };

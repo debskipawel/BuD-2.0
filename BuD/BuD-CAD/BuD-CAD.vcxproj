@@ -167,8 +167,8 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Actions\Action.h" />
-    <ClInclude Include="Actions\ActionList.h" />
+    <ClInclude Include="Actions\TransformAction.h" />
+    <ClInclude Include="Actions\TransformActionList.h" />
     <ClInclude Include="ApplicationCAD.h" />
     <ClInclude Include="AppState.h" />
     <ClInclude Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.h" />
@@ -183,6 +183,9 @@
     <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h" />
     <ClInclude Include="GUI\MenuBar\MenuBarGuiLayer.h" />
     <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC0.h" />
+    <ClInclude Include="Selection\BaseSelectionSystem.h" />
+    <ClInclude Include="Selection\ManualSelectionSystem.h" />
+    <ClInclude Include="Selection\TransformSelectionSystem.h" />
     <ClInclude Include="Visitors\Selection\BaseObjectSelectionVisitor.h" />
     <ClInclude Include="Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.h" />
     <ClInclude Include="GUI\Cursor\CursorGuiLayer.h" />
@@ -197,7 +200,6 @@
     <ClInclude Include="GUI\Console\ConsoleGuiLayer.h" />
     <ClInclude Include="GUI\MainGuiLayer.h" />
     <ClInclude Include="GUI\ObjectList\ObjectListGuiLayer.h" />
-    <ClInclude Include="Scene\SelectedGroup.h" />
     <ClInclude Include="Visitors\Deletion\ObjectDeletionVisitor.h" />
     <ClInclude Include="Visitors\ObjectGui\ObjectGuiDrawerVisitor.h" />
     <ClInclude Include="GUI\Performance\PerformanceGuiLayer.h" />
@@ -217,11 +219,12 @@
     <ClInclude Include="Visitors\AbstractVisitor.h" />
     <ClInclude Include="Visitors\Selection\ObjectSelectVisitor.h" />
     <ClInclude Include="Visitors\Selection\ObjectUnselectVisitor.h" />
-    <ClInclude Include="Visitors\Transform\ApplyTransformVisitor.h" />
+    <ClInclude Include="Visitors\Transform\ApplyGroupTransformVisitor.h" />
+    <ClInclude Include="Visitors\Validation\BaseValidationVisitor.h" />
+    <ClInclude Include="Visitors\Validation\ControlPointValidationVisitor.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Actions\Action.cpp" />
-    <ClCompile Include="Actions\ActionList.cpp" />
+    <ClCompile Include="Actions\TransformActionList.cpp" />
     <ClCompile Include="ApplicationCAD.cpp" />
     <ClCompile Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.cpp" />
@@ -249,7 +252,9 @@
     <ClCompile Include="GUI\Console\ConsoleGuiLayer.cpp" />
     <ClCompile Include="GUI\MainGuiLayer.cpp" />
     <ClCompile Include="GUI\ObjectList\ObjectListGuiLayer.cpp" />
-    <ClCompile Include="Scene\SelectedGroup.cpp" />
+    <ClCompile Include="Selection\BaseSelectionSystem.cpp" />
+    <ClCompile Include="Selection\ManualSelectionSystem.cpp" />
+    <ClCompile Include="Selection\TransformSelectionSystem.cpp" />
     <ClCompile Include="Visitors\Deletion\ObjectDeletionVisitor.cpp" />
     <ClCompile Include="Visitors\ObjectGui\ObjectGuiDrawerVisitor.cpp" />
     <ClCompile Include="GUI\Performance\PerformanceGuiLayer.cpp" />
@@ -265,7 +270,9 @@
     <ClCompile Include="Visitors\Selection\BaseObjectSelectionVisitor.cpp" />
     <ClCompile Include="Visitors\Selection\ObjectSelectVisitor.cpp" />
     <ClCompile Include="Visitors\Selection\ObjectUnselectVisitor.cpp" />
-    <ClCompile Include="Visitors\Transform\ApplyTransformVisitor.cpp" />
+    <ClCompile Include="Visitors\Transform\ApplyGroupTransformVisitor.cpp" />
+    <ClCompile Include="Visitors\Validation\BaseValidationVisitor.cpp" />
+    <ClCompile Include="Visitors\Validation\ControlPointValidationVisitor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuD\BuD.vcxproj">

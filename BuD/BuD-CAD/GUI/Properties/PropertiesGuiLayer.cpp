@@ -5,7 +5,7 @@
 
 #include <Visitors/Deletion/ObjectDeletionVisitor.h>
 #include <Visitors/ObjectGui/ObjectGuiDrawerVisitor.h>
-#include <Visitors/Transform/ApplyTransformVisitor.h>
+#include <Visitors/Transform/ApplyGroupTransformVisitor.h>
 
 PropertiesGuiLayer::PropertiesGuiLayer(MainDataLayer& dataLayer)
 	: BaseGuiLayer(dataLayer)
@@ -16,7 +16,7 @@ void PropertiesGuiLayer::DrawGui()
 {
 	if (ImGui::Begin("Properties"))
 	{
-		auto selectedCount = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup.m_SelectedObjects.size();
+		auto selectedCount = m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected.Count();
 
 		switch (selectedCount)
 		{
@@ -63,37 +63,24 @@ bool PropertiesGuiLayer::DrawGuiForTransform(TransformComponent& transform)
 
 void PropertiesGuiLayer::DrawGuiForSelectedTransform()
 {
-	auto& actionList = m_MainDataLayer.m_SceneDataLayer.m_ActionList;
-	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
-	auto& selectedGroup = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup;
-
-	auto& groupTransform = actionList.m_GroupTransform;
+	auto& selectedForTransform = m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform;
+	auto& groupTransform = selectedForTransform.GroupTransform();
 
 	if (DrawGuiForTransform(groupTransform))
 	{
-		// ----- logic for setting cursor position -----
-		auto cursorPosition = groupTransform.m_Position;
-
-		auto lastAction = m_MainDataLayer.m_SceneDataLayer.m_ActionList.Last();
-		auto lastActionShared = lastAction.lock();
-
-		if (lastActionShared)
-		{
-			cursorPosition += lastActionShared->m_Centroid;
-		}
+		auto centroid = selectedForTransform.Centroid();
 
 		auto& cursor = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_MainCursor;
-		cursor->SetPosition(cursorPosition);
-		// ---------------------------------------------
+		cursor->SetPosition(centroid);
 
-		for (auto& id : selectedGroup.m_SelectedObjects)
-		{
-			auto& object = scene.m_ObjectList[id];
-			auto& initialTransform = selectedGroup.m_InitialTransformCopies[id];
+		selectedForTransform.ForEachSelected(
+			[centroid, &groupTransform, &selectedForTransform](std::shared_ptr<SceneObjectCAD> object)
+			{
+				auto initialTransform = selectedForTransform.InitialTransform(object->Id());
 
-			std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ApplyTransformVisitor>(initialTransform, groupTransform, lastActionShared->m_Centroid);
-			visitor->Visit(object);
-		}
+				std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ApplyGroupTransformVisitor>(initialTransform, groupTransform, centroid - groupTransform.m_Position);
+				visitor->Visit(object);
+			});
 	}
 
 	if (groupTransform.m_Scale.x == 0.0f || groupTransform.m_Scale.y == 0.0f || groupTransform.m_Scale.z == 0.0f)
@@ -108,18 +95,7 @@ void PropertiesGuiLayer::DrawGuiForSelectedTransform()
 
 void PropertiesGuiLayer::DrawGuiForSingularObject()
 {
-	auto& selectedGroup = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup;
-	auto& selectedId = *selectedGroup.m_SelectedObjects.begin();
-
-	auto& object = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_ObjectList[selectedId];
-
-	auto transformCopy = object->m_Transform;
-	
-	ImGui::Text("Preview of object local transform");
-
-	DrawGuiForTransform(transformCopy);
-	
-	ImGui::Separator();
+	auto object = m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected.First();
 
 	std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ObjectGuiDrawerVisitor>(m_MainDataLayer.m_SceneDataLayer);
 
@@ -128,16 +104,22 @@ void PropertiesGuiLayer::DrawGuiForSingularObject()
 
 void PropertiesGuiLayer::DrawDeleteButton()
 {
-	auto& selectedGroup = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup;
-
 	auto max = ImGui::GetWindowContentRegionMax();
 	auto min = ImGui::GetWindowContentRegionMin();
 
 	auto cursorPos = ImGui::GetCursorPos();
 	auto style = ImGui::GetStyle();
 
-	auto buttonHeight = 20 + 2 * style.ItemInnerSpacing.y;
-	auto fullHeight = buttonHeight;
+	auto buttonHeight = 20;
+	auto buttonHeightWithSpacing = buttonHeight + style.ItemInnerSpacing.y;
+	auto fullHeight = buttonHeightWithSpacing;
+
+	auto& manuallySelected = m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected;
+
+	auto addBezierC0 = manuallySelected.Count() > 1 && manuallySelected.ValidatedForControlPoints();
+	auto addBezierC2 = manuallySelected.Count() >= 4 && manuallySelected.ValidatedForControlPoints();
+
+	fullHeight += ((int)addBezierC0 + (int)addBezierC2) * buttonHeightWithSpacing;
 
 	if (max.y - fullHeight > cursorPos.y)
 	{
@@ -145,6 +127,43 @@ void PropertiesGuiLayer::DrawDeleteButton()
 	}
 
 	ImGui::Separator();
+
+	if (addBezierC0 && ImGui::Button("Add Bezier C0 curve", ImVec2(max.x - min.x, buttonHeight)))
+	{
+		std::vector<std::weak_ptr<Point>> controlPoints;
+
+		manuallySelected.ForEachSelected(
+			[&controlPoints](std::shared_ptr<SceneObjectCAD> object)
+			{
+				auto point = std::dynamic_pointer_cast<Point>(object);
+
+				if (point)
+				{
+					controlPoints.push_back(point);
+				}
+			});
+
+		m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateBezierCurveC0(controlPoints);
+	}
+
+	if (addBezierC2 && ImGui::Button("Add Bezier C2 curve", ImVec2(max.x - min.x, buttonHeight)))
+	{
+		std::vector<std::weak_ptr<Point>> controlPoints;
+
+		manuallySelected.ForEachSelected(
+			[&controlPoints](std::shared_ptr<SceneObjectCAD> object)
+			{
+				auto point = std::dynamic_pointer_cast<Point>(object);
+
+				if (point)
+				{
+					controlPoints.push_back(point);
+				}
+			});
+
+		// TODO
+		// m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateBezierCurveC2(controlPoints);
+	}
 
 	if (ImGui::Button("Delete all selected", ImVec2(max.x - min.x, buttonHeight)))
 	{
@@ -161,11 +180,9 @@ void PropertiesGuiLayer::DrawDeleteButton()
 		{
 			std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ObjectDeletionVisitor>(m_MainDataLayer.m_SceneDataLayer);
 
-			while (!m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup.m_SelectedObjects.empty())
+			while (m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected.Count())
 			{
-				auto& id = *m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup.m_SelectedObjects.begin();
-				auto& object = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_ObjectList[id];
-
+				auto object = m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected.First();
 				visitor->Visit(object);
 			}
 

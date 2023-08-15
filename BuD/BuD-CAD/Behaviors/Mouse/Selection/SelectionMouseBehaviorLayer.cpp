@@ -24,15 +24,13 @@ void SelectionMouseBehaviorLayer::OnLeftButtonDown(int x, int y)
 
 void SelectionMouseBehaviorLayer::ClearSelected()
 {
-	auto& selectedGroup = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup;
-	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
+	auto& selectedGroup = m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected;
 
 	std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ObjectUnselectVisitor>(m_MainDataLayer.m_SceneDataLayer);
 
-	while (!selectedGroup.m_SelectedObjects.empty())
+	while (selectedGroup.Count())
 	{
-		auto& id = *selectedGroup.m_SelectedObjects.begin();
-		auto& object = scene.m_ObjectList[id];
+		auto object = selectedGroup.First();
 
 		visitor->Visit(object);
 	}
@@ -60,7 +58,7 @@ void SelectionMouseBehaviorLayer::HandleSelection(int x, int y)
 		{
 			ClearSelected();
 		}
-		else if (m_MainDataLayer.m_SceneDataLayer.m_ActionList.Selected(closestObject->Id()))
+		else if (m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected.Selected(closestObject->Id()))
 		{
 			std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ObjectUnselectVisitor>(m_MainDataLayer.m_SceneDataLayer);
 			visitor->Visit(closestObject);

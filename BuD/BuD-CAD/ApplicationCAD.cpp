@@ -22,7 +22,7 @@ ApplicationCAD::ApplicationCAD()
 	BuD::Random random;
 	std::vector<std::weak_ptr<Point>> controlPoints;
 	
-	constexpr auto torusCount = 6;
+	constexpr auto torusCount = 7;
 	for (int i = 0; i < torusCount; i++)
 	{
 		auto position = dxm::Vector3::Zero + 2 * (i - torusCount / 2) * dxm::Vector3::UnitZ + random.Next(-2.0f, 2.0f) * dxm::Vector3::UnitY;
@@ -32,16 +32,6 @@ ApplicationCAD::ApplicationCAD()
 	}
 
 	m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateBezierCurveC0(controlPoints);
-
-	BuD::Log::WriteError("This");
-	BuD::Log::WriteError("is");
-	BuD::Log::WriteError("a");
-	BuD::Log::WriteWarning("test.");
-	BuD::Log::WriteWarning("I am");
-	BuD::Log::WriteWarning("lord.");
-	BuD::Log::WriteInfo("Feel");
-	BuD::Log::WriteInfo("my");
-	BuD::Log::WriteInfo("wrath.");
 }
 
 void ApplicationCAD::OnUpdate(float deltaTime)

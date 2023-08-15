@@ -144,19 +144,10 @@
     <ClInclude Include="Visitors\Selection\ObjectUnselectVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\SelectedGroup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Visitors\Deletion\ObjectDeletionVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\Action.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Actions\ActionList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Visitors\Transform\ApplyTransformVisitor.h">
+    <ClInclude Include="Visitors\Transform\ApplyGroupTransformVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Visitors\Selection\BaseObjectSelectionVisitor.h">
@@ -166,6 +157,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC0.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\TransformAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Selection\TransformSelectionSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\TransformActionList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Selection\ManualSelectionSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Selection\BaseSelectionSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Visitors\Validation\BaseValidationVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Visitors\Validation\ControlPointValidationVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -281,22 +293,13 @@
     <ClCompile Include="Visitors\Selection\ObjectUnselectVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\SelectedGroup.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Visitors\Deletion\ObjectDeletionVisitor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\ActionList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Components\TransformComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Transform\ApplyTransformVisitor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Actions\Action.cpp">
+    <ClCompile Include="Visitors\Transform\ApplyGroupTransformVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Visitors\Selection\BaseObjectSelectionVisitor.cpp">
@@ -306,6 +309,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Objects\CAD\PointBased\Curve\BezierCurveC0.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Selection\TransformSelectionSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\TransformActionList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Selection\ManualSelectionSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Selection\BaseSelectionSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Visitors\Validation\BaseValidationVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Visitors\Validation\ControlPointValidationVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

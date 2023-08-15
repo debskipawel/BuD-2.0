@@ -6,6 +6,7 @@ class BaseGuiLayer
 {
 public:
 	BaseGuiLayer(MainDataLayer& dataLayer);
+	virtual ~BaseGuiLayer() = default;
 
 	virtual void DrawGui() = 0;
 

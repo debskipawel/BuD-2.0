@@ -2,7 +2,7 @@
 
 #include <set>
 
-#include <Visitors/Transform/ApplyTransformVisitor.h>
+#include <Visitors/Transform/ApplyGroupTransformVisitor.h>
 
 ActionMouseBehaviorLayer::ActionMouseBehaviorLayer(MainDataLayer& dataLayer)
 	: BaseMouseBehaviorLayer(dataLayer)
@@ -51,35 +51,22 @@ void ActionMouseBehaviorLayer::HandleActionEnd()
 
 void ActionMouseBehaviorLayer::HandleActionPerform(int dx, int dy)
 {
-	switch (m_MainDataLayer.m_AppStateDataLayer.m_AppState)
+	std::map<AppState, std::function<void(int, int)>> appStateToActionMap =
 	{
-		case AppState::MOVE:
-		{
-			Move(dx, dy);
-			break;
-		}
-		case AppState::ROTATE:
-		{
-			Rotate(dx, dy);
-			break;
-		}
-		case AppState::SCALE:
-		{
-			Scale(dx, dy);
-			break;
-		}
-		default:
-		{
-			break;
-		}
-	}
+		{ AppState::MOVE, [this](int dx, int dy) { Move(dx, dy); } },
+		{ AppState::ROTATE, [this](int dx, int dy) { Rotate(dx, dy); } },
+		{ AppState::SCALE, [this](int dx, int dy) { Scale(dx, dy); } },
+	};
+
+	auto& handler = appStateToActionMap.at(m_MainDataLayer.m_AppStateDataLayer.m_AppState);
+	handler(dx, dy);
 }
 
 void ActionMouseBehaviorLayer::Move(int dx, int dy)
 {
 	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
-	auto& actionList = m_MainDataLayer.m_SceneDataLayer.m_ActionList;
-	auto& groupTransform = actionList.m_GroupTransform;
+	auto& selectedForTransform = m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform;
+	auto& groupTransform = selectedForTransform.GroupTransform();
 
 	auto sensitivity = 0.01f;
 
@@ -116,15 +103,15 @@ void ActionMouseBehaviorLayer::Move(int dx, int dy)
 	{
 		groupTransform.m_Position += moveVector;
 
-		ApplyMouseAction();
+		ApplyGroupMouseAction();
 	}
 }
 
 void ActionMouseBehaviorLayer::Rotate(int dx, int dy)
 {
 	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
-	auto& actionList = m_MainDataLayer.m_SceneDataLayer.m_ActionList;
-	auto& groupTransform = actionList.m_GroupTransform;
+	auto& selectedForTransform = m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform;
+	auto& groupTransform = selectedForTransform.GroupTransform();
 
 	auto camera = scene.m_Scene.ActiveCamera();
 
@@ -164,15 +151,15 @@ void ActionMouseBehaviorLayer::Rotate(int dx, int dy)
 	{
 		groupTransform.m_Rotation += rotationVector;
 
-		ApplyMouseAction();
+		ApplyGroupMouseAction();
 	}
 }
 
 void ActionMouseBehaviorLayer::Scale(int dx, int dy)
 {
 	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
-	auto& actionList = m_MainDataLayer.m_SceneDataLayer.m_ActionList;
-	auto& groupTransform = actionList.m_GroupTransform;
+	auto& selectedForTransform = m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform;
+	auto& groupTransform = selectedForTransform.GroupTransform();
 
 	auto sensitivity = 0.003;
 
@@ -209,37 +196,27 @@ void ActionMouseBehaviorLayer::Scale(int dx, int dy)
 	{
 		groupTransform.m_Scale += scaleVector;
 
-		ApplyMouseAction();
+		ApplyGroupMouseAction();
 	}
 }
 
-void ActionMouseBehaviorLayer::ApplyMouseAction()
+void ActionMouseBehaviorLayer::ApplyGroupMouseAction()
 {
 	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
-	auto& selectedGroup = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup;
-	auto& actionList = m_MainDataLayer.m_SceneDataLayer.m_ActionList;
-	auto& groupTransform = actionList.m_GroupTransform;
+	auto& selectedForTransform = m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform;
+	auto& groupTransform = selectedForTransform.GroupTransform();
 
-	auto cursorPosition = groupTransform.m_Position;
-
-	auto lastAction = m_MainDataLayer.m_SceneDataLayer.m_ActionList.Last();
-	auto lastActionShared = lastAction.lock();
-
-	if (lastActionShared)
-	{
-		cursorPosition += lastActionShared->m_Centroid;
-	}
+	auto centroid = selectedForTransform.Centroid();
 
 	auto& cursor = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_MainCursor;
-	cursor->SetPosition(cursorPosition);
-	// ---------------------------------------------
+	cursor->SetPosition(centroid);
 
-	for (auto& id : selectedGroup.m_SelectedObjects)
-	{
-		auto& object = scene.m_ObjectList[id];
-		auto& initialTransform = selectedGroup.m_InitialTransformCopies[id];
+	selectedForTransform.ForEachSelected(
+		[centroid, &selectedForTransform, &groupTransform](std::shared_ptr<SceneObjectCAD> object)
+		{
+			auto initialTransform = selectedForTransform.InitialTransform(object->Id());
 
-		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ApplyTransformVisitor>(initialTransform, groupTransform, lastActionShared->m_Centroid);
-		visitor->Visit(object);
-	}
+			std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ApplyGroupTransformVisitor>(initialTransform, groupTransform, centroid - groupTransform.m_Position);
+			visitor->Visit(object);
+		});
 }

@@ -1,13 +1,13 @@
-#include "ApplyTransformVisitor.h"
+#include "ApplyGroupTransformVisitor.h"
 
-ApplyTransformVisitor::ApplyTransformVisitor(const TransformComponent& originalTransform, const TransformComponent& additionalTransform, const dxm::Vector3& centroid)
-	: m_OriginalTransform(originalTransform), m_AdditionalTransform(additionalTransform), m_Centroid(centroid)
+ApplyGroupTransformVisitor::ApplyGroupTransformVisitor(const TransformComponent& initialTransform, const TransformComponent& additionalTransform, const dxm::Vector3& centroid)
+	: m_InitialTransform(initialTransform), m_AdditionalTransform(additionalTransform), m_Centroid(centroid)
 {
 }
 
-void ApplyTransformVisitor::Visit(Torus& torus)
+void ApplyGroupTransformVisitor::Visit(Torus& torus)
 {
-	auto centroidToTorus = m_OriginalTransform.m_Position - m_Centroid;
+	auto centroidToTorus = m_InitialTransform.m_Position - m_Centroid;
 	auto rotation = m_AdditionalTransform.m_Rotation;
 	rotation.x = DirectX::XMConvertToRadians(rotation.x);
 	rotation.y = DirectX::XMConvertToRadians(rotation.y);
@@ -21,7 +21,7 @@ void ApplyTransformVisitor::Visit(Torus& torus)
 
 	auto accumulatedPosition = m_Centroid + rotatedCentroidToTorus;
 
-	auto initialRotation = m_OriginalTransform.m_Rotation;
+	auto initialRotation = m_InitialTransform.m_Rotation;
 	initialRotation.x = DirectX::XMConvertToRadians(initialRotation.x);
 	initialRotation.y = DirectX::XMConvertToRadians(initialRotation.y);
 	initialRotation.z = DirectX::XMConvertToRadians(initialRotation.z);
@@ -33,7 +33,7 @@ void ApplyTransformVisitor::Visit(Torus& torus)
 	newRotation.y = DirectX::XMConvertToDegrees(newRotation.y);
 	newRotation.z = DirectX::XMConvertToDegrees(newRotation.z);
 
-	auto newScale = m_OriginalTransform.m_Scale * m_AdditionalTransform.m_Scale;
+	auto newScale = m_InitialTransform.m_Scale * m_AdditionalTransform.m_Scale;
 
 	torus.m_Transform.m_Position = m_AdditionalTransform.m_Position + accumulatedPosition;
 	torus.m_Transform.m_Rotation = newRotation;
@@ -45,9 +45,9 @@ void ApplyTransformVisitor::Visit(Torus& torus)
 		dxm::Matrix::CreateTranslation(torus.m_Transform.m_Position);
 }
 
-void ApplyTransformVisitor::Visit(Point& point)
+void ApplyGroupTransformVisitor::Visit(Point& point)
 {
-	auto centroidToPoint = m_OriginalTransform.m_Position - m_Centroid;
+	auto centroidToPoint = m_InitialTransform.m_Position - m_Centroid;
 	
 	auto rotation = m_AdditionalTransform.m_Rotation;
 	rotation.x = DirectX::XMConvertToRadians(rotation.x);
@@ -76,7 +76,7 @@ void ApplyTransformVisitor::Visit(Point& point)
 	}
 }
 
-void ApplyTransformVisitor::Visit(BezierCurveC0& curve)
+void ApplyGroupTransformVisitor::Visit(BezierCurveC0& curve)
 {
 	for (auto& point : curve.m_ControlPoints)
 	{

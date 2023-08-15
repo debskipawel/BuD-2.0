@@ -1,6 +1,6 @@
 #include "ObjectUnselectVisitor.h"
 
-#include <Visitors/Transform/ApplyTransformVisitor.h>
+#include <Visitors/Transform/ApplyGroupTransformVisitor.h>
 
 ObjectUnselectVisitor::ObjectUnselectVisitor(SceneDataLayer& sceneDataLayer)
 	: BaseObjectSelectionVisitor(sceneDataLayer)
@@ -9,61 +9,69 @@ ObjectUnselectVisitor::ObjectUnselectVisitor(SceneDataLayer& sceneDataLayer)
 
 void ObjectUnselectVisitor::Visit(Torus& torus)
 {
-	UniversalUnselect(torus);
+	UnselectForTransform(m_Caller);
+	UnselectManually(m_Caller);
 
 	torus.m_InstanceData.m_Color = Torus::UNSELECTED_COLOR;
 }
 
 void ObjectUnselectVisitor::Visit(Point& point)
 {
-	UniversalUnselect(point);
+	UnselectForTransform(m_Caller);
+	UnselectManually(m_Caller);
 
-	point.m_InstanceData.m_Color = Torus::UNSELECTED_COLOR;
+	point.m_InstanceData.m_Color = Point::UNSELECTED_COLOR;
 }
 
 void ObjectUnselectVisitor::Visit(BezierCurveC0& curve)
 {
-	UniversalUnselect(curve);
+	UnselectManually(m_Caller);
+
+	curve.m_Color = BezierCurveC0::UNSELECTED_COLOR;
 
 	for (auto& segment : curve.m_InstanceData.m_Segments)
 	{
 		segment.m_Color = BezierCurveC0::UNSELECTED_COLOR;
 	}
+
+	for (auto& controlPoint : curve.m_ControlPoints)
+	{
+		auto controlPointShared = controlPoint.lock();
+
+		if (!controlPointShared)
+		{
+			continue;
+		}
+
+		if (!m_SceneDataLayer.m_ManuallySelected.Selected(controlPointShared->Id()))
+		{
+			UnselectForTransform(controlPoint);
+		}
+	}
 }
 
-void ObjectUnselectVisitor::UniversalUnselect(SceneObjectCAD& object)
+void ObjectUnselectVisitor::UnselectManually(std::weak_ptr<SceneObjectCAD> object)
 {
-	auto& scene = m_SceneDataLayer.m_SceneCAD;
-	auto& actionList = m_SceneDataLayer.m_ActionList;
-	auto& selectedGroup = m_SceneDataLayer.m_SelectedGroup;
+	auto& selectGroup = m_SceneDataLayer.m_ManuallySelected;
+	auto objectShared = object.lock();
 
-	auto id = object.Id();
-
-	if (!actionList.Selected(id))
+	if (!objectShared || !selectGroup.Selected(objectShared->Id()))
 	{
 		return;
 	}
 
-	auto actionToBeApplied = actionList.m_GroupTransform != TransformComponent::IDENTITY;
+	selectGroup.Unselect(objectShared->Id());
+}
 
-	auto newAction = actionList.NewAction();
-	auto newActionShared = newAction.lock();
+void ObjectUnselectVisitor::UnselectForTransform(std::weak_ptr<SceneObjectCAD> object)
+{
+	auto& selectGroup = m_SceneDataLayer.m_SelectedForTransform;
+	auto objectShared = object.lock();
 
-	if (actionToBeApplied)
+	if (!objectShared || !selectGroup.Selected(objectShared->Id()))
 	{
-		ApplyAction(newActionShared);
+		return;
 	}
 
-	newActionShared->m_NewlyUnselectedObjects.insert(id);
-
-	auto selectedObjectsCount = newActionShared->SelectedCount();
-
-	if (selectedObjectsCount)
-	{
-		newActionShared->m_Centroid = ((selectedObjectsCount + 1) * newActionShared->m_Centroid - object.m_Transform.m_Position) / selectedObjectsCount;
-	}
-
-	m_SceneDataLayer.m_SceneCAD.m_MainCursor->SetPosition(newActionShared->m_Centroid);
-
-	selectedGroup.Remove(m_Caller);
+	selectGroup.Unselect(objectShared->Id());
 }

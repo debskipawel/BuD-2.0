@@ -9,6 +9,8 @@
 class AbstractVisitor
 {
 public:
+	virtual ~AbstractVisitor() = default;
+
 	virtual void Visit(std::weak_ptr<SceneObjectCAD> object);
 
 	virtual void Visit(Point& point) {}

@@ -1,14 +1,15 @@
 #pragma once
 
 #include <Scene/SceneCAD.h>
-#include <Scene/SelectedGroup.h>
-#include <Actions/ActionList.h>
+
+#include <Selection/ManualSelectionSystem.h>
+#include <Selection/TransformSelectionSystem.h>
 
 struct SceneDataLayer
 {
 public:
 	SceneCAD m_SceneCAD;
-	SelectedGroup m_SelectedGroup;
 
-	ActionList m_ActionList;
+	ManualSelectionSystem m_ManuallySelected;
+	TransformSelectionSystem m_SelectedForTransform;
 };

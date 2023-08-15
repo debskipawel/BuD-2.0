@@ -6,6 +6,7 @@ class BaseMouseBehaviorLayer
 {
 public:
 	BaseMouseBehaviorLayer(MainDataLayer& dataLayer);
+	virtual ~BaseMouseBehaviorLayer() = default;
 
 	virtual void OnLeftButtonDown(int x, int y) {}
 	virtual void OnRightButtonDown(int x, int y) {}

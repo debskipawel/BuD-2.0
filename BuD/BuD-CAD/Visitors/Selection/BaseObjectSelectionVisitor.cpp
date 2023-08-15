@@ -1,30 +1,16 @@
 #include "BaseObjectSelectionVisitor.h"
 
-#include <Visitors/Transform/ApplyTransformVisitor.h>
+#include <Visitors/Transform/ApplyGroupTransformVisitor.h>
 
 BaseObjectSelectionVisitor::BaseObjectSelectionVisitor(SceneDataLayer& sceneDataLayer)
 	: m_SceneDataLayer(sceneDataLayer)
 {
 }
 
-void BaseObjectSelectionVisitor::ApplyAction(std::shared_ptr<Action> action)
+void BaseObjectSelectionVisitor::SetCursorToCentroid()
 {
-	auto& selectedGroup = m_SceneDataLayer.m_SelectedGroup;
-	auto& scene = m_SceneDataLayer.m_SceneCAD;
+	auto& cursor = m_SceneDataLayer.m_SceneCAD.m_MainCursor;
+	auto centroid = m_SceneDataLayer.m_SelectedForTransform.Centroid();
 
-	for (auto& id : action->m_CurrentlySelectedObjects)
-	{
-		auto& originalTransform = selectedGroup.m_InitialTransformCopies[id];
-		auto& object = scene.m_ObjectList[id];
-
-		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ApplyTransformVisitor>(
-			originalTransform,
-			action->m_TransformComponent,
-			action->m_Centroid
-		);
-
-		visitor->Visit(object);
-
-		selectedGroup.m_InitialTransformCopies[id] = object->m_Transform;
-	}
+	cursor->SetPosition(centroid);
 }

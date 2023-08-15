@@ -93,5 +93,29 @@ void BezierCurveC0::OnPointModify()
 	}
 }
 
+void BezierCurveC0::RenderBorder(bool borderOn)
+{
+	if (borderOn == m_Border)
+	{
+		return;
+	}
+
+	if (borderOn)
+	{
+
+	}
+	else
+	{
+
+	}
+
+	m_Border = borderOn;
+}
+
+bool BezierCurveC0::RenderBorder() const
+{
+	return m_Border;
+}
+
 dxm::Vector3 BezierCurveC0::SELECTED_COLOR = { 0.8f, 0.6f, 0.0f };
 dxm::Vector3 BezierCurveC0::UNSELECTED_COLOR = { 1.0f, 1.0f, 1.0f };

@@ -29,8 +29,6 @@ void MenuBarGuiLayer::DrawGui()
 
 void MenuBarGuiLayer::DrawSerializationSettings()
 {
-    auto& actionList = m_MainDataLayer.m_SceneDataLayer.m_ActionList;
-
     std::string message;
 
     if (ImGui::MenuItem("Undo", "Ctrl+Z"))
