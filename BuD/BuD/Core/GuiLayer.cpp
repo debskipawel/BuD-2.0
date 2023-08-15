@@ -16,7 +16,7 @@ namespace BuD
 		
 		if (!graphicsDevice)
 		{
-			Log::WriteError(L"Attempting to create a GUI layer without renderer initialized!");
+			Log::WriteError("Attempting to create a GUI layer without renderer initialized!");
 			return;
 		}
 

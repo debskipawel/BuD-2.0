@@ -23,7 +23,7 @@ namespace BuD
 	{
 		if (!s_ActiveProfilerNode || (!s_ActiveProfilerNode->m_Parent && s_CapturingFrame))
 		{
-			Log::WriteError(L"Profiler error, EndScope used without BeginScope");
+			Log::WriteError("Profiler error, EndScope used without BeginScope");
 			throw std::runtime_error("");
 		}
 
@@ -61,7 +61,7 @@ namespace BuD
 
 		if (s_ActiveProfilerNode)
 		{
-			Log::WriteError(L"Profiler error, unmatching BeginScope/EndScope in code");
+			Log::WriteError("Profiler error, unmatching BeginScope/EndScope in code");
 			throw std::runtime_error("Profiler error, unmatching BeginScope/EndScope in code");
 		}
 	}

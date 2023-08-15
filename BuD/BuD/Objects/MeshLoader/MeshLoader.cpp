@@ -109,7 +109,7 @@ namespace BuD
 		}
 		else
 		{
-			Log::WriteWarning(L"Trying to load static mesh in " + filepath.extension().wstring() + L" format, which is incorrect or not currently supported.");
+			Log::WriteWarning("Trying to load static mesh in " + filepath.extension().string() + " format, which is incorrect or not currently supported.");
 			return EMPTY;
 		}
 

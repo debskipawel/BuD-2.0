@@ -39,6 +39,8 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreateTorus(dxm::Vector3 position)
 	auto torus = std::make_shared<Torus>(m_Scene, position);
 	m_ObjectList.emplace(torus->Id(), torus);
 
+	BuD::Log::WriteInfo("Successfully created a torus.");
+
 	return torus;
 }
 
@@ -46,6 +48,8 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreatePoint(dxm::Vector3 position)
 {
 	auto point = std::make_shared<Point>(m_Scene, position);
 	m_ObjectList.emplace(point->Id(), point);
+
+	BuD::Log::WriteInfo("Successfully created a point.");
 
 	return point;
 }
@@ -60,6 +64,8 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreateBezierCurveC0(std::vector<std::wea
 		auto controlPointShared = controlPoint.lock();
 		controlPointShared->m_PointBasedObjects.push_back(curve);
 	}
+
+	BuD::Log::WriteInfo("Successfully created a Bezier C0 curve.");
 
 	return curve;
 }

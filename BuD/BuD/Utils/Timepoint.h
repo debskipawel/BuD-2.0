@@ -13,7 +13,7 @@ namespace BuD
 		Timepoint& operator=(const Timepoint& other) = default;
 		Timepoint& operator=(Timepoint& other) = default;
 
-		std::wstring Format() const;
+		std::string Format() const;
 
 		Timepoint operator+(const Timepoint& other) const;
 		Timepoint operator-(const Timepoint& other) const;

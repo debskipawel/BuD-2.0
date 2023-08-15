@@ -16,7 +16,7 @@ namespace BuD
 
 			if (FAILED(device->CreateGeometryShader(code, size, nullptr, m_Shader.GetAddressOf())))
 			{
-				Log::WriteError(L"Error while creating geometry shader");
+				Log::WriteError("Error while creating geometry shader");
 			}
 		}
 

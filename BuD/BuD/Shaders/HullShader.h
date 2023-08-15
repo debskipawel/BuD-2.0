@@ -16,7 +16,7 @@ namespace BuD
 
 			if (FAILED(device->CreateHullShader(code, size, nullptr, m_Shader.GetAddressOf())))
 			{
-				Log::WriteError(L"Error while creating hull shader");
+				Log::WriteError("Error while creating hull shader");
 			}
 		}
 

@@ -35,12 +35,12 @@ namespace BuD
 
 		if (FAILED(hr))
 		{
-			Log::WriteError(L"Error while creating a D3D11 device");
+			Log::WriteError("Error while creating a D3D11 device");
 		}
 
 		if (FAILED(CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED)))
 		{
-			Log::WriteWarning(L"Failed to initialize COM library, any texture load attempt will fail.");
+			Log::WriteWarning("Failed to initialize COM library, any texture load attempt will fail.");
 		}
 	}
 	
@@ -52,7 +52,7 @@ namespace BuD
 
 		if (FAILED(hr))
 		{
-			Log::WriteError(L"Error while creating a render target view");
+			Log::WriteError("Error while creating a render target view");
 		}
 
 		return result;
@@ -69,7 +69,7 @@ namespace BuD
 
 		if (FAILED(hr))
 		{
-			Log::WriteError(L"Error while creating depth buffer\n");
+			Log::WriteError("Error while creating depth buffer\n");
 		}
 
 		return result;
@@ -82,7 +82,7 @@ namespace BuD
 
 		if (FAILED(hr))
 		{
-			Log::WriteError(L"Error while creating a texture");
+			Log::WriteError("Error while creating a texture");
 		}
 
 		return result;
@@ -105,7 +105,7 @@ namespace BuD
 
 		if (FAILED(hr))
 		{
-			Log::WriteError(L"Error while creating SRV from file (check logs to see if COM library was properly initialized)");
+			Log::WriteError("Error while creating SRV from file (check logs to see if COM library was properly initialized)");
 		}
 
 		return srv;

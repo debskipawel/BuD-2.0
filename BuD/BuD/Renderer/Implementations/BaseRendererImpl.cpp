@@ -87,7 +87,7 @@ namespace BuD
 
 		if ((hs && !ds) || (!hs && ds))
 		{
-			Log::WriteError(L"Trying to use tessellation without using either hull and domain shader.");
+			Log::WriteError("Trying to use tessellation without using either hull and domain shader.");
 		}
 
 		if (hs && ds)

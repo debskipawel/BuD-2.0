@@ -19,14 +19,6 @@ public:
 	SandboxApp()
 		: m_Scene()
 	{
-		BuD::Log::RegisterLogHandle(
-			[](const BuD::Log::LogRecord& record)
-			{
-				OutputDebugStringW(record.message.c_str());
-				OutputDebugStringW(L"\n");
-			}
-		);
-
 		m_BlackHole = std::make_unique<BlackHoleQuadStandard>(m_Scene);
 		m_BlackHoleInstanced = std::make_unique<BlackHoleQuadInstanced>(m_SceneInstanced);
 

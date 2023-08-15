@@ -14,7 +14,7 @@ namespace BuD
 #endif
 	}
 
-	void Log::Write(std::wstring message, LogSeverity severity)
+	void Log::Write(std::string message, LogSeverity severity)
 	{
 #ifdef _DEBUG
 		auto timepoint = Clock::Now();

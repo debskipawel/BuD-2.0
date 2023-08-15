@@ -23,14 +23,15 @@ namespace BuD
 		{
 			Timepoint time;
 			LogSeverity severity;
-			std::wstring message;
+			std::string message;
 		};
 
 		static const std::queue<LogRecord>& GetAllLogs();
-		static void Write(std::wstring message, LogSeverity severity);
-		inline static void WriteInfo(std::wstring message) { Write(message, LS_INFO); }
-		inline static void WriteWarning(std::wstring message) { Write(message, LS_WARNING); }
-		inline static void WriteError(std::wstring message) { Write(message, LS_ERROR); }
+
+		static void Write(std::string message, LogSeverity severity);
+		inline static void WriteInfo(std::string message) { Write(message, LS_INFO); }
+		inline static void WriteWarning(std::string message) { Write(message, LS_WARNING); }
+		inline static void WriteError(std::string message) { Write(message, LS_ERROR); }
 
 		static void RegisterLogHandle(std::function<void(const LogRecord&)> handle);
 	

@@ -63,7 +63,7 @@ namespace BuD
 	{
 		if (s_ActiveRenderTargets.empty())
 		{
-			Log::WriteError(L"Attempting to retrieve a render target without starting it beforehand.");
+			Log::WriteError("Attempting to retrieve a render target without starting it beforehand.");
 			return { nullptr };
 		}
 
@@ -94,7 +94,7 @@ namespace BuD
 	{
 		if (!s_Device)
 		{
-			Log::WriteWarning(L"Attempting to begin frame without initializing the renderer.");
+			Log::WriteWarning("Attempting to begin frame without initializing the renderer.");
 			return;
 		}
 
@@ -149,7 +149,7 @@ namespace BuD
 	{
 		if (!s_Device)
 		{
-			Log::WriteWarning(L"Attempting to render scene without initializing the renderer.");
+			Log::WriteWarning("Attempting to render scene without initializing the renderer.");
 			return;
 		}
 
@@ -179,13 +179,13 @@ namespace BuD
 	{
 		if (!s_Device)
 		{
-			Log::WriteWarning(L"Attempting to end frame without initializing the renderer.");
+			Log::WriteWarning("Attempting to end frame without initializing the renderer.");
 			return;
 		}
 
 		if (!s_ActiveRenderTargets.empty())
 		{
-			Log::WriteWarning(L"Not all render targets for this frame have been used");
+			Log::WriteWarning("Not all render targets for this frame have been used");
 		}
 
 		if (!s_RenderingToSwapchain)

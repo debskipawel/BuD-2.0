@@ -59,7 +59,7 @@ namespace BuD
 
 				if (!mesh.m_VertexBuffer || !mesh.m_IndexBuffer || !pipeline.m_VertexShader || !pipeline.m_PixelShader)
 				{
-					Log::WriteWarning(L"Attempting to render without necessary assets (vertex & index buffers, vertex & pixel shaders). Abandoning.");
+					Log::WriteWarning("Attempting to render without necessary assets (vertex & index buffers, vertex & pixel shaders). Abandoning.");
 					continue;
 				}
 

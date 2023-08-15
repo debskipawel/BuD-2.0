@@ -77,7 +77,7 @@ namespace BuD
 
 		if (FAILED(inputLayoutRes))
 		{
-			Log::WriteError(L"Error while creating input layout");
+			Log::WriteError("Error while creating input layout");
 		}
 	}
 

@@ -18,20 +18,6 @@ ApplicationCAD::ApplicationCAD()
 
 	auto currentPath = std::filesystem::current_path();
 
-	BuD::Log::RegisterLogHandle(
-		[](const BuD::Log::LogRecord& record)
-		{
-			if (record.severity != BuD::LogSeverity::LS_ERROR)
-			{
-				return;
-			}
-
-			auto message = std::format(L"[{}] {}\n", record.time.Format(), record.message);
-
-			OutputDebugStringW(message.c_str());
-		}
-	);
-
 	// TODO: delete this code. just temporary startup benchmarking stuff.
 	BuD::Random random;
 	std::vector<std::weak_ptr<Point>> controlPoints;
@@ -46,6 +32,16 @@ ApplicationCAD::ApplicationCAD()
 	}
 
 	m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateBezierCurveC0(controlPoints);
+
+	BuD::Log::WriteError("This");
+	BuD::Log::WriteError("is");
+	BuD::Log::WriteError("a");
+	BuD::Log::WriteWarning("test.");
+	BuD::Log::WriteWarning("I am");
+	BuD::Log::WriteWarning("lord.");
+	BuD::Log::WriteInfo("Feel");
+	BuD::Log::WriteInfo("my");
+	BuD::Log::WriteInfo("wrath.");
 }
 
 void ApplicationCAD::OnUpdate(float deltaTime)

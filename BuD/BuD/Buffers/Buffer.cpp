@@ -55,7 +55,7 @@ namespace BuD
         ID3D11Buffer* temp;
         if (FAILED(device->CreateBuffer(&bufferDesc, data ? &sdata : nullptr, &temp)))
         {
-            Log::WriteError(L"Error while creating a buffer.");
+            Log::WriteError("Error while creating a buffer.");
         }
 
         m_Buffer.Attach(temp);
