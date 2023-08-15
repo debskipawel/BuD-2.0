@@ -9,7 +9,7 @@ void TransformActionList::Add(std::shared_ptr<TransformAction> action)
 {
 	if (m_CurrentActionIndex + 1 < m_ActionList.size())
 	{
-		m_ActionList[m_CurrentActionIndex++] = action;
+		m_ActionList[++m_CurrentActionIndex] = action;
 		m_UsableActionListSize = m_CurrentActionIndex + 1;
 
 		return;
@@ -22,7 +22,7 @@ void TransformActionList::Add(std::shared_ptr<TransformAction> action)
 
 std::weak_ptr<TransformAction> TransformActionList::GoBack()
 {
-	if (m_CurrentActionIndex > 0)
+	if (m_CurrentActionIndex >= 0)
 	{
 		return m_ActionList[m_CurrentActionIndex--];
 	}

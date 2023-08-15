@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{c303ffb3-e742-4bd3-9d35-1694214a564f}</ProjectGuid>
+    <RootNamespace>BuDaudio</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions);</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>bud_audio_pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)Dependencies;$(ProjectDir)Dependencies\wavpack\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>Dsound.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions);</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>bud_audio_pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)Dependencies;$(ProjectDir)Dependencies\wavpack\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>Dsound.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_LIB;%(PreprocessorDefinitions);</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>bud_audio_pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)Dependencies;$(ProjectDir)Dependencies\wavpack\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>Dsound.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_LIB;%(PreprocessorDefinitions); </PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>bud_audio_pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(ProjectDir)Dependencies;$(ProjectDir)Dependencies\wavpack\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>Dsound.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Dependencies\minimp3\minimp3.h" />
+    <ClInclude Include="Dependencies\minimp3\minimp3_ex.h" />
+    <ClInclude Include="Dependencies\rtaudio-5.2.0\RtAudio.h" />
+    <ClInclude Include="Dependencies\wavpack\include\wavpack.h" />
+    <ClInclude Include="Dependencies\wavpack\src\decorr_tables.h" />
+    <ClInclude Include="Dependencies\wavpack\src\unpack3.h" />
+    <ClInclude Include="Dependencies\wavpack\src\wavpack_local.h" />
+    <ClInclude Include="Dependencies\wavpack\src\wavpack_version.h" />
+    <ClInclude Include="include\AudioDevice.h" />
+    <ClInclude Include="src\AudioGallery.h" />
+    <ClInclude Include="include\AudioSystem.h" />
+    <ClInclude Include="include\SoundEffect.h" />
+    <ClInclude Include="src\FlacFileDecoder.h" />
+    <ClInclude Include="src\Mp3FileDecoder.h" />
+    <ClInclude Include="src\SoundBuffer.h" />
+    <ClInclude Include="src\SoundFileDecoder.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Dependencies\rtaudio-5.2.0\RtAudio.cpp" />
+    <ClCompile Include="Dependencies\wavpack\src\common_utils.c" />
+    <ClCompile Include="Dependencies\wavpack\src\decorr_utils.c" />
+    <ClCompile Include="Dependencies\wavpack\src\entropy_utils.c" />
+    <ClCompile Include="Dependencies\wavpack\src\extra1.c" />
+    <ClCompile Include="Dependencies\wavpack\src\extra2.c" />
+    <ClCompile Include="Dependencies\wavpack\src\open_filename.c" />
+    <ClCompile Include="Dependencies\wavpack\src\open_legacy.c" />
+    <ClCompile Include="Dependencies\wavpack\src\open_raw.c" />
+    <ClCompile Include="Dependencies\wavpack\src\open_utils.c" />
+    <ClCompile Include="Dependencies\wavpack\src\pack.c" />
+    <ClCompile Include="Dependencies\wavpack\src\pack_dns.c" />
+    <ClCompile Include="Dependencies\wavpack\src\pack_dsd.c" />
+    <ClCompile Include="Dependencies\wavpack\src\pack_floats.c" />
+    <ClCompile Include="Dependencies\wavpack\src\pack_utils.c" />
+    <ClCompile Include="Dependencies\wavpack\src\read_words.c" />
+    <ClCompile Include="Dependencies\wavpack\src\tags.c" />
+    <ClCompile Include="Dependencies\wavpack\src\tag_utils.c" />
+    <ClCompile Include="Dependencies\wavpack\src\unpack.c" />
+    <ClCompile Include="Dependencies\wavpack\src\unpack3.c" />
+    <ClCompile Include="Dependencies\wavpack\src\unpack3_open.c" />
+    <ClCompile Include="Dependencies\wavpack\src\unpack3_seek.c" />
+    <ClCompile Include="Dependencies\wavpack\src\unpack_dsd.c" />
+    <ClCompile Include="Dependencies\wavpack\src\unpack_floats.c" />
+    <ClCompile Include="Dependencies\wavpack\src\unpack_seek.c" />
+    <ClCompile Include="Dependencies\wavpack\src\unpack_utils.c" />
+    <ClCompile Include="Dependencies\wavpack\src\write_words.c" />
+    <ClCompile Include="src\SoundBuffer.cpp" />
+    <ClCompile Include="src\SoundEffect.cpp" />
+    <ClCompile Include="src\AudioGallery.cpp" />
+    <ClCompile Include="src\AudioSystem.cpp" />
+    <ClCompile Include="src\AudioDevice.cpp" />
+    <ClCompile Include="src\Mp3FileDecoder.cpp" />
+    <ClCompile Include="src\SoundFileDecoder.cpp" />
+    <ClCompile Include="src\WavpackFileDecoder.cpp" />
+    <ClCompile Include="src\WavpackFileDecoder.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Dependencies\wavpack\src\pack_x64.asm" />
+    <None Include="Dependencies\wavpack\src\pack_x64.S" />
+    <None Include="Dependencies\wavpack\src\pack_x86.asm" />
+    <None Include="Dependencies\wavpack\src\pack_x86.S" />
+    <None Include="Dependencies\wavpack\src\unpack_armv7.S" />
+    <None Include="Dependencies\wavpack\src\unpack_x64.asm" />
+    <None Include="Dependencies\wavpack\src\unpack_x64.S" />
+    <None Include="Dependencies\wavpack\src\unpack_x86.asm" />
+    <None Include="Dependencies\wavpack\src\unpack_x86.S" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

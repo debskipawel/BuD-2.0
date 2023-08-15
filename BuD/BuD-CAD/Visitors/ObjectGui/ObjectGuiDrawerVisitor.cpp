@@ -4,7 +4,9 @@
 #include <misc/cpp/imgui_stdlib.h>
 
 #include <Objects/CAD/PointBased/PointBasedObjectCAD.h>
+
 #include <Visitors/Transform/ApplyGroupTransformVisitor.h>
+#include <Visitors/Transform/UpdateTransformVisitor.h>
 
 ObjectGuiDrawerVisitor::ObjectGuiDrawerVisitor(SceneDataLayer& dataLayer)
 	: m_SceneDataLayer(dataLayer)
@@ -19,16 +21,9 @@ void ObjectGuiDrawerVisitor::Visit(Torus& torus)
 
 	if (DrawGuiForTransform(torus.m_Transform))
 	{
-		const auto& transform = torus.m_Transform;
+		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<UpdateTransformVisitor>();
 
-		auto rotation = transform.m_Rotation;
-		rotation.x = DirectX::XMConvertToRadians(rotation.x);
-		rotation.y = DirectX::XMConvertToRadians(rotation.y);
-		rotation.z = DirectX::XMConvertToRadians(rotation.z);
-
-		auto model = dxm::Matrix::CreateScale(transform.m_Scale) * dxm::Matrix::CreateFromYawPitchRoll(rotation) * dxm::Matrix::CreateTranslation(transform.m_Position);
-
-		torus.m_InstanceData.m_ModelMatrix = model;
+		visitor->Visit(m_Caller);
 	}
 
 	ImGui::Separator();
@@ -59,17 +54,9 @@ void ObjectGuiDrawerVisitor::Visit(Point& point)
 
 	if (position != transform.m_Position)
 	{
-		point.m_InstanceData.m_Position = transform.m_Position;
+		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<UpdateTransformVisitor>();
 
-		for (auto& object : point.m_PointBasedObjects)
-		{
-			auto sharedObj = object.lock();
-
-			if (sharedObj)
-			{
-				sharedObj->OnPointModify();
-			}
-		}
+		visitor->Visit(m_Caller);
 	}
 }
 

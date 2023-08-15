@@ -20,12 +20,12 @@ void TransformSelectionSystem::Select(std::weak_ptr<SceneObjectCAD> sceneObject)
 
 	auto selectedCount = Count();
 
-	m_Centroid = (selectedCount * m_Centroid + sceneObjectShared->m_Transform.m_Position) / (selectedCount + 1);
-
 	auto id = sceneObjectShared->Id();
 
 	m_SelectedObjects.emplace(id, sceneObject);
 	m_InitialTransforms.emplace(id, sceneObjectShared->m_Transform);
+
+	UpdateCentroid();
 }
 
 void TransformSelectionSystem::Unselect(uint32_t sceneObjectId)
@@ -44,18 +44,16 @@ void TransformSelectionSystem::Unselect(uint32_t sceneObjectId)
 	}
 
 	auto action = CreateAction();
-	m_TransformActionList.Add(action);
 
-	auto postUnselectCount = Count() - 1;
-
-	if (postUnselectCount)
+	if (!action->m_TransformedObjects.empty())
 	{
-		auto position = objectShared->m_Transform.m_Position;
-		m_Centroid = ((postUnselectCount + 1) * m_Centroid - position) / postUnselectCount;
+		m_TransformActionList.Add(action);
 	}
 
 	m_SelectedObjects.erase(sceneObjectId);
 	m_InitialTransforms.erase(sceneObjectId);
+
+	UpdateCentroid();
 }
 
 TransformComponent TransformSelectionSystem::InitialTransform(uint32_t objectId) const
@@ -81,6 +79,63 @@ dxm::Vector3 TransformSelectionSystem::Centroid() const
 	return m_Centroid + m_GroupTransform.m_Position;
 }
 
+std::shared_ptr<TransformAction> TransformSelectionSystem::Undo()
+{
+	auto action = CreateAction();
+
+	if (!action->m_TransformedObjects.empty())
+	{
+		m_TransformActionList.Add(action);
+	}
+
+	auto lastAction = m_TransformActionList.GoBack();
+	auto actionShared = lastAction.lock();
+
+	if (actionShared)
+	{
+		for (auto& [id, initialTransform] : actionShared->m_OriginalTransforms)
+		{
+			m_InitialTransforms[id] = initialTransform;
+		}
+
+		UpdateCentroid();
+
+		return actionShared;
+	}
+
+	return std::shared_ptr<TransformAction>();
+}
+
+std::shared_ptr<TransformAction> TransformSelectionSystem::Redo()
+{
+	auto groupTransform = m_GroupTransform;
+	auto currentAction = CreateAction();
+
+	if (!currentAction->m_TransformedObjects.empty())
+	{
+		m_GroupTransform = groupTransform;
+
+		return std::shared_ptr<TransformAction>();;
+	}
+	
+	auto action = m_TransformActionList.GoForward();
+	auto actionShared = action.lock();
+
+	if (actionShared)
+	{
+		for (auto& [id, targetTransform] : actionShared->m_TargetTransforms)
+		{
+			m_InitialTransforms[id] = targetTransform;
+		}
+
+		UpdateCentroid();
+
+		return actionShared;
+	}
+
+	return std::shared_ptr<TransformAction>();
+}
+
 std::shared_ptr<TransformAction> TransformSelectionSystem::CreateAction()
 {
 	auto action = std::make_shared<TransformAction>();
@@ -99,13 +154,16 @@ std::shared_ptr<TransformAction> TransformSelectionSystem::CreateAction()
 		auto& initialTransform = m_InitialTransforms.at(id);
 		auto& targetTransform = objectShared->m_Transform;
 
-		m_Centroid += targetTransform.m_Position;
+		if (initialTransform != targetTransform)
+		{
+			m_Centroid += targetTransform.m_Position;
 
-		action->m_TransformedObjects.emplace(id, object);
-		action->m_OriginalTransforms.emplace(id, initialTransform);
-		action->m_TargetTransforms.emplace(id, targetTransform);
+			action->m_TransformedObjects.emplace(id, object);
+			action->m_OriginalTransforms.emplace(id, initialTransform);
+			action->m_TargetTransforms.emplace(id, targetTransform);
 
-		m_InitialTransforms[id] = targetTransform;
+			m_InitialTransforms[id] = targetTransform;
+		}
 	}
 
 	auto selectedCount = Count();

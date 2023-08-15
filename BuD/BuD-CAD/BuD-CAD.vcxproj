@@ -89,7 +89,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -110,7 +110,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -131,7 +131,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -152,7 +152,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -220,6 +220,7 @@
     <ClInclude Include="Visitors\Selection\ObjectSelectVisitor.h" />
     <ClInclude Include="Visitors\Selection\ObjectUnselectVisitor.h" />
     <ClInclude Include="Visitors\Transform\ApplyGroupTransformVisitor.h" />
+    <ClInclude Include="Visitors\Transform\UpdateTransformVisitor.h" />
     <ClInclude Include="Visitors\Validation\BaseValidationVisitor.h" />
     <ClInclude Include="Visitors\Validation\ControlPointValidationVisitor.h" />
   </ItemGroup>
@@ -271,12 +272,16 @@
     <ClCompile Include="Visitors\Selection\ObjectSelectVisitor.cpp" />
     <ClCompile Include="Visitors\Selection\ObjectUnselectVisitor.cpp" />
     <ClCompile Include="Visitors\Transform\ApplyGroupTransformVisitor.cpp" />
+    <ClCompile Include="Visitors\Transform\UpdateTransformVisitor.cpp" />
     <ClCompile Include="Visitors\Validation\BaseValidationVisitor.cpp" />
     <ClCompile Include="Visitors\Validation\ControlPointValidationVisitor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuD\BuD.vcxproj">
       <Project>{f37479f4-57c1-4c26-aaa9-b3951514890a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\BuD-audio\BuD-audio.vcxproj">
+      <Project>{c303ffb3-e742-4bd3-9d35-1694214a564f}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Dependencies\DearImGui\DearImGui.vcxproj">
       <Project>{e86e8410-58d4-4f25-b37f-e22af5c65200}</Project>
