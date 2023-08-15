@@ -10,11 +10,25 @@ ObjectSelectVisitor::ObjectSelectVisitor(SceneDataLayer& sceneDataLayer)
 void ObjectSelectVisitor::Visit(Torus& torus)
 {
 	UniversalSelect(torus);
+
+	torus.m_InstanceData.m_Color = Torus::SELECTED_COLOR;
 }
 
 void ObjectSelectVisitor::Visit(Point& point)
 {
 	UniversalSelect(point);
+
+	point.m_InstanceData.m_Color = Point::SELECTED_COLOR;
+}
+
+void ObjectSelectVisitor::Visit(BezierCurveC0& curve)
+{
+	UniversalSelect(curve);
+
+	for (auto& segment : curve.m_InstanceData.m_Segments)
+	{
+		segment.m_Color = BezierCurveC0::SELECTED_COLOR;
+	}
 }
 
 void ObjectSelectVisitor::UniversalSelect(SceneObjectCAD& object)

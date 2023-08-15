@@ -7,6 +7,7 @@ struct VSInput
     float4 modelRowW : INS_MODEL_W;
     float2 radius : INS_RADIUS;
     uint2 segments : INS_SEGMENTS;
+    float3 color : INS_COLOR;
     uint instanceID : SV_InstanceID;
 };
 
@@ -16,6 +17,7 @@ struct VSOutput
     matrix model : INS_MODEL;
     float2 radius : INS_RADIUS;
     uint2 segments : INS_SEGMENTS;
+    float3 color : INS_COLOR;
 };
 
 VSOutput main(VSInput i)
@@ -25,6 +27,7 @@ VSOutput main(VSInput i)
     o.model = transpose(float4x4(i.modelRowX, i.modelRowY, i.modelRowZ, i.modelRowW));
     o.radius = i.radius;
     o.segments = i.segments;
+    o.color = i.color;
     
 	return o;
 }

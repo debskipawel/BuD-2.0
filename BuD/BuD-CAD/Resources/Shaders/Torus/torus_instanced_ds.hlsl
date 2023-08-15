@@ -10,12 +10,14 @@ struct DS_OUTPUT
 {
 	float4 position  : SV_POSITION;
     float3 normal : NORMAL;
+    float3 color : INS_COLOR;
 };
 
 struct HS_CONTROL_POINT_OUTPUT
 {
     matrix model : INS_MODEL;
     float2 radius : INS_RADIUS;
+    float3 color : INS_COLOR;
 };
 
 struct HS_CONSTANT_DATA_OUTPUT
@@ -55,6 +57,7 @@ DS_OUTPUT main(
 	
     Output.position = mul(projMtx, mul(viewMtx, worldPos));
     Output.normal = normalize(normal);
+    Output.color = patch[0].color;
 	
 	return Output;
 }

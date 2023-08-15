@@ -36,11 +36,16 @@ uint32_t ActionList::SelectedCount() const
 
 std::weak_ptr<Action> ActionList::NewAction()
 {
+	auto selectedCount = SelectedCount();
+
+	if (selectedCount == 0)
+	{
+		m_GroupTransform = TransformComponent::IDENTITY;
+	}
+
 	if (m_GroupTransform == TransformComponent::IDENTITY)
 	{
-		auto selectedCount = SelectedCount();
-
-		if (m_ActionList.size() && SelectedCount())
+		if (m_ActionList.size() && selectedCount)
 		{
 			return InternalLast();
 		}

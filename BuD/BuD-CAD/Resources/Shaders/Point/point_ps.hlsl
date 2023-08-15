@@ -4,6 +4,7 @@ struct VSOutput
     float3 worldPos : WORLD_POS;
     float2 tex : TEXCOORD;
     float depth : DEPTH;
+    float3 color : INS_COLOR;
 };
 
 struct PSOutput
@@ -18,7 +19,8 @@ PSOutput main(VSOutput i)
     
     float radius = dot(i.tex, i.tex);
     
-    o.color = float(radius <= 1.0) * float4(1.0, 1.0, 1.0, 1.0);
+    float borderStart = 0.75, borderEnd = 1.0;
+    o.color = float(radius <= borderStart) * float4(i.color, 1.0) + (radius > borderStart && radius <= borderEnd) * float4(1.0, 1.0, 1.0, 1.0);
     o.depth = i.depth + float(radius > 1.0) * 100.0;
     
     return o;

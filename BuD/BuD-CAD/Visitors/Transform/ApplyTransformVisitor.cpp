@@ -64,4 +64,27 @@ void ApplyTransformVisitor::Visit(Point& point)
 
 	point.m_Transform.m_Position = m_AdditionalTransform.m_Position + accumulatedPosition;
 	point.m_InstanceData.m_Position = point.m_Transform.m_Position;
+
+	for (auto& dependentObject : point.m_PointBasedObjects)
+	{
+		auto dependentObjectShared = dependentObject.lock();
+
+		if (dependentObjectShared)
+		{
+			dependentObjectShared->OnPointModify();
+		}
+	}
+}
+
+void ApplyTransformVisitor::Visit(BezierCurveC0& curve)
+{
+	for (auto& point : curve.m_ControlPoints)
+	{
+		auto pointShared = point.lock();
+
+		if (pointShared)
+		{
+			Visit(*pointShared);
+		}
+	}
 }

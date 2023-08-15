@@ -4,12 +4,14 @@ struct HSInput
     matrix model : INS_MODEL;
     float2 radius : INS_RADIUS;
     uint2 segments : INS_SEGMENTS;
+    float3 color : INS_COLOR;
 };
 
 struct HS_CONTROL_POINT_OUTPUT
 {
     matrix model : INS_MODEL;
     float2 radius : INS_RADIUS;
+    float3 color : INS_COLOR;
 };
 
 struct HS_CONSTANT_DATA_OUTPUT
@@ -49,6 +51,7 @@ HS_CONTROL_POINT_OUTPUT main(
 
     Output.model = ip[i].model;
     Output.radius = ip[i].radius;
+    Output.color = ip[i].color;
 
 	return Output;
 }

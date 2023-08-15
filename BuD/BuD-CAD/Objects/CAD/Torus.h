@@ -17,7 +17,11 @@ public:
 		dxm::Matrix m_ModelMatrix;
 		float m_OuterRadius, m_InnerRadius;
 		unsigned int m_SegmentsU, m_SegmentsV;
+		dxm::Vector3 m_Color;
 	};
 
 	TorusInstanceData m_InstanceData;
+
+	static dxm::Vector3 SELECTED_COLOR;
+	static dxm::Vector3 UNSELECTED_COLOR;
 };

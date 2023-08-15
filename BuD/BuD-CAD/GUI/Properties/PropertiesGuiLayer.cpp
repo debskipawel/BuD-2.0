@@ -18,15 +18,26 @@ void PropertiesGuiLayer::DrawGui()
 	{
 		auto selectedCount = m_MainDataLayer.m_SceneDataLayer.m_SelectedGroup.m_SelectedObjects.size();
 
-		if (selectedCount)
+		switch (selectedCount)
 		{
-			DrawGuiForSelectedTransform();
-
-			if (selectedCount == 1)
+			case 0:
+			{
+				break;
+			}
+			case 1:
 			{
 				DrawGuiForSingularObject();
+				break;
 			}
+			default:
+			{
+				DrawGuiForSelectedTransform();
+				break;
+			}
+		}
 
+		if (selectedCount)
+		{
 			DrawDeleteButton();
 		}
 

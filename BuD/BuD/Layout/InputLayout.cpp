@@ -57,7 +57,7 @@ namespace BuD
 					: res->second;
 
 				auto byteSize = HelperFunctions::BytesPerFormat(desc.Format);
-				std::string argument = type + " arg" + std::to_string(argumentCount++) + " : " + desc.SemanticName + "; ";
+				std::string argument = std::format("{} arg{} : {}{};", type, argumentCount++, desc.SemanticName, desc.SemanticIndex);
 
 				return s + argument;
 			}

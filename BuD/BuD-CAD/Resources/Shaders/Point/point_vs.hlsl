@@ -9,6 +9,7 @@ struct VSInput
     float3 position : POSITION;
     float3 normal : NORMAL;
     float3 worldPosition : INS_POSITION;
+    float3 color : INS_COLOR;
     uint instanceId : SV_InstanceID;
 };
 
@@ -18,6 +19,7 @@ struct VSOutput
     float3 worldPos : WORLD_POS;
     float2 tex : TEXCOORD;
     float depth : DEPTH;
+    float3 color : INS_COLOR;
 };
 
 float ScalePoint(float3 pointPosition)
@@ -43,6 +45,7 @@ VSOutput main(VSInput i)
     o.worldPos = i.worldPosition;
     o.tex = i.position.xy;
     o.depth = screenSpacePosition.z;
+    o.color = i.color;
     
 	return o;
 }

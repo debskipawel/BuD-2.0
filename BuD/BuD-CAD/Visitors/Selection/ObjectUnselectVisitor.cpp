@@ -10,11 +10,25 @@ ObjectUnselectVisitor::ObjectUnselectVisitor(SceneDataLayer& sceneDataLayer)
 void ObjectUnselectVisitor::Visit(Torus& torus)
 {
 	UniversalUnselect(torus);
+
+	torus.m_InstanceData.m_Color = Torus::UNSELECTED_COLOR;
 }
 
 void ObjectUnselectVisitor::Visit(Point& point)
 {
 	UniversalUnselect(point);
+
+	point.m_InstanceData.m_Color = Torus::UNSELECTED_COLOR;
+}
+
+void ObjectUnselectVisitor::Visit(BezierCurveC0& curve)
+{
+	UniversalUnselect(curve);
+
+	for (auto& segment : curve.m_InstanceData.m_Segments)
+	{
+		segment.m_Color = BezierCurveC0::UNSELECTED_COLOR;
+	}
 }
 
 void ObjectUnselectVisitor::UniversalUnselect(SceneObjectCAD& object)

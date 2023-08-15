@@ -30,6 +30,8 @@ Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, float outerRadius, float 
 	m_InstanceData.m_SegmentsU = segmentsU;
 	m_InstanceData.m_SegmentsV = segmentsV;
 
+	m_InstanceData.m_Color = dxm::Vector3::One;
+
 	auto meshLoader = BuD::MeshLoader();
 
 	auto pointMesh = meshLoader.LoadPrimitiveMesh(
@@ -41,6 +43,7 @@ Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, float outerRadius, float 
 			{ "INS_MODEL_W", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 12 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 			{ "INS_RADIUS", 0, DXGI_FORMAT_R32G32_FLOAT, 1, 16 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 			{ "INS_SEGMENTS", 0, DXGI_FORMAT_R32G32_UINT, 1, 18 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 20 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 		}
 	);
 	pointMesh.m_BoundingBoxCallback = [this]()
@@ -99,3 +102,6 @@ void Torus::Accept(AbstractVisitor& visitor)
 {
 	visitor.Visit(*this);
 }
+
+dxm::Vector3 Torus::SELECTED_COLOR = { 0.8f, 0.6f, 0.0f };
+dxm::Vector3 Torus::UNSELECTED_COLOR = { 1.0f, 1.0f, 1.0f };

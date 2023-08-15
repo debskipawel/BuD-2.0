@@ -6,6 +6,7 @@
 
 #include <Objects/Additional/Cursor.h>
 #include <Objects/Additional/Grid.h>
+#include <Objects/CAD/Point.h>
 
 class SceneCAD
 {
@@ -15,8 +16,9 @@ public:
 
 	void DeleteObject(SceneObjectCAD& object);
 
-	std::shared_ptr<SceneObjectCAD> CreateTorus(dxm::Vector3 position);
-	std::shared_ptr<SceneObjectCAD> CreatePoint(dxm::Vector3 position);
+	std::weak_ptr<SceneObjectCAD> CreateTorus(dxm::Vector3 position);
+	std::weak_ptr<SceneObjectCAD> CreatePoint(dxm::Vector3 position);
+	std::weak_ptr<SceneObjectCAD> CreateBezierCurveC0(std::vector<std::weak_ptr<Point>> controlPoints);
 
 	std::shared_ptr<Cursor> m_MainCursor;
 

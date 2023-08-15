@@ -15,9 +15,13 @@ public:
 	struct PointInstanceData
 	{
 		dxm::Vector3 m_Position;
+		dxm::Vector3 m_Color;
 	};
 
 	PointInstanceData m_InstanceData;
 
 	std::vector<std::weak_ptr<PointBasedObjectCAD>> m_PointBasedObjects;
+
+	static dxm::Vector3 SELECTED_COLOR;
+	static dxm::Vector3 UNSELECTED_COLOR;
 };

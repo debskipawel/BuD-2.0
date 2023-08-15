@@ -43,10 +43,6 @@ void ObjectGuiDrawerVisitor::Visit(Torus& torus)
 
 	instanceData.m_OuterRadius = max(instanceData.m_OuterRadius, instanceData.m_InnerRadius);
 	instanceData.m_InnerRadius = min(instanceData.m_OuterRadius, instanceData.m_InnerRadius);
-
-	ImGui::Separator();
-
-	DrawDeleteButton(torus);
 }
 
 void ObjectGuiDrawerVisitor::Visit(Point& point)
@@ -113,23 +109,4 @@ bool ObjectGuiDrawerVisitor::DrawGuiForTransform(SceneObjectCAD& object)
 	changeFlag = changeFlag || (transform.m_Scale != scaleCopy);
 
 	return changeFlag;
-}
-
-void ObjectGuiDrawerVisitor::DrawDeleteButton(SceneObjectCAD& object)
-{
-	auto max = ImGui::GetWindowContentRegionMax();
-	auto min = ImGui::GetWindowContentRegionMin();
-
-	auto cursorPos = ImGui::GetCursorPos();
-
-	if (max.y - 20 > cursorPos.y)
-	{
-		ImGui::SetCursorPos({ min.x, max.y - 20 });
-	}
-
-	if (ImGui::Button("Delete", ImVec2(max.x - min.x, 20)))
-	{
-		auto& scene = m_SceneDataLayer.m_SceneCAD;
-		scene.DeleteObject(object);
-	}
 }

@@ -15,12 +15,16 @@ Point::Point(BuD::Scene& scene, dxm::Vector3 position)
 
 	m_Transform.m_Position = position;
 	m_InstanceData.m_Position = position;
+	m_InstanceData.m_Color = Point::UNSELECTED_COLOR;
 
 	BuD::MeshLoader meshLoader;
 	
 	auto mesh = meshLoader.LoadPrimitiveMesh(
 		BuD::MeshPrimitiveType::QUAD,
-		{ { "INS_POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1 } }
+		{ 
+			{ "INS_POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 3 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1},
+		}
 	);
 	mesh.m_BoundingBoxCallback = [this]()
 	{
@@ -69,3 +73,6 @@ void Point::Accept(AbstractVisitor& visitor)
 {
 	visitor.Visit(*this);
 }
+
+dxm::Vector3 Point::SELECTED_COLOR = { 0.8f, 0.6f, 0.0f };
+dxm::Vector3 Point::UNSELECTED_COLOR = { 1.0f, 1.0f, 1.0f };

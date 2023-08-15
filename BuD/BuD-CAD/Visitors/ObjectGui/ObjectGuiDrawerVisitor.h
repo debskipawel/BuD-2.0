@@ -14,7 +14,6 @@ public:
 protected:
 	virtual bool DrawGuiForTag(SceneObjectCAD& object);
 	virtual bool DrawGuiForTransform(SceneObjectCAD& object);
-	virtual void DrawDeleteButton(SceneObjectCAD& object);
 
 	SceneDataLayer& m_SceneDataLayer;
 };

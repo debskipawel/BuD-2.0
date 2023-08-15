@@ -19,7 +19,5 @@ protected:
 	virtual void DrawSerializationSettings();
 	virtual void DrawRendererSettings();
 
-	virtual void DrawGuiForPopups();
-
 	std::vector<MainMenuItem> m_MenuItems;
 };

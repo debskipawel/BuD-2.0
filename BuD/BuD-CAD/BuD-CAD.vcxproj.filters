@@ -165,6 +165,9 @@
     <ClInclude Include="GUI\MenuBar\MenuBarGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC0.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -302,6 +305,9 @@
     <ClCompile Include="GUI\MenuBar\MenuBarGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\CAD\PointBased\Curve\BezierCurveC0.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Torus\torus_instanced_vs.hlsl" />
@@ -316,5 +322,9 @@
     <FxCompile Include="Resources\Shaders\Cursor\cursor_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\Point\point_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\Point\point_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_hs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_ds.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_ps.hlsl" />
   </ItemGroup>
 </Project>
