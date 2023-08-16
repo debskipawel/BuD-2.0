@@ -42,25 +42,13 @@ void MenuBarGuiLayer::DrawSerializationSettings()
 
     if (ImGui::MenuItem("Undo", "Ctrl+Z"))
     {
-        auto action = m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform.Undo();
+        auto undone = m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform.Undo();
         
-        if (action)
+        if (undone)
         {
-            for (auto& [id, object] : action->m_TransformedObjects)
-            {
-                auto objectShared = object.lock();
+            auto& cursor = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_MainCursor;
 
-                if (!objectShared)
-                {
-                    continue;
-                }
-
-                auto& initialTransform = action->m_OriginalTransforms.at(id);
-
-                objectShared->m_Transform = initialTransform;
-
-                visitor->Visit(object);
-            }
+            cursor->SetPosition(m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform.Centroid());
         }
         else
         {
@@ -70,25 +58,13 @@ void MenuBarGuiLayer::DrawSerializationSettings()
 
     if (ImGui::MenuItem("Redo", "Ctrl+Y"))
     {
-        auto action = m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform.Redo();
+        auto redone = m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform.Redo();
 
-        if (action)
+        if (redone)
         {
-            for (auto& [id, object] : action->m_TransformedObjects)
-            {
-                auto objectShared = object.lock();
+            auto& cursor = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_MainCursor;
 
-                if (!objectShared)
-                {
-                    continue;
-                }
-
-                auto& targetTransform = action->m_TargetTransforms.at(id);
-
-                objectShared->m_Transform = targetTransform;
-
-                visitor->Visit(object);
-            }
+            cursor->SetPosition(m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform.Centroid());
         }
         else
         {

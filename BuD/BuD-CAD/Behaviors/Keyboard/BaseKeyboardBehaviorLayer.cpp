@@ -5,10 +5,12 @@ BaseKeyboardBehaviorLayer::BaseKeyboardBehaviorLayer(MainDataLayer& dataLayer)
 {
 }
 
-void BaseKeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
+bool BaseKeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
 {
+	return false;
 }
 
-void BaseKeyboardBehaviorLayer::OnKeyRelease(BuD::KeyboardKeys key)
+bool BaseKeyboardBehaviorLayer::OnKeyRelease(BuD::KeyboardKeys key)
 {
+	return false;
 }

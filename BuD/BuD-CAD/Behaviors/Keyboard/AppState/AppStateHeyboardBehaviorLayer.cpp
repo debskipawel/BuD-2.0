@@ -5,14 +5,16 @@ AppStateKeyboardBehaviorLayer::AppStateKeyboardBehaviorLayer(MainDataLayer& data
 {
 }
 
-void AppStateKeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
+bool AppStateKeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
 {
 	if (m_MainDataLayer.m_AppStateDataLayer.m_AppState == AppState::FROZEN)
 	{
-		return;
+		return false;
 	}
 
 	HandleAppStateChange(key);
+
+	return false;
 }
 
 void AppStateKeyboardBehaviorLayer::HandleAppStateChange(BuD::KeyboardKeys key)

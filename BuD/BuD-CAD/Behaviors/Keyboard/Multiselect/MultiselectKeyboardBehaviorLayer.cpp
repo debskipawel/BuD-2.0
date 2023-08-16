@@ -5,21 +5,25 @@ MultiselectKeyboardBehaviorLayer::MultiselectKeyboardBehaviorLayer(MainDataLayer
 {
 }
 
-void MultiselectKeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
+bool MultiselectKeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
 {
 	auto& appState = m_MainDataLayer.m_AppStateDataLayer;
 
 	if (appState.m_AppState == AppState::FROZEN)
 	{
-		return;
+		return false;
 	}
 
 	HandleMultiselectEnable(key);
+
+	return false;
 }
 
-void MultiselectKeyboardBehaviorLayer::OnKeyRelease(BuD::KeyboardKeys key)
+bool MultiselectKeyboardBehaviorLayer::OnKeyRelease(BuD::KeyboardKeys key)
 {
 	HandleMultiselectDisable(key);
+
+	return false;
 }
 
 void MultiselectKeyboardBehaviorLayer::HandleMultiselectEnable(BuD::KeyboardKeys key)

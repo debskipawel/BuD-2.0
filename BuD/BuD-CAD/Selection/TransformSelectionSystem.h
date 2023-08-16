@@ -16,8 +16,8 @@ public:
 
 	virtual dxm::Vector3 Centroid() const;
 
-	virtual std::shared_ptr<TransformAction> Undo();
-	virtual std::shared_ptr<TransformAction> Redo();
+	virtual bool Undo();
+	virtual bool Redo();
 
 protected:
 	TransformComponent m_GroupTransform;

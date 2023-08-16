@@ -2,6 +2,8 @@
 
 #include <numeric>
 
+#include <Visitors/Transform/UpdateTransformVisitor.h>
+
 void TransformSelectionSystem::Select(std::weak_ptr<SceneObjectCAD> sceneObject)
 {
 	auto sceneObjectShared = sceneObject.lock();
@@ -79,7 +81,7 @@ dxm::Vector3 TransformSelectionSystem::Centroid() const
 	return m_Centroid + m_GroupTransform.m_Position;
 }
 
-std::shared_ptr<TransformAction> TransformSelectionSystem::Undo()
+bool TransformSelectionSystem::Undo()
 {
 	auto action = CreateAction();
 
@@ -93,20 +95,34 @@ std::shared_ptr<TransformAction> TransformSelectionSystem::Undo()
 
 	if (actionShared)
 	{
-		for (auto& [id, initialTransform] : actionShared->m_OriginalTransforms)
+		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<UpdateTransformVisitor>();
+
+		for (auto& [id, object] : actionShared->m_TransformedObjects)
 		{
+			auto objectShared = object.lock();
+
+			if (!objectShared)
+			{
+				continue;
+			}
+
+			auto& initialTransform = actionShared->m_OriginalTransforms[id];
+
+			objectShared->m_Transform = initialTransform;
+			visitor->Visit(object);
+
 			m_InitialTransforms[id] = initialTransform;
 		}
 
 		UpdateCentroid();
 
-		return actionShared;
+		return true;
 	}
 
-	return std::shared_ptr<TransformAction>();
+	return false;
 }
 
-std::shared_ptr<TransformAction> TransformSelectionSystem::Redo()
+bool TransformSelectionSystem::Redo()
 {
 	auto groupTransform = m_GroupTransform;
 	auto currentAction = CreateAction();
@@ -115,7 +131,7 @@ std::shared_ptr<TransformAction> TransformSelectionSystem::Redo()
 	{
 		m_GroupTransform = groupTransform;
 
-		return std::shared_ptr<TransformAction>();;
+		return false;
 	}
 	
 	auto action = m_TransformActionList.GoForward();
@@ -123,17 +139,31 @@ std::shared_ptr<TransformAction> TransformSelectionSystem::Redo()
 
 	if (actionShared)
 	{
-		for (auto& [id, targetTransform] : actionShared->m_TargetTransforms)
+		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<UpdateTransformVisitor>();
+
+		for (auto& [id, object] : actionShared->m_TransformedObjects)
 		{
+			auto objectShared = object.lock();
+
+			if (!objectShared)
+			{
+				continue;
+			}
+
+			auto& targetTransform = actionShared->m_TargetTransforms[id];
+
+			objectShared->m_Transform = targetTransform;
+			visitor->Visit(object);
+
 			m_InitialTransforms[id] = targetTransform;
 		}
 
 		UpdateCentroid();
 
-		return actionShared;
+		return true;
 	}
 
-	return std::shared_ptr<TransformAction>();
+	return false;
 }
 
 std::shared_ptr<TransformAction> TransformSelectionSystem::CreateAction()

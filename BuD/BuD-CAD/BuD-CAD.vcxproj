@@ -177,6 +177,7 @@
     <ClInclude Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Keyboard\Multiselect\MultiselectKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Keyboard\Shortcuts\ShortcutsKeyboardBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\Action\ActionMouseBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\BaseMouseBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.h" />
@@ -233,6 +234,7 @@
     <ClCompile Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Keyboard\Multiselect\MultiselectKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\Shortcuts\ShortcutsKeyboardBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Mouse\Action\ActionMouseBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Mouse\BaseMouseBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.cpp" />

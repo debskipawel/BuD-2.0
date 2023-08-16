@@ -5,21 +5,25 @@ CameraKeyboardBehaviorLayer::CameraKeyboardBehaviorLayer(MainDataLayer& dataLaye
 {
 }
 
-void CameraKeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
+bool CameraKeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
 {
 	auto& appState = m_MainDataLayer.m_AppStateDataLayer;
 
 	if (appState.m_AppState == AppState::FROZEN)
 	{
-		return;
+		return false;
 	}
 
 	HandleCameraMovementEnable(key);
+
+	return false;
 }
 
-void CameraKeyboardBehaviorLayer::OnKeyRelease(BuD::KeyboardKeys key)
+bool CameraKeyboardBehaviorLayer::OnKeyRelease(BuD::KeyboardKeys key)
 {
 	HandleCameraMovementDisable(key);
+
+	return false;
 }
 
 void CameraKeyboardBehaviorLayer::HandleCameraMovementEnable(BuD::KeyboardKeys key)

@@ -183,6 +183,9 @@
     <ClInclude Include="Visitors\Transform\UpdateTransformVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Behaviors\Keyboard\Shortcuts\ShortcutsKeyboardBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -333,6 +336,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Visitors\Transform\UpdateTransformVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Keyboard\Shortcuts\ShortcutsKeyboardBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

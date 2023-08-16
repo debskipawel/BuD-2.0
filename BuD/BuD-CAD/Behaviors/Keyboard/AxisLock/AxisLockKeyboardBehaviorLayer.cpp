@@ -5,19 +5,23 @@ AxisLockKeyboardBehaviorLayer::AxisLockKeyboardBehaviorLayer(MainDataLayer& data
 {
 }
 
-void AxisLockKeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
+bool AxisLockKeyboardBehaviorLayer::OnKeyPress(BuD::KeyboardKeys key)
 {
 	if (m_MainDataLayer.m_AppStateDataLayer.m_AppState == AppState::FROZEN)
 	{
-		return;
+		return false;
 	}
 
 	HandleAxisLockEnable(key);
+
+	return false;
 }
 
-void AxisLockKeyboardBehaviorLayer::OnKeyRelease(BuD::KeyboardKeys key)
+bool AxisLockKeyboardBehaviorLayer::OnKeyRelease(BuD::KeyboardKeys key)
 {
 	HandleAxisLockDisable(key);
+
+	return false;
 }
 
 void AxisLockKeyboardBehaviorLayer::HandleAxisLockEnable(BuD::KeyboardKeys key)
