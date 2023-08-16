@@ -35,10 +35,8 @@ namespace BuD
 
 		static void RegisterLogHandle(std::function<void(const LogRecord&)> handle);
 	
-#ifdef _DEBUG
 	private:
 		inline static std::queue<LogRecord> s_LogMessagesQueue = {};
 		inline static std::vector<std::function<void(const LogRecord&)>> s_LogMessagesHandles = {};
-#endif
 	};
 }
