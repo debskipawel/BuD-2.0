@@ -12,5 +12,11 @@ public:
 	virtual void DrawGui() override;
 
 protected:
-	BuD::Texture m_IdleIcon, m_MoveIcon, m_RotateIcon, m_ScaleIcon;
+	struct AppStateButton
+	{
+		BuD::Texture m_ButtonIcon;
+		std::string m_TooltipLabel;
+	};
+
+	std::map<AppState, AppStateButton> m_ButtonMap;
 };
