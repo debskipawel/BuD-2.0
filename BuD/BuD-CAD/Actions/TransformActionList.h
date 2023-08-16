@@ -9,6 +9,9 @@ public:
 
 	void Add(std::shared_ptr<TransformAction> action);
 
+	bool CanGoBack();
+	bool CanGoForward();
+
 	std::weak_ptr<TransformAction> GoBack();
 	std::weak_ptr<TransformAction> GoForward();
 

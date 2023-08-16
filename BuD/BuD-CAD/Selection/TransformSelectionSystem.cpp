@@ -81,6 +81,46 @@ dxm::Vector3 TransformSelectionSystem::Centroid() const
 	return m_Centroid + m_GroupTransform.m_Position;
 }
 
+bool TransformSelectionSystem::CanUndo()
+{
+	bool flag = m_TransformActionList.CanGoBack();
+
+	if (m_SelectedObjects.size() == 1)
+	{
+		auto& object = m_SelectedObjects.begin()->second;
+		auto objectShared = object.lock();
+
+		flag = flag || (objectShared ? m_InitialTransforms[objectShared->Id()] != objectShared->m_Transform : true);
+	}
+
+	if (m_SelectedObjects.size() > 1)
+	{
+		flag = flag || m_GroupTransform != TransformComponent::IDENTITY;
+	}
+
+	return flag;
+}
+
+bool TransformSelectionSystem::CanRedo()
+{
+	bool flag = m_TransformActionList.CanGoForward();
+
+	if (m_SelectedObjects.size() == 1)
+	{
+		auto& object = m_SelectedObjects.begin()->second;
+		auto objectShared = object.lock();
+
+		flag = flag && (objectShared ? m_InitialTransforms[objectShared->Id()] != objectShared->m_Transform : true);
+	}
+
+	if (m_SelectedObjects.size() > 1)
+	{
+		flag = flag && m_GroupTransform == TransformComponent::IDENTITY;
+	}
+
+	return flag;
+}
+
 bool TransformSelectionSystem::Undo()
 {
 	auto action = CreateAction();

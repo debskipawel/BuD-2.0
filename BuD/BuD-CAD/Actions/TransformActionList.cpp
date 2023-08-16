@@ -20,9 +20,19 @@ void TransformActionList::Add(std::shared_ptr<TransformAction> action)
 	m_CurrentActionIndex++;
 }
 
+bool TransformActionList::CanGoBack()
+{
+	return m_CurrentActionIndex >= 0;
+}
+
+bool TransformActionList::CanGoForward()
+{
+	return m_CurrentActionIndex + 1 < m_UsableActionListSize;
+}
+
 std::weak_ptr<TransformAction> TransformActionList::GoBack()
 {
-	if (m_CurrentActionIndex >= 0)
+	if (CanGoBack())
 	{
 		return m_ActionList[m_CurrentActionIndex--];
 	}
@@ -32,7 +42,7 @@ std::weak_ptr<TransformAction> TransformActionList::GoBack()
 
 std::weak_ptr<TransformAction> TransformActionList::GoForward()
 {
-	if (m_CurrentActionIndex + 1 < m_UsableActionListSize)
+	if (CanGoForward())
 	{
 		return m_ActionList[++m_CurrentActionIndex];
 	}

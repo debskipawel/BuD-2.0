@@ -1,6 +1,5 @@
 #pragma once
 
-#include <AudioSystem.h>
 #include <GUI/BaseGuiLayer.h>
 
 class MenuBarGuiLayer : public BaseGuiLayer
@@ -21,5 +20,4 @@ protected:
 	virtual void DrawRendererSettings();
 
 	std::vector<MainMenuItem> m_MenuItems;
-	std::shared_ptr<BuD::Audio::SoundEffect> m_ErrorSoundEffect;
 };

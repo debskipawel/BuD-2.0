@@ -7,11 +7,6 @@
 MenuBarGuiLayer::MenuBarGuiLayer(MainDataLayer& dataLayer)
 	: BaseGuiLayer(dataLayer)
 {
-    m_ErrorSoundEffect = BuD::Audio::AudioSystem::Load("./Resources/Sounds/powiadomienie.mp3");
-    
-    auto defaultAudioDevice = BuD::Audio::AudioSystem::DefaultAudioDevice();
-    BuD::Audio::AudioSystem::SetActiveDevice(defaultAudioDevice);
-
     m_MenuItems.emplace_back("File", [this]() { DrawSerializationSettings(); });
     m_MenuItems.emplace_back("Renderer", [this]() { DrawRendererSettings(); });
 }
@@ -36,11 +31,12 @@ void MenuBarGuiLayer::DrawGui()
 
 void MenuBarGuiLayer::DrawSerializationSettings()
 {
-    std::string message;
+    auto& selectedTransform = m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform;
 
-    std::unique_ptr<AbstractVisitor> visitor = std::make_unique<UpdateTransformVisitor>();
+    auto canUndo = selectedTransform.CanUndo();
+    auto canRedo = selectedTransform.CanRedo();
 
-    if (ImGui::MenuItem("Undo", "Ctrl+Z"))
+    if (ImGui::MenuItem("Undo", "Ctrl+Z", nullptr, canUndo))
     {
         auto undone = m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform.Undo();
         
@@ -50,13 +46,9 @@ void MenuBarGuiLayer::DrawSerializationSettings()
 
             cursor->SetPosition(m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform.Centroid());
         }
-        else
-        {
-            BuD::Audio::AudioSystem::Play(m_ErrorSoundEffect);
-        }
     }
 
-    if (ImGui::MenuItem("Redo", "Ctrl+Y"))
+    if (ImGui::MenuItem("Redo", "Ctrl+Y", nullptr, canRedo))
     {
         auto redone = m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform.Redo();
 
@@ -65,10 +57,6 @@ void MenuBarGuiLayer::DrawSerializationSettings()
             auto& cursor = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_MainCursor;
 
             cursor->SetPosition(m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform.Centroid());
-        }
-        else
-        {
-            BuD::Audio::AudioSystem::Play(m_ErrorSoundEffect);
         }
     }
 }

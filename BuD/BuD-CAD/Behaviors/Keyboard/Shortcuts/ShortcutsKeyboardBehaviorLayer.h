@@ -2,6 +2,8 @@
 
 #include <Behaviors/Keyboard/BaseKeyboardBehaviorLayer.h>
 
+#include <AudioSystem.h>
+
 class ShortcutsKeyboardBehaviorLayer : public BaseKeyboardBehaviorLayer
 {
 public:
@@ -15,4 +17,5 @@ protected:
 	virtual void Redo();
 
 	std::unordered_map<BuD::KeyboardKeys, bool> m_SystemKeysPressed;
+	std::shared_ptr<BuD::Audio::SoundEffect> m_ErrorSoundEffect;
 };

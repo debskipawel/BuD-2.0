@@ -16,6 +16,9 @@ public:
 
 	virtual dxm::Vector3 Centroid() const;
 
+	virtual bool CanUndo();
+	virtual bool CanRedo();
+
 	virtual bool Undo();
 	virtual bool Redo();
 

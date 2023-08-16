@@ -5,6 +5,11 @@
 ShortcutsKeyboardBehaviorLayer::ShortcutsKeyboardBehaviorLayer(MainDataLayer& dataLayer)
 	: BaseKeyboardBehaviorLayer(dataLayer)
 {
+	m_ErrorSoundEffect = BuD::Audio::AudioSystem::Load("./Resources/Sounds/powiadomienie.mp3");
+
+	auto defaultAudioDevice = BuD::Audio::AudioSystem::DefaultAudioDevice();
+	BuD::Audio::AudioSystem::SetActiveDevice(defaultAudioDevice);
+
 	m_SystemKeysPressed =
 	{
 		{ BuD::KeyboardKeys::Control, false },
@@ -55,6 +60,10 @@ void ShortcutsKeyboardBehaviorLayer::Undo()
 
 		cursor->SetPosition(m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform.Centroid());
 	}
+	else
+	{
+		BuD::Audio::AudioSystem::Play(m_ErrorSoundEffect);
+	}
 }
 
 void ShortcutsKeyboardBehaviorLayer::Redo()
@@ -66,5 +75,9 @@ void ShortcutsKeyboardBehaviorLayer::Redo()
 		auto& cursor = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_MainCursor;
 
 		cursor->SetPosition(m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform.Centroid());
+	}
+	else
+	{
+		BuD::Audio::AudioSystem::Play(m_ErrorSoundEffect);
 	}
 }
