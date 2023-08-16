@@ -2,6 +2,8 @@
 
 #include <imgui.h>
 
+#include <Visitors/PointBased/PointAddedVisitor.h>
+
 ObjectCreationGuiLayer::ObjectCreationGuiLayer(MainDataLayer& dataLayer)
 	: BaseGuiLayer(dataLayer)
 {
@@ -55,5 +57,16 @@ void ObjectCreationGuiLayer::CreatePoint()
 	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
 	auto position = scene.m_MainCursor->GetPosition();
 
-	scene.CreatePoint(position);
+	auto object = scene.CreatePoint(position);
+
+	if (m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected.ValidatedForAddingControlPoint())
+	{
+		auto first = m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected.First();
+
+		auto objectShared = object.lock();
+		auto point = std::dynamic_pointer_cast<Point>(objectShared);
+
+		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<PointAddedVisitor>(m_MainDataLayer, point);
+		visitor->Visit(first);
+	}
 }

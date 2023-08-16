@@ -186,6 +186,12 @@
     <ClInclude Include="Behaviors\Keyboard\Shortcuts\ShortcutsKeyboardBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Visitors\Validation\CanAddControlPointValidationVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Visitors\PointBased\PointAddedVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -339,6 +345,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Behaviors\Keyboard\Shortcuts\ShortcutsKeyboardBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Visitors\Validation\CanAddControlPointValidationVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Visitors\PointBased\PointAddedVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -37,7 +37,7 @@ void AppStateGuiLayer::DrawGui()
 			if (ImGui::ImageButton(icon.SRV(), { 32, 32 }, { 0, 0 }, { 1, 1 }, -1, color))
 			{
 				const auto& scene = sceneCAD.m_Scene;
-				const auto& cursor = sceneCAD.m_MainCursor;
+				const auto& cursor = sceneCAD.m_CentroidCursor;
 				
 				cursor->SetAppState(state);
 				m_MainDataLayer.m_AppStateDataLayer.SetAppState(state);

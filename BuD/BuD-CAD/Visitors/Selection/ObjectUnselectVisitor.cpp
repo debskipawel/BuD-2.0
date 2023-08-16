@@ -74,4 +74,6 @@ void ObjectUnselectVisitor::UnselectForTransform(std::weak_ptr<SceneObjectCAD> o
 	}
 
 	selectGroup.Unselect(objectShared->Id());
+
+	SetCursorToCentroid();
 }

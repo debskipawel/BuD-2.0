@@ -210,8 +210,6 @@ std::shared_ptr<TransformAction> TransformSelectionSystem::CreateAction()
 {
 	auto action = std::make_shared<TransformAction>();
 
-	m_Centroid = dxm::Vector3::Zero;
-
 	for (auto& [id, object] : m_SelectedObjects)
 	{
 		auto objectShared = object.lock();
@@ -226,21 +224,12 @@ std::shared_ptr<TransformAction> TransformSelectionSystem::CreateAction()
 
 		if (initialTransform != targetTransform)
 		{
-			m_Centroid += targetTransform.m_Position;
-
 			action->m_TransformedObjects.emplace(id, object);
 			action->m_OriginalTransforms.emplace(id, initialTransform);
 			action->m_TargetTransforms.emplace(id, targetTransform);
 
 			m_InitialTransforms[id] = targetTransform;
 		}
-	}
-
-	auto selectedCount = Count();
-
-	if (selectedCount)
-	{
-		m_Centroid /= selectedCount;
 	}
 
 	m_GroupTransform = TransformComponent::IDENTITY;
@@ -250,7 +239,7 @@ std::shared_ptr<TransformAction> TransformSelectionSystem::CreateAction()
 
 void TransformSelectionSystem::UpdateCentroid()
 {
-	m_Centroid = dxm::Vector3::Zero;
+	auto centroid = dxm::Vector3::Zero;
 
 	for (auto& [id, object] : m_SelectedObjects)
 	{
@@ -263,13 +252,10 @@ void TransformSelectionSystem::UpdateCentroid()
 
 		auto& targetTransform = objectShared->m_Transform;
 
-		m_Centroid += targetTransform.m_Position;
+		centroid += targetTransform.m_Position;
 	}
 
 	auto selectedCount = Count();
 
-	if (selectedCount)
-	{
-		m_Centroid /= selectedCount;
-	}
+	m_Centroid = selectedCount ? centroid / selectedCount : dxm::Vector3(NAN, NAN, NAN);
 }

@@ -25,8 +25,8 @@ void AppStateKeyboardBehaviorLayer::HandleAppStateChange(BuD::KeyboardKeys key)
 	{
 		auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
 
-		auto& cursor = scene.m_MainCursor;
-		cursor->SetAppState(result->second);
+		auto& centroidCursor = scene.m_CentroidCursor;
+		centroidCursor->SetAppState(result->second);
 
 		m_MainDataLayer.m_AppStateDataLayer.SetAppState(result->second);
 	}

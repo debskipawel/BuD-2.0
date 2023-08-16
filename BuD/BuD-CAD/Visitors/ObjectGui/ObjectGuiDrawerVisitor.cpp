@@ -22,8 +22,12 @@ void ObjectGuiDrawerVisitor::Visit(Torus& torus)
 	if (DrawGuiForTransform(torus.m_Transform))
 	{
 		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<UpdateTransformVisitor>();
-
 		visitor->Visit(m_Caller);
+
+		auto centroid = m_SceneDataLayer.m_SelectedForTransform.Centroid();
+
+		auto& cursor = m_SceneDataLayer.m_SceneCAD.m_CentroidCursor;
+		cursor->SetPosition(centroid);
 	}
 
 	ImGui::Separator();
@@ -85,7 +89,7 @@ void ObjectGuiDrawerVisitor::DrawGuiForSelectedTransform()
 	{
 		auto centroid = selectedForTransform.Centroid();
 
-		auto& cursor = m_SceneDataLayer.m_SceneCAD.m_MainCursor;
+		auto& cursor = m_SceneDataLayer.m_SceneCAD.m_CentroidCursor;
 		cursor->SetPosition(centroid);
 
 		selectedForTransform.ForEachSelected(

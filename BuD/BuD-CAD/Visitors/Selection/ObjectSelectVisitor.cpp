@@ -12,8 +12,6 @@ void ObjectSelectVisitor::Visit(Torus& torus)
 	SelectManually(m_Caller);
 	SelectForTransform(m_Caller);
 
-	SetCursorToCentroid();
-
 	torus.m_InstanceData.m_Color = Torus::SELECTED_COLOR;
 }
 
@@ -21,8 +19,6 @@ void ObjectSelectVisitor::Visit(Point& point)
 {
 	SelectManually(m_Caller);
 	SelectForTransform(m_Caller);
-
-	SetCursorToCentroid();
 
 	point.m_InstanceData.m_Color = Point::SELECTED_COLOR;
 }
@@ -52,11 +48,6 @@ void ObjectSelectVisitor::Visit(BezierCurveC0& curve)
 			SelectForTransform(controlPoint);
 		}
 	}
-
-	if (curve.m_ControlPoints.size())
-	{
-		SetCursorToCentroid();
-	}
 }
 
 void ObjectSelectVisitor::SelectManually(std::weak_ptr<SceneObjectCAD> object)
@@ -83,4 +74,6 @@ void ObjectSelectVisitor::SelectForTransform(std::weak_ptr<SceneObjectCAD> objec
 	}
 
 	selectGroup.Select(object);
+
+	SetCursorToCentroid();
 }

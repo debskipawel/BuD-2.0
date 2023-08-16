@@ -118,7 +118,7 @@ void AxisLockKeyboardBehaviorLayer::SetAxisLock(AxisLock axisLock)
 	appState.SetAxisLock(axisLock);
 
 	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
-	auto& cursor = scene.m_MainCursor;
+	auto& centroidCursor = scene.m_CentroidCursor;
 
-	cursor->SetAxisLock(axisLock);
+	centroidCursor->SetAxisLock(axisLock);
 }

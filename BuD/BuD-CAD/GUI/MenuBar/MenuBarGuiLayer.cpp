@@ -42,7 +42,7 @@ void MenuBarGuiLayer::DrawSerializationSettings()
         
         if (undone)
         {
-            auto& cursor = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_MainCursor;
+            auto& cursor = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_CentroidCursor;
 
             cursor->SetPosition(m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform.Centroid());
         }
@@ -54,7 +54,7 @@ void MenuBarGuiLayer::DrawSerializationSettings()
 
         if (redone)
         {
-            auto& cursor = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_MainCursor;
+            auto& cursor = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_CentroidCursor;
 
             cursor->SetPosition(m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform.Centroid());
         }

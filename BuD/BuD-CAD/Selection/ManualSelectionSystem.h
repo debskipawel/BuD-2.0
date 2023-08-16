@@ -13,7 +13,9 @@ public:
 	std::shared_ptr<SceneObjectCAD> First();
 
 	inline virtual bool ValidatedForControlPoints() const { return m_ValidatedForControlPoints; }
+	inline virtual bool ValidatedForAddingControlPoint() const { return m_ValidatedForAddingControlPoint; }
 
 protected:
 	bool m_ValidatedForControlPoints;
+	bool m_ValidatedForAddingControlPoint;
 };

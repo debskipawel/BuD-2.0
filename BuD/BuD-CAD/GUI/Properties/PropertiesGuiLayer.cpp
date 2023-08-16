@@ -70,7 +70,7 @@ void PropertiesGuiLayer::DrawGuiForSelectedTransform()
 	{
 		auto centroid = selectedForTransform.Centroid();
 
-		auto& cursor = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_MainCursor;
+		auto& cursor = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_CentroidCursor;
 		cursor->SetPosition(centroid);
 
 		selectedForTransform.ForEachSelected(

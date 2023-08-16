@@ -21,6 +21,7 @@ public:
 	std::weak_ptr<SceneObjectCAD> CreateBezierCurveC0(std::vector<std::weak_ptr<Point>> controlPoints);
 
 	std::shared_ptr<Cursor> m_MainCursor;
+	std::shared_ptr<Cursor> m_CentroidCursor;
 
 	std::map<uint32_t, std::shared_ptr<SceneObjectCAD>> m_ObjectList;
 
