@@ -176,6 +176,8 @@ public:
 					}
 
 					ImGui::Text(text.c_str());
+
+					return false;
 				},
 				[](BuD::Profiler::ScopeNode* node, unsigned int recursionLevel, unsigned int childId, unsigned int selfId)
 				{

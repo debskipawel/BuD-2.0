@@ -35,7 +35,7 @@ Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, float outerRadius, float 
 	auto meshLoader = BuD::MeshLoader();
 
 	auto pointMesh = meshLoader.LoadPrimitiveMesh(
-		BuD::MeshPrimitiveType::POINT,
+		BuD::MeshPrimitiveType::POINT_TESSELLATION,
 		{
 			{ "INS_MODEL_X", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 			{ "INS_MODEL_Y", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 4 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1},

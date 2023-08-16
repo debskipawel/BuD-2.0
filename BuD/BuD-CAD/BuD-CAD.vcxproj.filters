@@ -371,5 +371,7 @@
     <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_hs.hlsl" />
     <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_ds.hlsl" />
     <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_border_gs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_border_ps.hlsl" />
   </ItemGroup>
 </Project>

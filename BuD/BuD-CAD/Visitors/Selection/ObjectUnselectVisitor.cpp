@@ -27,6 +27,8 @@ void ObjectUnselectVisitor::Visit(BezierCurveC0& curve)
 {
 	UnselectManually(m_Caller);
 
+	curve.RenderBorder(false);
+
 	curve.m_Color = BezierCurveC0::UNSELECTED_COLOR;
 
 	for (auto& segment : curve.m_InstanceData.m_Segments)

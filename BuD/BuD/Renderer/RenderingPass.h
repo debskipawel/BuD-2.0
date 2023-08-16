@@ -22,6 +22,8 @@ namespace BuD
 
 		std::optional<InstanceComponent> m_Instancing;
 
+		bool m_ShouldSkip = false;
+
 	public:
 		bool operator==(const RenderingPass& other) const;
 		bool operator!=(const RenderingPass& other) const;

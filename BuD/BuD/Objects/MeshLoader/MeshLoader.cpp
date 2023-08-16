@@ -139,8 +139,9 @@ namespace BuD
 		case BuD::MeshPrimitiveType::CUBE:
 			primitiveLoader = std::make_unique<Internal::CubeMeshPrimitiveLoader>();
 			break;
-		case BuD::MeshPrimitiveType::POINT:
-			primitiveLoader = std::make_unique<Internal::PointMeshPrimitiveLoader>();
+		case BuD::MeshPrimitiveType::POINT_TESSELLATION:
+		case BuD::MeshPrimitiveType::POINT_STANDARD:
+			primitiveLoader = std::make_unique<Internal::PointMeshPrimitiveLoader>(meshType);
 		default:
 			break;
 		}
