@@ -11,4 +11,5 @@ public:
 	void Visit(Point& point);
 
 	void Visit(BezierCurveC0& curve);
+	void Visit(BezierCurveC2& curve);
 };

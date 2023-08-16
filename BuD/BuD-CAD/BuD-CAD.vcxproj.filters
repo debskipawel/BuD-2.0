@@ -192,6 +192,12 @@
     <ClInclude Include="Visitors\PointBased\PointAddedVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\CAD\PointBased\Curve\BaseCubicBezierCurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -353,6 +359,12 @@
     <ClCompile Include="Visitors\PointBased\PointAddedVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\CAD\PointBased\Curve\BezierCurveC2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\CAD\PointBased\Curve\BaseCubicBezierCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Torus\torus_instanced_vs.hlsl" />
@@ -373,5 +385,13 @@
     <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_border_gs.hlsl" />
     <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_border_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_ds.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_hs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_border_bspline_gs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_border_bernstein_gs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_border_bernstein_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_border_bspline_ps.hlsl" />
   </ItemGroup>
 </Project>

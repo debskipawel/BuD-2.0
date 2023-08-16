@@ -59,8 +59,12 @@ void ObjectGuiDrawerVisitor::Visit(Point& point)
 	if (position != transform.m_Position)
 	{
 		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<UpdateTransformVisitor>();
-
 		visitor->Visit(m_Caller);
+
+		auto centroid = m_SceneDataLayer.m_SelectedForTransform.Centroid();
+
+		auto& cursor = m_SceneDataLayer.m_SceneCAD.m_CentroidCursor;
+		cursor->SetPosition(centroid);
 	}
 }
 
@@ -74,10 +78,26 @@ void ObjectGuiDrawerVisitor::Visit(BezierCurveC0& curve)
 
 	ImGui::Separator();
 
-	auto borderOn = curve.RenderBorder();
+	auto borderOn = curve.ShouldRenderControlPointBorder();
 	ImGui::Checkbox("Toggle border", &borderOn);
 
-	curve.RenderBorder(borderOn);
+	curve.RenderControlPointBorder(borderOn);
+}
+
+void ObjectGuiDrawerVisitor::Visit(BezierCurveC2& curve)
+{
+	DrawGuiForSelectedTransform();
+
+	ImGui::Separator();
+
+	DrawGuiForTag(curve);
+
+	ImGui::Separator();
+
+	auto borderOn = curve.ShouldRenderControlPointBorder();
+	ImGui::Checkbox("Toggle border", &borderOn);
+
+	curve.RenderControlPointBorder(borderOn);
 }
 
 void ObjectGuiDrawerVisitor::DrawGuiForSelectedTransform()

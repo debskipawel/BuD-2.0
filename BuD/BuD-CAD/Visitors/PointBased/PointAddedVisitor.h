@@ -10,6 +10,7 @@ public:
 	PointAddedVisitor(MainDataLayer& dataLayer, std::weak_ptr<Point> pointAdded);
 
 	virtual void Visit(BezierCurveC0& curve);
+	virtual void Visit(BezierCurveC2& curve);
 
 protected:
 	MainDataLayer& m_MainDataLayer;

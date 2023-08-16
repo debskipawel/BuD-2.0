@@ -2,10 +2,10 @@
 
 #include <Objects/CAD/PointBased/Curve/BaseCubicBezierCurve.h>
 
-class BezierCurveC0 : public BaseCubicBezierCurve
+class BezierCurveC2 : public BaseCubicBezierCurve
 {
 public:
-	BezierCurveC0(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints = {});
+	BezierCurveC2(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints = {});
 
 	virtual void Accept(AbstractVisitor& visitor) override;
 

@@ -25,16 +25,33 @@ void ObjectUnselectVisitor::Visit(Point& point)
 
 void ObjectUnselectVisitor::Visit(BezierCurveC0& curve)
 {
-	UnselectManually(m_Caller);
-
-	curve.RenderBorder(false);
-
 	curve.m_Color = BezierCurveC0::UNSELECTED_COLOR;
 
 	for (auto& segment : curve.m_InstanceData.m_Segments)
 	{
 		segment.m_Color = BezierCurveC0::UNSELECTED_COLOR;
 	}
+
+	CommonUnselectCurve(curve);
+}
+
+void ObjectUnselectVisitor::Visit(BezierCurveC2& curve)
+{
+	curve.m_Color = BezierCurveC2::UNSELECTED_COLOR;
+
+	for (auto& segment : curve.m_InstanceData.m_Segments)
+	{
+		segment.m_Color = BezierCurveC2::UNSELECTED_COLOR;
+	}
+
+	CommonUnselectCurve(curve);
+}
+
+void ObjectUnselectVisitor::CommonUnselectCurve(BaseCubicBezierCurve& curve)
+{
+	UnselectManually(m_Caller);
+
+	curve.RenderControlPointBorder(false);
 
 	for (auto& controlPoint : curve.m_ControlPoints)
 	{

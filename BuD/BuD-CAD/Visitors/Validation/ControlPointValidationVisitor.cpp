@@ -14,3 +14,8 @@ void ControlPointValidationVisitor::Visit(BezierCurveC0& curve)
 {
 	m_Valid = false;
 }
+
+void ControlPointValidationVisitor::Visit(BezierCurveC2& curve)
+{
+	m_Valid = false;
+}

@@ -33,7 +33,3 @@ void UpdateTransformVisitor::Visit(Point& point)
 		}
 	}
 }
-
-void UpdateTransformVisitor::Visit(BezierCurveC0& curve)
-{
-}

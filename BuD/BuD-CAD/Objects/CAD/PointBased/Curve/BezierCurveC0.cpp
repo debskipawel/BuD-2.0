@@ -7,34 +7,15 @@
 #include <Visitors/AbstractVisitor.h>
 
 BezierCurveC0::BezierCurveC0(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints)
-	: PointBasedObjectCAD(scene, controlPoints), m_Border(false)
+	: BaseCubicBezierCurve(scene, controlPoints)
 {
 	OnPointModify();
 	m_Tag = std::format("C0 Bezier curve {}", m_SceneEntity.Id());
 
 	auto meshLoader = BuD::MeshLoader();
 
-	auto curveMesh = meshLoader.LoadPrimitiveMesh(
-		BuD::MeshPrimitiveType::POINT_TESSELLATION,
-		{
-			{ "INS_POINT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
-			{ "INS_POINT", 1, DXGI_FORMAT_R32G32B32_FLOAT, 1, 3 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1},
-			{ "INS_POINT", 2, DXGI_FORMAT_R32G32B32_FLOAT, 1, 6 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
-			{ "INS_POINT", 3, DXGI_FORMAT_R32G32B32_FLOAT, 1, 9 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
-			{ "INS_COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 12 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
-		}
-	);
-	
-	auto borderMesh = meshLoader.LoadPrimitiveMesh(
-		BuD::MeshPrimitiveType::POINT_STANDARD,
-		{
-			{ "INS_POINT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
-			{ "INS_POINT", 1, DXGI_FORMAT_R32G32B32_FLOAT, 1, 3 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1},
-			{ "INS_POINT", 2, DXGI_FORMAT_R32G32B32_FLOAT, 1, 6 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
-			{ "INS_POINT", 3, DXGI_FORMAT_R32G32B32_FLOAT, 1, 9 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
-			{ "INS_COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 12 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
-		}
-	);
+	auto curveMesh = LoadCurvePrimitiveMesh();
+	auto borderMesh = LoadBorderPrimitiveMesh();
 
 	BuD::ShaderPipeline curveShaderPipeline = {};
 	curveShaderPipeline.m_VertexShader = BuD::ShaderLoader::VSLoad("./Resources/Shaders/PointBased/BezierCurveC0/bezier_curve_c0_vs.hlsl", { sizeof(dxm::Matrix) });
@@ -47,16 +28,7 @@ BezierCurveC0::BezierCurveC0(BuD::Scene& scene, std::vector<std::weak_ptr<Point>
 	borderShaderPipeline.m_GeometryShader = BuD::ShaderLoader::GSLoad("./Resources/Shaders/PointBased/BezierCurveC0/bezier_curve_c0_border_gs.hlsl", { sizeof(dxm::Matrix) });
 	borderShaderPipeline.m_PixelShader = BuD::ShaderLoader::PSLoad("./Resources/Shaders/PointBased/BezierCurveC0/bezier_curve_c0_border_ps.hlsl");
 
-	BuD::InstanceComponent instancing;
-	instancing.m_InstanceCallback = [this]()
-	{
-		BuD::InstanceData instanceData;
-		instanceData.m_Data = (uint8_t*)m_InstanceData.m_Segments.data();
-		instanceData.m_InstancesCount = m_InstanceData.m_Segments.size();
-		instanceData.m_Size = m_InstanceData.m_Segments.size() * sizeof(BezierCurveSegmentC0);
-
-		return instanceData;
-	};
+	BuD::InstanceComponent instancing = CreateCurveInstancingComponent();
 
 	BuD::RenderingPass curveRenderingPass = {};
 	curveRenderingPass.m_Mesh = curveMesh;
@@ -78,7 +50,7 @@ BezierCurveC0::BezierCurveC0(BuD::Scene& scene, std::vector<std::weak_ptr<Point>
 	borderRenderingPass.m_Mesh = borderMesh;
 	borderRenderingPass.m_Pipeline = borderShaderPipeline;
 	borderRenderingPass.m_Instancing = instancing;
-	borderRenderingPass.m_ShouldSkip = !m_Border;
+	borderRenderingPass.m_ShouldSkip = !m_ControlPointBorder;
 	borderRenderingPass.m_PreRenderCallback = [](const BuD::RenderingPass& renderingPass, const BuD::Scene& scene)
 	{
 		auto viewMtx = scene.ActiveCamera()->ViewMatrix();
@@ -127,9 +99,9 @@ void BezierCurveC0::OnPointModify()
 	}
 }
 
-void BezierCurveC0::RenderBorder(bool borderOn)
+void BezierCurveC0::RenderControlPointBorder(bool borderOn)
 {
-	if (borderOn == m_Border)
+	if (borderOn == m_ControlPointBorder)
 	{
 		return;
 	}
@@ -138,12 +110,7 @@ void BezierCurveC0::RenderBorder(bool borderOn)
 
 	rendering.RenderingPasses[1].m_ShouldSkip = !borderOn;
 
-	m_Border = borderOn;
-}
-
-bool BezierCurveC0::RenderBorder() const
-{
-	return m_Border;
+	m_ControlPointBorder = borderOn;
 }
 
 dxm::Vector3 BezierCurveC0::SELECTED_COLOR = { 0.8f, 0.6f, 0.0f };

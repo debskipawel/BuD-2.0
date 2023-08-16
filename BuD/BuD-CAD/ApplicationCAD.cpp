@@ -31,7 +31,7 @@ ApplicationCAD::ApplicationCAD()
 		controlPoints.push_back(std::dynamic_pointer_cast<Point>(point.lock()));
 	}
 
-	m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateBezierCurveC0(controlPoints);
+	m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateBezierCurveC2(controlPoints);
 }
 
 void ApplicationCAD::OnUpdate(float deltaTime)

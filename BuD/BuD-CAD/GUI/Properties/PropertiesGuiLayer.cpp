@@ -161,8 +161,7 @@ void PropertiesGuiLayer::DrawDeleteButton()
 				}
 			});
 
-		// TODO
-		// m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateBezierCurveC2(controlPoints);
+		m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateBezierCurveC2(controlPoints);
 	}
 
 	if (ImGui::Button("Delete all selected", ImVec2(max.x - min.x, buttonHeight)))

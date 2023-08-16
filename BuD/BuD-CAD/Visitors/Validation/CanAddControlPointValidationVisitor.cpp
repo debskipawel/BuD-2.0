@@ -14,3 +14,8 @@ void CanAddControlPointValidationVisitor::Visit(BezierCurveC0& curve)
 {
 	m_Valid = true;
 }
+
+void CanAddControlPointValidationVisitor::Visit(BezierCurveC2& curve)
+{
+	m_Valid = true;
+}

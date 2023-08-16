@@ -25,14 +25,31 @@ void ObjectSelectVisitor::Visit(Point& point)
 
 void ObjectSelectVisitor::Visit(BezierCurveC0& curve)
 {
-	SelectManually(m_Caller);
-
 	curve.m_Color = BezierCurveC0::SELECTED_COLOR;
 
 	for (auto& segment : curve.m_InstanceData.m_Segments)
 	{
 		segment.m_Color = BezierCurveC0::SELECTED_COLOR;
 	}
+
+	CommonSelectCurve(curve);
+}
+
+void ObjectSelectVisitor::Visit(BezierCurveC2& curve)
+{
+	curve.m_Color = BezierCurveC2::SELECTED_COLOR;
+
+	for (auto& segment : curve.m_InstanceData.m_Segments)
+	{
+		segment.m_Color = BezierCurveC2::SELECTED_COLOR;
+	}
+
+	CommonSelectCurve(curve);
+}
+
+void ObjectSelectVisitor::CommonSelectCurve(BaseCubicBezierCurve& curve)
+{
+	SelectManually(m_Caller);
 
 	for (auto& controlPoint : curve.m_ControlPoints)
 	{

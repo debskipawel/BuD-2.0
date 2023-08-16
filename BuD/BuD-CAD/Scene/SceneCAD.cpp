@@ -4,6 +4,7 @@
 #include <Objects/CAD/Point.h>
 
 #include <Objects/CAD/PointBased/Curve/BezierCurveC0.h>
+#include <Objects/CAD/PointBased/Curve/BezierCurveC2.h>
 
 SceneCAD::SceneCAD()
 	: m_Scene(), m_ObjectList()
@@ -69,6 +70,22 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreateBezierCurveC0(std::vector<std::wea
 	}
 
 	BuD::Log::WriteInfo("Successfully created a Bezier C0 curve.");
+
+	return curve;
+}
+
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateBezierCurveC2(std::vector<std::weak_ptr<Point>> controlPoints)
+{
+	auto curve = std::make_shared<BezierCurveC2>(m_Scene, controlPoints);
+	m_ObjectList.emplace(curve->Id(), curve);
+
+	for (auto& controlPoint : controlPoints)
+	{
+		auto controlPointShared = controlPoint.lock();
+		controlPointShared->m_PointBasedObjects.push_back(curve);
+	}
+
+	BuD::Log::WriteInfo("Successfully created a Bezier C2 curve.");
 
 	return curve;
 }

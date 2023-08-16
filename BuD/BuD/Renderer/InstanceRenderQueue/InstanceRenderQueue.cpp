@@ -40,7 +40,10 @@ namespace BuD
 		{
 			auto& rawInstanceData = m_InstanceRenderingData[index];
 
-			handle(renderingPass, rawInstanceData);
+			if (rawInstanceData.Count())
+			{
+				handle(renderingPass, rawInstanceData);
+			}
 		}
 	}
 

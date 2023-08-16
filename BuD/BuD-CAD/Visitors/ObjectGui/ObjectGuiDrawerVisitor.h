@@ -12,6 +12,7 @@ public:
 	virtual void Visit(Point& point) override;
 
 	virtual void Visit(BezierCurveC0& curve) override;
+	virtual void Visit(BezierCurveC2& curve) override;
 
 protected:
 	virtual void DrawGuiForSelectedTransform();

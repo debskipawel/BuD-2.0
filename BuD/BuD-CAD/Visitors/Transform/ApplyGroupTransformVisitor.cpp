@@ -75,16 +75,3 @@ void ApplyGroupTransformVisitor::Visit(Point& point)
 		}
 	}
 }
-
-void ApplyGroupTransformVisitor::Visit(BezierCurveC0& curve)
-{
-	for (auto& point : curve.m_ControlPoints)
-	{
-		auto pointShared = point.lock();
-
-		if (pointShared)
-		{
-			Visit(*pointShared);
-		}
-	}
-}

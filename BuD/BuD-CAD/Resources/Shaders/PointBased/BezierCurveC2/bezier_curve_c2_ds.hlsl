@@ -37,6 +37,14 @@ float3 DeCastiljeau(float3 controlPoints[4], float t)
 	return lerp(d, e, t);
 }
 
+static const float4x4 bSplineToBernstein =
+{
+	1.0 / 6, 2.0 / 3, 1.0 / 6, 0.0,
+	0.0, 2.0 / 3, 1.0 / 3, 0.0,
+	0.0, 1.0 / 3, 2.0 / 3, 0.0,
+	0.0, 1.0 / 6, 2.0 / 3, 1.0 / 6
+};
+
 [domain("isoline")]
 DSOutput main(
 	HSConstantDataOutput input,
@@ -47,8 +55,12 @@ DSOutput main(
 
 	o.color = patch[0].color;
 	
+	float4x3 pointsMatrix = { patch[0].controlPoint0, patch[0].controlPoint1, patch[0].controlPoint2, patch[0].controlPoint3 };
+	
+	float4x3 pointsInBspline = mul(bSplineToBernstein, pointsMatrix);
+	
 	float u = domain.x;
-	float3 controlPoints[4] = { patch[0].controlPoint0, patch[0].controlPoint1, patch[0].controlPoint2, patch[0].controlPoint3 };
+	float3 controlPoints[4] = { pointsInBspline._11_12_13, pointsInBspline._21_22_23, pointsInBspline._31_32_33, pointsInBspline._41_42_43 };
 
 	o.worldPosition = DeCastiljeau(controlPoints, u);
 	o.position = mul(projMtx, float4(o.worldPosition, 1.0));
