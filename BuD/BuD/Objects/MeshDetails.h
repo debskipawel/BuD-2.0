@@ -15,7 +15,6 @@ namespace BuD
 	{
 	public:
 		MeshDetails();
-		MeshDetails(const MeshDetails& other);
 
 		std::string m_Name;
 
