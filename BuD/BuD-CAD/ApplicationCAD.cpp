@@ -31,7 +31,7 @@ ApplicationCAD::ApplicationCAD()
 		controlPoints.push_back(std::dynamic_pointer_cast<Point>(point.lock()));
 	}
 	// Uncomment to test loops
-	// controlPoints.push_back(std::dynamic_pointer_cast<Point>((*controlPoints.begin()).lock()));
+	controlPoints.push_back(std::dynamic_pointer_cast<Point>((*controlPoints.begin()).lock()));
 
 	m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateYukselInterpolatingCurveC2(controlPoints);
 }

@@ -63,6 +63,7 @@ void YukselInterpolatingCurveC2::OnPointModify()
 	{
 		loop = true;
 		segmentsCount = controlPointsCount;
+		controlPointsCount = m_ControlPoints.size() - 1;
 	}
 
 	m_InstanceData.m_Segments.resize(segmentsCount);
