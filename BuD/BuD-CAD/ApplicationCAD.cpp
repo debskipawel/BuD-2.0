@@ -25,13 +25,15 @@ ApplicationCAD::ApplicationCAD()
 	constexpr auto torusCount = 7;
 	for (int i = 0; i < torusCount; i++)
 	{
-		auto position = dxm::Vector3::Zero + 2 * (i - torusCount / 2) * dxm::Vector3::UnitZ + random.Next(-2.0f, 2.0f) * dxm::Vector3::UnitY;
+		auto position = dxm::Vector3::Zero + 2 * (i - torusCount / 2) * dxm::Vector3::UnitZ + random.Next(0.0f, 5.0f) * dxm::Vector3::UnitY;
 		auto point = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreatePoint(position);
 
 		controlPoints.push_back(std::dynamic_pointer_cast<Point>(point.lock()));
 	}
+	// Uncomment to test loops
+	// controlPoints.push_back(std::dynamic_pointer_cast<Point>((*controlPoints.begin()).lock()));
 
-	m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateBezierCurveC2(controlPoints);
+	m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateYukselInterpolatingCurveC2(controlPoints);
 }
 
 void ApplicationCAD::OnUpdate(float deltaTime)

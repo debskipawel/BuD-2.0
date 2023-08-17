@@ -56,6 +56,16 @@ void ObjectDeletionVisitor::Visit(BezierCurveC2& curve)
 	m_SceneDataLayer.m_SceneCAD.DeleteObject(curve);
 }
 
+void ObjectDeletionVisitor::Visit(YukselInterpolatingCurveC2& curve)
+{
+	NotifyControlPointsAboutDeletion(curve);
+
+	std::unique_ptr<AbstractVisitor> unselectVisitor = std::make_unique<ObjectUnselectVisitor>(m_SceneDataLayer);
+	unselectVisitor->Visit(m_Caller);
+
+	m_SceneDataLayer.m_SceneCAD.DeleteObject(curve);
+}
+
 void ObjectDeletionVisitor::NotifyControlPointsAboutDeletion(PointBasedObjectCAD& object)
 {
 	auto id = object.Id();

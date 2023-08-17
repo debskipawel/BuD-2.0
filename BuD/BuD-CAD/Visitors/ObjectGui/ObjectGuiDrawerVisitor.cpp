@@ -100,6 +100,15 @@ void ObjectGuiDrawerVisitor::Visit(BezierCurveC2& curve)
 	curve.RenderControlPointBorder(borderOn);
 }
 
+void ObjectGuiDrawerVisitor::Visit(YukselInterpolatingCurveC2& curve)
+{
+	DrawGuiForSelectedTransform();
+
+	ImGui::Separator();
+
+	DrawGuiForTag(curve);
+}
+
 void ObjectGuiDrawerVisitor::DrawGuiForSelectedTransform()
 {
 	auto& selectedForTransform = m_SceneDataLayer.m_SelectedForTransform;

@@ -3,7 +3,7 @@
 #include <Visitors/AbstractVisitor.h>
 
 BezierCurveC2::BezierCurveC2(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints)
-	: BaseCubicBezierCurve(scene, controlPoints)
+	: BaseCurve(scene, controlPoints)
 {
 	OnPointModify();
 	m_Tag = std::format("C2 Bezier curve {}", m_SceneEntity.Id());

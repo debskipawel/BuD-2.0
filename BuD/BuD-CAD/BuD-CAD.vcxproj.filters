@@ -195,7 +195,10 @@
     <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\PointBased\Curve\BaseCubicBezierCurve.h">
+    <ClInclude Include="Objects\CAD\PointBased\Curve\BaseCurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\CAD\PointBased\Curve\YukselInterpolatingCurveC2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -362,7 +365,10 @@
     <ClCompile Include="Objects\CAD\PointBased\Curve\BezierCurveC2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CAD\PointBased\Curve\BaseCubicBezierCurve.cpp">
+    <ClCompile Include="Objects\CAD\PointBased\Curve\BaseCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\CAD\PointBased\Curve\YukselInterpolatingCurveC2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -393,5 +399,9 @@
     <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_border_bernstein_gs.hlsl" />
     <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_border_bernstein_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_border_bspline_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\YukselCurveC2\yuksel_curve_c2_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\YukselCurveC2\yuksel_curve_c2_hs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\YukselCurveC2\yuksel_curve_c2_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\YukselCurveC2\yuksel_curve_c2_ds.hlsl" />
   </ItemGroup>
 </Project>

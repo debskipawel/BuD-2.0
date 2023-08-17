@@ -12,4 +12,5 @@ public:
 
 	void Visit(BezierCurveC0& curve);
 	void Visit(BezierCurveC2& curve);
+	void Visit(YukselInterpolatingCurveC2& curve);
 };

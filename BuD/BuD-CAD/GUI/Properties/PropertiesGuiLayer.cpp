@@ -117,9 +117,10 @@ void PropertiesGuiLayer::DrawDeleteButton()
 	auto& manuallySelected = m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected;
 
 	auto addBezierC0 = manuallySelected.Count() > 1 && manuallySelected.ValidatedForControlPoints();
+	auto addYukselC2 = manuallySelected.Count() > 1 && manuallySelected.ValidatedForControlPoints();
 	auto addBezierC2 = manuallySelected.Count() >= 4 && manuallySelected.ValidatedForControlPoints();
 
-	fullHeight += ((int)addBezierC0 + (int)addBezierC2) * buttonHeightWithSpacing;
+	fullHeight += ((int)addBezierC0 + (int)addYukselC2 + (int)addBezierC2) * buttonHeightWithSpacing;
 
 	if (max.y - fullHeight > cursorPos.y)
 	{
@@ -162,6 +163,24 @@ void PropertiesGuiLayer::DrawDeleteButton()
 			});
 
 		m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateBezierCurveC2(controlPoints);
+	}
+
+	if (addYukselC2 && ImGui::Button("Add interpolating C2 curve", ImVec2(max.x - min.x, buttonHeight)))
+	{
+		std::vector<std::weak_ptr<Point>> controlPoints;
+
+		manuallySelected.ForEachSelected(
+			[&controlPoints](std::shared_ptr<SceneObjectCAD> object)
+			{
+				auto point = std::dynamic_pointer_cast<Point>(object);
+
+				if (point)
+				{
+					controlPoints.push_back(point);
+				}
+			});
+
+		m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateYukselInterpolatingCurveC2(controlPoints);
 	}
 
 	if (ImGui::Button("Delete all selected", ImVec2(max.x - min.x, buttonHeight)))

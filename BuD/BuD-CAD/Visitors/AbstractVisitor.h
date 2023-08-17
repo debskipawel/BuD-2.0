@@ -6,6 +6,7 @@
 #include <Objects/CAD/Torus.h>
 #include <Objects/CAD/PointBased/Curve/BezierCurveC0.h>
 #include <Objects/CAD/PointBased/Curve/BezierCurveC2.h>
+#include <Objects/CAD/PointBased/Curve/YukselInterpolatingCurveC2.h>
 
 class AbstractVisitor
 {
@@ -19,6 +20,7 @@ public:
 
 	virtual void Visit(BezierCurveC0& curve) {}
 	virtual void Visit(BezierCurveC2& curve) {}
+	virtual void Visit(YukselInterpolatingCurveC2& curve) {}
 
 protected:
 	std::weak_ptr<SceneObjectCAD> m_Caller;

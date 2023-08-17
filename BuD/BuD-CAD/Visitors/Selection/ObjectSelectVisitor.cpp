@@ -47,7 +47,19 @@ void ObjectSelectVisitor::Visit(BezierCurveC2& curve)
 	CommonSelectCurve(curve);
 }
 
-void ObjectSelectVisitor::CommonSelectCurve(BaseCubicBezierCurve& curve)
+void ObjectSelectVisitor::Visit(YukselInterpolatingCurveC2& curve)
+{
+	curve.m_Color = YukselInterpolatingCurveC2::SELECTED_COLOR;
+
+	for (auto& segment : curve.m_InstanceData.m_Segments)
+	{
+		segment.m_Color = YukselInterpolatingCurveC2::SELECTED_COLOR;
+	}
+
+	CommonSelectCurve(curve);
+}
+
+void ObjectSelectVisitor::CommonSelectCurve(BaseCurve& curve)
 {
 	SelectManually(m_Caller);
 

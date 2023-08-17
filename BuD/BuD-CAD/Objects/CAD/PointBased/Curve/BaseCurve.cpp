@@ -1,16 +1,16 @@
-#include "BaseCubicBezierCurve.h"
+#include "BaseCurve.h"
 
-BaseCubicBezierCurve::BaseCubicBezierCurve(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints)
+BaseCurve::BaseCurve(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints)
 	: PointBasedObjectCAD(scene, controlPoints), m_ControlPointBorder(false)
 {
 }
 
-bool BaseCubicBezierCurve::ShouldRenderControlPointBorder() const
+bool BaseCurve::ShouldRenderControlPointBorder() const
 {
 	return m_ControlPointBorder;
 }
 
-BuD::MeshDetails&& BaseCubicBezierCurve::LoadCurvePrimitiveMesh()
+BuD::MeshDetails BaseCurve::LoadCurvePrimitiveMesh()
 {
 	auto meshLoader = BuD::MeshLoader();
 
@@ -26,7 +26,7 @@ BuD::MeshDetails&& BaseCubicBezierCurve::LoadCurvePrimitiveMesh()
 	);
 }
 
-BuD::MeshDetails&& BaseCubicBezierCurve::LoadBorderPrimitiveMesh()
+BuD::MeshDetails BaseCurve::LoadBorderPrimitiveMesh()
 {
 	auto meshLoader = BuD::MeshLoader();
 
@@ -42,7 +42,7 @@ BuD::MeshDetails&& BaseCubicBezierCurve::LoadBorderPrimitiveMesh()
 	);
 }
 
-BuD::InstanceComponent BaseCubicBezierCurve::CreateCurveInstancingComponent()
+BuD::InstanceComponent BaseCurve::CreateCurveInstancingComponent()
 {
 	return BuD::InstanceComponent
 	{

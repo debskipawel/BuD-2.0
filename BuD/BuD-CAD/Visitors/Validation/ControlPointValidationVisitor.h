@@ -13,4 +13,5 @@ public:
 
 	virtual void Visit(BezierCurveC0& curve) override;
 	virtual void Visit(BezierCurveC2& curve) override;
+	virtual void Visit(YukselInterpolatingCurveC2& curve) override;
 };

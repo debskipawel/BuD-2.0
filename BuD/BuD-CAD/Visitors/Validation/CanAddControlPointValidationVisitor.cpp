@@ -19,3 +19,8 @@ void CanAddControlPointValidationVisitor::Visit(BezierCurveC2& curve)
 {
 	m_Valid = true;
 }
+
+void CanAddControlPointValidationVisitor::Visit(YukselInterpolatingCurveC2& curve)
+{
+	m_Valid = true;
+}

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Objects/CAD/PointBased/Curve/BaseCubicBezierCurve.h>
+#include <Objects/CAD/PointBased/Curve/BaseCurve.h>
 
-class BezierCurveC2 : public BaseCubicBezierCurve
+class BezierCurveC2 : public BaseCurve
 {
 public:
 	BezierCurveC2(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints = {});

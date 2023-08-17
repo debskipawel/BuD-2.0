@@ -2,10 +2,10 @@
 
 #include <Objects/CAD/PointBased/PointBasedObjectCAD.h>
 
-class BaseCubicBezierCurve : public PointBasedObjectCAD
+class BaseCurve : public PointBasedObjectCAD
 {
 public:
-	BaseCubicBezierCurve(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints = {});
+	BaseCurve(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints = {});
 
 	virtual void RenderControlPointBorder(bool borderOn) = 0;
 	virtual bool ShouldRenderControlPointBorder() const;
@@ -24,8 +24,8 @@ public:
 	CubicBezierCurveInstanceData m_InstanceData;
 
 protected:
-	BuD::MeshDetails&& LoadCurvePrimitiveMesh();
-	BuD::MeshDetails&& LoadBorderPrimitiveMesh();
+	BuD::MeshDetails LoadCurvePrimitiveMesh();
+	BuD::MeshDetails LoadBorderPrimitiveMesh();
 
 	BuD::InstanceComponent CreateCurveInstancingComponent();
 

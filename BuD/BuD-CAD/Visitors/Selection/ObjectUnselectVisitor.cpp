@@ -47,7 +47,19 @@ void ObjectUnselectVisitor::Visit(BezierCurveC2& curve)
 	CommonUnselectCurve(curve);
 }
 
-void ObjectUnselectVisitor::CommonUnselectCurve(BaseCubicBezierCurve& curve)
+void ObjectUnselectVisitor::Visit(YukselInterpolatingCurveC2& curve)
+{
+	curve.m_Color = YukselInterpolatingCurveC2::UNSELECTED_COLOR;
+
+	for (auto& segment : curve.m_InstanceData.m_Segments)
+	{
+		segment.m_Color = YukselInterpolatingCurveC2::UNSELECTED_COLOR;
+	}
+
+	CommonUnselectCurve(curve);
+}
+
+void ObjectUnselectVisitor::CommonUnselectCurve(BaseCurve& curve)
 {
 	UnselectManually(m_Caller);
 
