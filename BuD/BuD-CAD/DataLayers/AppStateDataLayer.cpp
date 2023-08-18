@@ -12,6 +12,11 @@ void AppStateDataLayer::SetAxisLock(AxisLock axisLock)
 
 void AppStateDataLayer::Freeze()
 {
+	if (m_AppState == AppState::FROZEN)
+	{
+		return;
+	}
+
 	m_PreviousAppState = m_AppState;
 	m_AppState = AppState::FROZEN;
 }

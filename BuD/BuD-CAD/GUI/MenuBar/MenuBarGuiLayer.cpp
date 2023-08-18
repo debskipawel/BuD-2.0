@@ -5,13 +5,13 @@
 #include <Visitors/Transform/UpdateTransformVisitor.h>
 
 MenuBarGuiLayer::MenuBarGuiLayer(MainDataLayer& dataLayer)
-	: BaseGuiLayer(dataLayer)
+	: BaseGuiLayer(dataLayer), m_MultiEyeSettingsPopupOpen(false)
 {
     m_MenuItems.emplace_back("File", [this]() { DrawSerializationSettings(); });
     m_MenuItems.emplace_back("Renderer", [this]() { DrawRendererSettings(); });
 
-    m_RendereModeMenuItems.emplace_back("Anaglyph mode", BuD::RenderingMode::ANAGLYPH);
-    m_RendereModeMenuItems.emplace_back("Standard mode", BuD::RenderingMode::STANDARD);
+    m_RendererModeMenuItems.emplace_back("Standard mode", BuD::RenderingMode::STANDARD);
+    m_RendererModeMenuItems.emplace_back("Anaglyph mode", BuD::RenderingMode::ANAGLYPH);
 }
 
 void MenuBarGuiLayer::DrawGui()
@@ -30,6 +30,8 @@ void MenuBarGuiLayer::DrawGui()
 
         ImGui::EndMainMenuBar();
 	}
+
+    DrawMultiEyeSettingsPopup();
 }
 
 void MenuBarGuiLayer::DrawSerializationSettings()
@@ -70,7 +72,7 @@ void MenuBarGuiLayer::DrawRendererSettings()
 
     if (ImGui::BeginMenu("Rendering mode"))
     {
-        for (auto& rendererModeMenuItem : m_RendereModeMenuItems)
+        for (auto& rendererModeMenuItem : m_RendererModeMenuItems)
         {
             auto selected = renderingMode == rendererModeMenuItem.m_RenderingMode;
 
@@ -87,6 +89,45 @@ void MenuBarGuiLayer::DrawRendererSettings()
 
     if (ImGui::MenuItem("Multi-eye settings", nullptr, nullptr, isMultiEyeMode))
     {
+        m_MultiEyeSettingsPopupOpen = true;
+    }
+}
 
+void MenuBarGuiLayer::DrawMultiEyeSettingsPopup()
+{
+    if (m_MultiEyeSettingsPopupOpen)
+    {
+        m_MainDataLayer.m_AppStateDataLayer.Freeze();
+
+        ImGui::OpenPopup("###multi_eye_settings");
+    }
+
+    if (ImGui::BeginPopupModal("Multi-eye settings ###multi_eye_settings", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoResize))
+    {
+        auto multiEyeSettings = BuD::Renderer::GetMultiEyeSettings();
+
+        if (ImGui::DragFloat("Eye distance", &multiEyeSettings.m_EyeDistance, 0.01f)
+            || ImGui::DragFloat("Focus plane", &multiEyeSettings.m_FocusPlane, 0.25f))
+        {
+            multiEyeSettings.m_EyeDistance = max(multiEyeSettings.m_EyeDistance, 0.0f);
+            multiEyeSettings.m_FocusPlane = max(multiEyeSettings.m_FocusPlane, 0.0f);
+
+            BuD::Renderer::SetMultiEyeSettings(multiEyeSettings);
+        }
+
+        ImGui::Separator();
+
+        auto max = ImGui::GetWindowContentRegionMax();
+        auto min = ImGui::GetWindowContentRegionMin();
+
+        if (ImGui::Button("OK", { max.x - min.x, 20 }))
+        {
+            m_MultiEyeSettingsPopupOpen = false;
+            ImGui::CloseCurrentPopup();
+
+            m_MainDataLayer.m_AppStateDataLayer.Unfreeze();
+        }
+
+        ImGui::EndPopup();
     }
 }

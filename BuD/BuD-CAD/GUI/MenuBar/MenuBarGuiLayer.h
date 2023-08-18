@@ -25,6 +25,10 @@ protected:
 	virtual void DrawSerializationSettings();
 	virtual void DrawRendererSettings();
 
+	virtual void DrawMultiEyeSettingsPopup();
+
 	std::vector<MainMenuItem> m_MenuItems;
-	std::vector<RendererModeMenuItem> m_RendereModeMenuItems;
+	std::vector<RendererModeMenuItem> m_RendererModeMenuItems;
+
+	bool m_MultiEyeSettingsPopupOpen;
 };
