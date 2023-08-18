@@ -207,6 +207,9 @@
     <ClInclude Include="Visitors\PointBased\BasePointActionVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BaseBezierPatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -383,6 +386,9 @@
     <ClCompile Include="Visitors\PointBased\BasePointActionVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BaseBezierPatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Torus\torus_instanced_vs.hlsl" />
@@ -415,5 +421,9 @@
     <FxCompile Include="Resources\Shaders\PointBased\YukselCurveC2\yuksel_curve_c2_hs.hlsl" />
     <FxCompile Include="Resources\Shaders\PointBased\YukselCurveC2\yuksel_curve_c2_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\PointBased\YukselCurveC2\yuksel_curve_c2_ds.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\bezier_patch_c0_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\bezier_patch_c0_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\bezier_patch_c0_hs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\bezier_patch_c0_ds.hlsl" />
   </ItemGroup>
 </Project>
