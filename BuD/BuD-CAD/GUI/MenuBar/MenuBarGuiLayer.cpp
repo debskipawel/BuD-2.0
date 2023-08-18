@@ -9,6 +9,9 @@ MenuBarGuiLayer::MenuBarGuiLayer(MainDataLayer& dataLayer)
 {
     m_MenuItems.emplace_back("File", [this]() { DrawSerializationSettings(); });
     m_MenuItems.emplace_back("Renderer", [this]() { DrawRendererSettings(); });
+
+    m_RendereModeMenuItems.emplace_back("Anaglyph mode", BuD::RenderingMode::ANAGLYPH);
+    m_RendereModeMenuItems.emplace_back("Standard mode", BuD::RenderingMode::STANDARD);
 }
 
 void MenuBarGuiLayer::DrawGui()
@@ -63,4 +66,27 @@ void MenuBarGuiLayer::DrawSerializationSettings()
 
 void MenuBarGuiLayer::DrawRendererSettings()
 {
+    auto renderingMode = BuD::Renderer::GetRenderingMode();
+
+    if (ImGui::BeginMenu("Rendering mode"))
+    {
+        for (auto& rendererModeMenuItem : m_RendereModeMenuItems)
+        {
+            auto selected = renderingMode == rendererModeMenuItem.m_RenderingMode;
+
+            if (ImGui::MenuItem(rendererModeMenuItem.m_Label.c_str(), nullptr, &selected))
+            {
+                BuD::Renderer::SetRenderingMode(rendererModeMenuItem.m_RenderingMode);
+            }
+        }
+
+        ImGui::EndMenu();
+    }
+
+    auto isRenderingModeAnaglyph = renderingMode == BuD::RenderingMode::ANAGLYPH;
+
+    if (ImGui::MenuItem("Anaglyph settings", nullptr, nullptr, isRenderingModeAnaglyph))
+    {
+
+    }
 }

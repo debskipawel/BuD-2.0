@@ -111,13 +111,13 @@ namespace BuD
 	{
 		auto& context = m_Device->Context();
 
-		ID3D11ShaderResourceView* clean[] = { nullptr };
+		ID3D11ShaderResourceView* clean[] = { nullptr, nullptr };
 
-		context->VSSetShaderResources(0, 1, clean);
-		context->GSSetShaderResources(0, 1, clean);
-		context->HSSetShaderResources(0, 1, clean);
-		context->DSSetShaderResources(0, 1, clean);
-		context->PSSetShaderResources(0, 1, clean);
+		context->VSSetShaderResources(0, 2, clean);
+		context->GSSetShaderResources(0, 2, clean);
+		context->HSSetShaderResources(0, 2, clean);
+		context->DSSetShaderResources(0, 2, clean);
+		context->PSSetShaderResources(0, 2, clean);
 
 		context->GSSetShader(nullptr, nullptr, 0);
 		context->HSSetShader(nullptr, nullptr, 0);

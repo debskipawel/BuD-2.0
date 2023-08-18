@@ -182,6 +182,7 @@
     <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\QuadMeshPrimitiveLoader.cpp" />
     <ClCompile Include="Profiler\Profiler.cpp" />
     <ClCompile Include="Renderer\GraphicsDevice.cpp" />
+    <ClCompile Include="Renderer\Implementations\AnaglyphRendererImpl.cpp" />
     <ClCompile Include="Renderer\Implementations\BaseRendererImpl.cpp" />
     <ClCompile Include="Renderer\Implementations\StandardRendererImpl.cpp" />
     <ClCompile Include="Renderer\InstanceData.cpp" />
@@ -248,6 +249,9 @@
     <ClInclude Include="Objects\MeshPrimitiveType.h" />
     <ClInclude Include="Profiler\Profiler.h" />
     <ClInclude Include="Renderer\GraphicsDevice.h" />
+    <ClInclude Include="Renderer\Implementations\AnaglyphBlendingShaders.h" />
+    <ClInclude Include="Renderer\Implementations\AnaglyphRendererImpl.h" />
+    <ClInclude Include="Renderer\Implementations\AnaglyphSettings.h" />
     <ClInclude Include="Renderer\Implementations\BaseRendererImpl.h" />
     <ClInclude Include="Renderer\Implementations\RenderingMode.h" />
     <ClInclude Include="Renderer\Implementations\StandardRendererImpl.h" />

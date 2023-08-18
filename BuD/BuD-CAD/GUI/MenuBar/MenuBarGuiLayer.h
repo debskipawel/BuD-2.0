@@ -16,8 +16,15 @@ protected:
 		std::function<void()> m_Handler;
 	};
 
+	struct RendererModeMenuItem
+	{
+		std::string m_Label;
+		BuD::RenderingMode m_RenderingMode;
+	};
+
 	virtual void DrawSerializationSettings();
 	virtual void DrawRendererSettings();
 
 	std::vector<MainMenuItem> m_MenuItems;
+	std::vector<RendererModeMenuItem> m_RendereModeMenuItems;
 };

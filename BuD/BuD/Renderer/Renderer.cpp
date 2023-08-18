@@ -4,6 +4,7 @@
 #include <Utils/Log.h>
 #include <Utils/Clock.h>
 
+#include "Implementations/AnaglyphRendererImpl.h"
 #include "Implementations/StandardRendererImpl.h"
 #include "Structures/Texture2DDesc.h"
 #include "Structures/ViewportDesc.h"
@@ -15,12 +16,12 @@ namespace BuD
 		s_Device = std::make_shared<GraphicsDevice>(window);
 
 		auto standardImpl = std::make_shared<StandardRendererImpl>(s_Device);
-		//auto anaglyphImpl = nullptr;
+		auto anaglyphImpl = std::make_shared<AnaglyphRendererImpl>(s_Device);
 
 		s_RenderingImplementations.emplace(RenderingMode::STANDARD, standardImpl);
-		//s_RenderingImplementations.emplace(RenderingMode::ANAGLYPH, anaglyphImpl);
+		s_RenderingImplementations.emplace(RenderingMode::ANAGLYPH, anaglyphImpl);
 
-		s_ActiveRendererImpl = standardImpl;
+		s_ActiveRendererImpl = s_RenderingImplementations.at(s_RenderingMode);
 
 		auto width = window->Width();
 		auto height = window->Height();
@@ -83,6 +84,22 @@ namespace BuD
 		}
 
 		return result;
+	}
+
+	RenderingMode Renderer::GetRenderingMode()
+	{
+		return s_RenderingMode;
+	}
+
+	void Renderer::SetRenderingMode(RenderingMode mode)
+	{
+		if (mode == s_RenderingMode)
+		{
+			return;
+		}
+
+		s_ActiveRendererImpl = s_RenderingImplementations[mode];
+		s_RenderingMode = mode;
 	}
 
 	dxm::Matrix Renderer::ProjectionMatrix()

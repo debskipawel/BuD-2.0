@@ -168,6 +168,9 @@
     <ClCompile Include="Renderer\RasterizerDescription.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Implementations\AnaglyphRendererImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bud_pch.h">
@@ -408,6 +411,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Structures\RasterizerDesc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Implementations\AnaglyphRendererImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Implementations\AnaglyphSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Implementations\AnaglyphBlendingShaders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

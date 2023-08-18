@@ -24,6 +24,9 @@ namespace BuD
 		static void BeginTarget(int width, int height);
 		static Texture EndTarget();
 
+		static RenderingMode GetRenderingMode();
+		static void SetRenderingMode(RenderingMode mode);
+
 		static dxm::Matrix ProjectionMatrix();
 
 		static void BeginFrame();
@@ -46,6 +49,7 @@ namespace BuD
 		inline static std::shared_ptr<BaseRendererImpl> s_ActiveRendererImpl = nullptr;
 
 		inline static RendererFrameStats s_PerformanceData = {};
+		inline static RenderingMode s_RenderingMode = RenderingMode::STANDARD;
 
 		// Device
 		inline static std::shared_ptr<GraphicsDevice> s_Device = nullptr;
