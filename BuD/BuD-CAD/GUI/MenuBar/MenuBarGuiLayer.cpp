@@ -83,9 +83,9 @@ void MenuBarGuiLayer::DrawRendererSettings()
         ImGui::EndMenu();
     }
 
-    auto isRenderingModeAnaglyph = renderingMode == BuD::RenderingMode::ANAGLYPH;
+    auto isMultiEyeMode = BuD::Renderer::IsMultiEyeMode();
 
-    if (ImGui::MenuItem("Anaglyph settings", nullptr, nullptr, isRenderingModeAnaglyph))
+    if (ImGui::MenuItem("Multi-eye settings", nullptr, nullptr, isMultiEyeMode))
     {
 
     }

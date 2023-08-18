@@ -21,6 +21,8 @@ namespace BuD
 		s_RenderingImplementations.emplace(RenderingMode::STANDARD, standardImpl);
 		s_RenderingImplementations.emplace(RenderingMode::ANAGLYPH, anaglyphImpl);
 
+		s_MultiEyeRendererImplementations.insert(anaglyphImpl);
+
 		s_ActiveRendererImpl = s_RenderingImplementations.at(s_RenderingMode);
 
 		auto width = window->Width();
@@ -86,6 +88,11 @@ namespace BuD
 		return result;
 	}
 
+	bool Renderer::IsMultiEyeMode()
+	{
+		return std::dynamic_pointer_cast<MultiEyeRendererImpl>(s_ActiveRendererImpl) != std::shared_ptr<MultiEyeRendererImpl>();
+	}
+
 	RenderingMode Renderer::GetRenderingMode()
 	{
 		return s_RenderingMode;
@@ -100,6 +107,21 @@ namespace BuD
 
 		s_ActiveRendererImpl = s_RenderingImplementations[mode];
 		s_RenderingMode = mode;
+	}
+
+	MultiEyeSettings Renderer::GetMultiEyeSettings()
+	{
+		return s_MultiEyeSettings;
+	}
+
+	void Renderer::SetMultiEyeSettings(const MultiEyeSettings& settings)
+	{
+		s_MultiEyeSettings = settings;
+
+		for (auto& multiEyeRendererImplementation : s_MultiEyeRendererImplementations)
+		{
+			multiEyeRendererImplementation->SetMultiEyeSettings(settings);
+		}
 	}
 
 	dxm::Matrix Renderer::ProjectionMatrix()

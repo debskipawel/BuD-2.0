@@ -4,8 +4,9 @@
 #include "RenderTarget.h"
 #include "Texture.h"
 
-#include "Implementations/BaseRendererImpl.h"
-#include "Implementations/RenderingMode.h"
+#include <Renderer/Implementations/BaseRendererImpl.h>
+#include <Renderer/Implementations/MultiEyeRendererImpl.h>
+#include <Renderer/Implementations/RenderingMode.h>
 
 #include <Scene/Scene.h>
 #include <Utils/Timepoint.h>
@@ -24,8 +25,13 @@ namespace BuD
 		static void BeginTarget(int width, int height);
 		static Texture EndTarget();
 
+		static bool IsMultiEyeMode();
+
 		static RenderingMode GetRenderingMode();
 		static void SetRenderingMode(RenderingMode mode);
+
+		static MultiEyeSettings GetMultiEyeSettings();
+		static void SetMultiEyeSettings(const MultiEyeSettings& settings);
 
 		static dxm::Matrix ProjectionMatrix();
 
@@ -46,10 +52,13 @@ namespace BuD
 		static void RenderToExternalTarget();
 
 		inline static std::map<RenderingMode, std::shared_ptr<BaseRendererImpl>> s_RenderingImplementations = {};
+		inline static std::set<std::shared_ptr<MultiEyeRendererImpl>> s_MultiEyeRendererImplementations = {};
+		
 		inline static std::shared_ptr<BaseRendererImpl> s_ActiveRendererImpl = nullptr;
 
 		inline static RendererFrameStats s_PerformanceData = {};
 		inline static RenderingMode s_RenderingMode = RenderingMode::STANDARD;
+		inline static MultiEyeSettings s_MultiEyeSettings = {};
 
 		// Device
 		inline static std::shared_ptr<GraphicsDevice> s_Device = nullptr;

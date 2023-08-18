@@ -187,6 +187,7 @@
     <ClCompile Include="Renderer\Implementations\StandardRendererImpl.cpp" />
     <ClCompile Include="Renderer\InstanceData.cpp" />
     <ClCompile Include="Renderer\InstanceRenderQueue\InstanceRenderQueue.cpp" />
+    <ClCompile Include="Renderer\Implementations\MultiEyeRendererImpl.cpp" />
     <ClCompile Include="Renderer\PixDebugLayer.cpp" />
     <ClCompile Include="Renderer\RasterizerDescription.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
@@ -248,16 +249,18 @@
     <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\QuadMeshPrimitiveLoader.h" />
     <ClInclude Include="Objects\MeshPrimitiveType.h" />
     <ClInclude Include="Profiler\Profiler.h" />
+    <ClInclude Include="Renderer\Eye.h" />
     <ClInclude Include="Renderer\GraphicsDevice.h" />
     <ClInclude Include="Renderer\Implementations\AnaglyphBlendingShaders.h" />
     <ClInclude Include="Renderer\Implementations\AnaglyphRendererImpl.h" />
-    <ClInclude Include="Renderer\Implementations\AnaglyphSettings.h" />
+    <ClInclude Include="Renderer\MultiEyeSettings.h" />
     <ClInclude Include="Renderer\Implementations\BaseRendererImpl.h" />
     <ClInclude Include="Renderer\Implementations\RenderingMode.h" />
     <ClInclude Include="Renderer\Implementations\StandardRendererImpl.h" />
     <ClInclude Include="Objects\Interfaces\IRenderable.h" />
     <ClInclude Include="Renderer\InstanceData.h" />
     <ClInclude Include="Renderer\InstanceRenderQueue\InstanceRenderQueue.h" />
+    <ClInclude Include="Renderer\Implementations\MultiEyeRendererImpl.h" />
     <ClInclude Include="Renderer\RasterizerDescription.h" />
     <ClInclude Include="Renderer\RendererFrameStats.h" />
     <ClInclude Include="Renderer\Renderer.h" />

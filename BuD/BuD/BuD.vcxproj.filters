@@ -171,6 +171,9 @@
     <ClCompile Include="Renderer\Implementations\AnaglyphRendererImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Implementations\MultiEyeRendererImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bud_pch.h">
@@ -416,10 +419,16 @@
     <ClInclude Include="Renderer\Implementations\AnaglyphRendererImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\Implementations\AnaglyphSettings.h">
+    <ClInclude Include="Renderer\MultiEyeSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Implementations\AnaglyphBlendingShaders.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Implementations\MultiEyeRendererImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Eye.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

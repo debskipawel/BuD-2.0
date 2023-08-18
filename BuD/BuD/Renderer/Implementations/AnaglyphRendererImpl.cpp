@@ -9,6 +9,7 @@
 
 #include <Renderer/Renderer.h>
 #include <Renderer/Implementations/AnaglyphBlendingShaders.h>
+#include <Renderer/Implementations/StandardRendererImpl.h>
 #include <Renderer/Structures/ViewportDesc.h>
 
 #include <d3dcompiler.h>
@@ -19,9 +20,9 @@ namespace BuD
 	constexpr float FOV = 90.0f, NEAR_PLANE = 0.01f, FAR_PLANE = 100.0f;
 
 	AnaglyphRendererImpl::AnaglyphRendererImpl(std::shared_ptr<GraphicsDevice> device)
-		: BaseRendererImpl(device), m_PreviousWidth(0), m_PreviousHeight(0)
+		: MultiEyeRendererImpl(device), m_PreviousWidth(0), m_PreviousHeight(0)
 	{
-		m_InstanceBuffer = std::make_shared<InstanceBuffer>(64, nullptr);
+		m_SingleEyeRendererImpl = std::make_unique<StandardRendererImpl>(device);
 
 		auto meshLoader = MeshLoader();
 		m_BlendMeshDetails = meshLoader.LoadPrimitiveMesh(MeshPrimitiveType::QUAD);
@@ -42,11 +43,6 @@ namespace BuD
 		samplerDesc.AddressU = samplerDesc.AddressV = samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
 
 		hr = m_Device->Device()->CreateSamplerState(&samplerDesc, m_BlendSamplerState.GetAddressOf());
-	}
-
-	dxm::Matrix AnaglyphRendererImpl::ProjectionMatrix()
-	{
-		return m_ProjectionMatricesForEyes.at(m_EyeForCurrentRendering);
 	}
 	
 	RendererFrameStats AnaglyphRendererImpl::Render(Scene& scene, const RenderTargetInfo& renderTarget)
@@ -69,36 +65,6 @@ namespace BuD
 		frameStats.m_InstancesDrawn = m_InstancesDrawnThisFrame;
 		
 		return frameStats;
-	}
-	
-	void AnaglyphRendererImpl::UpdateProjectionMatrices(float aspectRatio, float fov, float nearPlane, float farPlane)
-	{
-		float focusPlane = m_AnaglyphSettings.m_FocusPlane;
-		float eyeDistance = m_AnaglyphSettings.m_EyeDistance;
-		float halfEyeDistance = eyeDistance * 0.5f;
-
-		float top = focusPlane * tanf(DirectX::XMConvertToRadians(fov * 0.5f));
-		float bottom = focusPlane * tanf(-DirectX::XMConvertToRadians(fov * 0.5f));
-		
-		float width = (top - bottom) * aspectRatio;
-
-		float L = -0.5f * width;
-		float R = 0.5f * width;
-
-		float leftEyeL = (L + halfEyeDistance) * nearPlane / focusPlane;
-		float leftEyeR = (R + halfEyeDistance) * nearPlane / focusPlane;
-
-		float rightEyeL = (L - halfEyeDistance) * nearPlane / focusPlane;
-		float rightEyeR = (R - halfEyeDistance) * nearPlane / focusPlane;
-
-		top = top * nearPlane / focusPlane;
-		bottom = bottom * nearPlane / focusPlane;
-
-		m_ProjectionMatricesForEyes[Eye::LEFT] = dxm::Matrix::CreateTranslation({ halfEyeDistance, 0.0f, 0.0f })
-			* dxm::Matrix::CreatePerspectiveOffCenter(leftEyeL, leftEyeR, bottom, top, nearPlane, farPlane);
-
-		m_ProjectionMatricesForEyes[Eye::RIGHT] = dxm::Matrix::CreateTranslation({ -halfEyeDistance, 0.0f, 0.0f })
-			* dxm::Matrix::CreatePerspectiveOffCenter(rightEyeL, rightEyeR, bottom, top, nearPlane, farPlane);
 	}
 
 	void AnaglyphRendererImpl::UpdateEyeRenderTargets(unsigned int width, unsigned int height)
@@ -126,70 +92,15 @@ namespace BuD
 			return;
 		}
 
-		auto camera = scene.ActiveCamera();
-		auto frustum = Frustum(
-			camera->EyePosition(), camera->Front(), camera->Right(),
-			static_cast<float>(renderTarget->Width) / static_cast<float>(renderTarget->Height),
-			FOV, NEAR_PLANE, FAR_PLANE);
-
 		auto& context = m_Device->Context();
-
-		ViewportDesc viewportDesc{ renderTarget->Width, renderTarget->Height };
-
-		context->OMSetRenderTargets(1, renderTarget->RenderTargetView.GetAddressOf(), renderTarget->DepthStencilView.Get());
-		context->RSSetViewports(1, &viewportDesc);
 
 		float cleanColor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 		context->ClearRenderTargetView(renderTarget->RenderTargetView.Get(), cleanColor);
 		context->ClearDepthStencilView(renderTarget->DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-		for (auto [entity, renderable] : scene.GetAllEntitiesWith<IRenderable>())
-		{
-			auto id = entity;
-			SceneEntity entity(scene, id);
+		RenderTargetInfo renderTargetInfo{ renderTarget->RenderTargetView, renderTarget->DepthStencilView, renderTarget->Width, renderTarget->Height };
 
-			for (auto& renderingPass : renderable.RenderingPasses)
-			{
-				if (renderingPass.m_ShouldSkip)
-				{
-					continue;
-				}
-
-				auto& instancing = renderingPass.m_Instancing;
-
-				auto& pipeline = renderingPass.m_Pipeline;
-				auto& mesh = renderingPass.m_Mesh;
-
-				if (!mesh.m_VertexBuffer || !mesh.m_IndexBuffer || !pipeline.m_VertexShader || !pipeline.m_PixelShader)
-				{
-					continue;
-				}
-
-				auto& aabbCallback = mesh.m_BoundingBoxCallback;
-
-				if (mesh.m_BoundingBoxCallback.has_value())
-				{
-					auto& aabbCallback = mesh.m_BoundingBoxCallback.value();
-					auto aabb = aabbCallback();
-
-					if (!frustum.IsInside(aabb))
-					{
-						continue;
-					}
-				}
-
-				if (instancing.has_value())
-				{
-					m_InstanceRenderQueue.Add(renderingPass);
-					continue;
-				}
-
-				RenderIndividually(renderingPass, scene);
-				m_DrawCallsThisFrame++;
-			}
-		}
-
-		DeployInstancedQueue(scene);
+		m_SingleEyeRendererImpl->Render(scene, renderTargetInfo);
 	}
 
 	void AnaglyphRendererImpl::BlendEyesToSingle(const RenderTargetInfo& renderTarget)
@@ -240,48 +151,5 @@ namespace BuD
 		m_DrawCallsThisFrame++;
 
 		CleanAfterDrawing();
-	}
-
-	void AnaglyphRendererImpl::DeployInstancedQueue(Scene& scene)
-	{
-		m_InstanceRenderQueue.ForEach(
-			[this, &scene](const RenderingPass& renderingPass, const InstanceRenderQueue::InstanceRawDataBuffer& rawInstanceData)
-			{
-				auto& pipeline = renderingPass.m_Pipeline;
-				auto& mesh = renderingPass.m_Mesh;
-
-				auto& vb = mesh.m_VertexBuffer;
-				auto& ib = mesh.m_IndexBuffer;
-
-				auto& il = mesh.m_InputLayout;
-
-				m_InstanceBuffer->Update(rawInstanceData.Data(), rawInstanceData.Size());
-
-				renderingPass.m_PreRenderCallback(renderingPass, scene);
-
-				ID3D11Buffer* vertexBuffers[] = { vb->Get(), m_InstanceBuffer->Get() };
-				UINT strides[] = { vb->Stride(), rawInstanceData.Size() / rawInstanceData.Count() };
-				UINT offsets[] = { vb->Offset(), 0 };
-
-				auto& context = m_Device->Context();
-
-				context->IASetInputLayout(il->Layout());
-				context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
-				context->IASetIndexBuffer(ib->Get(), ib->Format(), 0);
-				context->IASetPrimitiveTopology(ib->Topology());
-
-				SetupRasterizerState(renderingPass.m_RasterizerDescription);
-				SetupShaderPipeline(renderingPass.m_Pipeline);
-
-				context->DrawIndexedInstanced(ib->Count(), rawInstanceData.Count(), 0, 0, 0);
-
-				m_DrawCallsThisFrame++;
-				m_InstancesDrawnThisFrame += rawInstanceData.Count();
-
-				CleanAfterDrawing();
-			}
-		);
-
-		m_InstanceRenderQueue.Clear();
 	}
 }
