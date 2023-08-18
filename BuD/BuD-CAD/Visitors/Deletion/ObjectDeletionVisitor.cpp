@@ -2,6 +2,7 @@
 
 #include <Objects/CAD/PointBased/PointBasedObjectCAD.h>
 #include <Visitors/Selection/ObjectUnselectVisitor.h>
+#include <Visitors/PointBased/PointRemovedVisitor.h>
 
 ObjectDeletionVisitor::ObjectDeletionVisitor(SceneDataLayer& dataLayer)
 	: m_SceneDataLayer(dataLayer)
@@ -18,6 +19,9 @@ void ObjectDeletionVisitor::Visit(Torus& torus)
 
 void ObjectDeletionVisitor::Visit(Point& point)
 {
+	auto pointShared = std::dynamic_pointer_cast<Point>(m_Caller.lock());
+	std::unique_ptr<AbstractVisitor> pointDeletionVisitor = std::make_unique<PointRemovedVisitor>(m_SceneDataLayer, pointShared);
+
 	for (auto& object : point.m_PointBasedObjects)
 	{
 		auto objectShared = object.lock();
@@ -27,7 +31,7 @@ void ObjectDeletionVisitor::Visit(Point& point)
 			continue;
 		}
 
-		objectShared->OnPointRemove(point.Id());
+		pointDeletionVisitor->Visit(objectShared);
 	}
 
 	std::unique_ptr<AbstractVisitor> unselectVisitor = std::make_unique<ObjectUnselectVisitor>(m_SceneDataLayer);

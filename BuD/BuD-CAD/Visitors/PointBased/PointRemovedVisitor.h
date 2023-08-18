@@ -2,15 +2,15 @@
 
 #include <Visitors/PointBased/BasePointActionVisitor.h>
 
-class PointAddedVisitor : public BasePointActionVisitor
+class PointRemovedVisitor : public BasePointActionVisitor
 {
 public:
-	PointAddedVisitor(SceneDataLayer& dataLayer, std::weak_ptr<Point> pointAdded);
+	PointRemovedVisitor(SceneDataLayer& dataLayer, std::weak_ptr<Point> pointAdded);
 
 	virtual void Visit(BezierCurveC0& curve);
 	virtual void Visit(BezierCurveC2& curve);
 	virtual void Visit(YukselInterpolatingCurveC2& curve);
 
 protected:
-	virtual void CommonHandlePointAddition(BaseCurve& curve);
+	virtual void CommonHandlePointDeletion(BaseCurve& curve);
 };

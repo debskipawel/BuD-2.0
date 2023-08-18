@@ -66,7 +66,7 @@ void ObjectCreationGuiLayer::CreatePoint()
 		auto objectShared = object.lock();
 		auto point = std::dynamic_pointer_cast<Point>(objectShared);
 
-		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<PointAddedVisitor>(m_MainDataLayer, point);
+		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<PointAddedVisitor>(m_MainDataLayer.m_SceneDataLayer, point);
 		visitor->Visit(first);
 	}
 }

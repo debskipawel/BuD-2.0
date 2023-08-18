@@ -1,60 +1,34 @@
 #include "PointAddedVisitor.h"
 
-PointAddedVisitor::PointAddedVisitor(MainDataLayer& dataLayer, std::weak_ptr<Point> pointAdded)
-	: m_MainDataLayer(dataLayer)
+PointAddedVisitor::PointAddedVisitor(SceneDataLayer& dataLayer, std::weak_ptr<Point> pointAdded)
+	: BasePointActionVisitor(dataLayer, pointAdded)
 {
-	m_PointAdded = pointAdded.lock();
-}
-
-void PointAddedVisitor::Visit(std::weak_ptr<SceneObjectCAD> object)
-{
-	if (!m_PointAdded)
-	{
-		return;
-	}
-
-	AbstractVisitor::Visit(object);
 }
 
 void PointAddedVisitor::Visit(BezierCurveC0& curve)
 {
-	curve.OnPointAdd(m_PointAdded);
-
-	auto pointBasedObject = std::dynamic_pointer_cast<PointBasedObjectCAD>(m_Caller.lock());
-
-	m_PointAdded->m_PointBasedObjects.push_back(pointBasedObject);
-
-	UpdateCentroidCursor();
+	CommonHandlePointAddition(curve);
 }
 
 void PointAddedVisitor::Visit(BezierCurveC2& curve)
 {
-	curve.OnPointAdd(m_PointAdded);
-
-	auto pointBasedObject = std::dynamic_pointer_cast<PointBasedObjectCAD>(m_Caller.lock());
-
-	m_PointAdded->m_PointBasedObjects.push_back(pointBasedObject);
-
-	UpdateCentroidCursor();
+	CommonHandlePointAddition(curve);
 }
 
 void PointAddedVisitor::Visit(YukselInterpolatingCurveC2& curve)
 {
-	curve.OnPointAdd(m_PointAdded);
+	CommonHandlePointAddition(curve);
+}
+
+void PointAddedVisitor::CommonHandlePointAddition(BaseCurve& curve)
+{
+	curve.m_ControlPoints.push_back(m_Point);
+
+	curve.OnPointModify();
 
 	auto pointBasedObject = std::dynamic_pointer_cast<PointBasedObjectCAD>(m_Caller.lock());
 
-	m_PointAdded->m_PointBasedObjects.push_back(pointBasedObject);
+	m_Point->m_PointBasedObjects.push_back(pointBasedObject);
 
 	UpdateCentroidCursor();
-}
-
-void PointAddedVisitor::UpdateCentroidCursor()
-{
-	auto& selectedTransform = m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform;
-	auto& cursor = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_CentroidCursor;
-
-	selectedTransform.Select(m_PointAdded);
-
-	cursor->SetPosition(selectedTransform.Centroid());
 }

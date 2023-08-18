@@ -191,6 +191,8 @@
     <ClInclude Include="Selection\ManualSelectionSystem.h" />
     <ClInclude Include="Selection\TransformSelectionSystem.h" />
     <ClInclude Include="Visitors\PointBased\PointAddedVisitor.h" />
+    <ClInclude Include="Visitors\PointBased\BasePointActionVisitor.h" />
+    <ClInclude Include="Visitors\PointBased\PointRemovedVisitor.h" />
     <ClInclude Include="Visitors\Selection\BaseObjectSelectionVisitor.h" />
     <ClInclude Include="Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.h" />
     <ClInclude Include="GUI\Cursor\CursorGuiLayer.h" />
@@ -271,6 +273,8 @@
     <ClCompile Include="GUI\Performance\PerformanceGuiLayer.cpp" />
     <ClCompile Include="GUI\Properties\PropertiesGuiLayer.cpp" />
     <ClCompile Include="Visitors\PointBased\PointAddedVisitor.cpp" />
+    <ClCompile Include="Visitors\PointBased\BasePointActionVisitor.cpp" />
+    <ClCompile Include="Visitors\PointBased\PointRemovedVisitor.cpp" />
     <ClCompile Include="Visitors\RayIntersection\RayIntersectionVisitor.cpp" />
     <ClCompile Include="GUI\Viewport\ViewportGuiLayer.cpp" />
     <ClCompile Include="Objects\Additional\Grid.cpp" />
