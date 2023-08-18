@@ -100,7 +100,10 @@ namespace BuD
 
 		RenderTargetInfo renderTargetInfo{ renderTarget->RenderTargetView, renderTarget->DepthStencilView, renderTarget->Width, renderTarget->Height };
 
-		m_SingleEyeRendererImpl->Render(scene, renderTargetInfo);
+		auto stats = m_SingleEyeRendererImpl->Render(scene, renderTargetInfo);
+		
+		m_DrawCallsThisFrame += stats.m_DrawCalls;
+		m_InstancesDrawnThisFrame += stats.m_InstancesDrawn;
 	}
 
 	void AnaglyphRendererImpl::BlendEyesToSingle(const RenderTargetInfo& renderTarget)
