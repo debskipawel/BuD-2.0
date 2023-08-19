@@ -1,5 +1,7 @@
 #include "PointRemovedVisitor.h"
 
+#include <Visitors/Deletion/ObjectDeletionVisitor.h>
+
 PointRemovedVisitor::PointRemovedVisitor(SceneDataLayer& dataLayer, std::weak_ptr<Point> point)
 	: BasePointActionVisitor(dataLayer, point)
 {
@@ -18,6 +20,18 @@ void PointRemovedVisitor::Visit(BezierCurveC2& curve)
 void PointRemovedVisitor::Visit(YukselInterpolatingCurveC2& curve)
 {
 	CommonHandlePointDeletion(curve);
+}
+
+void PointRemovedVisitor::Visit(BezierPatchC0& patch)
+{
+	std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ObjectDeletionVisitor>(m_SceneDataLayer);
+	visitor->Visit(m_Caller);
+}
+
+void PointRemovedVisitor::Visit(BezierPatchC2& patch)
+{
+	std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ObjectDeletionVisitor>(m_SceneDataLayer);
+	visitor->Visit(m_Caller);
 }
 
 void PointRemovedVisitor::CommonHandlePointDeletion(BaseCurve& curve)

@@ -109,6 +109,24 @@ void ObjectGuiDrawerVisitor::Visit(YukselInterpolatingCurveC2& curve)
 	DrawGuiForTag(curve);
 }
 
+void ObjectGuiDrawerVisitor::Visit(BezierPatchC0& patch)
+{
+	DrawGuiForSelectedTransform();
+
+	ImGui::Separator();
+
+	DrawGuiForTag(patch);
+}
+
+void ObjectGuiDrawerVisitor::Visit(BezierPatchC2& patch)
+{
+	DrawGuiForSelectedTransform();
+
+	ImGui::Separator();
+
+	DrawGuiForTag(patch);
+}
+
 void ObjectGuiDrawerVisitor::DrawGuiForSelectedTransform()
 {
 	auto& selectedForTransform = m_SceneDataLayer.m_SelectedForTransform;

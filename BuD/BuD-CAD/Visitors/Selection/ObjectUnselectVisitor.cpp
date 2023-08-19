@@ -59,6 +59,22 @@ void ObjectUnselectVisitor::Visit(YukselInterpolatingCurveC2& curve)
 	CommonUnselectCurve(curve);
 }
 
+void ObjectUnselectVisitor::Visit(BezierPatchC0& patch)
+{
+	patch.m_Color = BezierPatchC0::UNSELECTED_COLOR;
+	patch.m_InstanceData.m_Color = patch.m_Color;
+
+	CommonUnselectPatch(patch);
+}
+
+void ObjectUnselectVisitor::Visit(BezierPatchC2& patch)
+{
+	patch.m_Color = BezierPatchC2::UNSELECTED_COLOR;
+	patch.m_InstanceData.m_Color = patch.m_Color;
+
+	CommonUnselectPatch(patch);
+}
+
 void ObjectUnselectVisitor::CommonUnselectCurve(BaseCurve& curve)
 {
 	UnselectManually(m_Caller);
@@ -66,6 +82,26 @@ void ObjectUnselectVisitor::CommonUnselectCurve(BaseCurve& curve)
 	curve.RenderControlPointBorder(false);
 
 	for (auto& controlPoint : curve.m_ControlPoints)
+	{
+		auto controlPointShared = controlPoint.lock();
+
+		if (!controlPointShared)
+		{
+			continue;
+		}
+
+		if (!m_SceneDataLayer.m_ManuallySelected.Selected(controlPointShared->Id()))
+		{
+			UnselectForTransform(controlPoint);
+		}
+	}
+}
+
+void ObjectUnselectVisitor::CommonUnselectPatch(BaseBezierPatch& patch)
+{
+	UnselectManually(m_Caller);
+
+	for (auto& controlPoint : patch.m_ControlPoints)
 	{
 		auto controlPointShared = controlPoint.lock();
 

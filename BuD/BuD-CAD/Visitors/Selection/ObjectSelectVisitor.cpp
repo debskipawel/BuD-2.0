@@ -59,11 +59,47 @@ void ObjectSelectVisitor::Visit(YukselInterpolatingCurveC2& curve)
 	CommonSelectCurve(curve);
 }
 
+void ObjectSelectVisitor::Visit(BezierPatchC0& patch)
+{
+	patch.m_Color = BezierPatchC0::SELECTED_COLOR;
+	patch.m_InstanceData.m_Color = patch.m_Color;
+
+	CommonSelectPatch(patch);
+}
+
+void ObjectSelectVisitor::Visit(BezierPatchC2& patch)
+{
+	patch.m_Color = BezierPatchC2::SELECTED_COLOR;
+	patch.m_InstanceData.m_Color = patch.m_Color;
+
+	CommonSelectPatch(patch);
+}
+
 void ObjectSelectVisitor::CommonSelectCurve(BaseCurve& curve)
 {
 	SelectManually(m_Caller);
 
 	for (auto& controlPoint : curve.m_ControlPoints)
+	{
+		auto controlPointShared = controlPoint.lock();
+
+		if (!controlPointShared)
+		{
+			continue;
+		}
+
+		if (!m_SceneDataLayer.m_ManuallySelected.Selected(controlPointShared->Id()))
+		{
+			SelectForTransform(controlPoint);
+		}
+	}
+}
+
+void ObjectSelectVisitor::CommonSelectPatch(BaseBezierPatch& patch)
+{
+	SelectManually(m_Caller);
+
+	for (auto& controlPoint : patch.m_ControlPoints)
 	{
 		auto controlPointShared = controlPoint.lock();
 
