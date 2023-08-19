@@ -122,6 +122,7 @@ namespace BuD
 
 		context->OMSetRenderTargets(1, renderTarget.RenderTargetView.GetAddressOf(), renderTarget.DepthStencilView.Get());
 		context->RSSetViewports(1, &viewportDesc);
+		context->RSSetState(nullptr);
 
 		ID3D11ShaderResourceView* eyeSRV[] = { leftEye->ShaderResourceView.Get(), rightEye->ShaderResourceView.Get() };
 
