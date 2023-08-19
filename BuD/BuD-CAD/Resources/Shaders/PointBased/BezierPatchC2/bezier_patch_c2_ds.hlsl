@@ -85,8 +85,11 @@ DSOutput main(
     float3 uControlPoints2[4] = { uPointsInBernstein2._11_12_13, uPointsInBernstein2._21_22_23, uPointsInBernstein2._31_32_33, uPointsInBernstein2._41_42_43 };
     float3 uControlPoints3[4] = { uPointsInBernstein3._11_12_13, uPointsInBernstein3._21_22_23, uPointsInBernstein3._31_32_33, uPointsInBernstein3._41_42_43 };
 
-    float3 vControlPoints[4] = { DeCastiljeau(uControlPoints0, u), DeCastiljeau(uControlPoints1, u), DeCastiljeau(uControlPoints2, u), DeCastiljeau(uControlPoints3, u) };
-	
+    float4x3 vPointsMatrix = { DeCastiljeau(uControlPoints0, u), DeCastiljeau(uControlPoints1, u), DeCastiljeau(uControlPoints2, u), DeCastiljeau(uControlPoints3, u) };
+    float4x3 vPointsInBernstein = mul(bSplineToBernstein, vPointsMatrix);
+    
+    float3 vControlPoints[4] = { vPointsInBernstein._11_12_13, vPointsInBernstein._21_22_23, vPointsInBernstein._31_32_33, vPointsInBernstein._41_42_43 };
+    
     o.worldPosition = DeCastiljeau(vControlPoints, v);
 	o.position = mul(projMtx, float4(o.worldPosition, 1.0));
 	
