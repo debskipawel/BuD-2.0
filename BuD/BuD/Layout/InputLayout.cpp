@@ -67,7 +67,7 @@ namespace BuD
 
 		ComPtr<ID3DBlob> compiledShaderCode;
 		ComPtr<ID3DBlob> compilerErrors;
-		auto hr = D3DCompile(fakeShader.c_str(), fakeShader.size(), NULL, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "main", "vs_4_0_level_9_1", 0, 0, compiledShaderCode.GetAddressOf(), compilerErrors.GetAddressOf());
+		auto hr = D3DCompile(fakeShader.c_str(), fakeShader.size(), NULL, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "main", "vs_5_0", 0, 0, compiledShaderCode.GetAddressOf(), compilerErrors.GetAddressOf());
 
 		auto inputLayoutRes = device->CreateInputLayout(
 			layout.data(), static_cast<UINT>(layout.size()),

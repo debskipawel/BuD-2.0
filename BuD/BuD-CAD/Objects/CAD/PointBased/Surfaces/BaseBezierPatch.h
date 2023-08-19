@@ -19,5 +19,5 @@ public:
 	dxm::Vector3 m_Color = dxm::Vector3::One;
 
 protected:
-	BuD::MeshDetails LoadCurvePrimitiveMesh();
+	BuD::MeshDetails LoadPatchPrimitiveMesh();
 };

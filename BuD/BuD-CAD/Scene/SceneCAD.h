@@ -18,9 +18,13 @@ public:
 
 	std::weak_ptr<SceneObjectCAD> CreateTorus(dxm::Vector3 position);
 	std::weak_ptr<SceneObjectCAD> CreatePoint(dxm::Vector3 position);
+	
 	std::weak_ptr<SceneObjectCAD> CreateBezierCurveC0(std::vector<std::weak_ptr<Point>> controlPoints);
 	std::weak_ptr<SceneObjectCAD> CreateBezierCurveC2(std::vector<std::weak_ptr<Point>> controlPoints);
 	std::weak_ptr<SceneObjectCAD> CreateYukselInterpolatingCurveC2(std::vector<std::weak_ptr<Point>> controlPoints);
+
+	std::weak_ptr<SceneObjectCAD> CreateBezierPatchC0(std::vector<std::weak_ptr<Point>> controlPoints);
+	std::weak_ptr<SceneObjectCAD> CreateBezierPatchC2(std::vector<std::weak_ptr<Point>> controlPoints);
 
 	std::shared_ptr<Cursor> m_MainCursor;
 	std::shared_ptr<Cursor> m_CentroidCursor;

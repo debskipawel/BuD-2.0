@@ -21,7 +21,7 @@ void BaseBezierPatch::OnPointModify()
 	}
 }
 
-BuD::MeshDetails BaseBezierPatch::LoadCurvePrimitiveMesh()
+BuD::MeshDetails BaseBezierPatch::LoadPatchPrimitiveMesh()
 {
 	auto meshLoader = BuD::MeshLoader();
 	return meshLoader.LoadPrimitiveMesh(

@@ -188,6 +188,8 @@
     <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC2.h" />
     <ClInclude Include="Objects\CAD\PointBased\Curve\YukselInterpolatingCurveC2.h" />
     <ClInclude Include="Objects\CAD\PointBased\Surfaces\BaseBezierPatch.h" />
+    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BezierPatchC0.h" />
+    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BezierPatchC2.h" />
     <ClInclude Include="Selection\BaseSelectionSystem.h" />
     <ClInclude Include="Selection\ManualSelectionSystem.h" />
     <ClInclude Include="Selection\TransformSelectionSystem.h" />
@@ -262,6 +264,8 @@
     <ClCompile Include="Objects\CAD\PointBased\Curve\YukselInterpolatingCurveC2.cpp" />
     <ClCompile Include="Objects\CAD\PointBased\PointBasedObjectCAD.cpp" />
     <ClCompile Include="Objects\CAD\PointBased\Surfaces\BaseBezierPatch.cpp" />
+    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BezierPatchC0.cpp" />
+    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BezierPatchC2.cpp" />
     <ClCompile Include="Raycasting\RayFactory.cpp" />
     <ClCompile Include="GUI\AppState\AppStateGuiLayer.cpp" />
     <ClCompile Include="GUI\Console\ConsoleGuiLayer.cpp" />
@@ -472,6 +476,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_ds.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_hs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Hull</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\PointBased\YukselCurveC2\yuksel_curve_c2_ds.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Domain</ShaderType>

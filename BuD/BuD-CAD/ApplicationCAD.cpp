@@ -22,18 +22,20 @@ ApplicationCAD::ApplicationCAD()
 	BuD::Random random;
 	std::vector<std::weak_ptr<Point>> controlPoints;
 	
-	constexpr auto torusCount = 7;
-	for (int i = 0; i < torusCount; i++)
+	for (int i = 0; i < 4; i++)
 	{
-		auto position = dxm::Vector3::Zero + 2 * (i - torusCount / 2) * dxm::Vector3::UnitZ + random.Next(0.0f, 5.0f) * dxm::Vector3::UnitY;
-		auto point = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreatePoint(position);
+		for (int j = 0; j < 4; j++)
+		{
+			auto position = dxm::Vector3(-1.5f, 0.0f, -1.5f) + j * dxm::Vector3::UnitX + i * dxm::Vector3::UnitZ;
+			
+			auto object = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreatePoint(position);
+			auto point = std::dynamic_pointer_cast<Point>(object.lock());
 
-		controlPoints.push_back(std::dynamic_pointer_cast<Point>(point.lock()));
+			controlPoints.push_back(point);
+		}
 	}
-	// Uncomment to test loops
-	controlPoints.push_back(std::dynamic_pointer_cast<Point>((*controlPoints.begin()).lock()));
 
-	m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateYukselInterpolatingCurveC2(controlPoints);
+	m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateBezierPatchC2(controlPoints);
 }
 
 void ApplicationCAD::OnUpdate(float deltaTime)

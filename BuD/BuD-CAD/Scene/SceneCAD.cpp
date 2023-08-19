@@ -7,6 +7,9 @@
 #include <Objects/CAD/PointBased/Curve/BezierCurveC2.h>
 #include <Objects/CAD/PointBased/Curve/YukselInterpolatingCurveC2.h>
 
+#include <Objects/CAD/PointBased/Surfaces/BezierPatchC0.h>
+#include <Objects/CAD/PointBased/Surfaces/BezierPatchC2.h>
+
 SceneCAD::SceneCAD()
 	: m_Scene(), m_ObjectList()
 {
@@ -105,4 +108,36 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreateYukselInterpolatingCurveC2(std::ve
 	BuD::Log::WriteInfo("Successfully created a Yuksel interpolating C2 curve.");
 
 	return curve;
+}
+
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateBezierPatchC0(std::vector<std::weak_ptr<Point>> controlPoints)
+{
+	auto patch = std::make_shared<BezierPatchC0>(m_Scene, controlPoints);
+	m_ObjectList.emplace(patch->Id(), patch);
+
+	for (auto& controlPoint : controlPoints)
+	{
+		auto controlPointShared = controlPoint.lock();
+		controlPointShared->m_PointBasedObjects.push_back(patch);
+	}
+
+	BuD::Log::WriteInfo("Successfully created a Bezier C0 patch.");
+
+	return patch;
+}
+
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateBezierPatchC2(std::vector<std::weak_ptr<Point>> controlPoints)
+{
+	auto patch = std::make_shared<BezierPatchC2>(m_Scene, controlPoints);
+	m_ObjectList.emplace(patch->Id(), patch);
+
+	for (auto& controlPoint : controlPoints)
+	{
+		auto controlPointShared = controlPoint.lock();
+		controlPointShared->m_PointBasedObjects.push_back(patch);
+	}
+
+	BuD::Log::WriteInfo("Successfully created a Bezier C0 patch.");
+
+	return patch;
 }
