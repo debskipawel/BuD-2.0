@@ -75,6 +75,42 @@ void ObjectUnselectVisitor::Visit(BezierPatchC2& patch)
 	CommonUnselectPatch(patch);
 }
 
+void ObjectUnselectVisitor::Visit(BezierSurfaceC0& surface)
+{
+	UnselectManually(m_Caller);
+
+	for (auto& patch : surface.m_BezierPatches)
+	{
+		auto patchShared = patch.lock();
+
+		if (!patchShared)
+		{
+			continue;
+		}
+
+		if (!m_SceneDataLayer.m_ManuallySelected.Selected(patchShared->Id()))
+		{
+			patchShared->m_Color = BaseBezierPatch::UNSELECTED_COLOR;
+			patchShared->m_InstanceData.m_Color = BaseBezierPatch::UNSELECTED_COLOR;
+		}
+	}
+
+	for (auto& controlPoint : surface.m_ControlPoints)
+	{
+		auto controlPointShared = controlPoint.lock();
+
+		if (!controlPointShared)
+		{
+			continue;
+		}
+
+		if (!m_SceneDataLayer.m_ManuallySelected.Selected(controlPointShared->Id()))
+		{
+			UnselectForTransform(controlPoint);
+		}
+	}
+}
+
 void ObjectUnselectVisitor::CommonUnselectCurve(BaseCurve& curve)
 {
 	UnselectManually(m_Caller);

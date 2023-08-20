@@ -52,7 +52,7 @@ void CameraMouseBehaviorLayer::OnScroll(int x, int y, int delta)
 		auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_Scene;
 		auto camera = scene.ActiveCamera();
 
-		camera->Zoom(-0.03f * delta);
+		camera->Zoom(-0.01f * delta);
 	}
 }
 

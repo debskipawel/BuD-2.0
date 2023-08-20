@@ -23,6 +23,8 @@ public:
 	std::weak_ptr<SceneObjectCAD> CreateBezierCurveC2(std::vector<std::weak_ptr<Point>> controlPoints);
 	std::weak_ptr<SceneObjectCAD> CreateYukselInterpolatingCurveC2(std::vector<std::weak_ptr<Point>> controlPoints);
 
+	std::weak_ptr<SceneObjectCAD> CreateFlatBezierSurfaceC0(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV);
+	std::weak_ptr<SceneObjectCAD> CreateCylinderBezierSurfaceC0(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV);
 	std::weak_ptr<SceneObjectCAD> CreateBezierPatchC0(std::vector<std::weak_ptr<Point>> controlPoints);
 	std::weak_ptr<SceneObjectCAD> CreateBezierPatchC2(std::vector<std::weak_ptr<Point>> controlPoints);
 

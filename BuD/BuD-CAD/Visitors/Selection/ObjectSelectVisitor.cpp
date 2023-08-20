@@ -75,6 +75,39 @@ void ObjectSelectVisitor::Visit(BezierPatchC2& patch)
 	CommonSelectPatch(patch);
 }
 
+void ObjectSelectVisitor::Visit(BezierSurfaceC0& surface)
+{
+	SelectManually(m_Caller);
+
+	for (auto& patch : surface.m_BezierPatches)
+	{
+		auto patchShared = patch.lock();
+
+		if (!patchShared)
+		{
+			continue;
+		}
+
+		patchShared->m_Color = BaseBezierPatch::SELECTED_COLOR;
+		patchShared->m_InstanceData.m_Color = BaseBezierPatch::SELECTED_COLOR;
+	}
+
+	for (auto& controlPoint : surface.m_ControlPoints)
+	{
+		auto controlPointShared = controlPoint.lock();
+
+		if (!controlPointShared)
+		{
+			continue;
+		}
+
+		if (!m_SceneDataLayer.m_ManuallySelected.Selected(controlPointShared->Id()))
+		{
+			SelectForTransform(controlPoint);
+		}
+	}
+}
+
 void ObjectSelectVisitor::CommonSelectCurve(BaseCurve& curve)
 {
 	SelectManually(m_Caller);

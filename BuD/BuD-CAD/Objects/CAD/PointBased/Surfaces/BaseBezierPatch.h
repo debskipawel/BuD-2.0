@@ -15,6 +15,9 @@ public:
 		dxm::Vector3 m_Color;
 	};
 
+	static dxm::Vector3 SELECTED_COLOR;
+	static dxm::Vector3 UNSELECTED_COLOR;
+
 	BezierPatchSegmentInstanceData m_InstanceData;
 	dxm::Vector3 m_Color = dxm::Vector3::One;
 

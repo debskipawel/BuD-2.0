@@ -102,29 +102,38 @@ void ObjectGuiDrawerVisitor::Visit(BezierCurveC2& curve)
 
 void ObjectGuiDrawerVisitor::Visit(YukselInterpolatingCurveC2& curve)
 {
-	DrawGuiForSelectedTransform();
+	DrawGuiForTag(curve);
 
 	ImGui::Separator();
 
-	DrawGuiForTag(curve);
+	DrawGuiForSelectedTransform();
 }
 
 void ObjectGuiDrawerVisitor::Visit(BezierPatchC0& patch)
 {
-	DrawGuiForSelectedTransform();
+	DrawGuiForTag(patch);
 
 	ImGui::Separator();
 
-	DrawGuiForTag(patch);
+	DrawGuiForSelectedTransform();
 }
 
 void ObjectGuiDrawerVisitor::Visit(BezierPatchC2& patch)
 {
-	DrawGuiForSelectedTransform();
+	DrawGuiForTag(patch);
 
 	ImGui::Separator();
 
-	DrawGuiForTag(patch);
+	DrawGuiForSelectedTransform();
+}
+
+void ObjectGuiDrawerVisitor::Visit(BezierSurfaceC0& surface)
+{
+	DrawGuiForTag(surface);
+	
+	ImGui::Separator();
+
+	DrawGuiForSelectedTransform();	
 }
 
 void ObjectGuiDrawerVisitor::DrawGuiForSelectedTransform()

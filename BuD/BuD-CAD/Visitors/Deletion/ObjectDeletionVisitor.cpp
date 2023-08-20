@@ -90,6 +90,21 @@ void ObjectDeletionVisitor::Visit(BezierPatchC2& patch)
 	m_SceneDataLayer.m_SceneCAD.DeleteObject(patch);
 }
 
+void ObjectDeletionVisitor::Visit(BezierSurfaceC0& surface)
+{
+	std::unique_ptr<AbstractVisitor> unselectVisitor = std::make_unique<ObjectUnselectVisitor>(m_SceneDataLayer);
+	unselectVisitor->Visit(m_Caller);
+
+	for (auto& bezierPatch : surface.m_BezierPatches)
+	{
+		std::weak_ptr<SceneObjectCAD> sceneObject = bezierPatch.lock();
+		
+		AbstractVisitor::Visit(sceneObject);
+	}
+
+	m_SceneDataLayer.m_SceneCAD.DeleteObject(surface);
+}
+
 void ObjectDeletionVisitor::NotifyControlPointsAboutDeletion(PointBasedObjectCAD& object)
 {
 	auto id = object.Id();

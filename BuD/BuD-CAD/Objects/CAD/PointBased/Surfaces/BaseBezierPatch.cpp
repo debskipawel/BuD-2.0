@@ -49,3 +49,6 @@ BuD::MeshDetails BaseBezierPatch::LoadPatchPrimitiveMesh()
 
 	return BuD::MeshDetails();
 }
+
+dxm::Vector3 BaseBezierPatch::SELECTED_COLOR = { 0.8f, 0.6f, 0.0f };
+dxm::Vector3 BaseBezierPatch::UNSELECTED_COLOR = { 1.0f, 1.0f, 1.0f };

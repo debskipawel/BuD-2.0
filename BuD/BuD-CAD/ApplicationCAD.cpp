@@ -16,26 +16,8 @@ ApplicationCAD::ApplicationCAD()
 	m_MouseBehaviorLayer = std::make_unique<MainMouseBehaviorLayer>(m_MainDataLayer);
 	m_KeyboardBehaviorLayer = std::make_unique<MainKeyboardBehaviorLayer>(m_MainDataLayer);
 
-	auto currentPath = std::filesystem::current_path();
-
 	// TODO: delete this code. just temporary startup benchmarking stuff.
-	BuD::Random random;
-	std::vector<std::weak_ptr<Point>> controlPoints;
-	
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			auto position = dxm::Vector3(-1.5f, 0.0f, -1.5f) + j * dxm::Vector3::UnitX + i * dxm::Vector3::UnitZ;
-			
-			auto object = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreatePoint(position);
-			auto point = std::dynamic_pointer_cast<Point>(object.lock());
-
-			controlPoints.push_back(point);
-		}
-	}
-
-	m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateBezierPatchC2(controlPoints);
+	m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateCylinderBezierSurfaceC0(dxm::Vector3::Zero, 4, 2);
 }
 
 void ApplicationCAD::OnUpdate(float deltaTime)

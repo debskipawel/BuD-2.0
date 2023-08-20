@@ -58,6 +58,3 @@ void BezierPatchC0::Accept(AbstractVisitor& visitor)
 {
 	visitor.Visit(*this);
 }
-
-dxm::Vector3 BezierPatchC0::SELECTED_COLOR = { 0.8f, 0.6f, 0.0f };
-dxm::Vector3 BezierPatchC0::UNSELECTED_COLOR = { 1.0f, 1.0f, 1.0f };

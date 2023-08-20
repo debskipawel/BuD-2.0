@@ -19,8 +19,11 @@ PSOutput main(VSOutput i)
     
     float radius = dot(i.tex, i.tex);
     
-    float borderStart = 0.75, borderEnd = 1.0;
-    o.color = float(radius <= borderStart) * float4(i.color, 1.0) + (radius > borderStart && radius <= borderEnd) * float4(1.0, 1.0, 1.0, 1.0);
+    float blackBorderStart = 0.8, blackBorderEnd = 1.0;
+    float borderStart = 0.7, borderEnd = 0.8;
+    o.color = float(radius <= borderStart) * float4(i.color, 1.0) 
+        + (radius > borderStart && radius <= borderEnd) * float4(1.0, 1.0, 1.0, 1.0) 
+        + (radius > blackBorderStart && radius <= blackBorderEnd) * float4(0.0, 0.0, 0.0, 1.0);
     o.depth = i.depth + float(radius > 1.0) * 100.0;
     
     return o;

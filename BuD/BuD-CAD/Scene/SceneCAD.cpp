@@ -10,6 +10,8 @@
 #include <Objects/CAD/PointBased/Surfaces/BezierPatchC0.h>
 #include <Objects/CAD/PointBased/Surfaces/BezierPatchC2.h>
 
+#include <Objects/CAD/PointBased/Surfaces/BezierSurfaceC0.h>
+
 SceneCAD::SceneCAD()
 	: m_Scene(), m_ObjectList()
 {
@@ -110,6 +112,28 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreateYukselInterpolatingCurveC2(std::ve
 	return curve;
 }
 
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFlatBezierSurfaceC0(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV)
+{
+	auto surface = std::make_shared<BezierSurfaceC0>(*this, position, patchesU, pachesV, false);
+
+	m_ObjectList.emplace(surface->Id(), surface);
+
+	BuD::Log::WriteInfo("Successfully created a flat C0 Bezier surface.");
+
+	return surface;
+}
+
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateCylinderBezierSurfaceC0(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV)
+{
+	auto surface = std::make_shared<BezierSurfaceC0>(*this, position, patchesU, pachesV, true);
+
+	m_ObjectList.emplace(surface->Id(), surface);
+
+	BuD::Log::WriteInfo("Successfully created a cylinder C0 Bezier surface.");
+
+	return surface;
+}
+
 std::weak_ptr<SceneObjectCAD> SceneCAD::CreateBezierPatchC0(std::vector<std::weak_ptr<Point>> controlPoints)
 {
 	auto patch = std::make_shared<BezierPatchC0>(m_Scene, controlPoints);
@@ -137,7 +161,7 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreateBezierPatchC2(std::vector<std::wea
 		controlPointShared->m_PointBasedObjects.push_back(patch);
 	}
 
-	BuD::Log::WriteInfo("Successfully created a Bezier C0 patch.");
+	BuD::Log::WriteInfo("Successfully created a Bezier C2 patch.");
 
 	return patch;
 }
