@@ -8,3 +8,4 @@
 
 #include <Utils/Scene/Scene.h>
 #include <Utils/Scene/SceneSerializer.h>
+#include <Utils/Scene/SerializerException.h>

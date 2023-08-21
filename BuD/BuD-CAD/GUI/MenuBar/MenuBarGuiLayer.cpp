@@ -36,19 +36,16 @@ void MenuBarGuiLayer::DrawGui()
 	}
 
     DrawMultiEyeSettingsPopup();
+    
     DrawSaveSceneDialog();
+    DrawLoadSceneDialog();
 }
 
 void MenuBarGuiLayer::DrawFileSettings()
 {
-    if (ImGui::MenuItem("New scene"))
-    {
-
-    }
-
     if (ImGui::MenuItem("Load scene"))
     {
-
+        OpenLoadSceneDialog();
     }
 
     ImGui::Separator();
@@ -175,10 +172,10 @@ void MenuBarGuiLayer::OpenSaveSceneDialog()
     
     auto currentPath = m_MainDataLayer.m_SceneDataLayer.m_PathToFile.empty()
         ? std::filesystem::current_path()
-        : m_MainDataLayer.m_SceneDataLayer.m_PathToFile;
+        : m_MainDataLayer.m_SceneDataLayer.m_PathToFile.parent_path();
 
     auto fileDialog = ImGuiFileDialog::Instance();
-    fileDialog->OpenDialog("SceneFileDialog", "Choose scene file", ".json", (const char*)currentPath.c_str(), 1, nullptr, ImGuiFileDialogFlags_Modal);
+    fileDialog->OpenDialog("SaveSceneFileDialog", "Save scene file", ".json", (const char*)currentPath.c_str(), 1, nullptr, ImGuiFileDialogFlags_Modal);
 }
 
 void MenuBarGuiLayer::DrawSaveSceneDialog()
@@ -187,7 +184,7 @@ void MenuBarGuiLayer::DrawSaveSceneDialog()
 
     bool flag = false;
 
-    if (fileDialog->Display("SceneFileDialog"))
+    if (fileDialog->Display("SaveSceneFileDialog"))
     {
         flag = true;
 
@@ -210,12 +207,55 @@ void MenuBarGuiLayer::DrawSaveSceneDialog()
     }
 }
 
+void MenuBarGuiLayer::OpenLoadSceneDialog()
+{
+    m_MainDataLayer.m_AppStateDataLayer.Freeze();
+
+    auto currentPath = m_MainDataLayer.m_SceneDataLayer.m_PathToFile.empty()
+        ? std::filesystem::current_path()
+        : m_MainDataLayer.m_SceneDataLayer.m_PathToFile.parent_path();
+
+    auto fileDialog = ImGuiFileDialog::Instance();
+    fileDialog->OpenDialog("LoadSceneFileDialog", "Load scene file", ".json", (const char*)currentPath.c_str(), 1, nullptr, ImGuiFileDialogFlags_Modal);
+}
+
+void MenuBarGuiLayer::DrawLoadSceneDialog()
+{
+    auto fileDialog = ImGuiFileDialog::Instance();
+
+    bool flag = false;
+
+    if (fileDialog->Display("LoadSceneFileDialog"))
+    {
+        flag = true;
+
+        if (fileDialog->IsOk())
+        {
+            std::string filePathName = fileDialog->GetFilePathName();
+
+            m_MainDataLayer.m_SceneDataLayer.m_PathToFile = filePathName;
+            Load();
+
+            m_MainDataLayer.m_AppStateDataLayer.Unfreeze();
+        }
+
+        fileDialog->Close();
+    }
+
+    if (flag && !fileDialog->IsOpened())
+    {
+        m_MainDataLayer.m_AppStateDataLayer.Unfreeze();
+    }
+}
+
 void MenuBarGuiLayer::Save()
 {
     auto& filepath = m_MainDataLayer.m_SceneDataLayer.m_PathToFile;
 
     auto& scene = MG1::Scene::Get();
     scene.Clear();
+
+    // TODO: add camera to the scene
 
     std::unique_ptr<AbstractVisitor> serializationVisitor = std::make_unique<SerializationVisitor>();
 
@@ -226,4 +266,33 @@ void MenuBarGuiLayer::Save()
 
     auto serializer = MG1::SceneSerializer();
     serializer.SaveScene(filepath);
+
+    BuD::Log::WriteInfo("Scene saved.");
+}
+
+void MenuBarGuiLayer::Load()
+{
+    auto& filepath = m_MainDataLayer.m_SceneDataLayer.m_PathToFile;
+
+    auto serializer = MG1::SceneSerializer();
+    
+    try
+    {
+        serializer.LoadScene(filepath);
+    }
+    catch (MG1::SerializerException e)
+    {
+        auto filename = filepath.filename();
+        auto message = std::format("Error while loading scene {}: {}", filename.string(), e.what());
+        
+        BuD::Log::WriteError(message);
+
+        return;
+    }
+
+    auto& scene = MG1::Scene::Get();
+    
+    // TODO: actually create new scene based on the serialized one
+
+    BuD::Log::WriteInfo("Scene loaded.");
 }

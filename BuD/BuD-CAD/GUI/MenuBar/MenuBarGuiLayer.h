@@ -30,7 +30,12 @@ protected:
 
 	virtual void OpenSaveSceneDialog();
 	virtual void DrawSaveSceneDialog();
+
+	virtual void OpenLoadSceneDialog();
+	virtual void DrawLoadSceneDialog();
+	
 	virtual void Save();
+	virtual void Load();
 
 	std::vector<MainMenuItem> m_MenuItems;
 	std::vector<RendererModeMenuItem> m_RendererModeMenuItems;

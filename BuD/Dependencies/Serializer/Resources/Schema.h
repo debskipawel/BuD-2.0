@@ -6,8 +6,8 @@
 inline static const std::string g_schema = R"(
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
-		"type": "object",
-		"properties": {
+	"type": "object",
+	"properties": {
 		"camera": {
 			"type": "object",
 			"properties": {
@@ -28,7 +28,6 @@ inline static const std::string g_schema = R"(
 				"oneOf": [
 					{"$ref": "#/definitions/geometry/torus"},
 					{"$ref": "#/definitions/geometry/bezierC0"},
-					{"$ref": "#/definitions/geometry/bezierC2"},
 					{"$ref": "#/definitions/geometry/interpolatedC2"},
 					{"$ref": "#/definitions/geometry/bezierSurfaceC0"},
 					{"$ref": "#/definitions/geometry/bezierSurfaceC2"}
@@ -36,6 +35,7 @@ inline static const std::string g_schema = R"(
 			}
 		}
 	},
+	"required": ["camera"],
 	"additionalProperties": false,
 	"definitions": {
 		"normalizedValue": {
@@ -237,4 +237,5 @@ inline static const std::string g_schema = R"(
 		}
 	}
 }
+
 )";
