@@ -5,7 +5,7 @@ BaseCurve::BaseCurve(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> contro
 {
 }
 
-bool BaseCurve::ShouldRenderControlPointBorder() const
+bool BaseCurve::ShouldDisplayPolygon() const
 {
 	return m_ControlPointBorder;
 }

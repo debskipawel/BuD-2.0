@@ -115,8 +115,6 @@ void ObjectUnselectVisitor::CommonUnselectCurve(BaseCurve& curve)
 {
 	UnselectManually(m_Caller);
 
-	curve.RenderControlPointBorder(false);
-
 	for (auto& controlPoint : curve.m_ControlPoints)
 	{
 		auto controlPointShared = controlPoint.lock();

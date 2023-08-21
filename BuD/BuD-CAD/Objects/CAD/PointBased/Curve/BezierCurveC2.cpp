@@ -114,7 +114,7 @@ void BezierCurveC2::OnPointModify()
 	}
 }
 
-void BezierCurveC2::RenderControlPointBorder(bool borderOn)
+void BezierCurveC2::TogglePolygon(bool borderOn)
 {
 	if (borderOn == m_ControlPointBorder)
 	{

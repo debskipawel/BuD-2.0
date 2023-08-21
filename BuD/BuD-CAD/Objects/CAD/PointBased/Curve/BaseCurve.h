@@ -7,8 +7,8 @@ class BaseCurve : public PointBasedObjectCAD
 public:
 	BaseCurve(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints = {});
 
-	virtual void RenderControlPointBorder(bool borderOn) = 0;
-	virtual bool ShouldRenderControlPointBorder() const;
+	virtual void TogglePolygon(bool borderOn) = 0;
+	virtual bool ShouldDisplayPolygon() const;
 
 	struct CubicBezierCurveSegment
 	{

@@ -453,5 +453,9 @@
     <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_hs.hlsl" />
     <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\bezier_patch_c0_polygon_gs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\bezier_patch_c0_polygon_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_polygon_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_polygon_gs.hlsl" />
   </ItemGroup>
 </Project>

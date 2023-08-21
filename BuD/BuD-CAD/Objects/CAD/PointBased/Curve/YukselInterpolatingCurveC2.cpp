@@ -95,7 +95,7 @@ void YukselInterpolatingCurveC2::OnPointModify()
 	}
 }
 
-void YukselInterpolatingCurveC2::RenderControlPointBorder(bool borderOn)
+void YukselInterpolatingCurveC2::TogglePolygon(bool borderOn)
 {
 	return;
 }

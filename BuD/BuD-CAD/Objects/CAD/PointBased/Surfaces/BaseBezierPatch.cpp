@@ -1,7 +1,7 @@
 #include "BaseBezierPatch.h"
 
 BaseBezierPatch::BaseBezierPatch(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints)
-	: PointBasedObjectCAD(scene, controlPoints)
+	: PointBasedObjectCAD(scene, controlPoints), m_DisplayBezierPolygon(false)
 {
 }
 
@@ -21,9 +21,15 @@ void BaseBezierPatch::OnPointModify()
 	}
 }
 
+bool BaseBezierPatch::ShouldDisplayPolygon()
+{
+	return m_DisplayBezierPolygon;
+}
+
 BuD::MeshDetails BaseBezierPatch::LoadPatchPrimitiveMesh()
 {
 	auto meshLoader = BuD::MeshLoader();
+	
 	return meshLoader.LoadPrimitiveMesh(
 		BuD::MeshPrimitiveType::POINT_TESSELLATION,
 		{
@@ -46,8 +52,34 @@ BuD::MeshDetails BaseBezierPatch::LoadPatchPrimitiveMesh()
 			{ "INS_COLOR", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 1, 48 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 		}
 	);
+}
 
-	return BuD::MeshDetails();
+BuD::MeshDetails BaseBezierPatch::LoadPolygonPrimitiveMesh()
+{
+	auto meshLoader = BuD::MeshLoader();
+
+	return meshLoader.LoadPrimitiveMesh(
+		BuD::MeshPrimitiveType::POINT_STANDARD,
+		{
+			{ "INS_POINT", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 1, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_POINT", 1,  DXGI_FORMAT_R32G32B32_FLOAT, 1, 3 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_POINT", 2,  DXGI_FORMAT_R32G32B32_FLOAT, 1, 6 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_POINT", 3,  DXGI_FORMAT_R32G32B32_FLOAT, 1, 9 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_POINT", 4,  DXGI_FORMAT_R32G32B32_FLOAT, 1, 12 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_POINT", 5,  DXGI_FORMAT_R32G32B32_FLOAT, 1, 15 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_POINT", 6,  DXGI_FORMAT_R32G32B32_FLOAT, 1, 18 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_POINT", 7,  DXGI_FORMAT_R32G32B32_FLOAT, 1, 21 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_POINT", 8,  DXGI_FORMAT_R32G32B32_FLOAT, 1, 24 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_POINT", 9,  DXGI_FORMAT_R32G32B32_FLOAT, 1, 27 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_POINT", 10, DXGI_FORMAT_R32G32B32_FLOAT, 1, 30 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_POINT", 11, DXGI_FORMAT_R32G32B32_FLOAT, 1, 33 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_POINT", 12, DXGI_FORMAT_R32G32B32_FLOAT, 1, 36 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_POINT", 13, DXGI_FORMAT_R32G32B32_FLOAT, 1, 39 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_POINT", 14, DXGI_FORMAT_R32G32B32_FLOAT, 1, 42 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_POINT", 15, DXGI_FORMAT_R32G32B32_FLOAT, 1, 45 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_COLOR", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 1, 48 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+		}
+	);
 }
 
 dxm::Vector3 BaseBezierPatch::SELECTED_COLOR = { 0.8f, 0.6f, 0.0f };

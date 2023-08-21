@@ -8,4 +8,6 @@ public:
 	BezierPatchC2(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints);
 
 	virtual void Accept(AbstractVisitor& visitor) override;
+
+	virtual void TogglePolygon(bool polygonOn) override;
 };

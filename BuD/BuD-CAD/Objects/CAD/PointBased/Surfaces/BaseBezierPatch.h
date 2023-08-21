@@ -9,6 +9,9 @@ public:
 
 	virtual void OnPointModify() override;
 
+	virtual bool ShouldDisplayPolygon();
+	virtual void TogglePolygon(bool polygonOn) = 0;
+
 	struct BezierPatchSegmentInstanceData
 	{
 		std::array<dxm::Vector3, 16> m_ControlPoints;
@@ -23,4 +26,7 @@ public:
 
 protected:
 	BuD::MeshDetails LoadPatchPrimitiveMesh();
+	BuD::MeshDetails LoadPolygonPrimitiveMesh();
+
+	bool m_DisplayBezierPolygon;
 };

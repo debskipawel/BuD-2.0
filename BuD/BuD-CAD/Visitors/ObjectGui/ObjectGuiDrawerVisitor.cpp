@@ -70,34 +70,38 @@ void ObjectGuiDrawerVisitor::Visit(Point& point)
 
 void ObjectGuiDrawerVisitor::Visit(BezierCurveC0& curve)
 {
+	DrawGuiForTag(curve);
+
+	ImGui::Separator();
+
 	DrawGuiForSelectedTransform();
 	
 	ImGui::Separator();
 
-	DrawGuiForTag(curve);
-
-	ImGui::Separator();
-
-	auto borderOn = curve.ShouldRenderControlPointBorder();
-	ImGui::Checkbox("Toggle border", &borderOn);
-
-	curve.RenderControlPointBorder(borderOn);
+	auto borderOn = curve.ShouldDisplayPolygon();
+	
+	if (ImGui::Checkbox("Toggle polygon ###curve_polygon", &borderOn))
+	{
+		curve.TogglePolygon(borderOn);
+	}
 }
 
 void ObjectGuiDrawerVisitor::Visit(BezierCurveC2& curve)
 {
-	DrawGuiForSelectedTransform();
-
-	ImGui::Separator();
-
 	DrawGuiForTag(curve);
 
 	ImGui::Separator();
 
-	auto borderOn = curve.ShouldRenderControlPointBorder();
-	ImGui::Checkbox("Toggle border", &borderOn);
+	DrawGuiForSelectedTransform();
 
-	curve.RenderControlPointBorder(borderOn);
+	ImGui::Separator();
+
+	auto borderOn = curve.ShouldDisplayPolygon();
+	
+	if (ImGui::Checkbox("Toggle polygon ###curve_polygon", &borderOn))
+	{
+		curve.TogglePolygon(borderOn);
+	}
 }
 
 void ObjectGuiDrawerVisitor::Visit(YukselInterpolatingCurveC2& curve)
@@ -116,6 +120,15 @@ void ObjectGuiDrawerVisitor::Visit(BezierPatchC0& patch)
 	ImGui::Separator();
 
 	DrawGuiForSelectedTransform();
+
+	ImGui::Separator();
+
+	auto polygonOn = patch.ShouldDisplayPolygon();
+
+	if (ImGui::Checkbox("Toggle Polygon ###patch_polygon", &polygonOn))
+	{
+		patch.TogglePolygon(polygonOn);
+	}
 }
 
 void ObjectGuiDrawerVisitor::Visit(BezierPatchC2& patch)
@@ -125,6 +138,15 @@ void ObjectGuiDrawerVisitor::Visit(BezierPatchC2& patch)
 	ImGui::Separator();
 
 	DrawGuiForSelectedTransform();
+
+	ImGui::Separator();
+
+	auto polygonOn = patch.ShouldDisplayPolygon();
+
+	if (ImGui::Checkbox("Toggle Polygon ###patch_polygon", &polygonOn))
+	{
+		patch.TogglePolygon(polygonOn);
+	}
 }
 
 void ObjectGuiDrawerVisitor::Visit(BezierSurfaceC0& surface)
@@ -133,7 +155,16 @@ void ObjectGuiDrawerVisitor::Visit(BezierSurfaceC0& surface)
 	
 	ImGui::Separator();
 
-	DrawGuiForSelectedTransform();	
+	DrawGuiForSelectedTransform();
+
+	ImGui::Separator();
+
+	auto polygonOn = surface.ShouldDisplayPolygon();
+
+	if (ImGui::Checkbox("Toggle Polygon ###surface_polygon", &polygonOn))
+	{
+		surface.TogglePolygon(polygonOn);
+	}
 }
 
 void ObjectGuiDrawerVisitor::DrawGuiForSelectedTransform()

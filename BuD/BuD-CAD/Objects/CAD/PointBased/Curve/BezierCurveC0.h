@@ -11,7 +11,7 @@ public:
 
 	virtual void OnPointModify() override;
 
-	virtual void RenderControlPointBorder(bool borderOn) override;
+	virtual void TogglePolygon(bool borderOn) override;
 
 	dxm::Vector3 m_Color = dxm::Vector3::One;
 

@@ -10,12 +10,18 @@ BezierPatchC0::BezierPatchC0(BuD::Scene& scene, std::vector<std::weak_ptr<Point>
 	OnPointModify();
 
 	auto patchMesh = LoadPatchPrimitiveMesh();
+	auto polygonMesh = LoadPolygonPrimitiveMesh();
 
-	auto pipeline = BuD::ShaderPipeline {};
-	pipeline.m_VertexShader = BuD::ShaderLoader::VSLoad("./Resources/Shaders/PointBased/BezierPatchC0/bezier_patch_c0_vs.hlsl", { sizeof(dxm::Matrix) });
-	pipeline.m_HullShader = BuD::ShaderLoader::HSLoad("./Resources/Shaders/PointBased/BezierPatchC0/bezier_patch_c0_hs.hlsl");
-	pipeline.m_DomainShader = BuD::ShaderLoader::DSLoad("./Resources/Shaders/PointBased/BezierPatchC0/bezier_patch_c0_ds.hlsl", { sizeof(dxm::Matrix) });
-	pipeline.m_PixelShader = BuD::ShaderLoader::PSLoad("./Resources/Shaders/PointBased/BezierPatchC0/bezier_patch_c0_ps.hlsl");
+	auto patchPipeline = BuD::ShaderPipeline {};
+	patchPipeline.m_VertexShader = BuD::ShaderLoader::VSLoad("./Resources/Shaders/PointBased/BezierPatchC0/bezier_patch_c0_vs.hlsl", { sizeof(dxm::Matrix) });
+	patchPipeline.m_HullShader = BuD::ShaderLoader::HSLoad("./Resources/Shaders/PointBased/BezierPatchC0/bezier_patch_c0_hs.hlsl");
+	patchPipeline.m_DomainShader = BuD::ShaderLoader::DSLoad("./Resources/Shaders/PointBased/BezierPatchC0/bezier_patch_c0_ds.hlsl", { sizeof(dxm::Matrix) });
+	patchPipeline.m_PixelShader = BuD::ShaderLoader::PSLoad("./Resources/Shaders/PointBased/BezierPatchC0/bezier_patch_c0_ps.hlsl");
+
+	auto polygonPipeline = BuD::ShaderPipeline {};
+	polygonPipeline.m_VertexShader = BuD::ShaderLoader::VSLoad("./Resources/Shaders/PointBased/BezierPatchC0/bezier_patch_c0_vs.hlsl", { sizeof(dxm::Matrix) });
+	polygonPipeline.m_GeometryShader = BuD::ShaderLoader::GSLoad("./Resources/Shaders/PointBased/BezierPatchC0/bezier_patch_c0_polygon_gs.hlsl", { sizeof(dxm::Matrix) });
+	polygonPipeline.m_PixelShader = BuD::ShaderLoader::PSLoad("./Resources/Shaders/PointBased/BezierPatchC0/bezier_patch_c0_polygon_ps.hlsl");
 
 	auto instancing = BuD::InstanceComponent{};
 	instancing.m_InstanceCallback = [this]()
@@ -29,13 +35,13 @@ BezierPatchC0::BezierPatchC0(BuD::Scene& scene, std::vector<std::weak_ptr<Point>
 		return instanceData;
 	};
 
-	auto renderingPass = BuD::RenderingPass{};
-	renderingPass.m_Mesh = patchMesh;
-	renderingPass.m_Pipeline = pipeline;
-	renderingPass.m_Instancing = instancing;
-	renderingPass.m_RasterizerDescription.m_CullType = BuD::CullType::NONE;
-	renderingPass.m_RasterizerDescription.m_FillMode = BuD::FillMode::WIREFRAME;
-	renderingPass.m_PreRenderCallback = [](const BuD::RenderingPass& renderingPass, const BuD::Scene& scene)
+	auto patchRenderingPass = BuD::RenderingPass{};
+	patchRenderingPass.m_Mesh = patchMesh;
+	patchRenderingPass.m_Pipeline = patchPipeline;
+	patchRenderingPass.m_Instancing = instancing;
+	patchRenderingPass.m_RasterizerDescription.m_CullType = BuD::CullType::NONE;
+	patchRenderingPass.m_RasterizerDescription.m_FillMode = BuD::FillMode::WIREFRAME;
+	patchRenderingPass.m_PreRenderCallback = [](const BuD::RenderingPass& renderingPass, const BuD::Scene& scene)
 	{
 		auto& vs = renderingPass.m_Pipeline.m_VertexShader;
 		auto& ds = renderingPass.m_Pipeline.m_DomainShader;
@@ -49,7 +55,26 @@ BezierPatchC0::BezierPatchC0(BuD::Scene& scene, std::vector<std::weak_ptr<Point>
 		ds->UpdateConstantBuffer(0, &projMtx, sizeof(dxm::Matrix));
 	};
 
-	std::vector<BuD::RenderingPass> renderingPasses = { renderingPass };
+	auto polygonRenderingPass = BuD::RenderingPass{};
+	polygonRenderingPass.m_ShouldSkip = !m_DisplayBezierPolygon;
+	polygonRenderingPass.m_Mesh = polygonMesh;
+	polygonRenderingPass.m_Pipeline = polygonPipeline;
+	polygonRenderingPass.m_Instancing = instancing;
+	polygonRenderingPass.m_PreRenderCallback = [](const BuD::RenderingPass& renderingPass, const BuD::Scene& scene)
+	{
+		auto& vs = renderingPass.m_Pipeline.m_VertexShader;
+		auto& gs = renderingPass.m_Pipeline.m_GeometryShader;
+
+		auto camera = scene.ActiveCamera();
+
+		auto viewMtx = camera->ViewMatrix();
+		auto projMtx = BuD::Renderer::ProjectionMatrix();
+
+		vs->UpdateConstantBuffer(0, &viewMtx, sizeof(dxm::Matrix));
+		gs->UpdateConstantBuffer(0, &projMtx, sizeof(dxm::Matrix));
+	};
+
+	std::vector<BuD::RenderingPass> renderingPasses = { patchRenderingPass, polygonRenderingPass };
 
 	m_SceneEntity.AddComponent<BuD::IRenderable>(renderingPasses);
 }
@@ -57,4 +82,17 @@ BezierPatchC0::BezierPatchC0(BuD::Scene& scene, std::vector<std::weak_ptr<Point>
 void BezierPatchC0::Accept(AbstractVisitor& visitor)
 {
 	visitor.Visit(*this);
+}
+
+void BezierPatchC0::TogglePolygon(bool polygonOn)
+{
+	if (m_DisplayBezierPolygon == polygonOn)
+	{
+		return;
+	}
+
+	m_DisplayBezierPolygon = polygonOn;
+
+	auto& renderingComponent = m_SceneEntity.GetComponent<BuD::IRenderable>();
+	renderingComponent.RenderingPasses[1].m_ShouldSkip = !m_DisplayBezierPolygon;
 }
