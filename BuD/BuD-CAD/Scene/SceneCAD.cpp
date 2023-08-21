@@ -11,6 +11,7 @@
 #include <Objects/CAD/PointBased/Surfaces/BezierPatchC2.h>
 
 #include <Objects/CAD/PointBased/Surfaces/BezierSurfaceC0.h>
+#include <Objects/CAD/PointBased/Surfaces/BezierSurfaceC2.h>
 
 SceneCAD::SceneCAD()
 	: m_Scene(), m_ObjectList()
@@ -130,6 +131,28 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreateCylinderBezierSurfaceC0(dxm::Vecto
 	m_ObjectList.emplace(surface->Id(), surface);
 
 	BuD::Log::WriteInfo("Successfully created a cylinder C0 Bezier surface.");
+
+	return surface;
+}
+
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFlatBezierSurfaceC2(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV)
+{
+	auto surface = std::make_shared<BezierSurfaceC2>(*this, position, patchesU, pachesV, false);
+
+	m_ObjectList.emplace(surface->Id(), surface);
+
+	BuD::Log::WriteInfo("Successfully created a flat C2 Bezier surface.");
+
+	return surface;
+}
+
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateCylinderBezierSurfaceC2(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV)
+{
+	auto surface = std::make_shared<BezierSurfaceC2>(*this, position, patchesU, pachesV, true);
+
+	m_ObjectList.emplace(surface->Id(), surface);
+
+	BuD::Log::WriteInfo("Successfully created a cylinder C2 Bezier surface.");
 
 	return surface;
 }

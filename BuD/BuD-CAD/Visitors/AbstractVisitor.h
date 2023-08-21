@@ -10,6 +10,7 @@
 #include <Objects/CAD/PointBased/Curve/YukselInterpolatingCurveC2.h>
 
 #include <Objects/CAD/PointBased/Surfaces/BezierSurfaceC0.h>
+#include <Objects/CAD/PointBased/Surfaces/BezierSurfaceC2.h>
 #include <Objects/CAD/PointBased/Surfaces/BezierPatchC0.h>
 #include <Objects/CAD/PointBased/Surfaces/BezierPatchC2.h>
 
@@ -30,8 +31,8 @@ public:
 	virtual void Visit(BezierPatchC0& patch) {}
 	virtual void Visit(BezierPatchC2& patch) {}
 	
-	virtual void Visit(BezierSurfaceC0& patch) {}
-	//virtual void Visit(BezierPatchC2& patch) {}
+	virtual void Visit(BezierSurfaceC0& surface) {}
+	virtual void Visit(BezierSurfaceC2& surface) {}
 
 protected:
 	std::weak_ptr<SceneObjectCAD> m_Caller;

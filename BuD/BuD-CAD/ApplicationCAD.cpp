@@ -15,9 +15,6 @@ ApplicationCAD::ApplicationCAD()
 
 	m_MouseBehaviorLayer = std::make_unique<MainMouseBehaviorLayer>(m_MainDataLayer);
 	m_KeyboardBehaviorLayer = std::make_unique<MainKeyboardBehaviorLayer>(m_MainDataLayer);
-
-	// TODO: delete this code. just temporary startup benchmarking stuff.
-	m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateCylinderBezierSurfaceC0(dxm::Vector3::Zero, 4, 2);
 }
 
 void ApplicationCAD::OnUpdate(float deltaTime)

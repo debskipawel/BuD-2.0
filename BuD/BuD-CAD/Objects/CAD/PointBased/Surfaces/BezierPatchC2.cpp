@@ -19,9 +19,9 @@ BezierPatchC2::BezierPatchC2(BuD::Scene& scene, std::vector<std::weak_ptr<Point>
 	patchPipeline.m_PixelShader = BuD::ShaderLoader::PSLoad("./Resources/Shaders/PointBased/BezierPatchC2/bezier_patch_c2_ps.hlsl");
 
 	auto polygonPipeline = BuD::ShaderPipeline{};
-	polygonPipeline.m_VertexShader = BuD::ShaderLoader::VSLoad("./Resources/Shaders/PointBased/BezierPatchC0/bezier_patch_c0_vs.hlsl", { sizeof(dxm::Matrix) });
-	polygonPipeline.m_GeometryShader = BuD::ShaderLoader::GSLoad("./Resources/Shaders/PointBased/BezierPatchC0/bezier_patch_c0_polygon_gs.hlsl", { sizeof(dxm::Matrix) });
-	polygonPipeline.m_PixelShader = BuD::ShaderLoader::PSLoad("./Resources/Shaders/PointBased/BezierPatchC0/bezier_patch_c0_polygon_ps.hlsl");
+	polygonPipeline.m_VertexShader = BuD::ShaderLoader::VSLoad("./Resources/Shaders/PointBased/BezierPatchC2/bezier_patch_c2_vs.hlsl", { sizeof(dxm::Matrix) });
+	polygonPipeline.m_GeometryShader = BuD::ShaderLoader::GSLoad("./Resources/Shaders/PointBased/BezierPatchC2/bezier_patch_c2_polygon_gs.hlsl", { sizeof(dxm::Matrix) });
+	polygonPipeline.m_PixelShader = BuD::ShaderLoader::PSLoad("./Resources/Shaders/PointBased/BezierPatchC2/bezier_patch_c2_polygon_ps.hlsl");
 
 	auto instancing = BuD::InstanceComponent{};
 	instancing.m_InstanceCallback = [this]()

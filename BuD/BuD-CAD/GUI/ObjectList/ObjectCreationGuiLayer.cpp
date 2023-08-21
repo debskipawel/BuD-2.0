@@ -5,7 +5,7 @@
 #include <Visitors/PointBased/PointAddedVisitor.h>
 
 ObjectCreationGuiLayer::ObjectCreationGuiLayer(MainDataLayer& dataLayer)
-	: BaseGuiLayer(dataLayer)
+	: BaseGuiLayer(dataLayer), m_OpenPopupForSurfaceC0(), m_OpenPopupForSurfaceC2()
 {
 	m_Buttons.emplace_back(ButtonInfo{ "Create torus", [this]() { CreateTorus(); } });
 	m_Buttons.emplace_back(ButtonInfo{ "Create point", [this]() { CreatePoint(); } });
@@ -19,7 +19,7 @@ void ObjectCreationGuiLayer::DrawGui()
 	{
 		auto panelWidth = ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x;
 
-		constexpr float MAX_BUTTON_WIDTH = 150.0f;
+		constexpr float MAX_BUTTON_WIDTH = 200.0f;
 		auto buttonsInLine = (int)(ceil(panelWidth / MAX_BUTTON_WIDTH));
 
 		auto& style = ImGui::GetStyle();
@@ -150,6 +150,54 @@ void ObjectCreationGuiLayer::DrawGuiForSurfaceCreationC0()
 
 void ObjectCreationGuiLayer::DrawGuiForSurfaceCreationC2()
 {
+	if (m_OpenPopupForSurfaceC2)
+	{
+		ImGui::OpenPopup("Create C2 surface ###surface_c2_creation_panel");
+	}
+
+	if (ImGui::BeginPopupModal("Create C2 surface ###surface_c2_creation_panel", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoResize))
+	{
+		ImGui::DragFloat3("Position", (float*)&m_SurfaceParametersC2.m_Position, 0.1f);
+		ImGui::DragInt("U patches", (int*)&m_SurfaceParametersC2.m_PatchesU, 0.2f, 1, 50, "%d", ImGuiSliderFlags_AlwaysClamp);
+		ImGui::DragInt("V patches", (int*)&m_SurfaceParametersC2.m_PatchesV, 0.2f, 1, 50, "%d", ImGuiSliderFlags_AlwaysClamp);
+		ImGui::Checkbox("Cylinder", &m_SurfaceParametersC2.m_Cylinder);
+
+		auto max = ImGui::GetWindowContentRegionMax();
+		auto min = ImGui::GetWindowContentRegionMin();
+
+		auto& style = ImGui::GetStyle();
+		auto buttonWidth = 0.5f * (max.x - min.x - style.ItemInnerSpacing.x * 3);
+
+		ImVec2 size = { buttonWidth, 0 };
+
+		if (ImGui::Button("OK", size))
+		{
+			if (m_SurfaceParametersC2.m_Cylinder)
+			{
+				m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateCylinderBezierSurfaceC2(m_SurfaceParametersC2.m_Position, m_SurfaceParametersC2.m_PatchesU, m_SurfaceParametersC2.m_PatchesV);
+			}
+			else
+			{
+				m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateFlatBezierSurfaceC2(m_SurfaceParametersC2.m_Position, m_SurfaceParametersC2.m_PatchesU, m_SurfaceParametersC2.m_PatchesV);
+
+			}
+
+			m_OpenPopupForSurfaceC2 = false;
+			m_MainDataLayer.m_AppStateDataLayer.Unfreeze();
+			ImGui::CloseCurrentPopup();
+		}
+
+		ImGui::SameLine();
+
+		if (ImGui::Button("Cancel", size))
+		{
+			m_OpenPopupForSurfaceC2 = false;
+			m_MainDataLayer.m_AppStateDataLayer.Unfreeze();
+			ImGui::CloseCurrentPopup();
+		}
+
+		ImGui::EndPopup();
+	}
 }
 
 ObjectCreationGuiLayer::SurfaceCreationParameters::SurfaceCreationParameters()

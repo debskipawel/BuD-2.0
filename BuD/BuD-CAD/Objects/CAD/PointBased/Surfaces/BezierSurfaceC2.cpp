@@ -1,14 +1,13 @@
-#include "BezierSurfaceC0.h"
+#include "BezierSurfaceC2.h"
 
 #include <numbers>
 
-#include <Objects/CAD/PointBased/Surfaces/BezierPatchC0.h>
 #include <Visitors/AbstractVisitor.h>
 
-BezierSurfaceC0::BezierSurfaceC0(SceneCAD& scene, dxm::Vector3 position, uint32_t sizeU, uint32_t sizeV, bool cylinder)
+BezierSurfaceC2::BezierSurfaceC2(SceneCAD& scene, dxm::Vector3 position, uint32_t sizeU, uint32_t sizeV, bool cylinder)
 	: BaseBezierSurface(scene.m_Scene, sizeU, sizeV, cylinder)
 {
-	m_Tag = std::format("C0 Bezier surface {}", Id());
+	m_Tag = std::format("C2 Bezier surface {}", Id());
 
 	if (cylinder)
 	{
@@ -18,46 +17,31 @@ BezierSurfaceC0::BezierSurfaceC0(SceneCAD& scene, dxm::Vector3 position, uint32_
 
 		auto cylinderMainAxis = dxm::Vector3::UnitZ;
 
-		auto pointStepV = patchWidthV / 3 * cylinderMainAxis;
-
-		float patchPivotAngle = 2.0f * std::numbers::pi / m_SizeU;
+		auto pointStepV = patchWidthV * cylinderMainAxis;
 		
+		auto patchPivotAngle = 2.0f * std::numbers::pi_v<float> / m_SizeU;
+
 		auto ca = cosf(patchPivotAngle), sa = sinf(patchPivotAngle);
-		auto scaleFactor = 4.0f / 3.0f * tanf(0.25f * patchPivotAngle);
+
+		auto pointsCountU = m_SizeU;
+		auto pointsCountV = m_SizeV + 3;
 
 		auto radiusVector = cylinderRadius * dxm::Vector3::UnitY;
 
-		for (int i = 0; i < 3 * m_SizeV + 1; i++)
+		for (int i = 0; i < pointsCountV; i++)
 		{
-			auto startingPosition = position - 0.5f * m_SizeV * cylinderMainAxis + i * pointStepV;
+			auto startPosition = position + (i - 0.5f * pointsCountV) * pointStepV;
 
-			for (int j = 0; j < m_SizeU; j++)
+			for (int j = 0; j < pointsCountU; j++)
 			{
-				auto previousRadiusVector = radiusVector;
-				auto tangent = cylinderMainAxis.Cross(previousRadiusVector);
-				tangent.Normalize();
+				auto point = scene.CreatePoint(startPosition + radiusVector);
+				m_ControlPoints.push_back(std::dynamic_pointer_cast<Point>(point.lock()));
 
-				auto nextRadiusVector = ca * previousRadiusVector + sa * tangent;
-				auto nextTangent = cylinderMainAxis.Cross(nextRadiusVector);
-				nextTangent.Normalize();
+				auto tangent = cylinderMainAxis.Cross(radiusVector);
 
-				auto position0 = startingPosition + previousRadiusVector;
-				auto position1 = position0 + scaleFactor * tangent;
-				auto position2 = startingPosition + nextRadiusVector - scaleFactor * nextTangent;
-
-				auto point0 = scene.CreatePoint(position0);
-				auto point1 = scene.CreatePoint(position1);
-				auto point2 = scene.CreatePoint(position2);
-
-				m_ControlPoints.push_back(std::dynamic_pointer_cast<Point>(point0.lock()));
-				m_ControlPoints.push_back(std::dynamic_pointer_cast<Point>(point1.lock()));
-				m_ControlPoints.push_back(std::dynamic_pointer_cast<Point>(point2.lock()));
-
-				radiusVector = nextRadiusVector;
+				radiusVector = ca * radiusVector + sa * tangent;
 			}
 		}
-
-		auto pointsCountU = m_SizeU * 3;
 
 		for (int i = 0; i < m_SizeV; i++)
 		{
@@ -65,8 +49,8 @@ BezierSurfaceC0::BezierSurfaceC0(SceneCAD& scene, dxm::Vector3 position, uint32_
 			{
 				std::vector<std::weak_ptr<Point>> controlPoints(16);
 
-				auto startPointU = j * 3;
-				auto startPointV = i * 3;
+				auto startPointU = j;
+				auto startPointV = i;
 
 				for (int point = 0; point < 16; point++)
 				{
@@ -78,7 +62,7 @@ BezierSurfaceC0::BezierSurfaceC0(SceneCAD& scene, dxm::Vector3 position, uint32_
 					controlPoints[point] = m_ControlPoints[pointIndex];
 				}
 
-				auto patch = scene.CreateBezierPatchC0(controlPoints);
+				auto patch = scene.CreateBezierPatchC2(controlPoints);
 				auto patchShared = std::dynamic_pointer_cast<BaseBezierPatch>(patch.lock());
 
 				m_BezierPatches.push_back(patchShared);
@@ -93,15 +77,18 @@ BezierSurfaceC0::BezierSurfaceC0(SceneCAD& scene, dxm::Vector3 position, uint32_
 	}
 	else
 	{
+		auto uAxis = dxm::Vector3::UnitX;
+		auto vAxis = dxm::Vector3::UnitZ;
+
 		auto patchWidthU = 1.0f;
 		auto patchWidthV = 1.0f;
 
-		auto startPosition = position - m_SizeU * patchWidthU / 2 * dxm::Vector3::UnitX - m_SizeV * patchWidthV / 2 * dxm::Vector3::UnitZ;
-		auto pointStepU = patchWidthU / 3 * dxm::Vector3::UnitX;
-		auto pointStepV = patchWidthV / 3 * dxm::Vector3::UnitZ;
+		auto startPosition = position - (m_SizeU + 2) * patchWidthU / 2 * uAxis - (m_SizeV + 2) * patchWidthV / 2 * vAxis;
+		auto pointStepU = patchWidthU * uAxis;
+		auto pointStepV = patchWidthV * vAxis;
 
-		auto pointsCountU = m_SizeU * 3 + 1;
-		auto pointsCountV = m_SizeV * 3 + 1;
+		auto pointsCountU = m_SizeU + 3;
+		auto pointsCountV = m_SizeV + 3;
 
 		for (int i = 0; i < pointsCountV; i++)
 		{
@@ -120,8 +107,8 @@ BezierSurfaceC0::BezierSurfaceC0(SceneCAD& scene, dxm::Vector3 position, uint32_
 			{
 				std::vector<std::weak_ptr<Point>> controlPoints(16);
 
-				auto startPointU = j * 3;
-				auto startPointV = i * 3;
+				auto startPointU = j;
+				auto startPointV = i;
 
 				for (int point = 0; point < 16; point++)
 				{
@@ -133,7 +120,7 @@ BezierSurfaceC0::BezierSurfaceC0(SceneCAD& scene, dxm::Vector3 position, uint32_
 					controlPoints[point] = m_ControlPoints[pointIndex];
 				}
 
-				auto patch = scene.CreateBezierPatchC0(controlPoints);
+				auto patch = scene.CreateBezierPatchC2(controlPoints);
 				auto patchShared = std::dynamic_pointer_cast<BaseBezierPatch>(patch.lock());
 
 				m_BezierPatches.push_back(patchShared);
@@ -148,12 +135,12 @@ BezierSurfaceC0::BezierSurfaceC0(SceneCAD& scene, dxm::Vector3 position, uint32_
 	}
 }
 
-void BezierSurfaceC0::Accept(AbstractVisitor& visitor)
+void BezierSurfaceC2::Accept(AbstractVisitor& visitor)
 {
 	visitor.Visit(*this);
 }
 
-void BezierSurfaceC0::OnPointModify()
+void BezierSurfaceC2::OnPointModify()
 {
 	for (auto& patch : m_BezierPatches)
 	{

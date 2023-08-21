@@ -161,7 +161,25 @@ void ObjectGuiDrawerVisitor::Visit(BezierSurfaceC0& surface)
 
 	auto polygonOn = surface.ShouldDisplayPolygon();
 
-	if (ImGui::Checkbox("Toggle Polygon ###surface_polygon", &polygonOn))
+	if (ImGui::Checkbox("Toggle Bezier polygon ###surface_polygon", &polygonOn))
+	{
+		surface.TogglePolygon(polygonOn);
+	}
+}
+
+void ObjectGuiDrawerVisitor::Visit(BezierSurfaceC2& surface)
+{
+	DrawGuiForTag(surface);
+
+	ImGui::Separator();
+
+	DrawGuiForSelectedTransform();
+
+	ImGui::Separator();
+
+	auto polygonOn = surface.ShouldDisplayPolygon();
+
+	if (ImGui::Checkbox("Toggle De Boor polygon ###surface_polygon", &polygonOn))
 	{
 		surface.TogglePolygon(polygonOn);
 	}

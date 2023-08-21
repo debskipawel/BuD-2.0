@@ -222,6 +222,9 @@
     <ClInclude Include="Objects\CAD\PointBased\Surfaces\BezierSurfaceC0.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BezierSurfaceC2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -411,6 +414,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Objects\CAD\PointBased\Surfaces\BezierSurfaceC0.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BezierSurfaceC2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

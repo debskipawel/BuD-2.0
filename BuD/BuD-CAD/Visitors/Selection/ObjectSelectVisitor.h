@@ -18,11 +18,12 @@ public:
 	virtual void Visit(BezierPatchC2& patch) override;
 
 	virtual void Visit(BezierSurfaceC0& surface) override;
-	//virtual void Visit(BezierSurfaceC2& surface) override;
+	virtual void Visit(BezierSurfaceC2& surface) override;
 
 protected:
 	virtual void CommonSelectCurve(BaseCurve& curve);
 	virtual void CommonSelectPatch(BaseBezierPatch& patch);
+	virtual void CommonSelectSurface(BaseBezierSurface& surface);
 
 	virtual void SelectManually(std::weak_ptr<SceneObjectCAD> object);
 	virtual void SelectForTransform(std::weak_ptr<SceneObjectCAD> object);

@@ -19,5 +19,5 @@ public:
 	virtual void Visit(BezierPatchC2& patch) override;
 
 	virtual void Visit(BezierSurfaceC0& surface) override;
-	//virtual void Visit(BezierSurfaceC2& surface) override;
+	virtual void Visit(BezierSurfaceC2& surface) override;
 };
