@@ -6,5 +6,5 @@
 #include <Models/Curves/InterpolatedC2.h>
 #include <Models/Torus.h>
 
-#include <Scene/Scene.h>
-#include <Scene/SceneSerializer.h>
+#include <Utils/Scene/Scene.h>
+#include <Utils/Scene/SceneSerializer.h>

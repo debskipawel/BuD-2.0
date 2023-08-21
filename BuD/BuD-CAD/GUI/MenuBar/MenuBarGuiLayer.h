@@ -22,10 +22,15 @@ protected:
 		BuD::RenderingMode m_RenderingMode;
 	};
 
-	virtual void DrawSerializationSettings();
+	virtual void DrawFileSettings();
+	virtual void DrawEditSettings();
 	virtual void DrawRendererSettings();
 
 	virtual void DrawMultiEyeSettingsPopup();
+
+	virtual void OpenSaveSceneDialog();
+	virtual void DrawSaveSceneDialog();
+	virtual void Save();
 
 	std::vector<MainMenuItem> m_MenuItems;
 	std::vector<RendererModeMenuItem> m_RendererModeMenuItems;

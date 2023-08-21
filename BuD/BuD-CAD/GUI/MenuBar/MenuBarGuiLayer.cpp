@@ -1,13 +1,17 @@
 #include "MenuBarGuiLayer.h"
 
 #include <imgui.h>
+#include <ImGuiFileDialog.h>
+#include <Serializer.h>
 
 #include <Visitors/Transform/UpdateTransformVisitor.h>
+#include <Visitors/Serialization/SerializationVisitor.h>
 
 MenuBarGuiLayer::MenuBarGuiLayer(MainDataLayer& dataLayer)
 	: BaseGuiLayer(dataLayer), m_MultiEyeSettingsPopupOpen(false)
 {
-    m_MenuItems.emplace_back("File", [this]() { DrawSerializationSettings(); });
+    m_MenuItems.emplace_back("File", [this]() { DrawFileSettings(); });
+    m_MenuItems.emplace_back("Edit", [this]() { DrawEditSettings(); });
     m_MenuItems.emplace_back("Renderer", [this]() { DrawRendererSettings(); });
 
     m_RendererModeMenuItems.emplace_back("Standard mode", BuD::RenderingMode::STANDARD);
@@ -32,9 +36,42 @@ void MenuBarGuiLayer::DrawGui()
 	}
 
     DrawMultiEyeSettingsPopup();
+    DrawSaveSceneDialog();
 }
 
-void MenuBarGuiLayer::DrawSerializationSettings()
+void MenuBarGuiLayer::DrawFileSettings()
+{
+    if (ImGui::MenuItem("New scene"))
+    {
+
+    }
+
+    if (ImGui::MenuItem("Load scene"))
+    {
+
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem("Save", "Ctrl+S"))
+    {
+        if (m_MainDataLayer.m_SceneDataLayer.m_PathToFile.empty())
+        {
+            OpenSaveSceneDialog();
+        }
+        else
+        {
+            Save();
+        }
+    }
+
+    if (ImGui::MenuItem("Save as...", "Ctrl+Shift+S"))
+    {
+        OpenSaveSceneDialog();
+    }
+}
+
+void MenuBarGuiLayer::DrawEditSettings()
 {
     auto& selectedTransform = m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform;
 
@@ -44,7 +81,7 @@ void MenuBarGuiLayer::DrawSerializationSettings()
     if (ImGui::MenuItem("Undo", "Ctrl+Z", nullptr, canUndo))
     {
         auto undone = m_MainDataLayer.m_SceneDataLayer.m_SelectedForTransform.Undo();
-        
+
         if (undone)
         {
             auto& cursor = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_CentroidCursor;
@@ -130,4 +167,63 @@ void MenuBarGuiLayer::DrawMultiEyeSettingsPopup()
 
         ImGui::EndPopup();
     }
+}
+
+void MenuBarGuiLayer::OpenSaveSceneDialog()
+{
+    m_MainDataLayer.m_AppStateDataLayer.Freeze();
+    
+    auto currentPath = m_MainDataLayer.m_SceneDataLayer.m_PathToFile.empty()
+        ? std::filesystem::current_path()
+        : m_MainDataLayer.m_SceneDataLayer.m_PathToFile;
+
+    auto fileDialog = ImGuiFileDialog::Instance();
+    fileDialog->OpenDialog("SceneFileDialog", "Choose scene file", ".json", (const char*)currentPath.c_str(), 1, nullptr, ImGuiFileDialogFlags_Modal);
+}
+
+void MenuBarGuiLayer::DrawSaveSceneDialog()
+{
+    auto fileDialog = ImGuiFileDialog::Instance();
+
+    bool flag = false;
+
+    if (fileDialog->Display("SceneFileDialog"))
+    {
+        flag = true;
+
+        if (fileDialog->IsOk())
+        {
+            std::string filePathName = fileDialog->GetFilePathName();
+
+            m_MainDataLayer.m_SceneDataLayer.m_PathToFile = filePathName;
+            Save();
+
+            m_MainDataLayer.m_AppStateDataLayer.Unfreeze();
+        }
+
+        fileDialog->Close();
+    }
+
+    if (flag && !fileDialog->IsOpened())
+    {
+        m_MainDataLayer.m_AppStateDataLayer.Unfreeze();
+    }
+}
+
+void MenuBarGuiLayer::Save()
+{
+    auto& filepath = m_MainDataLayer.m_SceneDataLayer.m_PathToFile;
+
+    auto& scene = MG1::Scene::Get();
+    scene.Clear();
+
+    std::unique_ptr<AbstractVisitor> serializationVisitor = std::make_unique<SerializationVisitor>();
+
+    for (auto& [id, object] : m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_ObjectList)
+    {
+        serializationVisitor->Visit(object);
+    }
+
+    auto serializer = MG1::SceneSerializer();
+    serializer.SaveScene(filepath);
 }
