@@ -28,6 +28,11 @@ SceneCAD::~SceneCAD()
 	m_ObjectList.clear();
 }
 
+void SceneCAD::Clear()
+{
+	m_ObjectList.clear();
+}
+
 void SceneCAD::DeleteObject(SceneObjectCAD& object)
 {
 	auto id = object.Id();

@@ -2,8 +2,8 @@
 
 #include <execution>
 
-BaseBezierSurface::BaseBezierSurface(BuD::Scene& scene, uint32_t sizeU, uint32_t sizeV, bool cylinder)
-	: PointBasedObjectCAD(scene, {}), m_SizeU(sizeU), m_SizeV(sizeV), m_Cylinder(cylinder)
+BaseBezierSurface::BaseBezierSurface(SceneCAD& scene, uint32_t sizeU, uint32_t sizeV, bool cylinder)
+	: SceneObjectCAD(scene.m_Scene), m_SizeU(sizeU), m_SizeV(sizeV), m_Cylinder(cylinder)
 {
 }
 

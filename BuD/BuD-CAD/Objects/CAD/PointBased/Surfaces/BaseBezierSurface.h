@@ -2,10 +2,12 @@
 
 #include <Objects/CAD/PointBased/Surfaces/BaseBezierPatch.h>
 
-class BaseBezierSurface : public PointBasedObjectCAD
+#include <Scene/SceneCAD.h>
+
+class BaseBezierSurface : public SceneObjectCAD
 {
 public:
-	BaseBezierSurface(BuD::Scene& scene, uint32_t sizeU, uint32_t sizeV, bool cylinder);
+	BaseBezierSurface(SceneCAD& scene, uint32_t sizeU, uint32_t sizeV, bool cylinder);
 
 	virtual bool ShouldDisplayPolygon();
 	virtual void TogglePolygon(bool polygonOn);
@@ -17,4 +19,8 @@ public:
 
 	static dxm::Vector3 SELECTED_COLOR;
 	static dxm::Vector3 UNSELECTED_COLOR;
+
+protected:
+	virtual std::vector<std::weak_ptr<Point>> CreateControlPointsForFlatSurface(SceneCAD& scene, dxm::Vector3 position, uint32_t sizeU, uint32_t sizeV) = 0;
+	virtual std::vector<std::weak_ptr<Point>> CreateControlPointsForCylinder(SceneCAD& scene, dxm::Vector3 position, uint32_t sizeU, uint32_t sizeV) = 0;
 };

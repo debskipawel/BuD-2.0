@@ -1,5 +1,10 @@
 #include "BaseSelectionSystem.h"
 
+void BaseSelectionSystem::Clear()
+{
+	m_SelectedObjects.clear();
+}
+
 void BaseSelectionSystem::Select(std::weak_ptr<SceneObjectCAD> sceneObject)
 {
 	auto sceneObjectShared = sceneObject.lock();

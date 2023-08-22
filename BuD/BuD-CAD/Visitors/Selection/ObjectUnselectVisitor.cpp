@@ -143,20 +143,20 @@ void ObjectUnselectVisitor::CommonUnselectSurface(BaseBezierSurface& surface)
 			patchShared->m_Color = BaseBezierPatch::UNSELECTED_COLOR;
 			patchShared->m_InstanceData.m_Color = BaseBezierPatch::UNSELECTED_COLOR;
 		}
-	}
 
-	for (auto& controlPoint : surface.m_ControlPoints)
-	{
-		auto controlPointShared = controlPoint.lock();
-
-		if (!controlPointShared)
+		for (auto& controlPoint : patchShared->m_ControlPoints)
 		{
-			continue;
-		}
+			auto controlPointShared = controlPoint.lock();
 
-		if (!m_SceneDataLayer.m_ManuallySelected.Selected(controlPointShared->Id()))
-		{
-			UnselectForTransform(controlPoint);
+			if (!controlPointShared)
+			{
+				continue;
+			}
+
+			if (!m_SceneDataLayer.m_ManuallySelected.Selected(controlPointShared->Id()))
+			{
+				UnselectForTransform(controlPoint);
+			}
 		}
 	}
 }

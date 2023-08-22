@@ -35,7 +35,6 @@ inline static const std::string g_schema = R"(
 			}
 		}
 	},
-	"required": ["camera"],
 	"additionalProperties": false,
 	"definitions": {
 		"normalizedValue": {

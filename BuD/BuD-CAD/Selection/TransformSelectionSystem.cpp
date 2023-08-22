@@ -4,6 +4,18 @@
 
 #include <Visitors/Transform/UpdateTransformVisitor.h>
 
+void TransformSelectionSystem::Clear()
+{
+	BaseSelectionSystem::Clear();
+
+	m_InitialTransforms.clear();
+	m_TransformActionList = TransformActionList();
+
+	m_GroupTransform = TransformComponent::IDENTITY;
+
+	UpdateCentroid();
+}
+
 void TransformSelectionSystem::Select(std::weak_ptr<SceneObjectCAD> sceneObject)
 {
 	auto sceneObjectShared = sceneObject.lock();

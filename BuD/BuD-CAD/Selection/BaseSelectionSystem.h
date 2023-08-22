@@ -7,6 +7,8 @@ class BaseSelectionSystem
 public:
 	virtual ~BaseSelectionSystem() = default;
 
+	virtual void Clear();
+
 	virtual void Select(std::weak_ptr<SceneObjectCAD> sceneObject);
 
 	virtual void Unselect(uint32_t sceneObjectId);

@@ -3,6 +3,14 @@
 #include <Visitors/Validation/ControlPointValidationVisitor.h>
 #include <Visitors/Validation/CanAddControlPointValidationVisitor.h>
 
+void ManualSelectionSystem::Clear()
+{
+    BaseSelectionSystem::Clear();
+
+    m_ValidatedForControlPoints = false;
+    m_ValidatedForAddingControlPoint = false;
+}
+
 void ManualSelectionSystem::Select(std::weak_ptr<SceneObjectCAD> sceneObject)
 {
     if (m_SelectedObjects.empty())

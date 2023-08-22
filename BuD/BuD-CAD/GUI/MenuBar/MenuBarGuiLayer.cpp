@@ -2,7 +2,8 @@
 
 #include <imgui.h>
 #include <ImGuiFileDialog.h>
-#include <Serializer.h>
+
+#include <Serializing/SceneSerializer.h>
 
 #include <Visitors/Transform/UpdateTransformVisitor.h>
 #include <Visitors/Serialization/SerializationVisitor.h>
@@ -52,13 +53,11 @@ void MenuBarGuiLayer::DrawFileSettings()
 
     if (ImGui::MenuItem("Save", "Ctrl+S"))
     {
-        if (m_MainDataLayer.m_SceneDataLayer.m_PathToFile.empty())
+        auto serializer = SceneSerializer(m_MainDataLayer);
+        
+        if (!serializer.Save())
         {
             OpenSaveSceneDialog();
-        }
-        else
-        {
-            Save();
         }
     }
 
@@ -190,10 +189,10 @@ void MenuBarGuiLayer::DrawSaveSceneDialog()
 
         if (fileDialog->IsOk())
         {
-            std::string filePathName = fileDialog->GetFilePathName();
-
-            m_MainDataLayer.m_SceneDataLayer.m_PathToFile = filePathName;
-            Save();
+            m_MainDataLayer.m_SceneDataLayer.m_PathToFile = fileDialog->GetFilePathName();
+            
+            auto serializer = SceneSerializer(m_MainDataLayer);
+            serializer.Save();
 
             m_MainDataLayer.m_AppStateDataLayer.Unfreeze();
         }
@@ -231,10 +230,10 @@ void MenuBarGuiLayer::DrawLoadSceneDialog()
 
         if (fileDialog->IsOk())
         {
-            std::string filePathName = fileDialog->GetFilePathName();
-
-            m_MainDataLayer.m_SceneDataLayer.m_PathToFile = filePathName;
-            Load();
+            m_MainDataLayer.m_SceneDataLayer.m_PathToFile = fileDialog->GetFilePathName();
+            
+            auto serializer = SceneSerializer(m_MainDataLayer);
+            serializer.Load();
 
             m_MainDataLayer.m_AppStateDataLayer.Unfreeze();
         }
@@ -246,53 +245,4 @@ void MenuBarGuiLayer::DrawLoadSceneDialog()
     {
         m_MainDataLayer.m_AppStateDataLayer.Unfreeze();
     }
-}
-
-void MenuBarGuiLayer::Save()
-{
-    auto& filepath = m_MainDataLayer.m_SceneDataLayer.m_PathToFile;
-
-    auto& scene = MG1::Scene::Get();
-    scene.Clear();
-
-    // TODO: add camera to the scene
-
-    std::unique_ptr<AbstractVisitor> serializationVisitor = std::make_unique<SerializationVisitor>();
-
-    for (auto& [id, object] : m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_ObjectList)
-    {
-        serializationVisitor->Visit(object);
-    }
-
-    auto serializer = MG1::SceneSerializer();
-    serializer.SaveScene(filepath);
-
-    BuD::Log::WriteInfo("Scene saved.");
-}
-
-void MenuBarGuiLayer::Load()
-{
-    auto& filepath = m_MainDataLayer.m_SceneDataLayer.m_PathToFile;
-
-    auto serializer = MG1::SceneSerializer();
-    
-    try
-    {
-        serializer.LoadScene(filepath);
-    }
-    catch (MG1::SerializerException e)
-    {
-        auto filename = filepath.filename();
-        auto message = std::format("Error while loading scene {}: {}", filename.string(), e.what());
-        
-        BuD::Log::WriteError(message);
-
-        return;
-    }
-
-    auto& scene = MG1::Scene::Get();
-    
-    // TODO: actually create new scene based on the serialized one
-
-    BuD::Log::WriteInfo("Scene loaded.");
 }

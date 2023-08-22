@@ -6,6 +6,9 @@ class ManualSelectionSystem : public BaseSelectionSystem
 {
 public:
 	explicit ManualSelectionSystem() = default;
+	explicit ManualSelectionSystem(const ManualSelectionSystem& other) = default;
+
+	virtual void Clear() override;
 
 	virtual void Select(std::weak_ptr<SceneObjectCAD> sceneObject) override;
 	virtual void Unselect(uint32_t sceneObjectId) override;

@@ -12,8 +12,11 @@ class SceneCAD
 {
 public:
 	SceneCAD();
+	SceneCAD(const SceneCAD& other) = default;
+	SceneCAD& operator=(const SceneCAD& other) = default;
 	~SceneCAD();
 
+	void Clear();
 	void DeleteObject(SceneObjectCAD& object);
 
 	std::weak_ptr<SceneObjectCAD> CreateTorus(dxm::Vector3 position);
