@@ -21,7 +21,25 @@ bool SceneSerializer::Save()
     auto& scene = MG1::Scene::Get();
     scene.Clear();
 
-    // TODO: add camera to the scene
+    auto camera = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_Scene.ActiveCamera();
+    auto viewMatrix = camera->ViewMatrix();
+    
+    dxm::Vector3 position, scale;
+    dxm::Quaternion rotation;
+    
+    if (viewMatrix.Decompose(position, rotation, scale))
+    {
+        auto eulerAngles = rotation.ToEuler();
+        auto focusPoint = camera->EyePosition() + camera->Front();
+
+        auto serializedCamera = MG1::Camera();
+        
+        serializedCamera.distance = 1.0f;
+        serializedCamera.focusPoint = { focusPoint.x, focusPoint.y, focusPoint.z };
+        serializedCamera.rotation = { DirectX::XMConvertToDegrees(eulerAngles.x), DirectX::XMConvertToDegrees(eulerAngles.y) };
+
+        scene.camera = serializedCamera;
+    }
 
     std::unique_ptr<AbstractVisitor> serializationVisitor = std::make_unique<SerializationVisitor>();
 
@@ -91,6 +109,24 @@ void SceneSerializer::ConstructLoadedScene()
 {
     auto& sceneCAD = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
     auto& scene = MG1::Scene::Get();
+
+    if (scene.camera.has_value())
+    {
+        auto& serializedCamera = scene.camera.value();
+        auto camera = sceneCAD.m_Scene.ActiveCamera();
+        auto focusPoint = dxm::Vector3(serializedCamera.focusPoint.x, serializedCamera.focusPoint.y, serializedCamera.focusPoint.z);
+
+        auto rotation = dxm::Vector3(
+            DirectX::XMConvertToRadians(serializedCamera.rotation.x),
+            DirectX::XMConvertToRadians(serializedCamera.rotation.y),
+            0.0f
+        );
+
+        auto position = focusPoint + dxm::Vector3::Transform(serializedCamera.distance * dxm::Vector3::UnitZ, dxm::Matrix::CreateFromYawPitchRoll(rotation));
+
+        // TODO: take camera rotation into consideration
+        camera->MoveTo(position);
+    }
 
     std::unordered_map<uint32_t, std::weak_ptr<Point>> pointMap;
 

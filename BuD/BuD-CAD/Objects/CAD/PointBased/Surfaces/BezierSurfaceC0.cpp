@@ -142,14 +142,15 @@ std::vector<std::weak_ptr<Point>> BezierSurfaceC0::CreateControlPointsForCylinde
 		{
 			auto previousRadiusVector = radiusVector;
 			auto tangent = cylinderMainAxis.Cross(previousRadiusVector);
-			tangent.Normalize();
+			auto tangentNormalized = tangent;
+			tangentNormalized.Normalize();
 
 			auto nextRadiusVector = ca * previousRadiusVector + sa * tangent;
 			auto nextTangent = cylinderMainAxis.Cross(nextRadiusVector);
 			nextTangent.Normalize();
 
 			auto position0 = startingPosition + previousRadiusVector;
-			auto position1 = position0 + scaleFactor * tangent;
+			auto position1 = position0 + scaleFactor * tangentNormalized;
 			auto position2 = startingPosition + nextRadiusVector - scaleFactor * nextTangent;
 
 			auto point0 = scene.CreatePoint(position0);

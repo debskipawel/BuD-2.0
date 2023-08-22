@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Models\Curves\Bezier.h" />
     <ClInclude Include="Models\Curves\BezierC0.h" />
     <ClInclude Include="Models\Curves\BezierC2.h" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Utils\Uint2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Models\Curves\BezierC0.cpp" />
     <ClCompile Include="Models\Curves\BezierC2.cpp" />
     <ClCompile Include="Models\Curves\InterpolatedC2.cpp" />

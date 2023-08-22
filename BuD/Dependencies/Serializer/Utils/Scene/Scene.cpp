@@ -23,6 +23,8 @@ namespace MG1
 		SceneObject::s_freedIds = std::stack<uint32_t>();
 		SceneObject::s_takenIds.clear();
 
+		camera = std::nullopt;
+
 		points.clear();
 		tori.clear();
 

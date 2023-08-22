@@ -1,7 +1,10 @@
 #pragma once
 
 #include <vector>
+#include <optional>
 #include <map>
+
+#include <Camera/Camera.h>
 
 #include <Models/Curves/BezierC0.h>
 #include <Models/Curves/BezierC2.h>
@@ -22,6 +25,8 @@ namespace MG1
 
 		void Clear();
 		bool IsValid() const;
+
+		std::optional<Camera> camera;
 
 		std::vector<Point> points;
 		std::vector<Torus> tori;

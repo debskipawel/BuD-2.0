@@ -18,7 +18,7 @@ void SerializationVisitor::Visit(Torus& torus)
 	t.name = torus.m_Tag;
 	t.largeRadius = torus.m_InstanceData.m_OuterRadius;
 	t.smallRadius = torus.m_InstanceData.m_InnerRadius;
-	t.samples = MG1::Uint2{ static_cast<uint32_t>(16), static_cast<uint32_t>(8) };
+	t.samples = MG1::Uint2{ torus.m_InstanceData.m_SegmentsU, torus.m_InstanceData.m_SegmentsV };
 
 	t.SetId(torus.Id());
 

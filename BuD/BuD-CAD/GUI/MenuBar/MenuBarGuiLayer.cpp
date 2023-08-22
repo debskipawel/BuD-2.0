@@ -170,11 +170,11 @@ void MenuBarGuiLayer::OpenSaveSceneDialog()
     m_MainDataLayer.m_AppStateDataLayer.Freeze();
     
     auto currentPath = m_MainDataLayer.m_SceneDataLayer.m_PathToFile.empty()
-        ? std::filesystem::current_path()
-        : m_MainDataLayer.m_SceneDataLayer.m_PathToFile.parent_path();
+        ? std::filesystem::current_path().string()
+        : m_MainDataLayer.m_SceneDataLayer.m_PathToFile.parent_path().string();
 
     auto fileDialog = ImGuiFileDialog::Instance();
-    fileDialog->OpenDialog("SaveSceneFileDialog", "Save scene file", ".json", (const char*)currentPath.c_str(), 1, nullptr, ImGuiFileDialogFlags_Modal);
+    fileDialog->OpenDialog("SaveSceneFileDialog", "Save scene file", ".json", currentPath.c_str(), 1, nullptr, ImGuiFileDialogFlags_Modal);
 }
 
 void MenuBarGuiLayer::DrawSaveSceneDialog()
@@ -211,11 +211,11 @@ void MenuBarGuiLayer::OpenLoadSceneDialog()
     m_MainDataLayer.m_AppStateDataLayer.Freeze();
 
     auto currentPath = m_MainDataLayer.m_SceneDataLayer.m_PathToFile.empty()
-        ? std::filesystem::current_path()
-        : m_MainDataLayer.m_SceneDataLayer.m_PathToFile.parent_path();
+        ? std::filesystem::current_path().string()
+        : std::format("{}\\", m_MainDataLayer.m_SceneDataLayer.m_PathToFile.parent_path().string());
 
     auto fileDialog = ImGuiFileDialog::Instance();
-    fileDialog->OpenDialog("LoadSceneFileDialog", "Load scene file", ".json", (const char*)currentPath.c_str(), 1, nullptr, ImGuiFileDialogFlags_Modal);
+    fileDialog->OpenDialog("LoadSceneFileDialog", "Load scene file", ".json", currentPath.c_str(), 1, nullptr, ImGuiFileDialogFlags_Modal);
 }
 
 void MenuBarGuiLayer::DrawLoadSceneDialog()

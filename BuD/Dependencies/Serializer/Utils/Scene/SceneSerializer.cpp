@@ -20,6 +20,11 @@ namespace MG1
 		auto& resultScene = Scene::Get();
 		resultScene.Clear();
 
+		if (document.contains("camera"))
+		{
+			resultScene.camera = std::make_optional<Camera>(document["camera"]);
+		}
+
 		std::set<uint32_t> loadedPoints;
 
 		for (auto& point : document["points"])
