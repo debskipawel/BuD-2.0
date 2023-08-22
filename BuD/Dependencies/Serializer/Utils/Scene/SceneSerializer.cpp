@@ -86,6 +86,11 @@ namespace MG1
 
 		nlohmann::ordered_json dumpDocument;
 
+		if (scene.camera.has_value())
+		{
+			dumpDocument["camera"] = scene.camera.value();
+		}
+
 		auto points = nlohmann::ordered_json::array();
 		
 		for (auto& point : scene.points)
