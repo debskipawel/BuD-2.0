@@ -184,6 +184,10 @@
     <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h" />
     <ClInclude Include="GUI\Intersection\IntersectionGuiLayer.h" />
     <ClInclude Include="GUI\MenuBar\MenuBarGuiLayer.h" />
+    <ClInclude Include="Intersection\BaseIntersectionAlgorithm.h" />
+    <ClInclude Include="Intersection\IntersectionAlgorithmParameters.h" />
+    <ClInclude Include="Intersection\MultiIntersectionAlgorithm.h" />
+    <ClInclude Include="Intersection\SelfIntersectionAlgorithm.h" />
     <ClInclude Include="Objects\CAD\PointBased\Curve\BaseCurve.h" />
     <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC0.h" />
     <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC2.h" />
@@ -269,6 +273,9 @@
     <ClCompile Include="GUI\Intersection\IntersectionGuiLayer.cpp" />
     <ClCompile Include="GUI\MenuBar\MenuBarGuiLayer.cpp" />
     <ClCompile Include="GUI\ObjectList\ObjectCreationGuiLayer.cpp" />
+    <ClCompile Include="Intersection\BaseIntersectionAlgorithm.cpp" />
+    <ClCompile Include="Intersection\MultiIntersectionAlgorithm.cpp" />
+    <ClCompile Include="Intersection\SelfIntersectionAlgorithm.cpp" />
     <ClCompile Include="Objects\Additional\Cursor.cpp" />
     <ClCompile Include="Objects\CAD\Point.cpp" />
     <ClCompile Include="Objects\CAD\PointBased\Curve\BaseCurve.cpp" />

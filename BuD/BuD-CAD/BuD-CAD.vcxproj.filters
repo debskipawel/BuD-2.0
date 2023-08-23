@@ -252,6 +252,18 @@
     <ClInclude Include="Visitors\Intersection\CalculatorNormalVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Intersection\BaseIntersectionAlgorithm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\IntersectionAlgorithmParameters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\SelfIntersectionAlgorithm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\MultiIntersectionAlgorithm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -471,6 +483,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Visitors\Intersection\CalculatorNormalVector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Intersection\BaseIntersectionAlgorithm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Intersection\SelfIntersectionAlgorithm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Intersection\MultiIntersectionAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

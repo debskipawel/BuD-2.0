@@ -23,6 +23,21 @@ dxm::Vector2 CalculatorParameterized::GetPatchParameter(BaseBezierSurface& surfa
 	auto uIndex = floor(uScaled);
 	auto vIndex = floor(vScaled);
 
+	auto u = uScaled - uIndex;
+	auto v = vScaled - vIndex;
+
+	if (uIndex >= surface.m_SizeU)
+	{
+		uIndex--;
+		u = 1.0f;
+	}
+
+	if (vIndex >= surface.m_SizeV)
+	{
+		vIndex--;
+		v = 1.0f;
+	}
+
 	return { uScaled - uIndex, vScaled - vIndex };
 }
 
@@ -36,8 +51,15 @@ std::array<dxm::Vector3, 16> CalculatorParameterized::GetControlPoints(BaseBezie
 	auto uIndex = floor(uScaled);
 	auto vIndex = floor(vScaled);
 
-	auto u = uScaled - uIndex;
-	auto v = vScaled - vIndex;
+	if (uIndex >= surface.m_SizeU)
+	{
+		uIndex--;
+	}
+
+	if (vIndex >= surface.m_SizeV)
+	{
+		vIndex--;
+	}
 
 	auto& patch = surface.m_BezierPatches[vIndex * surface.m_SizeU + uIndex];
 	auto patchShared = patch.lock();

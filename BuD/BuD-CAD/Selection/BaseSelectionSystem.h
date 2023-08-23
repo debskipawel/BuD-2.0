@@ -19,6 +19,8 @@ public:
 	inline virtual bool Selected(uint32_t sceneObjectId) const { return m_SelectedObjects.contains(sceneObjectId); }
 	inline virtual size_t Count() const { return m_SelectedObjects.size(); }
 
+	inline const auto& AllSelected() const { return m_SelectedObjects; }
+
 protected:
 	std::vector<uint32_t> m_SelectedOrder;
 	std::unordered_map<uint32_t, std::weak_ptr<SceneObjectCAD>> m_SelectedObjects;
