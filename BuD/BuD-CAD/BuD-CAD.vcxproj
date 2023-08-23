@@ -182,6 +182,7 @@
     <ClInclude Include="Behaviors\Mouse\BaseMouseBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h" />
+    <ClInclude Include="GUI\Intersection\IntersectionGuiLayer.h" />
     <ClInclude Include="GUI\MenuBar\MenuBarGuiLayer.h" />
     <ClInclude Include="Objects\CAD\PointBased\Curve\BaseCurve.h" />
     <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC0.h" />
@@ -239,6 +240,7 @@
     <ClInclude Include="Visitors\Validation\BaseValidationVisitor.h" />
     <ClInclude Include="Visitors\Validation\CanAddControlPointValidationVisitor.h" />
     <ClInclude Include="Visitors\Validation\ControlPointValidationVisitor.h" />
+    <ClInclude Include="Visitors\Validation\IntersectionEligibilityValidationVisitor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actions\TransformActionList.cpp" />
@@ -259,6 +261,7 @@
     <ClCompile Include="DataLayers\ViewportDataLayer.cpp" />
     <ClCompile Include="GUI\BaseGuiLayer.cpp" />
     <ClCompile Include="GUI\Cursor\CursorGuiLayer.cpp" />
+    <ClCompile Include="GUI\Intersection\IntersectionGuiLayer.cpp" />
     <ClCompile Include="GUI\MenuBar\MenuBarGuiLayer.cpp" />
     <ClCompile Include="GUI\ObjectList\ObjectCreationGuiLayer.cpp" />
     <ClCompile Include="Objects\Additional\Cursor.cpp" />
@@ -307,6 +310,7 @@
     <ClCompile Include="Visitors\Validation\BaseValidationVisitor.cpp" />
     <ClCompile Include="Visitors\Validation\CanAddControlPointValidationVisitor.cpp" />
     <ClCompile Include="Visitors\Validation\ControlPointValidationVisitor.cpp" />
+    <ClCompile Include="Visitors\Validation\IntersectionEligibilityValidationVisitor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuD\BuD.vcxproj">

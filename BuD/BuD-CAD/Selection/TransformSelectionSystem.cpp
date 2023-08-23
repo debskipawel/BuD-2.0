@@ -36,7 +36,8 @@ void TransformSelectionSystem::Select(std::weak_ptr<SceneObjectCAD> sceneObject)
 
 	auto id = sceneObjectShared->Id();
 
-	m_SelectedObjects.emplace(id, sceneObject);
+	BaseSelectionSystem::Select(sceneObject);
+
 	m_InitialTransforms.emplace(id, sceneObjectShared->m_Transform);
 
 	UpdateCentroid();
@@ -64,7 +65,8 @@ void TransformSelectionSystem::Unselect(uint32_t sceneObjectId)
 		m_TransformActionList.Add(action);
 	}
 
-	m_SelectedObjects.erase(sceneObjectId);
+	BaseSelectionSystem::Unselect(sceneObjectId);
+
 	m_InitialTransforms.erase(sceneObjectId);
 
 	UpdateCentroid();

@@ -1,11 +1,12 @@
 #pragma once
 
+#include <Visitors/Validation/BaseValidationVisitor.h>
 #include <Selection/BaseSelectionSystem.h>
 
 class ManualSelectionSystem : public BaseSelectionSystem
 {
 public:
-	explicit ManualSelectionSystem() = default;
+	explicit ManualSelectionSystem();
 	explicit ManualSelectionSystem(const ManualSelectionSystem& other) = default;
 
 	virtual void Clear() override;
@@ -18,7 +19,11 @@ public:
 	inline virtual bool ValidatedForControlPoints() const { return m_ValidatedForControlPoints; }
 	inline virtual bool ValidatedForAddingControlPoint() const { return m_ValidatedForAddingControlPoint; }
 
+	virtual bool EligibleForIntersection() const;
+
 protected:
+	std::unique_ptr<BaseValidationVisitor> m_IntersectionEligibilityValidator;
+
 	bool m_ValidatedForControlPoints;
 	bool m_ValidatedForAddingControlPoint;
 };

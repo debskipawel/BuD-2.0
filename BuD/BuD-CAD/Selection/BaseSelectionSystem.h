@@ -20,5 +20,6 @@ public:
 	inline virtual size_t Count() const { return m_SelectedObjects.size(); }
 
 protected:
+	std::vector<uint32_t> m_SelectedOrder;
 	std::unordered_map<uint32_t, std::weak_ptr<SceneObjectCAD>> m_SelectedObjects;
 };

@@ -2,6 +2,12 @@
 
 #include <Visitors/Validation/ControlPointValidationVisitor.h>
 #include <Visitors/Validation/CanAddControlPointValidationVisitor.h>
+#include <Visitors/Validation/IntersectionEligibilityValidationVisitor.h>
+
+ManualSelectionSystem::ManualSelectionSystem()
+{
+    m_IntersectionEligibilityValidator = std::make_unique<IntersectionEligibilityValidationVisitor>();
+}
 
 void ManualSelectionSystem::Clear()
 {
@@ -57,4 +63,21 @@ std::shared_ptr<SceneObjectCAD> ManualSelectionSystem::First()
     auto& [id, object] = *m_SelectedObjects.begin();
 
     return object.lock();
+}
+
+bool ManualSelectionSystem::EligibleForIntersection() const
+{
+    if (m_SelectedObjects.empty() || m_SelectedObjects.size() > 2)
+    {
+        return false;
+    }
+
+    return std::all_of(m_SelectedObjects.begin(), m_SelectedObjects.end(),
+        [this](std::pair<uint32_t, std::weak_ptr<SceneObjectCAD>> pair)
+        {
+            m_IntersectionEligibilityValidator->Visit(pair.second);
+
+            return m_IntersectionEligibilityValidator->Valid();
+        }
+    );
 }
