@@ -198,6 +198,11 @@
     <ClInclude Include="Selection\ManualSelectionSystem.h" />
     <ClInclude Include="Selection\TransformSelectionSystem.h" />
     <ClInclude Include="Serializing\SceneSerializer.h" />
+    <ClInclude Include="Visitors\Intersection\CalculatorParameterized.h" />
+    <ClInclude Include="Visitors\Intersection\CalculatorNormalVector.h" />
+    <ClInclude Include="Visitors\Intersection\CalculatorPartialDerivativeU.h" />
+    <ClInclude Include="Visitors\Intersection\CalculatorPartialDerivativeV.h" />
+    <ClInclude Include="Visitors\Intersection\CalculatorPointOnSurface.h" />
     <ClInclude Include="Visitors\PointBased\PointAddedVisitor.h" />
     <ClInclude Include="Visitors\PointBased\BasePointActionVisitor.h" />
     <ClInclude Include="Visitors\PointBased\PointRemovedVisitor.h" />
@@ -287,6 +292,11 @@
     <ClCompile Include="Selection\TransformSelectionSystem.cpp" />
     <ClCompile Include="Serializing\SceneSerializer.cpp" />
     <ClCompile Include="Visitors\Deletion\ObjectDeletionVisitor.cpp" />
+    <ClCompile Include="Visitors\Intersection\CalculatorParameterized.cpp" />
+    <ClCompile Include="Visitors\Intersection\CalculatorNormalVector.cpp" />
+    <ClCompile Include="Visitors\Intersection\CalculatorPartialDerivativeU.cpp" />
+    <ClCompile Include="Visitors\Intersection\CalculatorPartialDerivativeV.cpp" />
+    <ClCompile Include="Visitors\Intersection\CalculatorPointOnSurface.cpp" />
     <ClCompile Include="Visitors\ObjectGui\ObjectGuiDrawerVisitor.cpp" />
     <ClCompile Include="GUI\Performance\PerformanceGuiLayer.cpp" />
     <ClCompile Include="GUI\Properties\PropertiesGuiLayer.cpp" />

@@ -237,6 +237,21 @@
     <ClInclude Include="GUI\Intersection\IntersectionGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Visitors\Intersection\CalculatorParameterized.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Visitors\Intersection\CalculatorPointOnSurface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Visitors\Intersection\CalculatorPartialDerivativeU.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Visitors\Intersection\CalculatorPartialDerivativeV.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Visitors\Intersection\CalculatorNormalVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -441,6 +456,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GUI\Intersection\IntersectionGuiLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Visitors\Intersection\CalculatorParameterized.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Visitors\Intersection\CalculatorPointOnSurface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Visitors\Intersection\CalculatorPartialDerivativeU.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Visitors\Intersection\CalculatorPartialDerivativeV.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Visitors\Intersection\CalculatorNormalVector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

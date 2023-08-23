@@ -1,4 +1,4 @@
-#include "ParameterizedCalculator.h"
+#include "CalculatorParameterized.h"
 
 static const dxm::Matrix bSplineToBernstein =
 {
@@ -8,14 +8,14 @@ static const dxm::Matrix bSplineToBernstein =
 	0.0, 1.0f / 6, 2.0f / 3, 1.0f / 6
 };
 
-void ParameterizedCalculator::Visit(std::weak_ptr<SceneObjectCAD> object)
+void CalculatorParameterized::Visit(std::weak_ptr<SceneObjectCAD> object)
 {
 	m_Result = dxm::Vector3{ NAN, NAN, NAN };
 
 	AbstractVisitor::Visit(object);
 }
 
-dxm::Vector2 ParameterizedCalculator::GetPatchParameter(BaseBezierSurface& surface)
+dxm::Vector2 CalculatorParameterized::GetPatchParameter(BaseBezierSurface& surface)
 {
 	auto uScaled = m_Parameter.x * surface.m_SizeU;
 	auto vScaled = m_Parameter.y * surface.m_SizeV;
@@ -26,8 +26,10 @@ dxm::Vector2 ParameterizedCalculator::GetPatchParameter(BaseBezierSurface& surfa
 	return { uScaled - uIndex, vScaled - vIndex };
 }
 
-std::array<dxm::Vector3, 16> ParameterizedCalculator::GetControlPoints(BaseBezierSurface& surface)
+std::array<dxm::Vector3, 16> CalculatorParameterized::GetControlPoints(BaseBezierSurface& surface)
 {
+	std::array<dxm::Vector3, 16> controlPoints;
+	
 	auto uScaled = m_Parameter.x * surface.m_SizeU;
 	auto vScaled = m_Parameter.y * surface.m_SizeV;
 
@@ -42,10 +44,8 @@ std::array<dxm::Vector3, 16> ParameterizedCalculator::GetControlPoints(BaseBezie
 
 	if (!patchShared)
 	{
-		return;
+		return controlPoints;
 	}
-
-	std::array<dxm::Vector3, 16> controlPoints;
 
 	for (int i = 0; i < 16; i++)
 	{
@@ -57,7 +57,7 @@ std::array<dxm::Vector3, 16> ParameterizedCalculator::GetControlPoints(BaseBezie
 	return controlPoints;
 }
 
-dxm::Vector3 ParameterizedCalculator::DeCastiljeau2(std::array<dxm::Vector3, 3> controlPoints, float t)
+dxm::Vector3 CalculatorParameterized::DeCastiljeau2(std::array<dxm::Vector3, 3> controlPoints, float t)
 {
 	auto a = dxm::Vector3::Lerp(controlPoints[0], controlPoints[1], t);
 	auto b = dxm::Vector3::Lerp(controlPoints[1], controlPoints[2], t);
@@ -65,7 +65,7 @@ dxm::Vector3 ParameterizedCalculator::DeCastiljeau2(std::array<dxm::Vector3, 3> 
 	return dxm::Vector3::Lerp(a, b, t);
 }
 
-dxm::Vector3 ParameterizedCalculator::DeCastiljeau3(std::array<dxm::Vector3, 4> controlPoints, float t)
+dxm::Vector3 CalculatorParameterized::DeCastiljeau3(std::array<dxm::Vector3, 4> controlPoints, float t)
 {
 	auto a = dxm::Vector3::Lerp(controlPoints[0], controlPoints[1], t);
 	auto b = dxm::Vector3::Lerp(controlPoints[1], controlPoints[2], t);
@@ -76,7 +76,7 @@ dxm::Vector3 ParameterizedCalculator::DeCastiljeau3(std::array<dxm::Vector3, 4> 
 	return dxm::Vector3::Lerp(d, e, t);
 }
 
-std::array<dxm::Vector3, 4> ParameterizedCalculator::BSplineToBernstein(std::array<dxm::Vector3, 4> controlPoints)
+std::array<dxm::Vector3, 4> CalculatorParameterized::BSplineToBernstein(std::array<dxm::Vector3, 4> controlPoints)
 {
 	auto x = dxm::Vector4{ controlPoints[0].x, controlPoints[1].x, controlPoints[2].x, controlPoints[3].x };
 	auto y = dxm::Vector4{ controlPoints[0].y, controlPoints[1].y, controlPoints[2].y, controlPoints[3].y };

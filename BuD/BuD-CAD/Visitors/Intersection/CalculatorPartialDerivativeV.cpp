@@ -1,8 +1,8 @@
-#include "PointOnSurfaceVisitor.h"
+#include "CalculatorPartialDerivativeV.h"
 
 #include <numbers>
 
-void PointOnSurfaceVisitor::Visit(Torus& torus)
+void CalculatorPartialDerivativeV::Visit(Torus& torus)
 {
 	auto R = torus.m_InstanceData.m_OuterRadius;
 	auto r = torus.m_InstanceData.m_InnerRadius;
@@ -15,10 +15,10 @@ void PointOnSurfaceVisitor::Visit(Torus& torus)
 	auto su = sinf(2.0f * pi * u), cu = cosf(2.0f * pi * u);
 	auto sv = sinf(2.0f * pi * v), cv = cosf(2.0f * pi * v);
 
-	m_Result = { (R + r * cu) * cv, (R + r * cu) * sv, r * su };
+	m_Result = { -2.0f * pi * sv * (R - r * cu), 2.0f * pi * cv * (R + r * cu), 0.0f };
 }
 
-void PointOnSurfaceVisitor::Visit(BezierSurfaceC0& surface)
+void CalculatorPartialDerivativeV::Visit(BezierSurfaceC0& surface)
 {
 	auto parameter = GetPatchParameter(surface);
 	auto controlPoints = GetControlPoints(surface);
@@ -39,10 +39,17 @@ void PointOnSurfaceVisitor::Visit(BezierSurfaceC0& surface)
 		DeCastiljeau3(uControlPoints3, u),
 	};
 
-	m_Result = DeCastiljeau3(vControlPoints, v);
+	std::array<dxm::Vector3, 3> vDerControlPoints =
+	{
+		3.0f * (vControlPoints[1] - vControlPoints[0]),
+		3.0f * (vControlPoints[2] - vControlPoints[1]),
+		3.0f * (vControlPoints[3] - vControlPoints[2]),
+	};
+
+	m_Result = DeCastiljeau2(vDerControlPoints, v);
 }
 
-void PointOnSurfaceVisitor::Visit(BezierSurfaceC2& surface)
+void CalculatorPartialDerivativeV::Visit(BezierSurfaceC2& surface)
 {
 	auto parameter = GetPatchParameter(surface);
 	auto controlPoints = GetControlPoints(surface);
@@ -70,5 +77,12 @@ void PointOnSurfaceVisitor::Visit(BezierSurfaceC2& surface)
 
 	auto vPointsInBernstein = BSplineToBernstein(vControlPoints);
 
-	m_Result = DeCastiljeau3(vPointsInBernstein, v);
+	std::array<dxm::Vector3, 3> vDerPointsInBernstein =
+	{
+		3.0f * (vPointsInBernstein[1] - vPointsInBernstein[0]),
+		3.0f * (vPointsInBernstein[2] - vPointsInBernstein[1]),
+		3.0f * (vPointsInBernstein[3] - vPointsInBernstein[2]),
+	};
+
+	m_Result = DeCastiljeau2(vDerPointsInBernstein, v);
 }

@@ -1,8 +1,8 @@
-#include "PartialDerivativeUVisitor.h"
+#include "CalculatorPartialDerivativeU.h"
 
 #include <numbers>
 
-void PartialDerivativeUVisitor::Visit(Torus& torus)
+void CalculatorPartialDerivativeU::Visit(Torus& torus)
 {
 	auto R = torus.m_InstanceData.m_OuterRadius;
 	auto r = torus.m_InstanceData.m_InnerRadius;
@@ -18,7 +18,7 @@ void PartialDerivativeUVisitor::Visit(Torus& torus)
 	m_Result = { -2.0f * pi * r * su * cv,  -2.0f * pi * r * su * sv, 2.0f * pi * r * cu };
 }
 
-void PartialDerivativeUVisitor::Visit(BezierSurfaceC0& surface)
+void CalculatorPartialDerivativeU::Visit(BezierSurfaceC0& surface)
 {
 	auto parameter = GetPatchParameter(surface);
 	auto controlPoints = GetControlPoints(surface);
@@ -49,7 +49,7 @@ void PartialDerivativeUVisitor::Visit(BezierSurfaceC0& surface)
 	m_Result = DeCastiljeau2(uDerControlPoints, u);
 }
 
-void PartialDerivativeUVisitor::Visit(BezierSurfaceC2& surface)
+void CalculatorPartialDerivativeU::Visit(BezierSurfaceC2& surface)
 {
 	auto parameter = GetPatchParameter(surface);
 	auto controlPoints = GetControlPoints(surface);

@@ -1,8 +1,8 @@
-#include "PartialDerivativeVVisitor.h"
+#include "CalculatorPointOnSurface.h"
 
 #include <numbers>
 
-void PartialDerivativeVVisitor::Visit(Torus& torus)
+void CalculatorPointOnSurface::Visit(Torus& torus)
 {
 	auto R = torus.m_InstanceData.m_OuterRadius;
 	auto r = torus.m_InstanceData.m_InnerRadius;
@@ -15,10 +15,10 @@ void PartialDerivativeVVisitor::Visit(Torus& torus)
 	auto su = sinf(2.0f * pi * u), cu = cosf(2.0f * pi * u);
 	auto sv = sinf(2.0f * pi * v), cv = cosf(2.0f * pi * v);
 
-	m_Result = { -2.0f * pi * sv * (R - r * cu), 2.0f * pi * cv * (R + r * cu), 0.0f };
+	m_Result = { (R + r * cu) * cv, (R + r * cu) * sv, r * su };
 }
 
-void PartialDerivativeVVisitor::Visit(BezierSurfaceC0& surface)
+void CalculatorPointOnSurface::Visit(BezierSurfaceC0& surface)
 {
 	auto parameter = GetPatchParameter(surface);
 	auto controlPoints = GetControlPoints(surface);
@@ -39,17 +39,10 @@ void PartialDerivativeVVisitor::Visit(BezierSurfaceC0& surface)
 		DeCastiljeau3(uControlPoints3, u),
 	};
 
-	std::array<dxm::Vector3, 3> vDerControlPoints =
-	{
-		3.0f * (vControlPoints[1] - vControlPoints[0]),
-		3.0f * (vControlPoints[2] - vControlPoints[1]),
-		3.0f * (vControlPoints[3] - vControlPoints[2]),
-	};
-
-	m_Result = DeCastiljeau2(vDerControlPoints, v);
+	m_Result = DeCastiljeau3(vControlPoints, v);
 }
 
-void PartialDerivativeVVisitor::Visit(BezierSurfaceC2& surface)
+void CalculatorPointOnSurface::Visit(BezierSurfaceC2& surface)
 {
 	auto parameter = GetPatchParameter(surface);
 	auto controlPoints = GetControlPoints(surface);
@@ -77,12 +70,5 @@ void PartialDerivativeVVisitor::Visit(BezierSurfaceC2& surface)
 
 	auto vPointsInBernstein = BSplineToBernstein(vControlPoints);
 
-	std::array<dxm::Vector3, 3> vDerPointsInBernstein =
-	{
-		3.0f * (vPointsInBernstein[1] - vPointsInBernstein[0]),
-		3.0f * (vPointsInBernstein[2] - vPointsInBernstein[1]),
-		3.0f * (vPointsInBernstein[3] - vPointsInBernstein[2]),
-	};
-
-	m_Result = DeCastiljeau2(vDerPointsInBernstein, v);
+	m_Result = DeCastiljeau3(vPointsInBernstein, v);
 }

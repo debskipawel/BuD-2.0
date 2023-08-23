@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Visitors/Intersection/ParameterizedCalculator.h>
+#include <Visitors/Intersection/CalculatorParameterized.h>
 
-class PartialDerivativeVVisitor : public ParameterizedCalculator
+class CalculatorPointOnSurface : public CalculatorParameterized
 {
 public:
 	virtual void Visit(Torus& torus) override;

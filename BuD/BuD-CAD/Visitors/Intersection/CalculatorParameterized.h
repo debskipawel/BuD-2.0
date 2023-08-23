@@ -2,7 +2,7 @@
 
 #include <Visitors/AbstractVisitor.h>
 
-class ParameterizedCalculator : public AbstractVisitor
+class CalculatorParameterized : public AbstractVisitor
 {
 public:
 	virtual void Visit(std::weak_ptr<SceneObjectCAD> object) override;
