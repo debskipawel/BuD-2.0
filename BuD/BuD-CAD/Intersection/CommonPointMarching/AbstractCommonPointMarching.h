@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Intersection/IntersectionStructures.h>
+#include <Intersection/Structures/IntersectionStructures.h>
 #include <Intersection/CommonPointMarching/MarchingDirection.h>
 #include <Intersection/Sampler/ISampler.h>
 

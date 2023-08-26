@@ -73,12 +73,21 @@ NextCommonPointResult NewtonCommonPointMarching::NextPoint(dxm::Vector4 starting
 			-dT.x, -dT.y, -dT.z, 0.0f
 		};
 
+		auto det = dF.Determinant();
+
+		if (abs(det) < 1e-3f)
+		{
+			break;
+		}
+
 		auto b = dxm::Vector4::Transform(xk, dF) - F;
 
 		// can be solved a little smarter I think, but this should work for now
 		auto dFInv = dF.Invert();
 
 		xk1 = dxm::Vector4::Transform(b, dFInv);
+
+		result.m_Step = xk1 - startingPoint;
 
 		auto wrapResult = WrapParameter(xk1);
 

@@ -267,7 +267,7 @@
     <ClInclude Include="Visitors\Intersection\ParameterWrapperVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\IntersectionStructures.h">
+    <ClInclude Include="Intersection\Structures\IntersectionStructures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Intersection\InitialCommonPoint\AbstractInitialCommonPointFinder.h">
@@ -289,6 +289,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Intersection\CommonPointMarching\NewtonCommonPointMarching.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\Structures\StartingCommonPointResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\Structures\NextCommonPointResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\Structures\CommonPointSequenceResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\Structures\PointMappingResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\Structures\ParameterWrapResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\Structures\IntersectionResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\Structures\LoopResult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

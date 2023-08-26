@@ -66,36 +66,38 @@ void IntersectionGuiLayer::DrawGui()
 				intersectionFinder = std::make_unique<SelfIntersectionAlgorithm>(m_IntersectionParameters, first);
 			}
 
-			intersectionFinder->Find();
+			auto intersectionResult = intersectionFinder->Find();
 
-			const auto& intersectionCurve = intersectionFinder->Result();
-
-			if (!intersectionCurve.empty())
+			if (intersectionResult.m_IntersectionFound)
 			{
-				std::vector<std::weak_ptr<Point>> controlPoints1;
-				std::vector<std::weak_ptr<Point>> controlPoints2;
+				std::vector<std::weak_ptr<Point>> controlPoints;
 
-				for (auto& parameters : intersectionCurve)
+				for (auto intersectionPoint = intersectionResult.m_BackwardsPoints.rbegin(); intersectionPoint != intersectionResult.m_BackwardsPoints.rend(); intersectionPoint++)
 				{
-					m_PointOnSurfaceCalculator->SetParameter({ parameters.x, parameters.y });
-					m_PointOnSurfaceCalculator->Visit(first);
+					auto controlPoint = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreatePoint(intersectionPoint->m_Point);
 
-					auto position = m_PointOnSurfaceCalculator->Result();
-
-					m_PointOnSurfaceCalculator->SetParameter({ parameters.z, parameters.w });
-					m_PointOnSurfaceCalculator->Visit(second);
-
-					auto position2 = m_PointOnSurfaceCalculator->Result();
-
-					auto controlPoint = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreatePoint(position);
-					auto controlPoint2 = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreatePoint(position2);
-
-					controlPoints1.push_back(std::dynamic_pointer_cast<Point>(controlPoint.lock()));
-					controlPoints2.push_back(std::dynamic_pointer_cast<Point>(controlPoint2.lock()));
+					controlPoints.push_back(std::dynamic_pointer_cast<Point>(controlPoint.lock()));
 				}
 
-				m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateYukselInterpolatingCurveC2(controlPoints1);
-				m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateYukselInterpolatingCurveC2(controlPoints2);
+				auto startPoint = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreatePoint(intersectionResult.m_StartingPoint.m_Point);
+
+				for (auto& intersectionPoint : intersectionResult.m_ForwardPoints)
+				{
+					auto controlPoint = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreatePoint(intersectionPoint.m_Point);
+
+					controlPoints.push_back(std::dynamic_pointer_cast<Point>(controlPoint.lock()));
+				}
+
+				if (intersectionResult.m_LoopDetected.has_value())
+				{
+					controlPoints.push_back(controlPoints.front());
+				}
+
+				m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateYukselInterpolatingCurveC2(controlPoints);
+			}
+			else
+			{
+				BuD::Log::WriteWarning("Intersection not found.");
 			}
 		}
 

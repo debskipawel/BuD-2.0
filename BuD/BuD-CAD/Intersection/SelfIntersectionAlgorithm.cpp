@@ -6,7 +6,10 @@ SelfIntersectionAlgorithm::SelfIntersectionAlgorithm(IntersectionAlgorithmParame
 	m_ParameterizedObject = parameterizedObject.lock();
 }
 
-void SelfIntersectionAlgorithm::Find()
+IntersectionResult SelfIntersectionAlgorithm::Find()
 {
 	// TODO: everything...
+	IntersectionResult result = {};
+
+	return result;
 }

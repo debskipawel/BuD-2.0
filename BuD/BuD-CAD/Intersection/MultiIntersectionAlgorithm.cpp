@@ -21,34 +21,41 @@ MultiIntersectionAlgorithm::MultiIntersectionAlgorithm(
 	m_CommonPointMarching = std::make_unique<NewtonCommonPointMarching>(m_ParameterizedObject1, m_ParameterizedObject2, m_Parameters.m_Precision);
 }
 
-void MultiIntersectionAlgorithm::Find()
+IntersectionResult MultiIntersectionAlgorithm::Find()
 {
-	auto startingPoint = StartingPoint();
-	auto commonStartingPoint = FindInitialCommonPoint(startingPoint);
+	IntersectionResult result = {};
+
+	auto startingPoint = StartingParameter();
+	result.m_StartingPoint = FindInitialCommonPoint(startingPoint);
 	
-	if (!commonStartingPoint.m_ResultFound)
+	if (!result.m_StartingPoint.m_ResultFound)
 	{
-		m_IntersectionCurve = {};
-		return;
+		return result;
 	}
 
-	m_IntersectionCurve = { commonStartingPoint.m_Parameter };
+	result.m_IntersectionFound = true;
 
-	auto n1 = GetNormal(m_ParameterizedObject1, commonStartingPoint.m_Parameter.x, commonStartingPoint.m_Parameter.y);
-	auto n2 = GetNormal(m_ParameterizedObject2, commonStartingPoint.m_Parameter.z, commonStartingPoint.m_Parameter.w);
+	auto n1 = GetNormal(m_ParameterizedObject1, result.m_StartingPoint.m_Parameter.x, result.m_StartingPoint.m_Parameter.y);
+	auto n2 = GetNormal(m_ParameterizedObject2, result.m_StartingPoint.m_Parameter.z, result.m_StartingPoint.m_Parameter.w);
 
 	auto direction = n1.Cross(n2);
 	direction.Normalize();
 
-	auto result = FindAllCommonPointsInDirection(commonStartingPoint, direction, MarchingDirection::FORWARD);
+	auto forwardResult = FindAllCommonPointsInDirection(result.m_StartingPoint, direction, MarchingDirection::FORWARD);
 	
-	if (!result.m_LoopDetected)
+	result.m_ForwardPoints = std::move(forwardResult.m_Points);
+	result.m_LoopDetected = forwardResult.m_LoopDetected;
+
+	if (!forwardResult.m_LoopDetected.has_value())
 	{
-		FindAllCommonPointsInDirection(commonStartingPoint, direction, MarchingDirection::BACKWARD);
+		auto backwardsResult = FindAllCommonPointsInDirection(result.m_StartingPoint, direction, MarchingDirection::BACKWARD);
+		result.m_BackwardsPoints = std::move(backwardsResult.m_Points);
 	}
+
+	return result;
 }
 
-dxm::Vector4 MultiIntersectionAlgorithm::StartingPoint()
+dxm::Vector4 MultiIntersectionAlgorithm::StartingParameter()
 {
 	if (m_Parameters.m_UseCursorAsStartingPoint)
 	{
@@ -99,9 +106,11 @@ CommonPointSequenceResult MultiIntersectionAlgorithm::FindAllCommonPointsInDirec
 	dxm::Vector2 startingUV = { starting.m_Parameter.x, starting.m_Parameter.y };
 	dxm::Vector2 startingST = { starting.m_Parameter.z, starting.m_Parameter.w };
 
-	NextCommonPointResult previousPoint = {};
-	previousPoint.m_Parameter = starting.m_Parameter;
-	previousPoint.m_Point = starting.m_Point;
+	NextCommonPointResult startingPoint = {};
+	startingPoint.m_Parameter = starting.m_Parameter;
+	startingPoint.m_Point = starting.m_Point;
+
+	NextCommonPointResult previousPoint = startingPoint;
 
 	if (marchingDirection == MarchingDirection::BACKWARD)
 	{
@@ -115,51 +124,19 @@ CommonPointSequenceResult MultiIntersectionAlgorithm::FindAllCommonPointsInDirec
 	{
 		auto nextCommonPoint = m_CommonPointMarching->NextPoint(previousPoint.m_Parameter, m_Parameters.m_PointDistance, marchingDirection);
 
-		// if we encounter parallel normals along our path, just continue in the same direction as before and hope for the best
-		//if (!nextCommonPoint.m_ResultFound && previousDirection.has_value())
-		//{
-		//	previousDirection.value().Normalize();
-
-		//	nextCommonPoint = m_CommonPointMarching->NextPoint(previousPoint.m_Parameter, previousDirection.value(), m_Parameters.m_PointDistance);
-		//}
-
 		if (nextCommonPoint.m_ResultFound)
 		{
 			previousDirection = nextCommonPoint.m_Point - previousPoint.m_Point;
 
-			auto pointDiff = nextCommonPoint.m_Point - starting.m_Point;
+			auto loopResult = DetectLoop(startingPoint, previousPoint, nextCommonPoint);
 
-			auto prevUV = dxm::Vector2{ previousPoint.m_Parameter.x, previousPoint.m_Parameter.y };
-			auto prevST = dxm::Vector2{ previousPoint.m_Parameter.z, previousPoint.m_Parameter.w };
-
-			auto UV = dxm::Vector2{ nextCommonPoint.m_Parameter.x, nextCommonPoint.m_Parameter.y };
-			auto ST = dxm::Vector2{ nextCommonPoint.m_Parameter.z, nextCommonPoint.m_Parameter.w };
-
-			auto prevStepUV = prevUV - startingUV;
-			auto stepUV = UV - startingUV;
-
-			auto prevStepST = prevST - startingST;
-			auto stepST = ST - startingST;
-
-			if (prevStepUV.Dot(stepUV) < 0.0f || prevStepST.Dot(stepST) < 0.0f)
+			if (loopResult.has_value())
 			{
-				int a = 5;
-			}
-
-			if (pointDiff.Length() <= m_Parameters.m_PointDistance && (prevStepUV.Dot(stepUV) < 0.0f || prevStepST.Dot(stepST) < 0.0f))
-			{
-				result.m_LoopDetected = true;
+				result.m_LoopDetected = loopResult;
 				return result;
 			}
 
-			if (marchingDirection == MarchingDirection::BACKWARD)
-			{
-				m_IntersectionCurve.push_front(nextCommonPoint.m_Parameter);
-			}
-			else
-			{
-				m_IntersectionCurve.push_back(nextCommonPoint.m_Parameter);
-			}
+			result.m_Points.push_back(nextCommonPoint);
 
 			previousPoint = nextCommonPoint;
 		}
@@ -171,6 +148,54 @@ CommonPointSequenceResult MultiIntersectionAlgorithm::FindAllCommonPointsInDirec
 	}
 
 	return result;
+}
+
+std::optional<LoopResult> MultiIntersectionAlgorithm::DetectLoop(NextCommonPointResult starting, NextCommonPointResult previous, NextCommonPointResult current)
+{
+	auto pointDiff = current.m_Point - starting.m_Point;
+	
+	if (pointDiff.Length() > m_Parameters.m_PointDistance)
+	{
+		return std::nullopt;
+	}
+
+	auto initialStartToPrev = previous.m_Parameter - starting.m_Parameter;
+
+	auto startToNext = current.m_Parameter - starting.m_Parameter;
+	auto startToPrev = previous.m_Parameter - starting.m_Parameter;
+
+	// handles special cases, when current point is on one side of parameter space, and the previous on the other
+	// this logic took me like 2 hours to figure out and it works so please leave me alone and don't ask me how this works
+	auto wrappingHandler = [](float& initialStartToPrev, float& wrapped, float& startToNext, float& startToPrev, float& step)
+	{
+		auto determinant = initialStartToPrev * wrapped;
+
+		if (determinant < 0.0f)
+		{
+			startToNext = startToPrev + step;
+		}
+		else if (determinant > 0.0f)
+		{
+			startToPrev = startToNext - step;
+		}
+	};
+
+	wrappingHandler(initialStartToPrev.x, current.m_WrappedU, startToNext.x, startToPrev.x, current.m_Step.x);
+	wrappingHandler(initialStartToPrev.y, current.m_WrappedV, startToNext.y, startToPrev.y, current.m_Step.y);
+	wrappingHandler(initialStartToPrev.z, current.m_WrappedS, startToNext.z, startToPrev.z, current.m_Step.z);
+	wrappingHandler(initialStartToPrev.w, current.m_WrappedT, startToNext.w, startToPrev.w, current.m_Step.w);
+
+	auto startToNextUV = dxm::Vector2{ startToNext.x, startToNext.y };
+	auto startToNextST = dxm::Vector2{ startToNext.z, startToNext.w };
+	auto startToPrevUV = dxm::Vector2{ startToPrev.x, startToPrev.y };
+	auto startToPrevST = dxm::Vector2{ startToPrev.z, startToPrev.w };
+
+	if (startToNextUV.Dot(startToPrevUV) < 0.0f || startToNextST.Dot(startToPrevST) < 0.0f)
+	{
+		return LoopResult{ current.m_WrappedU, current.m_WrappedV, current.m_WrappedS, current.m_WrappedT };
+	}
+
+	return std::nullopt;
 }
 
 dxm::Vector4 MultiIntersectionAlgorithm::MapWorldPointToParameterSpace(dxm::Vector3 point)

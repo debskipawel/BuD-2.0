@@ -3,7 +3,7 @@
 #include <memory>
 
 #include <Scene/SceneObjectCAD.h>
-#include <Intersection/IntersectionStructures.h>
+#include <Intersection/Structures/IntersectionStructures.h>
 #include <Intersection/Sampler/ISampler.h>
 
 class AbstractInitialCommonPointFinder : public ISampler
