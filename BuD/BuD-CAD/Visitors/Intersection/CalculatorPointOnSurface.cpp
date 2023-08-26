@@ -4,6 +4,8 @@
 
 void CalculatorPointOnSurface::Visit(Torus& torus)
 {
+	WrapParameter(true, true);
+
 	auto R = torus.m_InstanceData.m_OuterRadius;
 	auto r = torus.m_InstanceData.m_InnerRadius;
 
@@ -15,11 +17,17 @@ void CalculatorPointOnSurface::Visit(Torus& torus)
 	auto su = sinf(2.0f * pi * u), cu = cosf(2.0f * pi * u);
 	auto sv = sinf(2.0f * pi * v), cv = cosf(2.0f * pi * v);
 
-	m_Result = { (R + r * cu) * cv, (R + r * cu) * sv, r * su };
+	auto localPosition = dxm::Vector4{ (R + r * cu) * cv, (R + r * cu) * sv, r * su, 1.0f };
+
+	auto worldPosition = dxm::Vector4::Transform(localPosition, torus.m_InstanceData.m_ModelMatrix);
+
+	m_Result = { worldPosition.x, worldPosition.y, worldPosition.z };
 }
 
 void CalculatorPointOnSurface::Visit(BezierSurfaceC0& surface)
 {
+	WrapParameter(surface.m_Cylinder, false);
+
 	auto parameter = GetPatchParameter(surface);
 	auto controlPoints = GetControlPoints(surface);
 
@@ -44,6 +52,8 @@ void CalculatorPointOnSurface::Visit(BezierSurfaceC0& surface)
 
 void CalculatorPointOnSurface::Visit(BezierSurfaceC2& surface)
 {
+	WrapParameter(surface.m_Cylinder, false);
+
 	auto parameter = GetPatchParameter(surface);
 	auto controlPoints = GetControlPoints(surface);
 

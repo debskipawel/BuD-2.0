@@ -51,6 +51,12 @@ void YukselInterpolatingCurveC2::OnPointModify()
 	auto controlPointsCount = m_ControlPoints.size();
 	auto segmentsCount = controlPointsCount - 1;
 
+	if (controlPointsCount == 0 || segmentsCount == 0)
+	{
+		m_InstanceData.m_Segments.clear();
+		return;
+	}
+
 	auto loop = false;
 
 	auto& front = m_ControlPoints.front();

@@ -11,6 +11,8 @@ public:
 	inline virtual dxm::Vector3 Result() const { return m_Result; }
 
 protected:
+	virtual void WrapParameter(bool uWrapped, bool vWrapped);
+
 	virtual dxm::Vector2 GetPatchParameter(BaseBezierSurface& surface);
 	virtual std::array<dxm::Vector3, 16> GetControlPoints(BaseBezierSurface& surface);
 

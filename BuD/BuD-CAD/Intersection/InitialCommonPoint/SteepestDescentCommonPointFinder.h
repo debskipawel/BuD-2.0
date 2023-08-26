@@ -1,0 +1,18 @@
+#pragma once
+
+#include <Intersection/InitialCommonPoint/AbstractInitialCommonPointFinder.h>
+
+class SteepestDescentInitialCommonPointFinder : public AbstractInitialCommonPointFinder
+{
+public:
+	SteepestDescentInitialCommonPointFinder(std::shared_ptr<SceneObjectCAD> object1, std::shared_ptr<SceneObjectCAD> object2, float precision);
+
+	virtual StartingCommonPointResult FindNearestCommonPoint(dxm::Vector4 startingPosition) override;
+
+	inline virtual constexpr const char* AlgorithmName() const override { return "Steepest descent"; }
+
+protected:
+	virtual ParameterWrapResult WrapParameter(dxm::Vector4 parameter);
+
+	float m_Precision;
+};

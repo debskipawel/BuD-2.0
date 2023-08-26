@@ -267,7 +267,7 @@ void SceneSerializer::ConstructLoadedScene()
             surfacePatches.push_back(patchObject);
         }
 
-        auto surfaceObject = std::make_shared<BezierSurfaceC2>(sceneCAD, surfacePatches, surfaceC0.size.x, surfaceC0.size.y, surfaceC0.uWrapped);
+        auto surfaceObject = std::make_shared<BezierSurfaceC0>(sceneCAD, surfacePatches, surfaceC0.size.x, surfaceC0.size.y, surfaceC0.uWrapped);
         surfaceObject->m_Tag = surfaceC0.name;
 
         sceneCAD.m_ObjectList.emplace(surfaceObject->Id(), surfaceObject);

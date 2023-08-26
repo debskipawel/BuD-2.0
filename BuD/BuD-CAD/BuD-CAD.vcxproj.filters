@@ -264,6 +264,33 @@
     <ClInclude Include="Intersection\MultiIntersectionAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Visitors\Intersection\ParameterWrapperVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\IntersectionStructures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\InitialCommonPoint\AbstractInitialCommonPointFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\InitialCommonPoint\LinearApproximationCommonPointFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\InitialCommonPoint\SteepestDescentCommonPointFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\CommonPointMarching\MarchingDirection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\CommonPointMarching\AbstractCommonPointMarching.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\Sampler\ISampler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\CommonPointMarching\NewtonCommonPointMarching.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -492,6 +519,27 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Intersection\MultiIntersectionAlgorithm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Visitors\Intersection\ParameterWrapperVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Intersection\InitialCommonPoint\AbstractInitialCommonPointFinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Intersection\InitialCommonPoint\LinearApproximationCommonPointFinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Intersection\InitialCommonPoint\SteepestDescentCommonPointFinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Intersection\Sampler\ISampler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Intersection\CommonPointMarching\AbstractCommonPointMarching.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Intersection\CommonPointMarching\NewtonCommonPointMarching.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

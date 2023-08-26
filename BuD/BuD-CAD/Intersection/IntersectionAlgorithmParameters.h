@@ -6,8 +6,15 @@ namespace dxm = DirectX::SimpleMath;
 
 struct IntersectionAlgorithmParameters
 {
-	dxm::Vector4 m_StartingParameters;
-	bool m_UseSelectedStartingPoint;
+	IntersectionAlgorithmParameters()
+		: m_PointDistance(0.1f), m_Precision(0.001f), m_UseCursorAsStartingPoint(false)
+	{
+	}
 
+	dxm::Vector3 m_CursorPosition;
+
+	bool m_UseCursorAsStartingPoint;
+
+	float m_PointDistance;
 	float m_Precision;
 };

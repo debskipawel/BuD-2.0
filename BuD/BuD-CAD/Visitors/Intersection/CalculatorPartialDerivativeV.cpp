@@ -15,7 +15,10 @@ void CalculatorPartialDerivativeV::Visit(Torus& torus)
 	auto su = sinf(2.0f * pi * u), cu = cosf(2.0f * pi * u);
 	auto sv = sinf(2.0f * pi * v), cv = cosf(2.0f * pi * v);
 
-	m_Result = { -2.0f * pi * sv * (R - r * cu), 2.0f * pi * cv * (R + r * cu), 0.0f };
+	auto localVector = dxm::Vector4{ -2.0f * pi * sv * (R - r * cu), 2.0f * pi * cv * (R + r * cu), 0.0f, 0.0f };
+	auto worldVector = dxm::Vector4::Transform(localVector, torus.m_InstanceData.m_ModelMatrix);
+
+	m_Result = { worldVector.x, worldVector.y, worldVector.z };
 }
 
 void CalculatorPartialDerivativeV::Visit(BezierSurfaceC0& surface)
@@ -46,7 +49,7 @@ void CalculatorPartialDerivativeV::Visit(BezierSurfaceC0& surface)
 		3.0f * (vControlPoints[3] - vControlPoints[2]),
 	};
 
-	m_Result = DeCastiljeau2(vDerControlPoints, v);
+	m_Result = DeCastiljeau2(vDerControlPoints, v) * surface.m_SizeV;
 }
 
 void CalculatorPartialDerivativeV::Visit(BezierSurfaceC2& surface)
@@ -84,5 +87,5 @@ void CalculatorPartialDerivativeV::Visit(BezierSurfaceC2& surface)
 		3.0f * (vPointsInBernstein[3] - vPointsInBernstein[2]),
 	};
 
-	m_Result = DeCastiljeau2(vDerPointsInBernstein, v);
+	m_Result = DeCastiljeau2(vDerPointsInBernstein, v) * surface.m_SizeV;
 }

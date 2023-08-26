@@ -2,10 +2,10 @@
 
 static const dxm::Matrix bSplineToBernstein =
 {
-	1.0f / 6, 2.0f / 3, 1.0f / 6, 0.0,
-	0.0, 2.0f / 3, 1.0f / 3, 0.0,
-	0.0, 1.0f / 3, 2.0f / 3, 0.0,
-	0.0, 1.0f / 6, 2.0f / 3, 1.0f / 6
+	1.0f / 6,	0.0f,		0.0f,		0.0f,
+	2.0f / 3,	2.0f / 3,	1.0f / 3,	1.0f / 6,
+	1.0f / 6,	1.0f / 3,	2.0f / 3,	2.0f / 3,
+	0.0,		0.0f,		0.0f,		1.0f / 6
 };
 
 void CalculatorParameterized::Visit(std::weak_ptr<SceneObjectCAD> object)
@@ -13,6 +13,19 @@ void CalculatorParameterized::Visit(std::weak_ptr<SceneObjectCAD> object)
 	m_Result = dxm::Vector3{ NAN, NAN, NAN };
 
 	AbstractVisitor::Visit(object);
+}
+
+void CalculatorParameterized::WrapParameter(bool uWrapped, bool vWrapped)
+{
+	if (uWrapped)
+	{
+		m_Parameter.x -= floor(m_Parameter.x);
+	}
+
+	if (vWrapped)
+	{
+		m_Parameter.y -= floor(m_Parameter.y);
+	}
 }
 
 dxm::Vector2 CalculatorParameterized::GetPatchParameter(BaseBezierSurface& surface)
@@ -38,7 +51,7 @@ dxm::Vector2 CalculatorParameterized::GetPatchParameter(BaseBezierSurface& surfa
 		v = 1.0f;
 	}
 
-	return { uScaled - uIndex, vScaled - vIndex };
+	return { u, v };
 }
 
 std::array<dxm::Vector3, 16> CalculatorParameterized::GetControlPoints(BaseBezierSurface& surface)
@@ -104,9 +117,9 @@ std::array<dxm::Vector3, 4> CalculatorParameterized::BSplineToBernstein(std::arr
 	auto y = dxm::Vector4{ controlPoints[0].y, controlPoints[1].y, controlPoints[2].y, controlPoints[3].y };
 	auto z = dxm::Vector4{ controlPoints[0].z, controlPoints[1].z, controlPoints[2].z, controlPoints[3].z };
 
-	auto xt = dxm::Vector4::Transform(x, bSplineToBernstein);
-	auto yt = dxm::Vector4::Transform(y, bSplineToBernstein);
-	auto zt = dxm::Vector4::Transform(z, bSplineToBernstein);
+	auto xt = dxm::Vector4::Transform(x, bSplineToBernstein.Transpose());
+	auto yt = dxm::Vector4::Transform(y, bSplineToBernstein.Transpose());
+	auto zt = dxm::Vector4::Transform(z, bSplineToBernstein.Transpose());
 
 	return
 	{
