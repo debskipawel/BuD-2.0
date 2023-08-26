@@ -84,6 +84,11 @@ NextCommonPointResult NewtonCommonPointMarching::NextPoint(dxm::Vector4 starting
 
 		result.m_Parameter = wrapResult.m_Parameter;
 
+		result.m_WrappedU = wrapResult.m_WrappedU;
+		result.m_WrappedV = wrapResult.m_WrappedV;
+		result.m_WrappedS = wrapResult.m_WrappedS;
+		result.m_WrappedT = wrapResult.m_WrappedT;
+
 		if (wrapResult.m_OutOfBounds)
 		{
 			result.m_ResultFound = true;
@@ -109,12 +114,18 @@ ParameterWrapResult NewtonCommonPointMarching::WrapParameter(dxm::Vector4 parame
 	result.m_Parameter.y = m_ParameterWrapper->Parameter().y;
 
 	result.m_OutOfBounds |= m_ParameterWrapper->OutOfRange();
+	
+	result.m_WrappedU = m_ParameterWrapper->WrappedU();
+	result.m_WrappedV = m_ParameterWrapper->WrappedV();
 
 	m_ParameterWrapper->SetParameter({ parameter.z, parameter.w });
 	m_ParameterWrapper->Visit(m_ParameterizedObject2);
 
 	result.m_Parameter.z = m_ParameterWrapper->Parameter().x;
 	result.m_Parameter.w = m_ParameterWrapper->Parameter().y;
+
+	result.m_WrappedS = m_ParameterWrapper->WrappedU();
+	result.m_WrappedT = m_ParameterWrapper->WrappedV();
 
 	result.m_OutOfBounds |= m_ParameterWrapper->OutOfRange();
 
