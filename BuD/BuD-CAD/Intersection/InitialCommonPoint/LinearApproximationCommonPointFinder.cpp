@@ -137,7 +137,7 @@ LinearApproximationCommonPointFinder::ProjectionResult LinearApproximationCommon
 		parameterDiff = dxm::Vector2{ diff.x, diff.z } / uvDet3;
 	}
 
-	result.m_Parameter += parameterDiff;
+	result.m_Parameter = oldParameter + parameterDiff;
 
 	m_ParameterWrapper->SetParameter(result.m_Parameter);
 	m_ParameterWrapper->Visit(object);
