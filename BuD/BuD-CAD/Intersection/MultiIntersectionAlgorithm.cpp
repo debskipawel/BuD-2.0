@@ -165,7 +165,7 @@ std::optional<LoopResult> MultiIntersectionAlgorithm::DetectLoop(NextCommonPoint
 	auto startToPrev = previous.m_Parameter - starting.m_Parameter;
 
 	// handles special cases, when current point is on one side of parameter space, and the previous on the other
-	// this logic took me like 2 hours to figure out and it works so please leave me alone and don't ask me how this works
+	// this logic took me like 2 hours to figure out and it works so please leave me alone and don't ask me why or how this works
 	auto wrappingHandler = [](float& initialStartToPrev, float& wrapped, float& startToNext, float& startToPrev, float& step)
 	{
 		auto determinant = initialStartToPrev * wrapped;
