@@ -70,30 +70,47 @@ void IntersectionGuiLayer::DrawGui()
 
 			if (intersectionResult.m_IntersectionFound)
 			{
-				std::vector<std::weak_ptr<Point>> controlPoints;
+				auto& startingPoint = intersectionResult.m_StartingPoint;
 
-				for (auto intersectionPoint = intersectionResult.m_BackwardsPoints.rbegin(); intersectionPoint != intersectionResult.m_BackwardsPoints.rend(); intersectionPoint++)
-				{
-					auto controlPoint = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreatePoint(intersectionPoint->m_Point);
+				std::vector<IntersectionPoint> intersectionPoints1 = {};
+				std::vector<IntersectionPoint> intersectionPoints2 = {};
 
-					controlPoints.push_back(std::dynamic_pointer_cast<Point>(controlPoint.lock()));
-				}
+				float prevWrappedU = 0.0f, prevWrappedV = 0.0f;
 
-				auto startPoint = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreatePoint(intersectionResult.m_StartingPoint.m_Point);
+				std::transform(
+					intersectionResult.m_BackwardsPoints.rbegin(), intersectionResult.m_BackwardsPoints.rend(),
+					std::back_inserter(intersectionPoints1),
+					[&prevWrappedU, &prevWrappedV](const NextCommonPointResult& point)
+					{
+						auto result = IntersectionPoint({ point.m_Parameter.x, point.m_Parameter.y }, prevWrappedU, prevWrappedU);
+						prevWrappedU = -point.m_WrappedU;
+						prevWrappedV = -point.m_WrappedV;
 
-				for (auto& intersectionPoint : intersectionResult.m_ForwardPoints)
-				{
-					auto controlPoint = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreatePoint(intersectionPoint.m_Point);
+						return result;
+					}
+				);
 
-					controlPoints.push_back(std::dynamic_pointer_cast<Point>(controlPoint.lock()));
-				}
+				intersectionPoints1.emplace_back(dxm::Vector2{ startingPoint.m_Parameter.x, startingPoint.m_Parameter.y }, prevWrappedU, prevWrappedV);
+
+				std::transform(
+					intersectionResult.m_ForwardPoints.begin(), intersectionResult.m_ForwardPoints.end(),
+					std::back_inserter(intersectionPoints1),
+					[](const NextCommonPointResult& point)
+					{
+						return IntersectionPoint({ point.m_Parameter.x, point.m_Parameter.y }, point.m_WrappedU, point.m_WrappedV);
+					}
+				);
 
 				if (intersectionResult.m_LoopDetected.has_value())
 				{
-					controlPoints.push_back(controlPoints.front());
+					intersectionPoints1.emplace_back(
+						dxm::Vector2{ startingPoint.m_Parameter.x, startingPoint.m_Parameter.y }, 
+						intersectionResult.m_LoopDetected->m_WrappedU,
+						intersectionResult.m_LoopDetected->m_WrappedV
+					);
 				}
 
-				m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateYukselInterpolatingCurveC2(controlPoints);
+				m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateIntersectionCurve(first, intersectionPoints1);
 			}
 			else
 			{

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Scene/SceneObjectCAD.h>
+#include <Objects/CAD/ParameterizedObject2D.h>
 
-class Torus : public SceneObjectCAD
+class Torus : public ParameterizedObject2D
 {
 public:
 	Torus(BuD::Scene& scene);

@@ -312,6 +312,15 @@
     <ClInclude Include="Intersection\Structures\LoopResult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\CAD\Intersection\IntersectionCurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\CAD\Intersection\IntersectionPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\CAD\ParameterizedObject2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -563,6 +572,12 @@
     <ClCompile Include="Intersection\CommonPointMarching\NewtonCommonPointMarching.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\CAD\ParameterizedObject2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\CAD\Intersection\IntersectionCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Torus\torus_instanced_vs.hlsl" />
@@ -607,5 +622,9 @@
     <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\bezier_patch_c0_polygon_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_polygon_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_polygon_gs.hlsl" />
+    <FxCompile Include="Resources\Shaders\IntersectionCurve\intersection_curve_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\IntersectionCurve\intersection_curve_hs.hlsl" />
+    <FxCompile Include="Resources\Shaders\IntersectionCurve\intersection_curve_ds.hlsl" />
+    <FxCompile Include="Resources\Shaders\IntersectionCurve\intersection_curve_ps.hlsl" />
   </ItemGroup>
 </Project>

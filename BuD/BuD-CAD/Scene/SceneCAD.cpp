@@ -2,6 +2,9 @@
 
 #include <Objects/CAD/Torus.h>
 #include <Objects/CAD/Point.h>
+#include <Objects/CAD/ParameterizedObject2D.h>
+
+#include <Objects/CAD/Intersection/IntersectionCurve.h>
 
 #include <Objects/CAD/PointBased/Curve/BezierCurveC0.h>
 #include <Objects/CAD/PointBased/Curve/BezierCurveC2.h>
@@ -192,4 +195,23 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreateBezierPatchC2(std::vector<std::wea
 	BuD::Log::WriteInfo("Successfully created a Bezier C2 patch.");
 
 	return patch;
+}
+
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateIntersectionCurve(std::weak_ptr<SceneObjectCAD> surface, std::vector<IntersectionPoint> intersectionPoints)
+{
+	auto surfaceShared = std::dynamic_pointer_cast<ParameterizedObject2D>(surface.lock());
+
+	if (!surfaceShared)
+	{
+		return std::weak_ptr<SceneObjectCAD>();
+	}
+
+	auto curve = std::make_shared<IntersectionCurve>(m_Scene, surface, intersectionPoints);
+	m_ObjectList.emplace(curve->Id(), curve);
+
+	surfaceShared->AddIntersectionCurve(curve);
+
+	BuD::Log::WriteInfo("Successfully created an intersection curve.");
+
+	return curve;
 }

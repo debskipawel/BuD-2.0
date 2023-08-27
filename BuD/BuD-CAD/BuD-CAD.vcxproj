@@ -203,6 +203,9 @@
     <ClInclude Include="Intersection\Structures\ParameterWrapResult.h" />
     <ClInclude Include="Intersection\Structures\PointMappingResult.h" />
     <ClInclude Include="Intersection\Structures\StartingCommonPointResult.h" />
+    <ClInclude Include="Objects\CAD\Intersection\IntersectionCurve.h" />
+    <ClInclude Include="Objects\CAD\Intersection\IntersectionPoint.h" />
+    <ClInclude Include="Objects\CAD\ParameterizedObject2D.h" />
     <ClInclude Include="Objects\CAD\PointBased\Curve\BaseCurve.h" />
     <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC0.h" />
     <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC2.h" />
@@ -299,6 +302,8 @@
     <ClCompile Include="Intersection\Sampler\ISampler.cpp" />
     <ClCompile Include="Intersection\SelfIntersectionAlgorithm.cpp" />
     <ClCompile Include="Objects\Additional\Cursor.cpp" />
+    <ClCompile Include="Objects\CAD\Intersection\IntersectionCurve.cpp" />
+    <ClCompile Include="Objects\CAD\ParameterizedObject2D.cpp" />
     <ClCompile Include="Objects\CAD\Point.cpp" />
     <ClCompile Include="Objects\CAD\PointBased\Curve\BaseCurve.cpp" />
     <ClCompile Include="Objects\CAD\PointBased\Curve\BezierCurveC0.cpp" />
@@ -407,6 +412,30 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\IntersectionCurve\intersection_curve_ds.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\IntersectionCurve\intersection_curve_hs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Hull</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\IntersectionCurve\intersection_curve_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\IntersectionCurve\intersection_curve_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_border_gs.hlsl">

@@ -18,7 +18,7 @@ Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, float outerRadius, float 
 }
 
 Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, float outerRadius, float innerRadius, unsigned int segmentsU, unsigned int segmentsV)
-	: SceneObjectCAD(scene)
+	: ParameterizedObject2D(scene)
 {
 	m_Tag = std::format("Torus {}", m_SceneEntity.Id());
 

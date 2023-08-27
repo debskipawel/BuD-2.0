@@ -3,7 +3,7 @@
 #include <execution>
 
 BaseBezierSurface::BaseBezierSurface(SceneCAD& scene, uint32_t sizeU, uint32_t sizeV, bool cylinder)
-	: SceneObjectCAD(scene.m_Scene), m_SizeU(sizeU), m_SizeV(sizeV), m_Cylinder(cylinder)
+	: ParameterizedObject2D(scene.m_Scene), m_SizeU(sizeU), m_SizeV(sizeV), m_Cylinder(cylinder)
 {
 }
 

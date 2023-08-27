@@ -6,7 +6,9 @@
 
 #include <Objects/Additional/Cursor.h>
 #include <Objects/Additional/Grid.h>
+
 #include <Objects/CAD/Point.h>
+#include <Objects/CAD/Intersection/IntersectionPoint.h>
 
 class SceneCAD
 {
@@ -34,6 +36,8 @@ public:
 
 	std::weak_ptr<SceneObjectCAD> CreateBezierPatchC0(std::vector<std::weak_ptr<Point>> controlPoints);
 	std::weak_ptr<SceneObjectCAD> CreateBezierPatchC2(std::vector<std::weak_ptr<Point>> controlPoints);
+
+	std::weak_ptr<SceneObjectCAD> CreateIntersectionCurve(std::weak_ptr<SceneObjectCAD> surface, std::vector<IntersectionPoint> intersectionPoints);
 
 	std::shared_ptr<Cursor> m_MainCursor;
 	std::shared_ptr<Cursor> m_CentroidCursor;

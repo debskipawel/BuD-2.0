@@ -5,6 +5,8 @@
 #include <Objects/CAD/Point.h>
 #include <Objects/CAD/Torus.h>
 
+#include <Objects/CAD/Intersection/IntersectionCurve.h>
+
 #include <Objects/CAD/PointBased/Curve/BezierCurveC0.h>
 #include <Objects/CAD/PointBased/Curve/BezierCurveC2.h>
 #include <Objects/CAD/PointBased/Curve/YukselInterpolatingCurveC2.h>
@@ -23,6 +25,8 @@ public:
 
 	virtual void Visit(Point& point) {}
 	virtual void Visit(Torus& torus) {}
+
+	virtual void Visit(IntersectionCurve& curve) {}
 
 	virtual void Visit(BezierCurveC0& curve) {}
 	virtual void Visit(BezierCurveC2& curve) {}

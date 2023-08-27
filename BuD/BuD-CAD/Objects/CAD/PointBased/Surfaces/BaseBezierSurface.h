@@ -1,10 +1,11 @@
 #pragma once
 
+#include <Objects/CAD/ParameterizedObject2D.h>
 #include <Objects/CAD/PointBased/Surfaces/BaseBezierPatch.h>
 
 #include <Scene/SceneCAD.h>
 
-class BaseBezierSurface : public SceneObjectCAD
+class BaseBezierSurface : public ParameterizedObject2D
 {
 public:
 	BaseBezierSurface(SceneCAD& scene, uint32_t sizeU, uint32_t sizeV, bool cylinder);
