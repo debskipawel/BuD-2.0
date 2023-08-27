@@ -7,5 +7,12 @@ ParameterizedObject2D::ParameterizedObject2D(BuD::Scene& scene)
 
 void ParameterizedObject2D::AddIntersectionCurve(std::weak_ptr<IntersectionCurve> intersectionCurve)
 {
-	m_IntersectionCurves.push_back(intersectionCurve);
+	auto intersectionCurveShared = intersectionCurve.lock();
+
+	if (!intersectionCurveShared)
+	{
+		return;
+	}
+
+	m_IntersectionCurves.emplace(intersectionCurveShared->Id(), intersectionCurve);
 }

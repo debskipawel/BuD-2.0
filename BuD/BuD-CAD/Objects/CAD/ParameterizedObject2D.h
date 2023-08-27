@@ -9,7 +9,6 @@ public:
 
 	virtual void AddIntersectionCurve(std::weak_ptr<IntersectionCurve> intersectionCurve);
 
-protected:
-	std::vector<std::weak_ptr<IntersectionCurve>> m_IntersectionCurves;
+	std::unordered_map<uint32_t, std::weak_ptr<IntersectionCurve>> m_IntersectionCurves;
 	// Texture m_ParameterSpace;
 };

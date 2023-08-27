@@ -10,6 +10,11 @@ void IntersectionEligibilityValidationVisitor::Visit(Point& point)
 	m_Valid = false;
 }
 
+void IntersectionEligibilityValidationVisitor::Visit(IntersectionCurve& curve)
+{
+	m_Valid = false;
+}
+
 void IntersectionEligibilityValidationVisitor::Visit(BezierCurveC0& curve)
 {
 	m_Valid = false;

@@ -10,6 +10,8 @@ public:
 	void Visit(Torus& torus) override;
 	void Visit(Point& point) override;
 
+	void Visit(IntersectionCurve& curve) override;
+
 	void Visit(BezierCurveC0& curve) override;
 	void Visit(BezierCurveC2& curve) override;
 	void Visit(YukselInterpolatingCurveC2& curve) override;

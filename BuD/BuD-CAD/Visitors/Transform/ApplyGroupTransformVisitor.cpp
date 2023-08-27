@@ -43,6 +43,18 @@ void ApplyGroupTransformVisitor::Visit(Torus& torus)
 		combinedRotation *
 		dxm::Matrix::CreateScale(torus.m_Transform.m_Scale) * 
 		dxm::Matrix::CreateTranslation(torus.m_Transform.m_Position);
+
+	for (auto& [id, intersectionCurve] : torus.m_IntersectionCurves)
+	{
+		auto curveShared = intersectionCurve.lock();
+
+		if (!curveShared)
+		{
+			continue;
+		}
+
+		curveShared->UpdateInstanceData();
+	}
 }
 
 void ApplyGroupTransformVisitor::Visit(Point& point)
