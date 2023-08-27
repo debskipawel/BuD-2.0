@@ -101,34 +101,28 @@ CommonPointSequenceResult MultiIntersectionAlgorithm::FindAllCommonPointsInDirec
 {
 	CommonPointSequenceResult result = {};
 
-	std::optional<dxm::Vector3> previousDirection = std::nullopt;
-
-	dxm::Vector2 startingUV = { starting.m_Parameter.x, starting.m_Parameter.y };
-	dxm::Vector2 startingST = { starting.m_Parameter.z, starting.m_Parameter.w };
-
 	NextCommonPointResult startingPoint = {};
 	startingPoint.m_Parameter = starting.m_Parameter;
 	startingPoint.m_Point = starting.m_Point;
 
 	NextCommonPointResult previousPoint = startingPoint;
 
+	std::optional<dxm::Vector3> previousDirection = std::nullopt;
+
 	if (marchingDirection == MarchingDirection::BACKWARD)
 	{
 		direction = -direction;
 	}
 
-	constexpr auto MAX_ITER = 1000;
-	auto iter = 0;
-
 	while (true)
 	{
-		auto nextCommonPoint = m_CommonPointMarching->NextPoint(previousPoint.m_Parameter, m_Parameters.m_PointDistance, marchingDirection);
+		auto nextPoint = m_CommonPointMarching->NextPoint(previousPoint.m_Parameter, m_Parameters.m_PointDistance, marchingDirection);
 
-		if (nextCommonPoint.m_ResultFound)
+		if (nextPoint.m_ResultFound)
 		{
-			previousDirection = nextCommonPoint.m_Point - previousPoint.m_Point;
+			previousDirection = nextPoint.m_Point - previousPoint.m_Point;
 
-			auto loopResult = DetectLoop(startingPoint, previousPoint, nextCommonPoint);
+			auto loopResult = DetectLoop(startingPoint, previousPoint, nextPoint);
 
 			if (loopResult.has_value())
 			{
@@ -136,15 +130,17 @@ CommonPointSequenceResult MultiIntersectionAlgorithm::FindAllCommonPointsInDirec
 				return result;
 			}
 
-			result.m_Points.push_back(nextCommonPoint);
+			result.m_Points.push_back(nextPoint);
 
-			previousPoint = nextCommonPoint;
+			previousPoint = nextPoint;
+
+			if (nextPoint.m_ShouldContinue)
+			{
+				continue;
+			}
 		}
 
-		if (!nextCommonPoint.m_ResultFound || !nextCommonPoint.m_ShouldContinue)
-		{
-			break;
-		}
+		break;
 	}
 
 	return result;
