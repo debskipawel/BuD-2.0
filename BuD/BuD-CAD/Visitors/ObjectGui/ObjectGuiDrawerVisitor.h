@@ -24,6 +24,8 @@ public:
 protected:
 	virtual void DrawGuiForSelectedTransform();
 	
+	virtual void DrawGuiForParameterSpace(ParameterizedObject2D& parameterized);
+
 	virtual bool DrawGuiForTag(SceneObjectCAD& object);
 	virtual bool DrawGuiForTransform(TransformComponent& transform);
 

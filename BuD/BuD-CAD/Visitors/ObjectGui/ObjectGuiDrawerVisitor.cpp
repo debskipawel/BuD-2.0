@@ -43,6 +43,10 @@ void ObjectGuiDrawerVisitor::Visit(Torus& torus)
 
 	instanceData.m_OuterRadius = max(instanceData.m_OuterRadius, instanceData.m_InnerRadius);
 	instanceData.m_InnerRadius = min(instanceData.m_OuterRadius, instanceData.m_InnerRadius);
+
+	ImGui::Separator();
+
+	DrawGuiForParameterSpace(torus);
 }
 
 void ObjectGuiDrawerVisitor::Visit(Point& point)
@@ -205,6 +209,34 @@ void ObjectGuiDrawerVisitor::DrawGuiForSelectedTransform()
 				std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ApplyGroupTransformVisitor>(initialTransform, groupTransform, centroid - groupTransform.m_Position);
 				visitor->Visit(object);
 			});
+	}
+}
+
+void ObjectGuiDrawerVisitor::DrawGuiForParameterSpace(ParameterizedObject2D& parameterized)
+{
+	if (parameterized.m_ParameterSpace.has_value() && ImGui::CollapsingHeader("Parameter space ###parameter_space"))
+	{
+		ImGui::TextWrapped("Click on any part of the parameter space to trim.");
+
+		auto cursorPreImage = ImGui::GetCursorScreenPos();
+		
+		auto width = ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x;
+		auto imageSize = ImVec2{ width, width };
+
+		ImGui::Image(parameterized.m_ParameterSpace->SRV(), imageSize);
+
+		if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && ImGui::IsItemHovered())
+		{
+			auto mousePos = ImGui::GetMousePos();
+
+			auto x = mousePos.x - cursorPreImage.x;
+			auto y = mousePos.y - cursorPreImage.y;
+
+			auto screenSpaceX = std::clamp(static_cast<float>(x) / imageSize.x, 0.0f, 1.0f);
+			auto screenSpaceY = std::clamp(static_cast<float>(y) / imageSize.y, 0.0f, 1.0f);
+
+			// TODO: trim
+		}
 	}
 }
 

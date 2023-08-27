@@ -13,6 +13,8 @@
 #include <Profiler/Profiler.h>
 
 #include <Renderer/Renderer.h>
+#include <Renderer/Texture.h>
+#include <Renderer/EditableTexture.h>
 
 #include <Shaders/Loader/ShaderLoader.h>
 

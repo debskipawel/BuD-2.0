@@ -181,6 +181,7 @@
     <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\PointMeshPrimitiveLoader.cpp" />
     <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\QuadMeshPrimitiveLoader.cpp" />
     <ClCompile Include="Profiler\Profiler.cpp" />
+    <ClCompile Include="Renderer\EditableTexture.cpp" />
     <ClCompile Include="Renderer\GraphicsDevice.cpp" />
     <ClCompile Include="Renderer\Implementations\AnaglyphRendererImpl.cpp" />
     <ClCompile Include="Renderer\Implementations\BaseRendererImpl.cpp" />
@@ -249,6 +250,7 @@
     <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\QuadMeshPrimitiveLoader.h" />
     <ClInclude Include="Objects\MeshPrimitiveType.h" />
     <ClInclude Include="Profiler\Profiler.h" />
+    <ClInclude Include="Renderer\EditableTexture.h" />
     <ClInclude Include="Renderer\Eye.h" />
     <ClInclude Include="Renderer\GraphicsDevice.h" />
     <ClInclude Include="Renderer\Implementations\AnaglyphBlendingShaders.h" />

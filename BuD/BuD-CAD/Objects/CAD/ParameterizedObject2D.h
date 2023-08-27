@@ -10,5 +10,5 @@ public:
 	virtual void AddIntersectionCurve(std::weak_ptr<IntersectionCurve> intersectionCurve);
 
 	std::unordered_map<uint32_t, std::weak_ptr<IntersectionCurve>> m_IntersectionCurves;
-	// Texture m_ParameterSpace;
+	std::optional<BuD::EditableTexture> m_ParameterSpace;
 };
