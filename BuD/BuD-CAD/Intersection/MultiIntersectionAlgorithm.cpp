@@ -169,17 +169,21 @@ std::optional<LoopResult> MultiIntersectionAlgorithm::DetectLoop(NextCommonPoint
 		if (determinant < 0.0f)
 		{
 			startToNext = startToPrev + step;
+			
+			return 0.0f;
 		}
 		else if (determinant > 0.0f)
 		{
 			startToPrev = startToNext - step;
+
+			return wrapped;
 		}
 	};
 
-	wrappingHandler(initialStartToPrev.x, current.m_WrappedU, startToNext.x, startToPrev.x, current.m_Step.x);
-	wrappingHandler(initialStartToPrev.y, current.m_WrappedV, startToNext.y, startToPrev.y, current.m_Step.y);
-	wrappingHandler(initialStartToPrev.z, current.m_WrappedS, startToNext.z, startToPrev.z, current.m_Step.z);
-	wrappingHandler(initialStartToPrev.w, current.m_WrappedT, startToNext.w, startToPrev.w, current.m_Step.w);
+	auto loopWrapU = wrappingHandler(initialStartToPrev.x, current.m_WrappedU, startToNext.x, startToPrev.x, current.m_Step.x);
+	auto loopWrapV = wrappingHandler(initialStartToPrev.y, current.m_WrappedV, startToNext.y, startToPrev.y, current.m_Step.y);
+	auto loopWrapS = wrappingHandler(initialStartToPrev.z, current.m_WrappedS, startToNext.z, startToPrev.z, current.m_Step.z);
+	auto loopWrapT = wrappingHandler(initialStartToPrev.w, current.m_WrappedT, startToNext.w, startToPrev.w, current.m_Step.w);
 
 	auto startToNextUV = dxm::Vector2{ startToNext.x, startToNext.y };
 	auto startToNextST = dxm::Vector2{ startToNext.z, startToNext.w };
@@ -188,7 +192,7 @@ std::optional<LoopResult> MultiIntersectionAlgorithm::DetectLoop(NextCommonPoint
 
 	if (startToNextUV.Dot(startToPrevUV) < 0.0f || startToNextST.Dot(startToPrevST) < 0.0f)
 	{
-		return LoopResult{ current.m_WrappedU, current.m_WrappedV, current.m_WrappedS, current.m_WrappedT };
+		return LoopResult{ loopWrapU, loopWrapV, loopWrapS, loopWrapT };
 	}
 
 	return std::nullopt;
