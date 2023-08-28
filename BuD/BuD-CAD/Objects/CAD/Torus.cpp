@@ -149,6 +149,7 @@ void Torus::CreateTrimmedRenderingPass()
 	m_TrimmedRenderingPass.m_Mesh = pointMesh;
 	m_TrimmedRenderingPass.m_Pipeline = pipeline;
 	m_TrimmedRenderingPass.m_RasterizerDescription.m_FillMode = BuD::FillMode::WIREFRAME;
+	m_TrimmedRenderingPass.m_RasterizerDescription.m_CullType = BuD::CullType::NONE;
 
 	m_TrimmedRenderingPass.m_PreRenderCallback = [this](const BuD::RenderingPass& renderingPass, const BuD::Scene& scene)
 	{

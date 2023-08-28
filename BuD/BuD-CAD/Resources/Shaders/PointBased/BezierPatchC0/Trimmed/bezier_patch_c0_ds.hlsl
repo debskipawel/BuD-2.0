@@ -9,6 +9,7 @@ struct DSOutput
 	float3 worldPosition : WORLD_POS;
     float3 normal : NORMAL;
 	float3 color : COLOR;
+    float depth : DEPTH;
     float2 texCoords : TEX_COORDS;
 };
 
@@ -89,6 +90,7 @@ DSOutput main(
 	
     o.worldPosition = DeCastiljeau3(vControlPoints, v);
     o.position = mul(projMtx, float4(o.worldPosition, 1.0));
+    o.depth = o.position.z / o.position.w;
     
     float3 vDerControlPoints[3] = { 3.0f * (vControlPoints[1] - vControlPoints[0]), 3.0f * (vControlPoints[2] - vControlPoints[1]), 3.0f * (vControlPoints[3] - vControlPoints[2]) };
     float3 uDerControlPoints[3] = { 3.0f * (uControlPoints[1] - uControlPoints[0]), 3.0f * (uControlPoints[2] - uControlPoints[1]), 3.0f * (uControlPoints[3] - uControlPoints[2]) };
@@ -98,7 +100,7 @@ DSOutput main(
     
     o.normal = cross(vDer, uDer);
     o.texCoords = float2(
-        (patch[0].rangeU.g - patch[0].rangeU.r) * u + patch[0].rangeU.r,
+        (patch[0].rangeU.g - patch[0].rangeU.r) * u + patch[0].rangeU.r, 
         (patch[0].rangeV.g - patch[0].rangeV.r) * v + patch[0].rangeV.r
     );
     

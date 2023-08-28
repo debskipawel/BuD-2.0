@@ -22,6 +22,8 @@ struct VSOutput
     float3 controlPoint13 : CONTROL_POINTS_13;
     float3 controlPoint14 : CONTROL_POINTS_14;
     float3 controlPoint15 : CONTROL_POINTS_15;
+    float2 rangeU : INS_PARAMETER_RANGE_U;
+    float2 rangeV : INS_PARAMETER_RANGE_V;
     float3 color : COLOR;
 };
 

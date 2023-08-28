@@ -87,6 +87,26 @@ void BezierSurfaceC0::Accept(AbstractVisitor& visitor)
 	visitor.Visit(*this);
 }
 
+void BezierSurfaceC0::AddIntersectionCurve(std::weak_ptr<IntersectionCurve> intersectionCurve)
+{
+	auto wasNotTrimmed = !m_IntersectionCurves.empty();
+
+	ParameterizedObject2D::AddIntersectionCurve(intersectionCurve);
+
+	if (wasNotTrimmed)
+	{
+		for (auto& patch : m_BezierPatches)
+		{
+			auto patchShared = std::dynamic_pointer_cast<BezierPatchC0>(patch.lock());
+
+			if (!patchShared)
+			{
+				//TODO: patchShared->SwitchToTrimmed();
+			}
+		}
+	}
+}
+
 std::vector<std::weak_ptr<Point>> BezierSurfaceC0::CreateControlPointsForFlatSurface(SceneCAD& scene, dxm::Vector3 position, uint32_t sizeU, uint32_t sizeV)
 {
 	auto controlPoints = std::vector<std::weak_ptr<Point>>();

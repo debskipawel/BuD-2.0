@@ -4,6 +4,7 @@ struct DSOutput
 	float3 worldPosition : WORLD_POS;
     float3 normal : NORMAL;
 	float3 color : COLOR;
+    float2 texCoords : TEX_COORDS;
 };
 
 float4 main(DSOutput i) : SV_TARGET

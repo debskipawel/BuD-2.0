@@ -630,5 +630,13 @@
     <FxCompile Include="Resources\Shaders\Torus\Trimmed\torus_hs.hlsl" />
     <FxCompile Include="Resources\Shaders\Torus\Trimmed\torus_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\Torus\Trimmed\torus_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\Trimmed\bezier_patch_c0_ds.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\Trimmed\bezier_patch_c0_hs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\Trimmed\bezier_patch_c0_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\Trimmed\bezier_patch_c0_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\Trimmed\bezier_patch_c2_ds.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\Trimmed\bezier_patch_c2_hs.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\Trimmed\bezier_patch_c2_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\Trimmed\bezier_patch_c2_vs.hlsl" />
   </ItemGroup>
 </Project>

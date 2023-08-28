@@ -5,6 +5,8 @@
 
 #include <Objects/CAD/PointBased/PointBasedObjectCAD.h>
 
+#include <Visitors/Intersection/CalculatorPointOnSurface.h>
+
 #include <Visitors/Transform/ApplyGroupTransformVisitor.h>
 #include <Visitors/Transform/UpdateTransformVisitor.h>
 
@@ -69,6 +71,46 @@ void ObjectGuiDrawerVisitor::Visit(Point& point)
 
 		auto& cursor = m_SceneDataLayer.m_SceneCAD.m_CentroidCursor;
 		cursor->SetPosition(centroid);
+	}
+}
+
+void ObjectGuiDrawerVisitor::Visit(IntersectionCurve& curve)
+{
+	auto width = ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x;
+
+	if (ImGui::Button("Make interpolation curve", { width, 0 }))
+	{
+		const auto& intersectionPoints = curve.IntersectionPoints();
+
+		std::vector<std::weak_ptr<Point>> controlPoints = {};
+
+		std::unique_ptr<CalculatorParameterized> pointCalculator = std::make_unique<CalculatorPointOnSurface>();
+
+		for (int i = 0; i < intersectionPoints.size() - 1; i++)
+		{
+			pointCalculator->SetParameter(intersectionPoints[i].m_Parameter);
+			pointCalculator->Visit(curve.m_Surface);
+
+			auto point = m_SceneDataLayer.m_SceneCAD.CreatePoint(pointCalculator->Result());
+			controlPoints.push_back(std::dynamic_pointer_cast<Point>(point.lock()));
+		}
+
+		if (intersectionPoints.front().m_Parameter == intersectionPoints.back().m_Parameter)
+		{
+			controlPoints.push_back(controlPoints.front());
+		}
+		else
+		{
+			auto parameter = intersectionPoints.back().m_Parameter;
+
+			pointCalculator->SetParameter(parameter);
+			pointCalculator->Visit(curve.m_Surface);
+
+			auto point = m_SceneDataLayer.m_SceneCAD.CreatePoint(pointCalculator->Result());
+			controlPoints.push_back(std::dynamic_pointer_cast<Point>(point.lock()));
+		}
+
+		m_SceneDataLayer.m_SceneCAD.CreateYukselInterpolatingCurveC2(controlPoints);
 	}
 }
 

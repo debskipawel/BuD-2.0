@@ -1,8 +1,10 @@
 #include "BaseBezierPatch.h"
 
-BaseBezierPatch::BaseBezierPatch(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints)
+BaseBezierPatch::BaseBezierPatch(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints, dxm::Vector2 rangeU, dxm::Vector2 rangeV)
 	: PointBasedObjectCAD(scene, controlPoints), m_DisplayBezierPolygon(false)
 {
+	m_InstanceData.m_ParameterRangeU = rangeU;
+	m_InstanceData.m_ParameterRangeV = rangeV;
 }
 
 void BaseBezierPatch::OnPointModify()
@@ -49,7 +51,9 @@ BuD::MeshDetails BaseBezierPatch::LoadPatchPrimitiveMesh()
 			{ "INS_POINT", 13, DXGI_FORMAT_R32G32B32_FLOAT, 1, 39 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 			{ "INS_POINT", 14, DXGI_FORMAT_R32G32B32_FLOAT, 1, 42 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 			{ "INS_POINT", 15, DXGI_FORMAT_R32G32B32_FLOAT, 1, 45 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
-			{ "INS_COLOR", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 1, 48 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_PARAMETER_RANGE_U", 0,  DXGI_FORMAT_R32G32_FLOAT, 1, 48 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_PARAMETER_RANGE_V", 0,  DXGI_FORMAT_R32G32_FLOAT, 1, 50 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_COLOR", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 1, 52 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 		}
 	);
 }
@@ -77,7 +81,9 @@ BuD::MeshDetails BaseBezierPatch::LoadPolygonPrimitiveMesh()
 			{ "INS_POINT", 13, DXGI_FORMAT_R32G32B32_FLOAT, 1, 39 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 			{ "INS_POINT", 14, DXGI_FORMAT_R32G32B32_FLOAT, 1, 42 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 			{ "INS_POINT", 15, DXGI_FORMAT_R32G32B32_FLOAT, 1, 45 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
-			{ "INS_COLOR", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 1, 48 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_PARAMETER_RANGE_U", 0,  DXGI_FORMAT_R32G32_FLOAT, 1, 48 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_PARAMETER_RANGE_V", 0,  DXGI_FORMAT_R32G32_FLOAT, 1, 50 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_COLOR", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 1, 52 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 		}
 	);
 }

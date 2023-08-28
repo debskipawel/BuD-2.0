@@ -22,6 +22,8 @@ struct VSInput
 	float3 controlPoint13 : INS_POINT13;
 	float3 controlPoint14 : INS_POINT14;
     float3 controlPoint15 : INS_POINT15;
+    float2 rangeU : INS_PARAMETER_RANGE_U;
+    float2 rangeV : INS_PARAMETER_RANGE_V;
 	float3 color : INS_COLOR;
 	uint instanceId : SV_InstanceID;
 };
@@ -45,6 +47,8 @@ struct VSOutput
     float3 controlPoint13 : CONTROL_POINTS_13;
     float3 controlPoint14 : CONTROL_POINTS_14;
     float3 controlPoint15 : CONTROL_POINTS_15;
+    float2 rangeU : PARAMETER_RANGE_U;
+    float2 rangeV : PARAMETER_RANGE_V;
 	float3 color : COLOR;
 };
 
@@ -70,6 +74,9 @@ VSOutput main(VSInput i)
 	o.controlPoint13 = mul(viewMtx, float4(i.controlPoint13, 1.0)).xyz;
 	o.controlPoint14 = mul(viewMtx, float4(i.controlPoint14, 1.0)).xyz;
     o.controlPoint15 = mul(viewMtx, float4(i.controlPoint15, 1.0)).xyz;
+	
+    o.rangeU = i.rangeU;
+    o.rangeV = i.rangeV;
 	
 	o.color = i.color;
 	

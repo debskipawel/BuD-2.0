@@ -10,4 +10,11 @@ public:
 	virtual void Accept(AbstractVisitor& visitor) override;
 
 	virtual void TogglePolygon(bool polygonOn) override;
+
+protected:
+	virtual void CreateInstanceRenderingPass();
+	virtual void CreateTrimmedRenderingPass();
+
+	BuD::RenderingPass m_InstanceRenderingPass;
+	BuD::RenderingPass m_TrimmedRenderingPass;
 };

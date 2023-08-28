@@ -5,7 +5,7 @@
 class BaseBezierPatch : public PointBasedObjectCAD
 {
 public:
-	BaseBezierPatch(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints);
+	BaseBezierPatch(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints, dxm::Vector2 rangeU = { 0.0f, 1.0f }, dxm::Vector2 rangeV = { 0.0f, 1.0f });
 
 	virtual void OnPointModify() override;
 
@@ -15,6 +15,8 @@ public:
 	struct BezierPatchSegmentInstanceData
 	{
 		std::array<dxm::Vector3, 16> m_ControlPoints;
+		dxm::Vector2 m_ParameterRangeU;
+		dxm::Vector2 m_ParameterRangeV;
 		dxm::Vector3 m_Color;
 	};
 
