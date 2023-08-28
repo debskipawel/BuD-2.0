@@ -169,6 +169,10 @@ void ObjectGuiDrawerVisitor::Visit(BezierSurfaceC0& surface)
 	{
 		surface.TogglePolygon(polygonOn);
 	}
+
+	ImGui::Separator();
+
+	DrawGuiForParameterSpace(surface);
 }
 
 void ObjectGuiDrawerVisitor::Visit(BezierSurfaceC2& surface)
@@ -187,6 +191,10 @@ void ObjectGuiDrawerVisitor::Visit(BezierSurfaceC2& surface)
 	{
 		surface.TogglePolygon(polygonOn);
 	}
+
+	ImGui::Separator();
+
+	DrawGuiForParameterSpace(surface);
 }
 
 void ObjectGuiDrawerVisitor::DrawGuiForSelectedTransform()
@@ -214,6 +222,9 @@ void ObjectGuiDrawerVisitor::DrawGuiForSelectedTransform()
 
 void ObjectGuiDrawerVisitor::DrawGuiForParameterSpace(ParameterizedObject2D& parameterized)
 {
+	constexpr dxm::Vector4 WHITE_COLOR = { 1.0f, 1.0f, 1.0f, 1.0f };
+	constexpr dxm::Vector4 BLACK_COLOR = { 0.0f, 0.0f, 0.0f, 1.0f };
+
 	if (parameterized.m_ParameterSpace.has_value() && ImGui::CollapsingHeader("Parameter space ###parameter_space"))
 	{
 		ImGui::TextWrapped("Click on any part of the parameter space to trim.");
@@ -236,6 +247,14 @@ void ObjectGuiDrawerVisitor::DrawGuiForParameterSpace(ParameterizedObject2D& par
 			auto screenSpaceY = std::clamp(static_cast<float>(y) / imageSize.y, 0.0f, 1.0f);
 
 			// TODO: trim
+			parameterized.m_ParameterSpace->BeginEdit();
+
+			auto color = parameterized.m_ParameterSpace->Sample(screenSpaceX, screenSpaceY);
+			auto fillColor = color == BLACK_COLOR ? WHITE_COLOR : BLACK_COLOR;
+
+			parameterized.m_ParameterSpace->FloodFill(screenSpaceX, screenSpaceY, fillColor);
+
+			parameterized.m_ParameterSpace->EndEdit();
 		}
 	}
 }

@@ -29,8 +29,6 @@ namespace BuD
 		hr = raw->CreateTexture2D(&readTextureDesc, nullptr, m_ReadTexture.GetAddressOf());
 
 		hr = raw->CreateShaderResourceView(m_MainTexture.Get(), nullptr, m_SRV.GetAddressOf());
-
-		int a = 5;
 	}
 
 	void EditableTexture::BeginEdit()
@@ -117,14 +115,8 @@ namespace BuD
 		}
 
 		auto pixelCoords = ScreenSpaceToPixel(x, y);
-		auto index = 4 * (m_Width * pixelCoords.second + pixelCoords.first);
-
-		return dxm::Vector4(
-			static_cast<float>(m_Buffer[index]) / 255,
-			static_cast<float>(m_Buffer[index + 1]) / 255,
-			static_cast<float>(m_Buffer[index + 2]) / 255,
-			static_cast<float>(m_Buffer[index + 3]) / 255
-		);
+		
+		return Sample(pixelCoords.first, pixelCoords.second);
 	}
 	
 	void EditableTexture::Clear(dxm::Vector4 color)
@@ -149,7 +141,37 @@ namespace BuD
 			return;
 		}
 
-		float mappedColor[4] = { std::clamp(color.x, 0.0f, 1.0f), std::clamp(color.y, 0.0f, 1.0f), std::clamp(color.z, 0.0f, 1.0f), std::clamp(color.w, 0.0f, 1.0f) };
+		auto [x1m, y1m] = ScreenSpaceToPixel(x1, y1);
+		auto [x2m, y2m] = ScreenSpaceToPixel(x2, y2);
+		
+		auto dx = x2m - x1m;
+		auto dy = y2m - y1m;
+		auto D = 2.0f * dy - dx;
+
+		auto y = y1;
+
+		if (abs(dy) < abs(dx))
+		{
+			if (dx < 0.0f)
+			{
+				DrawLineLow(x2m, y2m, x1m, y1m, color);
+			}
+			else
+			{
+				DrawLineLow(x1m, y1m, x2m, y2m, color);
+			}
+		}
+		else
+		{
+			if (dy < 0.0f)
+			{
+				DrawLineHigh(x2m, y2m, x1m, y1m, color);
+			}
+			else
+			{
+				DrawLineHigh(x1m, y1m, x2m, y2m, color);
+			}
+		}
 	}
 	
 	void EditableTexture::FloodFill(float x, float y, dxm::Vector4 color)
@@ -158,27 +180,131 @@ namespace BuD
 		{
 			return;
 		}
+
+		auto pixelCoords = ScreenSpaceToPixel(x, y);
+
+		FloodFill(pixelCoords.first, pixelCoords.second, color);
+	}
+
+	void EditableTexture::DrawLineLow(int x1, int y1, int x2, int y2, dxm::Vector4 color)
+	{
+		auto dx = x2 - x1, dy = y2 - y1;
+		auto yi = 1.0f;
+
+		if (dy < 0)
+		{
+			yi = -1;
+			dy = -dy;
+		}
+
+		auto D = 2.0f * dy - dx;
+		auto y = y1;
+
+		for (int x = x1; x <= x2; x++)
+		{
+			PutPixel(x, y, color);
+
+			if (D > 0.0f)
+			{
+				y += yi;
+				D -= 2.0f * dx;
+			}
+
+			D += 2.0f * dy;
+		}
+	}
+
+	void EditableTexture::DrawLineHigh(int x1, int y1, int x2, int y2, dxm::Vector4 color)
+	{
+		auto dx = x2 - x1, dy = y2 - y1;
+		auto xi = 1.0f;
+
+		if (dx < 0)
+		{
+			xi = -1;
+			dx = -dx;
+		}
+
+		auto D = 2.0f * dx - dy;
+		auto x = x1;
+
+		for (int y = y1; y <= y2; y++)
+		{
+			PutPixel(x, y, color);
+
+			if (D > 0.0f)
+			{
+				x += xi;
+				D -= 2.0f * dy;
+			}
+
+			D += 2.0f * dx;
+		}
 	}
 	
-	std::pair<uint32_t, uint32_t> EditableTexture::ScreenSpaceToPixel(float x, float y)
+	dxm::Vector4 EditableTexture::Sample(int x, int y)
+	{
+		auto index = static_cast<size_t>(4) * (m_Width * y + x);
+
+		return dxm::Vector4(m_Buffer[index], m_Buffer[index + 1], m_Buffer[index + 2], m_Buffer[index + 3]);
+	}
+
+	void EditableTexture::FloodFill(int x, int y, dxm::Vector4 color)
+	{
+		if (x < 0 || x >= m_Width || y < 0 || y >= m_Height)
+		{
+			return;
+		}
+
+		std::queue<std::pair<int, int>> pointsToFill = {};
+		pointsToFill.emplace(x, y);
+
+		auto startingColor = Sample(x, y);
+
+		while (!pointsToFill.empty())
+		{
+			auto [currX, currY] = pointsToFill.front();
+			pointsToFill.pop();
+
+			if (currX < 0 || currX >= m_Width || currY < 0 || currY >= m_Height)
+			{
+				continue;
+			}
+
+			auto sampledColor = Sample(currX, currY);
+
+			if (sampledColor != startingColor)
+			{
+				continue;
+			}
+
+			PutPixel(currX, currY, color);
+
+			pointsToFill.emplace(currX - 1, currY);
+			pointsToFill.emplace(currX + 1, currY);
+			pointsToFill.emplace(currX, currY - 1);
+			pointsToFill.emplace(currX, currY + 1);
+		}
+	}
+
+	std::pair<int, int> EditableTexture::ScreenSpaceToPixel(float x, float y)
 	{
 		if (m_Width == 0 || m_Height == 0 || x < 0.0f || x > 1.0f || y < 0.0f || y > 1.0f)
 		{
 			return { 0, 0 };
 		}
 
-		return { static_cast<uint32_t>(x * (m_Width - 1)), static_cast<uint32_t>(y * (m_Height - 1)) };
+		return { static_cast<int>(x * (m_Width - 1)), static_cast<int>(y * (m_Height - 1)) };
 	}
 
-	void EditableTexture::PutPixel(uint32_t x, uint32_t y, dxm::Vector4 color)
+	void EditableTexture::PutPixel(int x, int y, dxm::Vector4 color)
 	{
-		if (m_Buffer.empty())
+		if (!m_EditingMode || x < 0 || x >= m_Width || y < 0 || y >= m_Height)
 		{
 			return;
 		}
 
-		auto pixelCoords = ScreenSpaceToPixel(x, y);
-		auto index = 4 * (m_Width * pixelCoords.second + pixelCoords.first);
+		auto index = 4 * (m_Width * y + x);
 
 		float mappedColor[4] = { std::clamp(color.x, 0.0f, 1.0f), std::clamp(color.y, 0.0f, 1.0f), std::clamp(color.z, 0.0f, 1.0f), std::clamp(color.w, 0.0f, 1.0f) };
 

@@ -10,14 +10,16 @@ struct DS_OUTPUT
 {
 	float4 position  : SV_POSITION;
     float3 normal : NORMAL;
-    float3 color : INS_COLOR;
+    float depth : DEPTH;
+    float3 color : COLOR;
+    float2 domain : TEXCOORDS;
 };
 
 struct HS_CONTROL_POINT_OUTPUT
 {
-    matrix model : INS_MODEL;
-    float2 radius : INS_RADIUS;
-    float3 color : INS_COLOR;
+    matrix model : MODEL;
+    float2 radius : RADIUS;
+    float3 color : COLOR;
 };
 
 struct HS_CONSTANT_DATA_OUTPUT
@@ -39,8 +41,11 @@ DS_OUTPUT main(
     float R = patch[0].radius.r;
     float r = patch[0].radius.g;
 	
-    float phi = domain.r * TWO_PI;
-    float theta = domain.g * TWO_PI;
+    float u = domain.r;
+    float v = domain.g;
+    
+    float phi = u * TWO_PI;
+    float theta = v * TWO_PI;
 	
     float cu = cos(phi), su = sin(phi);
     float cv = cos(theta), sv = sin(theta);
@@ -54,8 +59,10 @@ DS_OUTPUT main(
 	
     // world position
     float4 worldPos = mul(patch[0].model, float4(position, 1.0));
-	
+    
     Output.position = mul(projMtx, mul(viewMtx, worldPos));
+    Output.domain = float2(u, v);
+    Output.depth = Output.position.z / Output.position.w;
     Output.normal = normalize(normal);
     Output.color = patch[0].color;
 	

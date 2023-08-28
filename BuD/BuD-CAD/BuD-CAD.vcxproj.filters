@@ -626,5 +626,9 @@
     <FxCompile Include="Resources\Shaders\IntersectionCurve\intersection_curve_hs.hlsl" />
     <FxCompile Include="Resources\Shaders\IntersectionCurve\intersection_curve_ds.hlsl" />
     <FxCompile Include="Resources\Shaders\IntersectionCurve\intersection_curve_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\Torus\Trimmed\torus_ds.hlsl" />
+    <FxCompile Include="Resources\Shaders\Torus\Trimmed\torus_hs.hlsl" />
+    <FxCompile Include="Resources\Shaders\Torus\Trimmed\torus_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\Torus\Trimmed\torus_vs.hlsl" />
   </ItemGroup>
 </Project>

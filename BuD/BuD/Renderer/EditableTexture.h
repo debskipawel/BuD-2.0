@@ -22,8 +22,16 @@ namespace BuD
 		void FloodFill(float x, float y, dxm::Vector4 color);
 
 	protected:
-		std::pair<uint32_t, uint32_t> ScreenSpaceToPixel(float x, float y);
-		void PutPixel(uint32_t x, uint32_t y, dxm::Vector4 color);
+		void DrawLineLow(int x1, int y1, int x2, int y2, dxm::Vector4 color);
+		void DrawLineHigh(int x1, int y1, int x2, int y2, dxm::Vector4 color);
+
+		dxm::Vector4 Sample(int x, int y);
+
+		void FloodFill(int x, int y, dxm::Vector4 color);
+
+		std::pair<int, int> ScreenSpaceToPixel(float x, float y);
+		
+		void PutPixel(int x, int y, dxm::Vector4 color);
 
 		ComPtr<ID3D11Texture2D> m_MainTexture;
 		ComPtr<ID3D11Texture2D> m_ReadTexture;

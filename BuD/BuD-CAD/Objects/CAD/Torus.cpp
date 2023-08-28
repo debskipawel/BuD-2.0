@@ -13,7 +13,7 @@ Torus::Torus(BuD::Scene& scene, dxm::Vector3 position)
 }
 
 Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, float outerRadius, float innerRadius)
-	: Torus(scene, position, outerRadius, innerRadius, 30, 15)
+	: Torus(scene, position, outerRadius, innerRadius, 15, 30)
 {
 }
 
@@ -32,6 +32,34 @@ Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, float outerRadius, float 
 
 	m_InstanceData.m_Color = dxm::Vector3::One;
 
+	CreateInstancedRenderingPass();
+	CreateTrimmedRenderingPass();
+
+	std::vector<BuD::RenderingPass> passes = { m_InstancedRenderingPass };
+
+	m_SceneEntity.AddComponent<BuD::IRenderable>(passes);
+}
+
+void Torus::Accept(AbstractVisitor& visitor)
+{
+	visitor.Visit(*this);
+}
+
+void Torus::AddIntersectionCurve(std::weak_ptr<IntersectionCurve> intersectionCurve)
+{
+	auto wasNotTrimmed = m_IntersectionCurves.empty();
+
+	ParameterizedObject2D::AddIntersectionCurve(intersectionCurve);
+
+	if (wasNotTrimmed)
+	{
+		auto& renderingComponent = m_SceneEntity.GetComponent<BuD::IRenderable>();
+		renderingComponent.RenderingPasses[0] = m_TrimmedRenderingPass;
+	}
+}
+
+void Torus::CreateInstancedRenderingPass()
+{
 	auto meshLoader = BuD::MeshLoader();
 
 	auto pointMesh = meshLoader.LoadPrimitiveMesh(
@@ -75,14 +103,14 @@ Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, float outerRadius, float 
 		return instance;
 	};
 
-	BuD::RenderingPass renderingPass;
-	renderingPass.m_Mesh = pointMesh;
-	renderingPass.m_Pipeline = pipeline;
-	renderingPass.m_Instancing = instancing;
+	m_InstancedRenderingPass = {};
+	m_InstancedRenderingPass.m_Mesh = pointMesh;
+	m_InstancedRenderingPass.m_Pipeline = pipeline;
+	m_InstancedRenderingPass.m_Instancing = instancing;
 
-	renderingPass.m_RasterizerDescription.m_FillMode = BuD::FillMode::WIREFRAME;
+	m_InstancedRenderingPass.m_RasterizerDescription.m_FillMode = BuD::FillMode::WIREFRAME;
 
-	renderingPass.m_PreRenderCallback = [](const BuD::RenderingPass& renderingPass, const BuD::Scene& scene)
+	m_InstancedRenderingPass.m_PreRenderCallback = [](const BuD::RenderingPass& renderingPass, const BuD::Scene& scene)
 	{
 		auto camera = scene.ActiveCamera();
 
@@ -91,16 +119,55 @@ Torus::Torus(BuD::Scene& scene, dxm::Vector3 position, float outerRadius, float 
 
 		ds->UpdateConstantBuffer(0, matrices, 2 * sizeof(dxm::Matrix));
 	};
-
-	std::vector<BuD::RenderingPass> passes;
-	passes.push_back(renderingPass);
-
-	m_SceneEntity.AddComponent<BuD::IRenderable>(passes);
 }
 
-void Torus::Accept(AbstractVisitor& visitor)
+void Torus::CreateTrimmedRenderingPass()
 {
-	visitor.Visit(*this);
+	auto meshLoader = BuD::MeshLoader();
+
+	auto pointMesh = meshLoader.LoadPrimitiveMesh(BuD::MeshPrimitiveType::POINT_TESSELLATION);
+	pointMesh.m_BoundingBoxCallback = [this]()
+	{
+		BuD::AABB aabb;
+
+		auto scale = m_Transform.m_Scale;
+		auto maxScale = max(max(scale.x, scale.y), scale.z);
+		auto position = m_Transform.m_Position;
+		aabb.m_Max = position + maxScale * dxm::Vector3(m_InstanceData.m_OuterRadius + m_InstanceData.m_InnerRadius);
+		aabb.m_Min = position - maxScale * dxm::Vector3(m_InstanceData.m_OuterRadius + m_InstanceData.m_InnerRadius);
+
+		return aabb;
+	};
+
+	BuD::ShaderPipeline pipeline;
+	pipeline.m_VertexShader = BuD::ShaderLoader::VSLoad("Resources/Shaders/Torus/Trimmed/torus_vs.hlsl");
+	pipeline.m_HullShader = BuD::ShaderLoader::HSLoad("Resources/Shaders/Torus/Trimmed/torus_hs.hlsl", { sizeof(TorusInstanceData) });
+	pipeline.m_DomainShader = BuD::ShaderLoader::DSLoad("Resources/Shaders/Torus/Trimmed/torus_ds.hlsl", { 2 * sizeof(dxm::Matrix) });
+	pipeline.m_PixelShader = BuD::ShaderLoader::PSLoad("Resources/Shaders/Torus/Trimmed/torus_ps.hlsl");
+
+	m_TrimmedRenderingPass = {};
+	m_TrimmedRenderingPass.m_Mesh = pointMesh;
+	m_TrimmedRenderingPass.m_Pipeline = pipeline;
+	m_TrimmedRenderingPass.m_RasterizerDescription.m_FillMode = BuD::FillMode::WIREFRAME;
+
+	m_TrimmedRenderingPass.m_PreRenderCallback = [this](const BuD::RenderingPass& renderingPass, const BuD::Scene& scene)
+	{
+		auto device = BuD::Renderer::Device();
+		auto context = device->Context();
+		auto camera = scene.ActiveCamera();
+
+		dxm::Matrix matrices[] = { camera->ViewMatrix(), BuD::Renderer::ProjectionMatrix() };
+		
+		auto& hs = renderingPass.m_Pipeline.m_HullShader;
+		auto& ds = renderingPass.m_Pipeline.m_DomainShader;
+
+		hs->UpdateConstantBuffer(0, &m_InstanceData, sizeof(TorusInstanceData));
+		ds->UpdateConstantBuffer(0, matrices, 2 * sizeof(dxm::Matrix));
+
+		ID3D11ShaderResourceView* SRVs[1] = { m_ParameterSpace.has_value() ? m_ParameterSpace->SRV() : nullptr };
+
+		context->PSSetShaderResources(0, 1, SRVs);
+	};
 }
 
 dxm::Vector3 Torus::SELECTED_COLOR = { 0.8f, 0.6f, 0.0f };

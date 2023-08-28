@@ -12,6 +12,8 @@ public:
 
 	virtual void Accept(AbstractVisitor& visitor) override;
 
+	virtual void AddIntersectionCurve(std::weak_ptr<IntersectionCurve> intersectionCurve) override;
+
 	struct TorusInstanceData
 	{
 		dxm::Matrix m_ModelMatrix;
@@ -24,4 +26,11 @@ public:
 
 	static dxm::Vector3 SELECTED_COLOR;
 	static dxm::Vector3 UNSELECTED_COLOR;
+
+protected:
+	void CreateInstancedRenderingPass();
+	void CreateTrimmedRenderingPass();
+
+	BuD::RenderingPass m_InstancedRenderingPass;
+	BuD::RenderingPass m_TrimmedRenderingPass;
 };

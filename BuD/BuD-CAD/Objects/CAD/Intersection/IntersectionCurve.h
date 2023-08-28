@@ -13,6 +13,8 @@ public:
 
 	virtual void UpdateInstanceData();
 
+	virtual const std::vector<IntersectionPoint>& IntersectionPoints() const { return m_IntersectionPoints; }
+
 	std::weak_ptr<SceneObjectCAD> m_Surface;
 
 protected:
