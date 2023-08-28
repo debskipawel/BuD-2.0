@@ -47,14 +47,23 @@ void Torus::Accept(AbstractVisitor& visitor)
 
 void Torus::AddIntersectionCurve(std::weak_ptr<IntersectionCurve> intersectionCurve)
 {
-	auto wasNotTrimmed = m_IntersectionCurves.empty();
-
 	ParameterizedObject2D::AddIntersectionCurve(intersectionCurve);
 
-	if (wasNotTrimmed)
+	if (!m_IntersectionCurves.empty())
 	{
 		auto& renderingComponent = m_SceneEntity.GetComponent<BuD::IRenderable>();
 		renderingComponent.RenderingPasses[0] = m_TrimmedRenderingPass;
+	}
+}
+
+void Torus::RemoveIntersectionCurve(std::weak_ptr<IntersectionCurve> intersectionCurve)
+{
+	ParameterizedObject2D::RemoveIntersectionCurve(intersectionCurve);
+
+	if (m_IntersectionCurves.empty())
+	{
+		auto& renderingComponent = m_SceneEntity.GetComponent<BuD::IRenderable>();
+		renderingComponent.RenderingPasses[0] = m_InstancedRenderingPass;
 	}
 }
 

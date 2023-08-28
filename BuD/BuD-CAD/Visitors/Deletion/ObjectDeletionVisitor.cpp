@@ -53,7 +53,7 @@ void ObjectDeletionVisitor::Visit(IntersectionCurve& curve)
 
 	if (surface)
 	{
-		// TODO: remove intersection curve from parameter space texture and from collection
+		surface->RemoveIntersectionCurve(std::dynamic_pointer_cast<IntersectionCurve>(m_Caller.lock()));
 	}
 
 	std::unique_ptr<AbstractVisitor> unselectVisitor = std::make_unique<ObjectUnselectVisitor>(m_SceneDataLayer);

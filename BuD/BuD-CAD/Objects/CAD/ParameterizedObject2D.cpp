@@ -38,6 +38,47 @@ void ParameterizedObject2D::AddIntersectionCurve(std::weak_ptr<IntersectionCurve
 	m_ParameterSpace->EndEdit();
 }
 
+void ParameterizedObject2D::RemoveIntersectionCurve(std::weak_ptr<IntersectionCurve> intersectionCurve)
+{
+	auto intersectionCurveShared = intersectionCurve.lock();
+
+	if (!intersectionCurveShared)
+	{
+		return;
+	}
+
+	if (!m_IntersectionCurves.contains(intersectionCurveShared->Id()))
+	{
+		return;
+	}
+
+	m_IntersectionCurves.erase(intersectionCurveShared->Id());
+
+	if (m_IntersectionCurves.empty())
+	{
+		m_ParameterSpace = std::nullopt;
+		return;
+	}
+
+	m_ParameterSpace->BeginEdit();
+
+	m_ParameterSpace->Clear({ 1.0f, 1.0f, 1.0f, 1.0f });
+
+	for (auto& [id, curve] : m_IntersectionCurves)
+	{
+		auto curveShared = curve.lock();
+
+		if (!curveShared)
+		{
+			continue;
+		}
+
+		DrawIntersectionCurveInParameterSpace(curveShared);
+	}
+
+	m_ParameterSpace->EndEdit();
+}
+
 void ParameterizedObject2D::DrawIntersectionCurveInParameterSpace(std::shared_ptr<IntersectionCurve> curve)
 {
 	const auto& intersectionPoints = curve->IntersectionPoints();

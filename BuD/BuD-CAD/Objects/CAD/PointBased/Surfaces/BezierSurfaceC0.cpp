@@ -89,11 +89,9 @@ void BezierSurfaceC0::Accept(AbstractVisitor& visitor)
 
 void BezierSurfaceC0::AddIntersectionCurve(std::weak_ptr<IntersectionCurve> intersectionCurve)
 {
-	auto wasNotTrimmed = !m_IntersectionCurves.empty();
-
 	ParameterizedObject2D::AddIntersectionCurve(intersectionCurve);
 
-	if (wasNotTrimmed)
+	if (!m_IntersectionCurves.empty())
 	{
 		for (auto& patch : m_BezierPatches)
 		{
@@ -102,6 +100,24 @@ void BezierSurfaceC0::AddIntersectionCurve(std::weak_ptr<IntersectionCurve> inte
 			if (!patchShared)
 			{
 				//TODO: patchShared->SwitchToTrimmed();
+			}
+		}
+	}
+}
+
+void BezierSurfaceC0::RemoveIntersectionCurve(std::weak_ptr<IntersectionCurve> intersectionCurve)
+{
+	ParameterizedObject2D::RemoveIntersectionCurve(intersectionCurve);
+
+	if (m_IntersectionCurves.empty())
+	{
+		for (auto& patch : m_BezierPatches)
+		{
+			auto patchShared = std::dynamic_pointer_cast<BezierPatchC0>(patch.lock());
+
+			if (!patchShared)
+			{
+				//TODO: patchShared->SwitchToInstanced();
 			}
 		}
 	}

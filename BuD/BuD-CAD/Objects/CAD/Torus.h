@@ -13,6 +13,7 @@ public:
 	virtual void Accept(AbstractVisitor& visitor) override;
 
 	virtual void AddIntersectionCurve(std::weak_ptr<IntersectionCurve> intersectionCurve) override;
+	virtual void RemoveIntersectionCurve(std::weak_ptr<IntersectionCurve> intersectionCurve) override;
 
 	struct TorusInstanceData
 	{
