@@ -240,10 +240,17 @@ void SceneSerializer::ConstructLoadedScene()
 
     for (auto& surfaceC0 : scene.surfacesC0)
     {
-        std::vector<std::weak_ptr<BaseBezierPatch>> surfacePatches;
+        std::vector<std::shared_ptr<BaseBezierPatch>> surfacePatches;
+
+        auto count = 0;
 
         for (auto& patch : surfaceC0.patches)
         {
+            auto u = count % surfaceC0.size.x;
+            auto v = count / surfaceC0.size.x;
+
+            count++;
+
             std::vector<std::weak_ptr<Point>> controlPoints;
 
             for (auto& controlPoint : patch.controlPoints)
@@ -253,7 +260,10 @@ void SceneSerializer::ConstructLoadedScene()
                 controlPoints.push_back(point);
             }
 
-            auto patchObject = std::make_shared<BezierPatchC0>(sceneCAD.m_Scene, controlPoints);
+            auto rangeU = dxm::Vector2{ static_cast<float>(u) / surfaceC0.size.x, static_cast<float>(u + 1) / surfaceC0.size.x };
+            auto rangeV = dxm::Vector2{ static_cast<float>(v) / surfaceC0.size.y, static_cast<float>(v + 1) / surfaceC0.size.y };
+
+            auto patchObject = std::make_shared<BezierPatchC0>(sceneCAD.m_Scene, controlPoints, rangeU, rangeV);
             
             for (auto& controlPoint : controlPoints)
             {
@@ -263,11 +273,11 @@ void SceneSerializer::ConstructLoadedScene()
             
             patchObject->m_Tag = patch.name;
 
-            sceneCAD.m_ObjectList.emplace(patchObject->Id(), patchObject);
             surfacePatches.push_back(patchObject);
         }
 
         auto surfaceObject = std::make_shared<BezierSurfaceC0>(sceneCAD, surfacePatches, surfaceC0.size.x, surfaceC0.size.y, surfaceC0.uWrapped);
+        surfaceObject->UpdateOwnership();
         surfaceObject->m_Tag = surfaceC0.name;
 
         sceneCAD.m_ObjectList.emplace(surfaceObject->Id(), surfaceObject);
@@ -275,10 +285,17 @@ void SceneSerializer::ConstructLoadedScene()
 
     for (auto& surfaceC2 : scene.surfacesC2)
     {
-        std::vector<std::weak_ptr<BaseBezierPatch>> surfacePatches;
+        std::vector<std::shared_ptr<BaseBezierPatch>> surfacePatches;
+
+        auto count = 0;
 
         for (auto& patch : surfaceC2.patches)
         {
+            auto u = count % surfaceC2.size.x;
+            auto v = count / surfaceC2.size.x;
+
+            count++;
+
             std::vector<std::weak_ptr<Point>> controlPoints;
 
             for (auto& controlPoint : patch.controlPoints)
@@ -288,7 +305,10 @@ void SceneSerializer::ConstructLoadedScene()
                 controlPoints.push_back(point);
             }
 
-            auto patchObject = std::make_shared<BezierPatchC2>(sceneCAD.m_Scene, controlPoints);
+            auto rangeU = dxm::Vector2{ static_cast<float>(u) / surfaceC2.size.x, static_cast<float>(u + 1) / surfaceC2.size.x };
+            auto rangeV = dxm::Vector2{ static_cast<float>(v) / surfaceC2.size.y, static_cast<float>(v + 1) / surfaceC2.size.y };
+
+            auto patchObject = std::make_shared<BezierPatchC2>(sceneCAD.m_Scene, controlPoints, rangeU, rangeV);
 
             for (auto& controlPoint : controlPoints)
             {
@@ -298,11 +318,12 @@ void SceneSerializer::ConstructLoadedScene()
 
             patchObject->m_Tag = patch.name;
 
-            sceneCAD.m_ObjectList.emplace(patchObject->Id(), patchObject);
             surfacePatches.push_back(patchObject);
         }
 
         auto surfaceObject = std::make_shared<BezierSurfaceC2>(sceneCAD, surfacePatches, surfaceC2.size.x, surfaceC2.size.y, surfaceC2.uWrapped);
+        surfaceObject->UpdateOwnership();
+
         surfaceObject->m_Tag = surfaceC2.name;
 
         sceneCAD.m_ObjectList.emplace(surfaceObject->Id(), surfaceObject);

@@ -39,16 +39,13 @@ void SceneCAD::Clear()
 void SceneCAD::DeleteObject(SceneObjectCAD& object)
 {
 	auto id = object.Id();
-	auto result = m_ObjectList.find(id);
 
-	if (result == m_ObjectList.end())
+	if (!m_ObjectList.contains(id))
 	{
 		return;
 	}
 
-	auto& objectPtr = result->second;
-
-	objectPtr.reset();
+	auto& objectPtr = m_ObjectList.at(id);
 
 	m_ObjectList.erase(id);
 }
@@ -124,6 +121,7 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreateYukselInterpolatingCurveC2(std::ve
 std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFlatBezierSurfaceC0(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV)
 {
 	auto surface = std::make_shared<BezierSurfaceC0>(*this, position, patchesU, pachesV, false);
+	surface->UpdateOwnership();
 
 	m_ObjectList.emplace(surface->Id(), surface);
 
@@ -135,6 +133,7 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFlatBezierSurfaceC0(dxm::Vector3 p
 std::weak_ptr<SceneObjectCAD> SceneCAD::CreateCylinderBezierSurfaceC0(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV)
 {
 	auto surface = std::make_shared<BezierSurfaceC0>(*this, position, patchesU, pachesV, true);
+	surface->UpdateOwnership();
 
 	m_ObjectList.emplace(surface->Id(), surface);
 
@@ -146,6 +145,7 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreateCylinderBezierSurfaceC0(dxm::Vecto
 std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFlatBezierSurfaceC2(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV)
 {
 	auto surface = std::make_shared<BezierSurfaceC2>(*this, position, patchesU, pachesV, false);
+	surface->UpdateOwnership();
 
 	m_ObjectList.emplace(surface->Id(), surface);
 
@@ -157,44 +157,13 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFlatBezierSurfaceC2(dxm::Vector3 p
 std::weak_ptr<SceneObjectCAD> SceneCAD::CreateCylinderBezierSurfaceC2(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV)
 {
 	auto surface = std::make_shared<BezierSurfaceC2>(*this, position, patchesU, pachesV, true);
+	surface->UpdateOwnership();
 
 	m_ObjectList.emplace(surface->Id(), surface);
 
 	BuD::Log::WriteInfo("Successfully created a cylinder C2 Bezier surface.");
 
 	return surface;
-}
-
-std::weak_ptr<SceneObjectCAD> SceneCAD::CreateBezierPatchC0(std::vector<std::weak_ptr<Point>> controlPoints)
-{
-	auto patch = std::make_shared<BezierPatchC0>(m_Scene, controlPoints);
-	m_ObjectList.emplace(patch->Id(), patch);
-
-	for (auto& controlPoint : controlPoints)
-	{
-		auto controlPointShared = controlPoint.lock();
-		controlPointShared->m_PointBasedObjects.push_back(patch);
-	}
-
-	BuD::Log::WriteInfo("Successfully created a Bezier C0 patch.");
-
-	return patch;
-}
-
-std::weak_ptr<SceneObjectCAD> SceneCAD::CreateBezierPatchC2(std::vector<std::weak_ptr<Point>> controlPoints)
-{
-	auto patch = std::make_shared<BezierPatchC2>(m_Scene, controlPoints);
-	m_ObjectList.emplace(patch->Id(), patch);
-
-	for (auto& controlPoint : controlPoints)
-	{
-		auto controlPointShared = controlPoint.lock();
-		controlPointShared->m_PointBasedObjects.push_back(patch);
-	}
-
-	BuD::Log::WriteInfo("Successfully created a Bezier C2 patch.");
-
-	return patch;
 }
 
 std::weak_ptr<SceneObjectCAD> SceneCAD::CreateIntersectionCurve(std::weak_ptr<SceneObjectCAD> surface, std::vector<IntersectionPoint> intersectionPoints)

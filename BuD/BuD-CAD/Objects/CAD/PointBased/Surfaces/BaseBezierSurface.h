@@ -5,7 +5,7 @@
 
 #include <Scene/SceneCAD.h>
 
-class BaseBezierSurface : public ParameterizedObject2D
+class BaseBezierSurface : public ParameterizedObject2D, public std::enable_shared_from_this<BaseBezierSurface>
 {
 public:
 	BaseBezierSurface(SceneCAD& scene, uint32_t sizeU, uint32_t sizeV, bool cylinder);
@@ -13,7 +13,9 @@ public:
 	virtual bool ShouldDisplayPolygon();
 	virtual void TogglePolygon(bool polygonOn);
 
-	std::vector<std::weak_ptr<BaseBezierPatch>> m_BezierPatches;
+	virtual void UpdateOwnership();
+
+	std::vector<std::shared_ptr<BaseBezierPatch>> m_BezierPatches;
 	
 	uint32_t m_SizeU, m_SizeV;
 	bool m_Cylinder;

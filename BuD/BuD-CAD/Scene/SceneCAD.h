@@ -34,9 +34,6 @@ public:
 	std::weak_ptr<SceneObjectCAD> CreateFlatBezierSurfaceC2(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV);
 	std::weak_ptr<SceneObjectCAD> CreateCylinderBezierSurfaceC2(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV);
 
-	std::weak_ptr<SceneObjectCAD> CreateBezierPatchC0(std::vector<std::weak_ptr<Point>> controlPoints);
-	std::weak_ptr<SceneObjectCAD> CreateBezierPatchC2(std::vector<std::weak_ptr<Point>> controlPoints);
-
 	std::weak_ptr<SceneObjectCAD> CreateIntersectionCurve(std::weak_ptr<SceneObjectCAD> surface, std::vector<IntersectionPoint> intersectionPoints);
 
 	std::shared_ptr<Cursor> m_MainCursor;

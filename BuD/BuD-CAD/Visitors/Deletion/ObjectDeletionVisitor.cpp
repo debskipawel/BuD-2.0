@@ -126,9 +126,7 @@ void ObjectDeletionVisitor::Visit(BezierSurfaceC0& surface)
 
 	for (auto& bezierPatch : surface.m_BezierPatches)
 	{
-		std::weak_ptr<SceneObjectCAD> sceneObject = bezierPatch.lock();
-		
-		AbstractVisitor::Visit(sceneObject);
+		AbstractVisitor::Visit(bezierPatch);
 	}
 
 	m_SceneDataLayer.m_SceneCAD.DeleteObject(surface);
@@ -148,9 +146,7 @@ void ObjectDeletionVisitor::Visit(BezierSurfaceC2& surface)
 
 	for (auto& bezierPatch : surface.m_BezierPatches)
 	{
-		std::weak_ptr<SceneObjectCAD> sceneObject = bezierPatch.lock();
-
-		AbstractVisitor::Visit(sceneObject);
+		AbstractVisitor::Visit(bezierPatch);
 	}
 
 	m_SceneDataLayer.m_SceneCAD.DeleteObject(surface);

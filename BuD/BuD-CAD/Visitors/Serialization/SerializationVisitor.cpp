@@ -131,20 +131,13 @@ void SerializationVisitor::Visit(BezierSurfaceC0& surface)
 
 	for (auto& patch : surface.m_BezierPatches)
 	{
-		auto patchShared = patch.lock();
-
-		if (!patchShared)
-		{
-			continue;
-		}
-
 		auto bezierPatch = MG1::BezierPatchC0();
-		bezierPatch.name = patchShared->m_Tag;
-		bezierPatch.SetId(patchShared->Id());
+		bezierPatch.name = patch->m_Tag;
+		bezierPatch.SetId(patch->Id());
 
 		bezierPatch.samples = MG1::Uint2{ static_cast<uint32_t>(16), static_cast<uint32_t>(16) };
 
-		for (auto& controlPoint : patchShared->m_ControlPoints)
+		for (auto& controlPoint : patch->m_ControlPoints)
 		{
 			auto controlPointShared = controlPoint.lock();
 
@@ -176,20 +169,13 @@ void SerializationVisitor::Visit(BezierSurfaceC2& surface)
 
 	for (auto& patch : surface.m_BezierPatches)
 	{
-		auto patchShared = patch.lock();
-
-		if (!patchShared)
-		{
-			continue;
-		}
-
 		auto bezierPatch = MG1::BezierPatchC2();
-		bezierPatch.name = patchShared->m_Tag;
-		bezierPatch.SetId(patchShared->Id());
+		bezierPatch.name = patch->m_Tag;
+		bezierPatch.SetId(patch->Id());
 
 		bezierPatch.samples = MG1::Uint2{ static_cast<uint32_t>(16), static_cast<uint32_t>(16) };
 
-		for (auto& controlPoint : patchShared->m_ControlPoints)
+		for (auto& controlPoint : patch->m_ControlPoints)
 		{
 			auto controlPointShared = controlPoint.lock();
 

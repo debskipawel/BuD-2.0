@@ -2,8 +2,8 @@
 
 #include <Visitors/AbstractVisitor.h>
 
-BezierPatchC0::BezierPatchC0(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints)
-	: BaseBezierPatch(scene, controlPoints)
+BezierPatchC0::BezierPatchC0(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints, dxm::Vector2 rangeU, dxm::Vector2 rangeV)
+	: BaseBezierPatch(scene, controlPoints, rangeU, rangeV)
 {
 	m_Tag = std::format("Bezier C0 patch {}", Id());
 
@@ -71,6 +71,18 @@ void BezierPatchC0::TogglePolygon(bool polygonOn)
 
 	auto& renderingComponent = m_SceneEntity.GetComponent<BuD::IRenderable>();
 	renderingComponent.RenderingPasses[1].m_ShouldSkip = !m_DisplayBezierPolygon;
+}
+
+void BezierPatchC0::SwitchToTrimmed()
+{
+	auto& renderingComponent = m_SceneEntity.GetComponent<BuD::IRenderable>();
+	renderingComponent.RenderingPasses[0] = m_TrimmedRenderingPass;
+}
+
+void BezierPatchC0::SwitchToInstanced()
+{
+	auto& renderingComponent = m_SceneEntity.GetComponent<BuD::IRenderable>();
+	renderingComponent.RenderingPasses[0] = m_InstanceRenderingPass;
 }
 
 void BezierPatchC0::CreateInstanceRenderingPass()
@@ -150,7 +162,9 @@ void BezierPatchC0::CreateTrimmedRenderingPass()
 
 		ds->UpdateConstantBuffer(0, &projMtx, sizeof(dxm::Matrix));
 
-		ID3D11ShaderResourceView* SRVs[1] = { /*m_ParameterSpace.has_value() ? m_ParameterSpace->SRV() :*/ nullptr};
+		auto surface = m_OwnerSurface.lock();
+
+		ID3D11ShaderResourceView* SRVs[1] = { surface && surface->m_ParameterSpace.has_value() ? surface->m_ParameterSpace->SRV() : nullptr };
 
 		context->PSSetShaderResources(0, 1, SRVs);
 	};

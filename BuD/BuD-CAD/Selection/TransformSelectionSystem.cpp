@@ -2,6 +2,7 @@
 
 #include <numeric>
 
+#include <Visitors/Transform/AfterUpdateTransformVisitor.h>
 #include <Visitors/Transform/UpdateTransformVisitor.h>
 
 void TransformSelectionSystem::Clear()
@@ -149,7 +150,8 @@ bool TransformSelectionSystem::Undo()
 
 	if (actionShared)
 	{
-		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<UpdateTransformVisitor>();
+		std::unique_ptr<AbstractVisitor> onTransformVisitor = std::make_unique<UpdateTransformVisitor>();
+		std::unique_ptr<AbstractVisitor> afterTransformVisitor = std::make_unique<AfterUpdateTransformVisitor>();
 
 		for (auto& [id, object] : actionShared->m_TransformedObjects)
 		{
@@ -163,9 +165,14 @@ bool TransformSelectionSystem::Undo()
 			auto& initialTransform = actionShared->m_OriginalTransforms[id];
 
 			objectShared->m_Transform = initialTransform;
-			visitor->Visit(object);
+			onTransformVisitor->Visit(object);
 
 			m_InitialTransforms[id] = initialTransform;
+		}
+
+		for (auto& [id, object] : actionShared->m_TransformedObjects)
+		{
+			afterTransformVisitor->Visit(object);
 		}
 
 		UpdateCentroid();
@@ -193,7 +200,8 @@ bool TransformSelectionSystem::Redo()
 
 	if (actionShared)
 	{
-		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<UpdateTransformVisitor>();
+		std::unique_ptr<AbstractVisitor> onTransformVisitor = std::make_unique<UpdateTransformVisitor>();
+		std::unique_ptr<AbstractVisitor> afterTransformVisitor = std::make_unique<AfterUpdateTransformVisitor>();
 
 		for (auto& [id, object] : actionShared->m_TransformedObjects)
 		{
@@ -207,9 +215,14 @@ bool TransformSelectionSystem::Redo()
 			auto& targetTransform = actionShared->m_TargetTransforms[id];
 
 			objectShared->m_Transform = targetTransform;
-			visitor->Visit(object);
+			onTransformVisitor->Visit(object);
 
 			m_InitialTransforms[id] = targetTransform;
+		}
+
+		for (auto& [id, object] : actionShared->m_TransformedObjects)
+		{
+			afterTransformVisitor->Visit(object);
 		}
 
 		UpdateCentroid();

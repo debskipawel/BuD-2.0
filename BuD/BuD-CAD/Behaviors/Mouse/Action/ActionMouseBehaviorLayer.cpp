@@ -2,6 +2,7 @@
 
 #include <set>
 
+#include <Visitors/Transform/AfterUpdateTransformVisitor.h>
 #include <Visitors/Transform/ApplyGroupTransformVisitor.h>
 
 ActionMouseBehaviorLayer::ActionMouseBehaviorLayer(MainDataLayer& dataLayer)
@@ -211,12 +212,22 @@ void ActionMouseBehaviorLayer::ApplyGroupMouseAction()
 	auto& cursor = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.m_CentroidCursor;
 	cursor->SetPosition(centroid);
 
+	auto onTransformVisitor = std::make_unique<ApplyGroupTransformVisitor>(groupTransform, centroid - groupTransform.m_Position);
+	std::unique_ptr<AbstractVisitor> afterTransformVisitor = std::make_unique<AfterUpdateTransformVisitor>();
+
 	selectedForTransform.ForEachSelected(
-		[centroid, &selectedForTransform, &groupTransform](std::shared_ptr<SceneObjectCAD> object)
+		[&selectedForTransform, &onTransformVisitor](std::shared_ptr<SceneObjectCAD> object)
 		{
 			auto initialTransform = selectedForTransform.InitialTransform(object->Id());
 
-			std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ApplyGroupTransformVisitor>(initialTransform, groupTransform, centroid - groupTransform.m_Position);
-			visitor->Visit(object);
+			onTransformVisitor->SetInitialTransform(initialTransform);
+			onTransformVisitor->Visit(object);
 		});
+
+	selectedForTransform.ForEachSelected(
+		[&afterTransformVisitor](std::shared_ptr<SceneObjectCAD> object)
+		{
+			afterTransformVisitor->Visit(object);
+		}
+	);
 }

@@ -2,6 +2,8 @@
 
 #include <Objects/CAD/PointBased/PointBasedObjectCAD.h>
 
+class BaseBezierSurface;
+
 class BaseBezierPatch : public PointBasedObjectCAD
 {
 public:
@@ -11,6 +13,11 @@ public:
 
 	virtual bool ShouldDisplayPolygon();
 	virtual void TogglePolygon(bool polygonOn) = 0;
+
+	virtual void SetOwnerSurface(std::weak_ptr<BaseBezierSurface> surface);
+
+	virtual void SwitchToTrimmed() = 0;
+	virtual void SwitchToInstanced() = 0;
 
 	struct BezierPatchSegmentInstanceData
 	{
@@ -25,6 +32,8 @@ public:
 
 	BezierPatchSegmentInstanceData m_InstanceData;
 	dxm::Vector3 m_Color = dxm::Vector3::One;
+
+	std::weak_ptr<BaseBezierSurface> m_OwnerSurface;
 
 protected:
 	BuD::MeshDetails LoadPatchPrimitiveMesh();

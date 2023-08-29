@@ -8,6 +8,7 @@
 #include <Visitors/Intersection/CalculatorPointOnSurface.h>
 
 #include <Visitors/Transform/ApplyGroupTransformVisitor.h>
+#include <Visitors/Transform/AfterUpdateTransformVisitor.h>
 #include <Visitors/Transform/UpdateTransformVisitor.h>
 
 ObjectGuiDrawerVisitor::ObjectGuiDrawerVisitor(SceneDataLayer& dataLayer)
@@ -23,8 +24,11 @@ void ObjectGuiDrawerVisitor::Visit(Torus& torus)
 
 	if (DrawGuiForTransform(torus.m_Transform))
 	{
-		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<UpdateTransformVisitor>();
-		visitor->Visit(m_Caller);
+		std::unique_ptr<AbstractVisitor> onTransformVisitor = std::make_unique<UpdateTransformVisitor>();
+		std::unique_ptr<AbstractVisitor> afterTransformVisitor = std::make_unique<AfterUpdateTransformVisitor>();
+		
+		onTransformVisitor->Visit(m_Caller);
+		afterTransformVisitor->Visit(m_Caller);
 
 		auto centroid = m_SceneDataLayer.m_SelectedForTransform.Centroid();
 
@@ -64,8 +68,11 @@ void ObjectGuiDrawerVisitor::Visit(Point& point)
 
 	if (position != transform.m_Position)
 	{
-		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<UpdateTransformVisitor>();
-		visitor->Visit(m_Caller);
+		std::unique_ptr<AbstractVisitor> onTransformVisitor = std::make_unique<UpdateTransformVisitor>();
+		std::unique_ptr<AbstractVisitor> afterTransformVisitor = std::make_unique<AfterUpdateTransformVisitor>();
+		
+		onTransformVisitor->Visit(m_Caller);
+		afterTransformVisitor->Visit(m_Caller);
 
 		auto centroid = m_SceneDataLayer.m_SelectedForTransform.Centroid();
 
@@ -251,14 +258,24 @@ void ObjectGuiDrawerVisitor::DrawGuiForSelectedTransform()
 		auto& cursor = m_SceneDataLayer.m_SceneCAD.m_CentroidCursor;
 		cursor->SetPosition(centroid);
 
+		auto onTransformVisitor = std::make_unique<ApplyGroupTransformVisitor>(groupTransform, centroid - groupTransform.m_Position);
+		std::unique_ptr<AbstractVisitor> afterTransformVisitor = std::make_unique<AfterUpdateTransformVisitor>();
+
 		selectedForTransform.ForEachSelected(
-			[centroid, &groupTransform, &selectedForTransform](std::shared_ptr<SceneObjectCAD> object)
+			[&selectedForTransform, &onTransformVisitor](std::shared_ptr<SceneObjectCAD> object)
 			{
 				auto initialTransform = selectedForTransform.InitialTransform(object->Id());
 
-				std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ApplyGroupTransformVisitor>(initialTransform, groupTransform, centroid - groupTransform.m_Position);
-				visitor->Visit(object);
+				onTransformVisitor->SetInitialTransform(initialTransform);
+				onTransformVisitor->Visit(object);
 			});
+
+		selectedForTransform.ForEachSelected(
+			[&afterTransformVisitor](std::shared_ptr<SceneObjectCAD> object)
+			{
+				afterTransformVisitor->Visit(object);
+			}
+		);
 	}
 }
 

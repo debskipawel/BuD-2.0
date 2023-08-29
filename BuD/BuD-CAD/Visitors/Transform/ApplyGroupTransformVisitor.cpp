@@ -1,8 +1,18 @@
 #include "ApplyGroupTransformVisitor.h"
 
-ApplyGroupTransformVisitor::ApplyGroupTransformVisitor(const TransformComponent& initialTransform, const TransformComponent& additionalTransform, const dxm::Vector3& centroid)
-	: m_InitialTransform(initialTransform), m_AdditionalTransform(additionalTransform), m_Centroid(centroid)
+ApplyGroupTransformVisitor::ApplyGroupTransformVisitor(const TransformComponent& additionalTransform, const dxm::Vector3& centroid)
+	: m_AdditionalTransform(additionalTransform), m_Centroid(centroid)
 {
+}
+
+void ApplyGroupTransformVisitor::Visit(std::weak_ptr<SceneObjectCAD> object)
+{
+	AbstractVisitor::Visit(object);
+}
+
+void ApplyGroupTransformVisitor::SetInitialTransform(const TransformComponent& transform)
+{
+	m_InitialTransform = transform;
 }
 
 void ApplyGroupTransformVisitor::Visit(Torus& torus)
@@ -43,18 +53,6 @@ void ApplyGroupTransformVisitor::Visit(Torus& torus)
 		combinedRotation *
 		dxm::Matrix::CreateScale(torus.m_Transform.m_Scale) * 
 		dxm::Matrix::CreateTranslation(torus.m_Transform.m_Position);
-
-	for (auto& [id, intersectionCurve] : torus.m_IntersectionCurves)
-	{
-		auto curveShared = intersectionCurve.lock();
-
-		if (!curveShared)
-		{
-			continue;
-		}
-
-		curveShared->UpdateInstanceData();
-	}
 }
 
 void ApplyGroupTransformVisitor::Visit(Point& point)
@@ -76,14 +74,4 @@ void ApplyGroupTransformVisitor::Visit(Point& point)
 
 	point.m_Transform.m_Position = m_AdditionalTransform.m_Position + accumulatedPosition;
 	point.m_InstanceData.m_Position = point.m_Transform.m_Position;
-
-	for (auto& dependentObject : point.m_PointBasedObjects)
-	{
-		auto dependentObjectShared = dependentObject.lock();
-
-		if (dependentObjectShared)
-		{
-			dependentObjectShared->OnPointModify();
-		}
-	}
 }

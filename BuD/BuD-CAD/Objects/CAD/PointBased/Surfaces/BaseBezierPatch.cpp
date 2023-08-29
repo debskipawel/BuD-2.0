@@ -1,5 +1,7 @@
 #include "BaseBezierPatch.h"
 
+#include <Objects/CAD/PointBased/Surfaces/BaseBezierSurface.h>
+
 BaseBezierPatch::BaseBezierPatch(BuD::Scene& scene, std::vector<std::weak_ptr<Point>> controlPoints, dxm::Vector2 rangeU, dxm::Vector2 rangeV)
 	: PointBasedObjectCAD(scene, controlPoints), m_DisplayBezierPolygon(false)
 {
@@ -21,11 +23,35 @@ void BaseBezierPatch::OnPointModify()
 			? controlPointShared->m_Transform.m_Position
 			: dxm::Vector3::Zero;
 	}
+
+	auto surface = m_OwnerSurface.lock();
+
+	if (!surface)
+	{
+		return;
+	}
+
+	for (auto& [id, intersectionCurve] : surface->m_IntersectionCurves)
+	{
+		auto curveShared = intersectionCurve.lock();
+
+		if (!curveShared)
+		{
+			continue;
+		}
+
+		curveShared->UpdateInstanceData();
+	}
 }
 
 bool BaseBezierPatch::ShouldDisplayPolygon()
 {
 	return m_DisplayBezierPolygon;
+}
+
+void BaseBezierPatch::SetOwnerSurface(std::weak_ptr<BaseBezierSurface> surface)
+{
+	m_OwnerSurface = surface;
 }
 
 BuD::MeshDetails BaseBezierPatch::LoadPatchPrimitiveMesh()

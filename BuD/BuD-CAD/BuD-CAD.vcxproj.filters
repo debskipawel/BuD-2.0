@@ -321,6 +321,9 @@
     <ClInclude Include="Objects\CAD\ParameterizedObject2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Visitors\Transform\AfterUpdateTransformVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -576,6 +579,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Objects\CAD\Intersection\IntersectionCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Visitors\Transform\AfterUpdateTransformVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -263,6 +263,7 @@
     <ClInclude Include="Visitors\Selection\ObjectSelectVisitor.h" />
     <ClInclude Include="Visitors\Selection\ObjectUnselectVisitor.h" />
     <ClInclude Include="Visitors\Serialization\SerializationVisitor.h" />
+    <ClInclude Include="Visitors\Transform\AfterUpdateTransformVisitor.h" />
     <ClInclude Include="Visitors\Transform\ApplyGroupTransformVisitor.h" />
     <ClInclude Include="Visitors\Transform\UpdateTransformVisitor.h" />
     <ClInclude Include="Visitors\Validation\BaseValidationVisitor.h" />
@@ -350,6 +351,7 @@
     <ClCompile Include="Visitors\Selection\ObjectSelectVisitor.cpp" />
     <ClCompile Include="Visitors\Selection\ObjectUnselectVisitor.cpp" />
     <ClCompile Include="Visitors\Serialization\SerializationVisitor.cpp" />
+    <ClCompile Include="Visitors\Transform\AfterUpdateTransformVisitor.cpp" />
     <ClCompile Include="Visitors\Transform\ApplyGroupTransformVisitor.cpp" />
     <ClCompile Include="Visitors\Transform\UpdateTransformVisitor.cpp" />
     <ClCompile Include="Visitors\Validation\BaseValidationVisitor.cpp" />

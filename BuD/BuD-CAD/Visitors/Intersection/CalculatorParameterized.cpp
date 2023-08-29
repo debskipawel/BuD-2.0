@@ -75,16 +75,10 @@ std::array<dxm::Vector3, 16> CalculatorParameterized::GetControlPoints(BaseBezie
 	}
 
 	auto& patch = surface.m_BezierPatches[vIndex * surface.m_SizeU + uIndex];
-	auto patchShared = patch.lock();
-
-	if (!patchShared)
-	{
-		return controlPoints;
-	}
 
 	for (int i = 0; i < 16; i++)
 	{
-		auto point = patchShared->m_ControlPoints[i].lock();
+		auto point = patch->m_ControlPoints[i].lock();
 
 		controlPoints[i] = point->m_Transform.m_Position;
 	}

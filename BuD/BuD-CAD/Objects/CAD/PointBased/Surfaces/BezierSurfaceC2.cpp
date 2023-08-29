@@ -4,7 +4,7 @@
 
 #include <Visitors/AbstractVisitor.h>
 
-BezierSurfaceC2::BezierSurfaceC2(SceneCAD& scene, std::vector<std::weak_ptr<BaseBezierPatch>> patches, uint32_t sizeU, uint32_t sizeV, bool cylinder)
+BezierSurfaceC2::BezierSurfaceC2(SceneCAD& scene, std::vector<std::shared_ptr<BaseBezierPatch>> patches, uint32_t sizeU, uint32_t sizeV, bool cylinder)
 	: BaseBezierSurface(scene, sizeU, sizeV, cylinder)
 {
 	m_BezierPatches = patches;
@@ -40,10 +40,12 @@ BezierSurfaceC2::BezierSurfaceC2(SceneCAD& scene, dxm::Vector3 position, uint32_
 					patchControlPoints[point] = controlPoints[pointIndex];
 				}
 
-				auto patch = scene.CreateBezierPatchC2(patchControlPoints);
-				auto patchShared = std::dynamic_pointer_cast<BaseBezierPatch>(patch.lock());
+				auto rangeU = dxm::Vector2{ static_cast<float>(j) / m_SizeU, static_cast<float>(j + 1) / m_SizeU };
+				auto rangeV = dxm::Vector2{ static_cast<float>(i) / m_SizeV, static_cast<float>(i + 1) / m_SizeV };
 
-				m_BezierPatches.push_back(patchShared);
+				auto patch = std::make_shared<BezierPatchC2>(scene.m_Scene, patchControlPoints, rangeU, rangeV);
+
+				m_BezierPatches.push_back(patch);
 			}
 		}
 	}
@@ -72,10 +74,12 @@ BezierSurfaceC2::BezierSurfaceC2(SceneCAD& scene, dxm::Vector3 position, uint32_
 					patchControlPoints[point] = controlPoints[pointIndex];
 				}
 
-				auto patch = scene.CreateBezierPatchC2(patchControlPoints);
-				auto patchShared = std::dynamic_pointer_cast<BaseBezierPatch>(patch.lock());
+				auto rangeU = dxm::Vector2{ static_cast<float>(j) / m_SizeU, static_cast<float>(j + 1) / m_SizeU };
+				auto rangeV = dxm::Vector2{ static_cast<float>(i) / m_SizeV, static_cast<float>(i + 1) / m_SizeV };
 
-				m_BezierPatches.push_back(patchShared);
+				auto patch = std::make_shared<BezierPatchC2>(scene.m_Scene, patchControlPoints, rangeU, rangeV);
+
+				m_BezierPatches.push_back(patch);
 			}
 		}
 	}
@@ -94,12 +98,7 @@ void BezierSurfaceC2::AddIntersectionCurve(std::weak_ptr<IntersectionCurve> inte
 	{
 		for (auto& patch : m_BezierPatches)
 		{
-			auto patchShared = std::dynamic_pointer_cast<BezierPatchC0>(patch.lock());
-
-			if (!patchShared)
-			{
-				//TODO: patchShared->SwitchToTrimmed();
-			}
+			patch->SwitchToTrimmed();
 		}
 	}
 }
@@ -112,12 +111,7 @@ void BezierSurfaceC2::RemoveIntersectionCurve(std::weak_ptr<IntersectionCurve> i
 	{
 		for (auto& patch : m_BezierPatches)
 		{
-			auto patchShared = std::dynamic_pointer_cast<BezierPatchC0>(patch.lock());
-
-			if (!patchShared)
-			{
-				//TODO: patchShared->SwitchToInstanced();
-			}
+			patch->SwitchToInstanced();
 		}
 	}
 }

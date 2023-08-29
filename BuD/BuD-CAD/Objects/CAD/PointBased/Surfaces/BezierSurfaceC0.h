@@ -7,7 +7,7 @@
 class BezierSurfaceC0 : public BaseBezierSurface
 {
 public:
-	BezierSurfaceC0(SceneCAD& scene, std::vector<std::weak_ptr<BaseBezierPatch>> patches, uint32_t sizeU, uint32_t sizeV, bool cylinder);
+	BezierSurfaceC0(SceneCAD& scene, std::vector<std::shared_ptr<BaseBezierPatch>> patches, uint32_t sizeU, uint32_t sizeV, bool cylinder);
 	BezierSurfaceC0(SceneCAD& scene, dxm::Vector3 position, uint32_t sizeU, uint32_t sizeV, bool cylinder = false);
 
 	virtual void Accept(AbstractVisitor& visitor) override;

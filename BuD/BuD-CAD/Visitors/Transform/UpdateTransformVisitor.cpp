@@ -12,18 +12,6 @@ void UpdateTransformVisitor::Visit(Torus& torus)
 	auto model = dxm::Matrix::CreateScale(transform.m_Scale) * dxm::Matrix::CreateFromYawPitchRoll(rotation) * dxm::Matrix::CreateTranslation(transform.m_Position);
 
 	torus.m_InstanceData.m_ModelMatrix = model;
-
-	for (auto& [id, intersectionCurve] : torus.m_IntersectionCurves)
-	{
-		auto curveShared = intersectionCurve.lock();
-
-		if (!curveShared)
-		{
-			continue;
-		}
-
-		curveShared->UpdateInstanceData();
-	}
 }
 
 void UpdateTransformVisitor::Visit(Point& point)
@@ -34,14 +22,4 @@ void UpdateTransformVisitor::Visit(Point& point)
 	}
 
 	point.m_InstanceData.m_Position = point.m_Transform.m_Position;
-
-	for (auto& object : point.m_PointBasedObjects)
-	{
-		auto sharedObj = object.lock();
-
-		if (sharedObj)
-		{
-			sharedObj->OnPointModify();
-		}
-	}
 }
