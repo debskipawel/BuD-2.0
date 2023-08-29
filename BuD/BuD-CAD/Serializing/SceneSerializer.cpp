@@ -162,7 +162,7 @@ void SceneSerializer::ConstructLoadedScene()
         };
 
         torusObject->m_InstanceData.m_ModelMatrix = dxm::Matrix::CreateScale(transform.m_Scale) * dxm::Matrix::CreateFromYawPitchRoll(rotationRadian) * dxm::Matrix::CreateTranslation(transform.m_Position);
-
+    
         sceneCAD.m_ObjectList.emplace(torusObject->Id(), torusObject);
     }
 

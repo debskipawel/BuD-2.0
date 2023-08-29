@@ -12,7 +12,7 @@ BaseIntersectionAlgorithm::BaseIntersectionAlgorithm(IntersectionAlgorithmParame
 {
 }
 
-PointMappingResult BaseIntersectionAlgorithm::MapWorldPointToSurface(dxm::Vector3 point, std::shared_ptr<SceneObjectCAD> surface)
+PointMappingResult BaseIntersectionAlgorithm::MapWorldPointToSurface(dxm::Vector3 point, std::weak_ptr<SceneObjectCAD> surface)
 {
 	PointMappingResult result = {};
 
@@ -59,7 +59,7 @@ PointMappingResult BaseIntersectionAlgorithm::MapWorldPointToSurface(dxm::Vector
 	return result;
 }
 
-PointMappingResult BaseIntersectionAlgorithm::CloudMapWorldPointToSurface(dxm::Vector3 point, std::shared_ptr<SceneObjectCAD> surface)
+PointMappingResult BaseIntersectionAlgorithm::CloudMapWorldPointToSurface(dxm::Vector3 point, std::weak_ptr<SceneObjectCAD> surface)
 {
 	PointMappingResult result = {};
 

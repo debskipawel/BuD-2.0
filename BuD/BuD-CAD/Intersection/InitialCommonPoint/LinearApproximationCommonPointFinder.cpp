@@ -1,6 +1,6 @@
 #include "LinearApproximationCommonPointFinder.h"
 
-LinearApproximationCommonPointFinder::LinearApproximationCommonPointFinder(std::shared_ptr<SceneObjectCAD> object1, std::shared_ptr<SceneObjectCAD> object2, float precision)
+LinearApproximationCommonPointFinder::LinearApproximationCommonPointFinder(std::weak_ptr<SceneObjectCAD> object1, std::weak_ptr<SceneObjectCAD> object2, float precision)
 	: AbstractInitialCommonPointFinder(object1, object2), m_Precision(precision)
 {
 }
@@ -105,7 +105,7 @@ LinearApproximationCommonPointFinder::LineResult LinearApproximationCommonPointF
 }
 
 LinearApproximationCommonPointFinder::ProjectionResult LinearApproximationCommonPointFinder::ProjectNewPointToParameterSpace(
-	std::shared_ptr<SceneObjectCAD> object, 
+	std::weak_ptr<SceneObjectCAD> object,
 	dxm::Vector2 oldParameter, 
 	dxm::Vector3 newPoint
 )

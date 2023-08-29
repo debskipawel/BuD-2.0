@@ -8,10 +8,10 @@ class ISampler
 protected:
 	ISampler();
 
-	virtual dxm::Vector3 GetPoint(std::shared_ptr<SceneObjectCAD> surface, float u, float v);
-	virtual dxm::Vector3 GetNormal(std::shared_ptr<SceneObjectCAD> surface, float u, float v);
-	virtual dxm::Vector3 GetDerivativeU(std::shared_ptr<SceneObjectCAD> surface, float u, float v);
-	virtual dxm::Vector3 GetDerivativeV(std::shared_ptr<SceneObjectCAD> surface, float u, float v);
+	virtual dxm::Vector3 GetPoint(std::weak_ptr<SceneObjectCAD> surface, float u, float v);
+	virtual dxm::Vector3 GetNormal(std::weak_ptr<SceneObjectCAD> surface, float u, float v);
+	virtual dxm::Vector3 GetDerivativeU(std::weak_ptr<SceneObjectCAD> surface, float u, float v);
+	virtual dxm::Vector3 GetDerivativeV(std::weak_ptr<SceneObjectCAD> surface, float u, float v);
 
 	std::unique_ptr<ParameterWrapperVisitor> m_ParameterWrapper;
 

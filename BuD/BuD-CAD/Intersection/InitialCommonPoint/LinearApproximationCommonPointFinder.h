@@ -5,7 +5,7 @@
 class LinearApproximationCommonPointFinder : public AbstractInitialCommonPointFinder
 {
 public:
-	LinearApproximationCommonPointFinder(std::shared_ptr<SceneObjectCAD> object1, std::shared_ptr<SceneObjectCAD> object2, float precision);
+	LinearApproximationCommonPointFinder(std::weak_ptr<SceneObjectCAD> object1, std::weak_ptr<SceneObjectCAD> object2, float precision);
 
 	virtual StartingCommonPointResult FindNearestCommonPoint(dxm::Vector4 startingPosition) override;
 
@@ -28,7 +28,7 @@ protected:
 	};
 
 	virtual LineResult FindIntersectionBetweenPlanes(dxm::Vector3 point1, dxm::Vector3 normal1, dxm::Vector3 point2, dxm::Vector3 normal2);
-	virtual ProjectionResult ProjectNewPointToParameterSpace(std::shared_ptr<SceneObjectCAD> object, dxm::Vector2 oldParameter, dxm::Vector3 newPoint);
+	virtual ProjectionResult ProjectNewPointToParameterSpace(std::weak_ptr<SceneObjectCAD> object, dxm::Vector2 oldParameter, dxm::Vector3 newPoint);
 
 	float m_Precision;
 };

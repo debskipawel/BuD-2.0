@@ -5,7 +5,7 @@
 class NewtonCommonPointMarching : public AbstractCommonPointMarching
 {
 public:
-	NewtonCommonPointMarching(std::shared_ptr<SceneObjectCAD> object1, std::shared_ptr<SceneObjectCAD> object2, float precision);
+	NewtonCommonPointMarching(std::weak_ptr<SceneObjectCAD> object1, std::weak_ptr<SceneObjectCAD> object2, float precision);
 
 	virtual NextCommonPointResult NextPoint(dxm::Vector4 startingPoint, float distance, MarchingDirection marchDirection = MarchingDirection::FORWARD) override;
 	virtual NextCommonPointResult NextPoint(dxm::Vector4 startingPoint, dxm::Vector3 spaceDirection, float distance) override;

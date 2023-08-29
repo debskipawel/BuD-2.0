@@ -15,7 +15,7 @@ ISampler::ISampler()
 	m_VDerivativeCalculator = std::make_unique<CalculatorPartialDerivativeV>();
 }
 
-dxm::Vector3 ISampler::GetPoint(std::shared_ptr<SceneObjectCAD> surface, float u, float v)
+dxm::Vector3 ISampler::GetPoint(std::weak_ptr<SceneObjectCAD> surface, float u, float v)
 {
 	m_PointCalculator->SetParameter({ u, v });
 	m_PointCalculator->Visit(surface);
@@ -23,7 +23,7 @@ dxm::Vector3 ISampler::GetPoint(std::shared_ptr<SceneObjectCAD> surface, float u
 	return m_PointCalculator->Result();
 }
 
-dxm::Vector3 ISampler::GetNormal(std::shared_ptr<SceneObjectCAD> surface, float u, float v)
+dxm::Vector3 ISampler::GetNormal(std::weak_ptr<SceneObjectCAD> surface, float u, float v)
 {
 	m_NormalCalculator->SetParameter({ u, v });
 	m_NormalCalculator->Visit(surface);
@@ -31,7 +31,7 @@ dxm::Vector3 ISampler::GetNormal(std::shared_ptr<SceneObjectCAD> surface, float 
 	return m_NormalCalculator->Result();
 }
 
-dxm::Vector3 ISampler::GetDerivativeU(std::shared_ptr<SceneObjectCAD> surface, float u, float v)
+dxm::Vector3 ISampler::GetDerivativeU(std::weak_ptr<SceneObjectCAD> surface, float u, float v)
 {
 	m_UDerivativeCalculator->SetParameter({ u, v });
 	m_UDerivativeCalculator->Visit(surface);
@@ -39,7 +39,7 @@ dxm::Vector3 ISampler::GetDerivativeU(std::shared_ptr<SceneObjectCAD> surface, f
 	return m_UDerivativeCalculator->Result();
 }
 
-dxm::Vector3 ISampler::GetDerivativeV(std::shared_ptr<SceneObjectCAD> surface, float u, float v)
+dxm::Vector3 ISampler::GetDerivativeV(std::weak_ptr<SceneObjectCAD> surface, float u, float v)
 {
 	m_VDerivativeCalculator->SetParameter({ u, v });
 	m_VDerivativeCalculator->Visit(surface);

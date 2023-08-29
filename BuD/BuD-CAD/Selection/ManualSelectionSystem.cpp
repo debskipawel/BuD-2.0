@@ -58,11 +58,11 @@ void ManualSelectionSystem::Unselect(uint32_t sceneObjectId)
     }
 }
 
-std::shared_ptr<SceneObjectCAD> ManualSelectionSystem::First()
+std::weak_ptr<SceneObjectCAD> ManualSelectionSystem::First()
 {
     auto& [id, object] = *m_SelectedObjects.begin();
 
-    return object.lock();
+    return object;
 }
 
 bool ManualSelectionSystem::EligibleForIntersection() const

@@ -51,14 +51,15 @@ void SelectionMouseBehaviorLayer::HandleSelection(int x, int y)
 	auto ray = rayFactory.CreateRay(screenSpace);
 
 	auto closestObject = GetClosestIntersecting(ray);
+	auto closestObjectShared = closestObject.lock();
 
-	if (closestObject)
+	if (closestObjectShared)
 	{
 		if (!m_MainDataLayer.m_AppStateDataLayer.m_MultiselectOn)
 		{
 			ClearSelected();
 		}
-		else if (m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected.Selected(closestObject->Id()))
+		else if (m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected.Selected(closestObjectShared->Id()))
 		{
 			std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ObjectUnselectVisitor>(m_MainDataLayer.m_SceneDataLayer);
 			visitor->Visit(closestObject);
@@ -90,9 +91,9 @@ void SelectionMouseBehaviorLayer::MoveCursorAlong(const Ray& ray)
 	cursor->SetPosition(newCursorPosition);
 }
 
-std::shared_ptr<SceneObjectCAD> SelectionMouseBehaviorLayer::GetClosestIntersecting(const Ray& ray)
+std::weak_ptr<SceneObjectCAD> SelectionMouseBehaviorLayer::GetClosestIntersecting(const Ray& ray)
 {
-	std::shared_ptr<SceneObjectCAD> closestObject = nullptr;
+	std::weak_ptr<SceneObjectCAD> closestObject = {};
 
 	auto visitor = std::make_unique<RayIntersectionVisitor>(ray);
 	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
@@ -114,9 +115,9 @@ std::shared_ptr<SceneObjectCAD> SelectionMouseBehaviorLayer::GetClosestIntersect
 	return closestObject;
 }
 
-std::vector<std::shared_ptr<SceneObjectCAD>> SelectionMouseBehaviorLayer::GetAllIntersecting(const Ray& ray)
+std::vector<std::weak_ptr<SceneObjectCAD>> SelectionMouseBehaviorLayer::GetAllIntersecting(const Ray& ray)
 {
-	auto objectsIntersecting = std::vector<std::shared_ptr<SceneObjectCAD>>();
+	auto objectsIntersecting = std::vector<std::weak_ptr<SceneObjectCAD>>();
 
 	auto visitor = std::make_unique<RayIntersectionVisitor>(ray);
 	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;

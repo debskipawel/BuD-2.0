@@ -7,12 +7,12 @@
 class AbstractCommonPointMarching : public ISampler
 {
 public:
-	AbstractCommonPointMarching(std::shared_ptr<SceneObjectCAD> object1, std::shared_ptr<SceneObjectCAD> object2);
+	AbstractCommonPointMarching(std::weak_ptr<SceneObjectCAD> object1, std::weak_ptr<SceneObjectCAD> object2);
 
 	virtual NextCommonPointResult NextPoint(dxm::Vector4 startingPoint, float distance, MarchingDirection direction = MarchingDirection::FORWARD) = 0;
 	virtual NextCommonPointResult NextPoint(dxm::Vector4 startingPoint, dxm::Vector3 spaceDirection, float distance) = 0;
 
 protected:
-	std::shared_ptr<SceneObjectCAD> m_ParameterizedObject1;
-	std::shared_ptr<SceneObjectCAD> m_ParameterizedObject2;
+	std::weak_ptr<SceneObjectCAD> m_ParameterizedObject1;
+	std::weak_ptr<SceneObjectCAD> m_ParameterizedObject2;
 };

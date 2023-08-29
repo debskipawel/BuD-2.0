@@ -1,8 +1,8 @@
 #include "SteepestDescentCommonPointFinder.h"
 
 SteepestDescentInitialCommonPointFinder::SteepestDescentInitialCommonPointFinder(
-	std::shared_ptr<SceneObjectCAD> object1, 
-	std::shared_ptr<SceneObjectCAD> object2, 
+	std::weak_ptr<SceneObjectCAD> object1,
+	std::weak_ptr<SceneObjectCAD> object2,
 	float precision
 )
 	: AbstractInitialCommonPointFinder(object1, object2), m_Precision(precision)

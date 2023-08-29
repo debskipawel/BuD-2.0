@@ -201,6 +201,7 @@ void PropertiesGuiLayer::DrawDeleteButton()
 			while (m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected.Count())
 			{
 				auto object = m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected.First();
+
 				visitor->Visit(object);
 			}
 

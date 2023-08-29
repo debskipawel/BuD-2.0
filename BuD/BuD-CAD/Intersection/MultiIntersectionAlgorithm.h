@@ -29,8 +29,8 @@ protected:
 
 	virtual dxm::Vector4 MapWorldPointToParameterSpace(dxm::Vector3 point);
 
-	std::shared_ptr<SceneObjectCAD> m_ParameterizedObject1;
-	std::shared_ptr<SceneObjectCAD> m_ParameterizedObject2;
+	std::weak_ptr<SceneObjectCAD> m_ParameterizedObject1;
+	std::weak_ptr<SceneObjectCAD> m_ParameterizedObject2;
 
 	std::vector<std::unique_ptr<AbstractInitialCommonPointFinder>> m_NearestCommonPointFinders;
 	std::unique_ptr<AbstractCommonPointMarching> m_CommonPointMarching;

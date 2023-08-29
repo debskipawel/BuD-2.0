@@ -16,8 +16,8 @@ public:
 	virtual IntersectionResult Find() = 0;
 
 protected:
-	virtual PointMappingResult MapWorldPointToSurface(dxm::Vector3 point, std::shared_ptr<SceneObjectCAD> surface);
-	virtual PointMappingResult CloudMapWorldPointToSurface(dxm::Vector3 point, std::shared_ptr<SceneObjectCAD> surface);
+	virtual PointMappingResult MapWorldPointToSurface(dxm::Vector3 point, std::weak_ptr<SceneObjectCAD> surface);
+	virtual PointMappingResult CloudMapWorldPointToSurface(dxm::Vector3 point, std::weak_ptr<SceneObjectCAD> surface);
 
 	IntersectionAlgorithmParameters m_Parameters;
 };

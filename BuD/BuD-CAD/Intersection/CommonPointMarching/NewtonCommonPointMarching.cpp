@@ -1,6 +1,6 @@
 #include "NewtonCommonPointMarching.h"
 
-NewtonCommonPointMarching::NewtonCommonPointMarching(std::shared_ptr<SceneObjectCAD> object1, std::shared_ptr<SceneObjectCAD> object2, float precision)
+NewtonCommonPointMarching::NewtonCommonPointMarching(std::weak_ptr<SceneObjectCAD> object1, std::weak_ptr<SceneObjectCAD> object2, float precision)
     : AbstractCommonPointMarching(object1, object2), m_Precision(precision)
 {
 }

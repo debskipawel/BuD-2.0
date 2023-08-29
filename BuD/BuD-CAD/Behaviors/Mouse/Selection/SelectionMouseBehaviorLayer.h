@@ -16,6 +16,6 @@ protected:
 
 	virtual void MoveCursorAlong(const Ray& ray);
 
-	virtual std::shared_ptr<SceneObjectCAD> GetClosestIntersecting(const Ray& ray);
-	virtual std::vector<std::shared_ptr<SceneObjectCAD>> GetAllIntersecting(const Ray& ray);
+	virtual std::weak_ptr<SceneObjectCAD> GetClosestIntersecting(const Ray& ray);
+	virtual std::vector<std::weak_ptr<SceneObjectCAD>> GetAllIntersecting(const Ray& ray);
 };

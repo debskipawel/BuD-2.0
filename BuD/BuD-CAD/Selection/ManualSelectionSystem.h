@@ -14,7 +14,7 @@ public:
 	virtual void Select(std::weak_ptr<SceneObjectCAD> sceneObject) override;
 	virtual void Unselect(uint32_t sceneObjectId) override;
 
-	std::shared_ptr<SceneObjectCAD> First();
+	std::weak_ptr<SceneObjectCAD> First();
 
 	inline virtual bool ValidatedForControlPoints() const { return m_ValidatedForControlPoints; }
 	inline virtual bool ValidatedForAddingControlPoint() const { return m_ValidatedForAddingControlPoint; }

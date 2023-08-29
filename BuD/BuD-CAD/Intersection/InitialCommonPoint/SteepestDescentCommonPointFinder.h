@@ -5,7 +5,7 @@
 class SteepestDescentInitialCommonPointFinder : public AbstractInitialCommonPointFinder
 {
 public:
-	SteepestDescentInitialCommonPointFinder(std::shared_ptr<SceneObjectCAD> object1, std::shared_ptr<SceneObjectCAD> object2, float precision);
+	SteepestDescentInitialCommonPointFinder(std::weak_ptr<SceneObjectCAD> object1, std::weak_ptr<SceneObjectCAD> object2, float precision);
 
 	virtual StartingCommonPointResult FindNearestCommonPoint(dxm::Vector4 startingPosition) override;
 
