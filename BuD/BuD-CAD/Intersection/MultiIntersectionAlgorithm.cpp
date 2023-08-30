@@ -118,6 +118,13 @@ CommonPointSequenceResult MultiIntersectionAlgorithm::FindAllCommonPointsInDirec
 	{
 		auto nextPoint = m_CommonPointMarching->NextPoint(previousPoint.m_Parameter, m_Parameters.m_PointDistance, marchingDirection);
 
+		// TODO: sometimes this goes back and circles around a point with parallel normals
+		if (!nextPoint.m_ResultFound && previousDirection.has_value())
+		{
+			previousDirection->Normalize();
+			nextPoint = m_CommonPointMarching->NextPoint(previousPoint.m_Parameter, previousDirection.value(), m_Parameters.m_PointDistance);
+		}
+
 		if (nextPoint.m_ResultFound)
 		{
 			previousDirection = nextPoint.m_Point - previousPoint.m_Point;

@@ -27,8 +27,9 @@ void PointAddedVisitor::CommonHandlePointAddition(BaseCurve& curve)
 	curve.OnPointModify();
 
 	auto pointBasedObject = std::dynamic_pointer_cast<PointBasedObjectCAD>(m_Caller.lock());
+	auto point = m_Point.lock();
 
-	m_Point->m_PointBasedObjects.push_back(pointBasedObject);
+	point->m_PointBasedObjects.push_back(pointBasedObject);
 
 	UpdateCentroidCursor();
 }

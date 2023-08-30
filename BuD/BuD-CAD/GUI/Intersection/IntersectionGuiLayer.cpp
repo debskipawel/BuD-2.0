@@ -70,6 +70,8 @@ void IntersectionGuiLayer::DrawGui()
 
 			if (intersectionResult.m_IntersectionFound)
 			{
+				BuD::Log::WriteInfo(std::format("Intersection detected ({}).", intersectionResult.m_LoopDetected.has_value() ? "loop" : "no loop"));
+
 				auto converter = [](
 					const IntersectionResult& result,
 					std::function<dxm::Vector2(const dxm::Vector4&)> uvGetter,

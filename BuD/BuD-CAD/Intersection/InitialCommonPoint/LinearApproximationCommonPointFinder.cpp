@@ -18,7 +18,9 @@ StartingCommonPointResult LinearApproximationCommonPointFinder::FindNearestCommo
 		auto P = GetPoint(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
 		auto Q = GetPoint(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
 
-		if ((P - Q).Length() < m_Precision)
+		auto diff = P - Q;
+
+		if (diff.Length() < m_Precision)
 		{
 			result.m_Point = 0.5f * (P + Q);
 
@@ -87,15 +89,18 @@ LinearApproximationCommonPointFinder::LineResult LinearApproximationCommonPointF
 
 	if (abs(det1) >= abs(det2) && abs(det1) >= abs(det3))
 	{
-		eqResult = dxm::Vector2{ point2.x - point1.x, point2.y - point1.y } / det1;
+		auto rhs = dxm::Vector2{ point2.x - point1.x, point2.y - point1.y };
+		eqResult = dxm::Vector2{ toLine2.y * rhs.x - toLine2.x * rhs.y, toLine1.x * rhs.y - toLine1.y * rhs.x } / det1;
 	}
 	else if (abs(det2) >= abs(det1) && abs(det2) >= abs(det3))
 	{
-		eqResult = dxm::Vector2{ point2.x - point1.x, point2.z - point1.z } / det2;
+		auto rhs = dxm::Vector2{ point2.y - point1.y, point2.z - point1.z };
+		eqResult = dxm::Vector2{ toLine2.z * rhs.x - toLine2.y * rhs.y, toLine1.y * rhs.y - toLine1.z * rhs.x } / det2;
 	}
 	else
 	{
-		eqResult = dxm::Vector2{ point2.x - point1.x, point2.z - point1.z } / det3;
+		auto rhs = dxm::Vector2{ point2.x - point1.x, point2.z - point1.z };
+		eqResult = dxm::Vector2{ toLine2.z * rhs.x - toLine2.x * rhs.y, toLine1.x * rhs.y - toLine1.z * rhs.x } / det3;
 	}
 
 	result.m_PointOnLine = point1 + eqResult.x * toLine1;
@@ -126,15 +131,15 @@ LinearApproximationCommonPointFinder::ProjectionResult LinearApproximationCommon
 
 	if (abs(uvDet1) >= abs(uvDet2) && abs(uvDet1) >= abs(uvDet3))
 	{
-		parameterDiff = dxm::Vector2{ diff.x, diff.y } / uvDet1;
+		parameterDiff = dxm::Vector2{ dV.y * diff.x - dV.x * diff.y, dU.x * diff.y - dU.y * diff.x } / uvDet1;
 	}
 	else if (abs(uvDet2) >= abs(uvDet1) && abs(uvDet2) >= abs(uvDet3))
 	{
-		parameterDiff = dxm::Vector2{ diff.y, diff.z } / uvDet2;
+		parameterDiff = dxm::Vector2{ dV.z * diff.y - dV.y * diff.z, dU.y * diff.z - dU.z * diff.y } / uvDet2;
 	}
 	else
 	{
-		parameterDiff = dxm::Vector2{ diff.x, diff.z } / uvDet3;
+		parameterDiff = dxm::Vector2{ dV.z * diff.x - dV.x * diff.z, dU.x * diff.z - dU.z * diff.x } / uvDet3;
 	}
 
 	result.m_Parameter = oldParameter + parameterDiff;

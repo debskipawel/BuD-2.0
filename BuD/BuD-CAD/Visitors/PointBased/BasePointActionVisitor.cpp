@@ -3,12 +3,11 @@
 BasePointActionVisitor::BasePointActionVisitor(SceneDataLayer& dataLayer, std::weak_ptr<Point> point)
 	: m_SceneDataLayer(dataLayer)
 {
-	m_Point = point.lock();
 }
 
 void BasePointActionVisitor::Visit(std::weak_ptr<SceneObjectCAD> object)
 {
-	if (!m_Point)
+	if (!m_Point.lock())
 	{
 		return;
 	}

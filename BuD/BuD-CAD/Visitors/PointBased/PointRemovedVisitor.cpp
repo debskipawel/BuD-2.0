@@ -36,7 +36,8 @@ void PointRemovedVisitor::Visit(BezierPatchC2& patch)
 
 void PointRemovedVisitor::CommonHandlePointDeletion(BaseCurve& curve)
 {
-	auto pointId = m_Point->Id();
+	auto point = m_Point.lock();
+	auto pointId = point->Id();
 
 	auto removedCount = std::erase_if(curve.m_ControlPoints, [pointId](std::weak_ptr<Point> controlPoint)
 		{

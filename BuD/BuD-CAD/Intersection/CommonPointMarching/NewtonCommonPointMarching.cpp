@@ -100,7 +100,13 @@ NextCommonPointResult NewtonCommonPointMarching::NextPoint(dxm::Vector4 starting
 
 		if (wrapResult.m_OutOfBounds)
 		{
-			result.m_ResultFound = true;
+			auto P = GetPoint(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
+			auto Q = GetPoint(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
+
+			auto mid = 0.5f * (P + Q);
+			auto diffFromStart = mid - P0;
+
+			result.m_ResultFound = diffFromStart.Length() < 2.0f * distance;
 			result.m_ShouldContinue = false;
 
 			return result;

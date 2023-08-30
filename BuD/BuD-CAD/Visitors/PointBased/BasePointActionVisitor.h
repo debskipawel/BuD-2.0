@@ -15,5 +15,5 @@ protected:
 	virtual void UpdateCentroidCursor();
 
 	SceneDataLayer& m_SceneDataLayer;
-	std::shared_ptr<Point> m_Point;
+	std::weak_ptr<Point> m_Point;
 };

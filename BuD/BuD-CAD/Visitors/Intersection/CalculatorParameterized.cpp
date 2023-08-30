@@ -111,9 +111,9 @@ std::array<dxm::Vector3, 4> CalculatorParameterized::BSplineToBernstein(std::arr
 	auto y = dxm::Vector4{ controlPoints[0].y, controlPoints[1].y, controlPoints[2].y, controlPoints[3].y };
 	auto z = dxm::Vector4{ controlPoints[0].z, controlPoints[1].z, controlPoints[2].z, controlPoints[3].z };
 
-	auto xt = dxm::Vector4::Transform(x, bSplineToBernstein.Transpose());
-	auto yt = dxm::Vector4::Transform(y, bSplineToBernstein.Transpose());
-	auto zt = dxm::Vector4::Transform(z, bSplineToBernstein.Transpose());
+	auto xt = dxm::Vector4::Transform(x, bSplineToBernstein);
+	auto yt = dxm::Vector4::Transform(y, bSplineToBernstein);
+	auto zt = dxm::Vector4::Transform(z, bSplineToBernstein);
 
 	return
 	{

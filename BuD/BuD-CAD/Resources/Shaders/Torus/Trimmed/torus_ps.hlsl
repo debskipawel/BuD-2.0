@@ -28,7 +28,7 @@ PSOutput main(PSInput i)
     float3 parameterSpaceSample = parameterSpace.Sample(samplerState, i.domain).xyz;
     
     o.color = float4(i.color, 1.0f);
-    o.depth = i.depth + (dot(parameterSpaceSample, parameterSpaceSample) != 3.0f) * 100.0f;
+    o.depth = i.depth + (dot(parameterSpaceSample, parameterSpaceSample) < 2.0f) * 100.0f;
     
     return o;
 }
