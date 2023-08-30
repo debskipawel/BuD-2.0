@@ -6,7 +6,7 @@
 #include <Intersection/Structures/IntersectionStructures.h>
 #include <Intersection/Sampler/ISampler.h>
 
-class AbstractInitialCommonPointFinder : public ISampler
+class AbstractInitialCommonPointFinder
 {
 public:
 	AbstractInitialCommonPointFinder(std::weak_ptr<SceneObjectCAD> object1, std::weak_ptr<SceneObjectCAD> object2);
@@ -16,6 +16,8 @@ public:
 	virtual constexpr const char* AlgorithmName() const = 0;
 
 protected:
+	std::unique_ptr<ISampler> m_Sampler;
+
 	std::weak_ptr<SceneObjectCAD> m_ParameterizedObject1;
 	std::weak_ptr<SceneObjectCAD> m_ParameterizedObject2;
 };

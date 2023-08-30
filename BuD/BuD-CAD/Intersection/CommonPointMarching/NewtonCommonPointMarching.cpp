@@ -1,8 +1,11 @@
 #include "NewtonCommonPointMarching.h"
 
+#include <Intersection/Sampler/VisitorSampler.h>
+
 NewtonCommonPointMarching::NewtonCommonPointMarching(std::weak_ptr<SceneObjectCAD> object1, std::weak_ptr<SceneObjectCAD> object2, float precision)
     : AbstractCommonPointMarching(object1, object2), m_Precision(precision)
 {
+	m_Sampler = std::make_unique<VisitorSampler>();
 }
 
 NextCommonPointResult NewtonCommonPointMarching::NextPoint(dxm::Vector4 startingPoint, float distance, MarchingDirection marchDirection)
@@ -10,8 +13,8 @@ NextCommonPointResult NewtonCommonPointMarching::NextPoint(dxm::Vector4 starting
 	NextCommonPointResult result = {};
 	result.m_ShouldContinue = true;
 
-	auto n1 = GetNormal(m_ParameterizedObject1, startingPoint.x, startingPoint.y);
-	auto n2 = GetNormal(m_ParameterizedObject2, startingPoint.z, startingPoint.w);
+	auto n1 = m_Sampler->GetNormal(m_ParameterizedObject1, startingPoint.x, startingPoint.y);
+	auto n2 = m_Sampler->GetNormal(m_ParameterizedObject2, startingPoint.z, startingPoint.w);
 
 	auto direction = marchDirection == MarchingDirection::BACKWARD ? n2.Cross(n1) : n1.Cross(n2);
 	
@@ -33,7 +36,7 @@ NextCommonPointResult NewtonCommonPointMarching::NextPoint(dxm::Vector4 starting
 	NextCommonPointResult result = {};
 	result.m_ShouldContinue = true;
 
-	auto P0 = GetPoint(m_ParameterizedObject1, startingPoint.x, startingPoint.y);
+	auto P0 = m_Sampler->GetPoint(m_ParameterizedObject1, startingPoint.x, startingPoint.y);
 
 	auto xk = dxm::Vector4::Zero;
 	auto xk1 = startingPoint;
@@ -45,13 +48,13 @@ NextCommonPointResult NewtonCommonPointMarching::NextPoint(dxm::Vector4 starting
 	{
 		xk = xk1;
 
-		auto P = GetPoint(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
-		auto Q = GetPoint(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
+		auto P = m_Sampler->GetPoint(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
+		auto Q = m_Sampler->GetPoint(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
 
-		auto dU = GetDerivativeU(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
-		auto dV = GetDerivativeV(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
-		auto dS = GetDerivativeU(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
-		auto dT = GetDerivativeV(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
+		auto dU = m_Sampler->GetDerivativeU(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
+		auto dV = m_Sampler->GetDerivativeV(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
+		auto dS = m_Sampler->GetDerivativeU(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
+		auto dT = m_Sampler->GetDerivativeV(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
 
 		auto F = dxm::Vector4(P.x - Q.x, P.y - Q.y, P.z - Q.z, (P - P0).Dot(spaceDirection) - distance);
 
@@ -89,19 +92,20 @@ NextCommonPointResult NewtonCommonPointMarching::NextPoint(dxm::Vector4 starting
 
 		result.m_Step = xk1 - startingPoint;
 
-		auto wrapResult = WrapParameter(xk1);
+		auto uvWrapResult = m_Sampler->WrapParameter(m_ParameterizedObject1, xk1.x, xk1.y);
+		auto stWrapResult = m_Sampler->WrapParameter(m_ParameterizedObject2, xk1.z, xk1.w);
 
-		result.m_Parameter = wrapResult.m_Parameter;
+		result.m_Parameter = { uvWrapResult.m_Parameter.x, uvWrapResult.m_Parameter.y, stWrapResult.m_Parameter.x, stWrapResult.m_Parameter.y };
 
-		result.m_WrappedU = wrapResult.m_WrappedU;
-		result.m_WrappedV = wrapResult.m_WrappedV;
-		result.m_WrappedS = wrapResult.m_WrappedS;
-		result.m_WrappedT = wrapResult.m_WrappedT;
+		result.m_WrappedU = uvWrapResult.m_Wrapped.x;
+		result.m_WrappedV = uvWrapResult.m_Wrapped.y;
+		result.m_WrappedS = stWrapResult.m_Wrapped.x;
+		result.m_WrappedT = stWrapResult.m_Wrapped.y;
 
-		if (wrapResult.m_OutOfBounds)
+		if (uvWrapResult.m_OutOfBounds || stWrapResult.m_OutOfBounds)
 		{
-			auto P = GetPoint(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
-			auto Q = GetPoint(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
+			auto P = m_Sampler->GetPoint(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
+			auto Q = m_Sampler->GetPoint(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
 
 			auto mid = 0.5f * (P + Q);
 			auto diffFromStart = mid - P0;
@@ -114,35 +118,6 @@ NextCommonPointResult NewtonCommonPointMarching::NextPoint(dxm::Vector4 starting
 	}
 
 	result.m_ResultFound = false;
-
-	return result;
-}
-
-ParameterWrapResult NewtonCommonPointMarching::WrapParameter(dxm::Vector4 parameter)
-{
-	ParameterWrapResult result = {};
-
-	m_ParameterWrapper->SetParameter({ parameter.x, parameter.y });
-	m_ParameterWrapper->Visit(m_ParameterizedObject1);
-
-	result.m_Parameter.x = m_ParameterWrapper->Parameter().x;
-	result.m_Parameter.y = m_ParameterWrapper->Parameter().y;
-
-	result.m_OutOfBounds |= m_ParameterWrapper->OutOfRange();
-	
-	result.m_WrappedU = m_ParameterWrapper->WrappedU();
-	result.m_WrappedV = m_ParameterWrapper->WrappedV();
-
-	m_ParameterWrapper->SetParameter({ parameter.z, parameter.w });
-	m_ParameterWrapper->Visit(m_ParameterizedObject2);
-
-	result.m_Parameter.z = m_ParameterWrapper->Parameter().x;
-	result.m_Parameter.w = m_ParameterWrapper->Parameter().y;
-
-	result.m_WrappedS = m_ParameterWrapper->WrappedU();
-	result.m_WrappedT = m_ParameterWrapper->WrappedV();
-
-	result.m_OutOfBounds |= m_ParameterWrapper->OutOfRange();
 
 	return result;
 }

@@ -1,11 +1,11 @@
-#include "ISampler.h"
+#include "VisitorSampler.h"
 
 #include <Visitors/Intersection/CalculatorPointOnSurface.h>
 #include <Visitors/Intersection/CalculatorNormalVector.h>
 #include <Visitors/Intersection/CalculatorPartialDerivativeU.h>
 #include <Visitors/Intersection/CalculatorPartialDerivativeV.h>
 
-ISampler::ISampler()
+VisitorSampler::VisitorSampler()
 {
 	m_ParameterWrapper = std::make_unique<ParameterWrapperVisitor>();
 
@@ -15,7 +15,7 @@ ISampler::ISampler()
 	m_VDerivativeCalculator = std::make_unique<CalculatorPartialDerivativeV>();
 }
 
-dxm::Vector3 ISampler::GetPoint(std::weak_ptr<SceneObjectCAD> surface, float u, float v)
+dxm::Vector3 VisitorSampler::GetPoint(std::weak_ptr<SceneObjectCAD> surface, float u, float v)
 {
 	m_PointCalculator->SetParameter({ u, v });
 	m_PointCalculator->Visit(surface);
@@ -23,7 +23,7 @@ dxm::Vector3 ISampler::GetPoint(std::weak_ptr<SceneObjectCAD> surface, float u, 
 	return m_PointCalculator->Result();
 }
 
-dxm::Vector3 ISampler::GetNormal(std::weak_ptr<SceneObjectCAD> surface, float u, float v)
+dxm::Vector3 VisitorSampler::GetNormal(std::weak_ptr<SceneObjectCAD> surface, float u, float v)
 {
 	m_NormalCalculator->SetParameter({ u, v });
 	m_NormalCalculator->Visit(surface);
@@ -31,7 +31,7 @@ dxm::Vector3 ISampler::GetNormal(std::weak_ptr<SceneObjectCAD> surface, float u,
 	return m_NormalCalculator->Result();
 }
 
-dxm::Vector3 ISampler::GetDerivativeU(std::weak_ptr<SceneObjectCAD> surface, float u, float v)
+dxm::Vector3 VisitorSampler::GetDerivativeU(std::weak_ptr<SceneObjectCAD> surface, float u, float v)
 {
 	m_UDerivativeCalculator->SetParameter({ u, v });
 	m_UDerivativeCalculator->Visit(surface);
@@ -39,10 +39,23 @@ dxm::Vector3 ISampler::GetDerivativeU(std::weak_ptr<SceneObjectCAD> surface, flo
 	return m_UDerivativeCalculator->Result();
 }
 
-dxm::Vector3 ISampler::GetDerivativeV(std::weak_ptr<SceneObjectCAD> surface, float u, float v)
+dxm::Vector3 VisitorSampler::GetDerivativeV(std::weak_ptr<SceneObjectCAD> surface, float u, float v)
 {
 	m_VDerivativeCalculator->SetParameter({ u, v });
 	m_VDerivativeCalculator->Visit(surface);
 
 	return m_VDerivativeCalculator->Result();
+}
+
+WrappedParameter VisitorSampler::WrapParameter(std::weak_ptr<SceneObjectCAD> surface, float u, float v)
+{
+	m_ParameterWrapper->SetParameter({ u, v });
+	m_ParameterWrapper->Visit(surface);
+
+	WrappedParameter result = {};
+	result.m_Parameter = m_ParameterWrapper->Parameter();
+	result.m_Wrapped = { m_ParameterWrapper->WrappedU(), m_ParameterWrapper->WrappedV() };
+	result.m_OutOfBounds = m_ParameterWrapper->OutOfRange();
+
+	return result;
 }

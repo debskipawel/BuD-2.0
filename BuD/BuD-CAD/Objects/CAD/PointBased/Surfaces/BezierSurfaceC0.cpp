@@ -46,6 +46,12 @@ BezierSurfaceC0::BezierSurfaceC0(SceneCAD& scene, dxm::Vector3 position, uint32_
 
 				auto patch = std::make_shared<BezierPatchC0>(scene.m_Scene, patchControlPoints, rangeU, rangeV);
 
+				for (auto& point : patchControlPoints)
+				{
+					auto pointShared = point.lock();
+					pointShared->m_PointBasedObjects.push_back(patch);
+				}
+
 				m_BezierPatches.push_back(patch);
 			}
 		}
@@ -79,6 +85,12 @@ BezierSurfaceC0::BezierSurfaceC0(SceneCAD& scene, dxm::Vector3 position, uint32_
 				auto rangeV = dxm::Vector2{ static_cast<float>(i) / m_SizeV, static_cast<float>(i + 1) / m_SizeV };
 
 				auto patch = std::make_shared<BezierPatchC0>(scene.m_Scene, patchControlPoints, rangeU, rangeV);
+
+				for (auto& point : patchControlPoints)
+				{
+					auto pointShared = point.lock();
+					pointShared->m_PointBasedObjects.push_back(patch);
+				}
 
 				m_BezierPatches.push_back(patch);
 			}

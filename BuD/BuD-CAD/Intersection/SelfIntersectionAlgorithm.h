@@ -7,8 +7,9 @@ class SelfIntersectionAlgorithm : public BaseIntersectionAlgorithm
 public:
 	SelfIntersectionAlgorithm(IntersectionAlgorithmParameters parameters, std::weak_ptr<SceneObjectCAD> parameterizedObject);
 
-	virtual IntersectionResult Find() override;
-
 protected:
-	std::shared_ptr<SceneObjectCAD> m_ParameterizedObject;
+	virtual dxm::Vector4 StartingParameter() override;
+	virtual dxm::Vector3 GetInitialDirection(const StartingCommonPointResult& initialPosition) override;
+
+	std::weak_ptr<SceneObjectCAD> m_ParameterizedObject;
 };

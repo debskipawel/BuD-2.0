@@ -191,6 +191,9 @@
     <ClInclude Include="GUI\MenuBar\MenuBarGuiLayer.h" />
     <ClInclude Include="Intersection\BaseIntersectionAlgorithm.h" />
     <ClInclude Include="Intersection\IntersectionAlgorithmParameters.h" />
+    <ClInclude Include="Intersection\LoopDetectors\AbstractLoopDetector.h" />
+    <ClInclude Include="Intersection\LoopDetectors\DotProductLoopDetector.h" />
+    <ClInclude Include="Intersection\Sampler\VisitorSampler.h" />
     <ClInclude Include="Intersection\Structures\CommonPointSequenceResult.h" />
     <ClInclude Include="Intersection\Structures\IntersectionResult.h" />
     <ClInclude Include="Intersection\Structures\IntersectionStructures.h" />
@@ -297,10 +300,11 @@
     <ClCompile Include="GUI\MenuBar\MenuBarGuiLayer.cpp" />
     <ClCompile Include="GUI\ObjectList\ObjectCreationGuiLayer.cpp" />
     <ClCompile Include="Intersection\BaseIntersectionAlgorithm.cpp" />
+    <ClCompile Include="Intersection\LoopDetectors\DotProductLoopDetector.cpp" />
     <ClCompile Include="Intersection\MultiIntersectionAlgorithm.cpp" />
     <ClCompile Include="Intersection\InitialCommonPoint\LinearApproximationCommonPointFinder.cpp" />
     <ClCompile Include="Intersection\InitialCommonPoint\SteepestDescentCommonPointFinder.cpp" />
-    <ClCompile Include="Intersection\Sampler\ISampler.cpp" />
+    <ClCompile Include="Intersection\Sampler\VisitorSampler.cpp" />
     <ClCompile Include="Intersection\SelfIntersectionAlgorithm.cpp" />
     <ClCompile Include="Objects\Additional\Cursor.cpp" />
     <ClCompile Include="Objects\CAD\Intersection\IntersectionCurve.cpp" />

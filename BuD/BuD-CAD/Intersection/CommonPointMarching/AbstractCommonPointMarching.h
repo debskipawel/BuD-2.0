@@ -4,7 +4,7 @@
 #include <Intersection/CommonPointMarching/MarchingDirection.h>
 #include <Intersection/Sampler/ISampler.h>
 
-class AbstractCommonPointMarching : public ISampler
+class AbstractCommonPointMarching
 {
 public:
 	AbstractCommonPointMarching(std::weak_ptr<SceneObjectCAD> object1, std::weak_ptr<SceneObjectCAD> object2);
@@ -13,6 +13,8 @@ public:
 	virtual NextCommonPointResult NextPoint(dxm::Vector4 startingPoint, dxm::Vector3 spaceDirection, float distance) = 0;
 
 protected:
+	std::unique_ptr<ISampler> m_Sampler;
+
 	std::weak_ptr<SceneObjectCAD> m_ParameterizedObject1;
 	std::weak_ptr<SceneObjectCAD> m_ParameterizedObject2;
 };

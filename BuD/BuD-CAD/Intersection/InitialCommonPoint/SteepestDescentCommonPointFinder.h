@@ -12,7 +12,5 @@ public:
 	inline virtual constexpr const char* AlgorithmName() const override { return "Steepest descent"; }
 
 protected:
-	virtual ParameterWrapResult WrapParameter(dxm::Vector4 parameter);
-
 	float m_Precision;
 };

@@ -3,21 +3,21 @@
 #include <Visitors/Intersection/CalculatorParameterized.h>
 #include <Visitors/Intersection/ParameterWrapperVisitor.h>
 
+struct WrappedParameter
+{
+	dxm::Vector2 m_Parameter;
+	dxm::Vector2 m_Wrapped;
+
+	bool m_OutOfBounds;
+};
+
 class ISampler
 {
-protected:
-	ISampler();
+public:
+	virtual dxm::Vector3 GetPoint(std::weak_ptr<SceneObjectCAD> surface, float u, float v) = 0;
+	virtual dxm::Vector3 GetNormal(std::weak_ptr<SceneObjectCAD> surface, float u, float v) = 0;
+	virtual dxm::Vector3 GetDerivativeU(std::weak_ptr<SceneObjectCAD> surface, float u, float v) = 0;
+	virtual dxm::Vector3 GetDerivativeV(std::weak_ptr<SceneObjectCAD> surface, float u, float v) = 0;
 
-	virtual dxm::Vector3 GetPoint(std::weak_ptr<SceneObjectCAD> surface, float u, float v);
-	virtual dxm::Vector3 GetNormal(std::weak_ptr<SceneObjectCAD> surface, float u, float v);
-	virtual dxm::Vector3 GetDerivativeU(std::weak_ptr<SceneObjectCAD> surface, float u, float v);
-	virtual dxm::Vector3 GetDerivativeV(std::weak_ptr<SceneObjectCAD> surface, float u, float v);
-
-	std::unique_ptr<ParameterWrapperVisitor> m_ParameterWrapper;
-
-private:
-	std::unique_ptr<CalculatorParameterized> m_PointCalculator;
-	std::unique_ptr<CalculatorParameterized> m_UDerivativeCalculator;
-	std::unique_ptr<CalculatorParameterized> m_VDerivativeCalculator;
-	std::unique_ptr<CalculatorParameterized> m_NormalCalculator;
+	virtual WrappedParameter WrapParameter(std::weak_ptr<SceneObjectCAD> surface, float u, float v) = 0;
 };

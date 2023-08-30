@@ -324,6 +324,15 @@
     <ClInclude Include="Visitors\Transform\AfterUpdateTransformVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Intersection\LoopDetectors\AbstractLoopDetector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\Sampler\VisitorSampler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Intersection\LoopDetectors\DotProductLoopDetector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -566,9 +575,6 @@
     <ClCompile Include="Intersection\InitialCommonPoint\SteepestDescentCommonPointFinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Intersection\Sampler\ISampler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Intersection\CommonPointMarching\AbstractCommonPointMarching.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -582,6 +588,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Visitors\Transform\AfterUpdateTransformVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Intersection\Sampler\VisitorSampler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Intersection\LoopDetectors\DotProductLoopDetector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

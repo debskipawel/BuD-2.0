@@ -11,7 +11,5 @@ public:
 	virtual NextCommonPointResult NextPoint(dxm::Vector4 startingPoint, dxm::Vector3 spaceDirection, float distance) override;
 
 protected:
-	virtual ParameterWrapResult WrapParameter(dxm::Vector4 parameter);
-
 	float m_Precision;
 };

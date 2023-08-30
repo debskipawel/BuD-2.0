@@ -13,25 +13,12 @@ public:
 		std::weak_ptr<SceneObjectCAD> parameterizedObject2
 	);
 
-	virtual IntersectionResult Find() override;
-
 protected:
-	virtual dxm::Vector4 StartingParameter();
-	virtual StartingCommonPointResult FindInitialCommonPoint(dxm::Vector4 startingPosition);
-
-	virtual CommonPointSequenceResult FindAllCommonPointsInDirection(
-		StartingCommonPointResult startingCommonPoint, 
-		dxm::Vector3 direction, 
-		MarchingDirection marchingDirection
-	);
-
-	virtual std::optional<LoopResult> DetectLoop(NextCommonPointResult starting, NextCommonPointResult previous, NextCommonPointResult current);
+	virtual dxm::Vector4 StartingParameter() override;
+	virtual dxm::Vector3 GetInitialDirection(const StartingCommonPointResult& initialPosition) override;
 
 	virtual dxm::Vector4 MapWorldPointToParameterSpace(dxm::Vector3 point);
 
 	std::weak_ptr<SceneObjectCAD> m_ParameterizedObject1;
 	std::weak_ptr<SceneObjectCAD> m_ParameterizedObject2;
-
-	std::vector<std::unique_ptr<AbstractInitialCommonPointFinder>> m_NearestCommonPointFinders;
-	std::unique_ptr<AbstractCommonPointMarching> m_CommonPointMarching;
 };

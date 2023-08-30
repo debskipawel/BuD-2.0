@@ -1,8 +1,11 @@
 #include "LinearApproximationCommonPointFinder.h"
 
+#include <Intersection/Sampler/VisitorSampler.h>
+
 LinearApproximationCommonPointFinder::LinearApproximationCommonPointFinder(std::weak_ptr<SceneObjectCAD> object1, std::weak_ptr<SceneObjectCAD> object2, float precision)
 	: AbstractInitialCommonPointFinder(object1, object2), m_Precision(precision)
 {
+	m_Sampler = std::make_unique<VisitorSampler>();
 }
 
 StartingCommonPointResult LinearApproximationCommonPointFinder::FindNearestCommonPoint(dxm::Vector4 startingPosition)
@@ -15,8 +18,8 @@ StartingCommonPointResult LinearApproximationCommonPointFinder::FindNearestCommo
 
 	for (result.m_IterationCount = 0; result.m_IterationCount < MAX_ITER; result.m_IterationCount++)
 	{
-		auto P = GetPoint(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
-		auto Q = GetPoint(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
+		auto P = m_Sampler->GetPoint(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
+		auto Q = m_Sampler->GetPoint(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
 
 		auto diff = P - Q;
 
@@ -28,8 +31,8 @@ StartingCommonPointResult LinearApproximationCommonPointFinder::FindNearestCommo
 			break;
 		}
 
-		auto n1 = GetNormal(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
-		auto n2 = GetNormal(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
+		auto n1 = m_Sampler->GetNormal(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
+		auto n2 = m_Sampler->GetNormal(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
 
 		auto line = FindIntersectionBetweenPlanes(P, n1, Q, n2);
 
@@ -117,11 +120,11 @@ LinearApproximationCommonPointFinder::ProjectionResult LinearApproximationCommon
 {
 	ProjectionResult result = {};
 
-	auto oldPoint = GetPoint(object, oldParameter.x, oldParameter.y);
+	auto oldPoint = m_Sampler->GetPoint(object, oldParameter.x, oldParameter.y);
 	auto diff = newPoint - oldPoint;
 
-	auto dU = GetDerivativeU(object, oldParameter.x, oldParameter.y);
-	auto dV = GetDerivativeV(object, oldParameter.x, oldParameter.y);
+	auto dU = m_Sampler->GetDerivativeU(object, oldParameter.x, oldParameter.y);
+	auto dV = m_Sampler->GetDerivativeV(object, oldParameter.x, oldParameter.y);
 
 	dxm::Vector2 parameterDiff;
 
@@ -144,11 +147,10 @@ LinearApproximationCommonPointFinder::ProjectionResult LinearApproximationCommon
 
 	result.m_Parameter = oldParameter + parameterDiff;
 
-	m_ParameterWrapper->SetParameter(result.m_Parameter);
-	m_ParameterWrapper->Visit(object);
+	auto wrapResult = m_Sampler->WrapParameter(object, result.m_Parameter.x, result.m_Parameter.y);
 
-	result.m_OutOfBounds = m_ParameterWrapper->OutOfRange();
-	result.m_Parameter = m_ParameterWrapper->Parameter();
+	result.m_OutOfBounds = wrapResult.m_OutOfBounds;
+	result.m_Parameter = wrapResult.m_Parameter;
 
 	return result;
 }

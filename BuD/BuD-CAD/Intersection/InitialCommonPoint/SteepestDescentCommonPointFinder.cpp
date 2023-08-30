@@ -1,5 +1,7 @@
 #include "SteepestDescentCommonPointFinder.h"
 
+#include <Intersection/Sampler/VisitorSampler.h>
+
 SteepestDescentInitialCommonPointFinder::SteepestDescentInitialCommonPointFinder(
 	std::weak_ptr<SceneObjectCAD> object1,
 	std::weak_ptr<SceneObjectCAD> object2,
@@ -7,6 +9,7 @@ SteepestDescentInitialCommonPointFinder::SteepestDescentInitialCommonPointFinder
 )
 	: AbstractInitialCommonPointFinder(object1, object2), m_Precision(precision)
 {
+	m_Sampler = std::make_unique<VisitorSampler>();
 }
 
 StartingCommonPointResult SteepestDescentInitialCommonPointFinder::FindNearestCommonPoint(dxm::Vector4 startingPosition)
@@ -21,8 +24,8 @@ StartingCommonPointResult SteepestDescentInitialCommonPointFinder::FindNearestCo
 
 	for (result.m_IterationCount = 0; result.m_IterationCount <= MAX_ITER; result.m_IterationCount++)
 	{
-		P = GetPoint(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
-		Q = GetPoint(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
+		P = m_Sampler->GetPoint(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
+		Q = m_Sampler->GetPoint(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
 
 		auto d = P - Q;
 
@@ -34,10 +37,10 @@ StartingCommonPointResult SteepestDescentInitialCommonPointFinder::FindNearestCo
 			break;
 		}
 
-		auto dU = GetDerivativeU(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
-		auto dV = GetDerivativeV(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
-		auto dS = GetDerivativeU(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
-		auto dT = GetDerivativeV(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
+		auto dU = m_Sampler->GetDerivativeU(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
+		auto dV = m_Sampler->GetDerivativeV(m_ParameterizedObject1, result.m_Parameter.x, result.m_Parameter.y);
+		auto dS = m_Sampler->GetDerivativeU(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
+		auto dT = m_Sampler->GetDerivativeV(m_ParameterizedObject2, result.m_Parameter.z, result.m_Parameter.w);
 
 		auto gradient = 2.0f * dxm::Vector4{ d.Dot(dU), d.Dot(dV), d.Dot(-dS), d.Dot(-dT) };
 
@@ -49,11 +52,14 @@ StartingCommonPointResult SteepestDescentInitialCommonPointFinder::FindNearestCo
 
 		float delta = max(1e-10f, 0.001f / float(std::pow(10, result.m_IterationCount / 50)));
 
-		auto wrapResult = WrapParameter(result.m_Parameter - delta * gradient);
+		auto newParameter = result.m_Parameter - delta * gradient;
 
-		result.m_Parameter = wrapResult.m_Parameter;
+		auto uvWrapResult = m_Sampler->WrapParameter(m_ParameterizedObject1, newParameter.x, newParameter.y);
+		auto stWrapResult = m_Sampler->WrapParameter(m_ParameterizedObject2, newParameter.z, newParameter.w);
 
-		if (wrapResult.m_OutOfBounds)
+		result.m_Parameter = { uvWrapResult.m_Parameter.x, uvWrapResult.m_Parameter.y, stWrapResult.m_Parameter.x, stWrapResult.m_Parameter.y };
+
+		if (uvWrapResult.m_OutOfBounds || stWrapResult.m_OutOfBounds)
 		{
 			result.m_ResultFound = false;
 			return result;
@@ -61,29 +67,6 @@ StartingCommonPointResult SteepestDescentInitialCommonPointFinder::FindNearestCo
 	}
 
 	result.m_Point = 0.5f * (P + Q);
-
-	return result;
-}
-
-ParameterWrapResult SteepestDescentInitialCommonPointFinder::WrapParameter(dxm::Vector4 parameter)
-{
-	ParameterWrapResult result = {};
-
-	m_ParameterWrapper->SetParameter({ parameter.x, parameter.y });
-	m_ParameterWrapper->Visit(m_ParameterizedObject1);
-
-	result.m_Parameter.x = m_ParameterWrapper->Parameter().x;
-	result.m_Parameter.y = m_ParameterWrapper->Parameter().y;
-
-	result.m_OutOfBounds |= m_ParameterWrapper->OutOfRange();
-
-	m_ParameterWrapper->SetParameter({ parameter.z, parameter.w });
-	m_ParameterWrapper->Visit(m_ParameterizedObject2);
-
-	result.m_Parameter.z = m_ParameterWrapper->Parameter().x;
-	result.m_Parameter.w = m_ParameterWrapper->Parameter().y;
-
-	result.m_OutOfBounds |= m_ParameterWrapper->OutOfRange();
 
 	return result;
 }

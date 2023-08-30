@@ -12,54 +12,130 @@ BaseIntersectionAlgorithm::BaseIntersectionAlgorithm(IntersectionAlgorithmParame
 {
 }
 
-PointMappingResult BaseIntersectionAlgorithm::MapWorldPointToSurface(dxm::Vector3 point, std::weak_ptr<SceneObjectCAD> surface)
+IntersectionResult BaseIntersectionAlgorithm::Find()
 {
-	PointMappingResult result = {};
+	IntersectionResult result = {};
 
-	auto minDistance = FLT_MAX;
+	auto startingPoint = StartingParameter();
+	result.m_StartingPoint = FindInitialCommonPoint(startingPoint);
 
-	auto prevClosestPoint = dxm::Vector2{ 0.0f, 0.0f };
-	auto closestPoint = dxm::Vector2{ 0.0f, 0.0f };
-	auto divisionFactor = 1.0f;
-
-	const int MAX_ITER = 15;
-	int iterCount;
-
-	for (iterCount = 0; iterCount < MAX_ITER; iterCount++)
+	if (!result.m_StartingPoint.m_ResultFound)
 	{
-		divisionFactor *= 0.5f;
-		prevClosestPoint = closestPoint;
-
-		for (float u = 0.0f; u < 1.0f; u += divisionFactor)
-		{
-			for (float v = 0.0f; v < 1.0f; v += divisionFactor)
-			{
-				auto result = GetPoint(surface, u + 0.5f * divisionFactor, v + 0.5f * divisionFactor);
-				auto length = (result - point).Length();
-
-				if (length < minDistance)
-				{
-					minDistance = length;
-					closestPoint = { u + 0.5f * divisionFactor, v + 0.5f * divisionFactor };
-				}
-			}
-		}
-
-		auto step = closestPoint - prevClosestPoint;
-
-		if (divisionFactor < 1e-2f || step.Length() < 0.001f)
-		{
-			break;
-		}
+		return result;
 	}
 
-	result.m_Parameter = closestPoint;
-	result.m_ResultFound = iterCount < MAX_ITER;
+	result.m_IntersectionFound = true;
+
+	auto direction = GetInitialDirection(result.m_StartingPoint);
+
+	auto forwardResult = FindAllCommonPointsInDirection(result.m_StartingPoint, direction, MarchingDirection::FORWARD);
+
+	result.m_ForwardPoints = std::move(forwardResult.m_Points);
+	result.m_LoopDetected = forwardResult.m_LoopDetected;
+
+	if (!forwardResult.m_LoopDetected.has_value())
+	{
+		auto backwardsResult = FindAllCommonPointsInDirection(result.m_StartingPoint, direction, MarchingDirection::BACKWARD);
+		result.m_BackwardsPoints = std::move(backwardsResult.m_Points);
+	}
 
 	return result;
 }
 
-PointMappingResult BaseIntersectionAlgorithm::CloudMapWorldPointToSurface(dxm::Vector3 point, std::weak_ptr<SceneObjectCAD> surface)
+StartingCommonPointResult BaseIntersectionAlgorithm::FindInitialCommonPoint(dxm::Vector4 startingPosition)
+{
+	for (auto& initialCommonPointFinder : m_NearestCommonPointFinders)
+	{
+		auto result = initialCommonPointFinder->FindNearestCommonPoint(startingPosition);
+
+		if (result.m_ResultFound)
+		{
+			return result;
+		}
+	}
+
+	StartingCommonPointResult result = {};
+	result.m_ResultFound = false;
+
+	return result;
+}
+
+NextCommonPointResult BaseIntersectionAlgorithm::FindNextPoint(const NextCommonPointResult& previousPoint, std::optional<dxm::Vector3> previousDirection, MarchingDirection marchingDirection)
+{
+	if (previousDirection.has_value())
+	{
+		previousDirection->Normalize();
+	}
+
+	auto result = m_MarchingCommonPointFinder->NextPoint(previousPoint.m_Parameter, m_Parameters.m_PointDistance, marchingDirection);
+
+	if (!result.m_ResultFound && previousDirection.has_value())
+	{
+		result = m_MarchingCommonPointFinder->NextPoint(previousPoint.m_Parameter, previousDirection.value(), m_Parameters.m_PointDistance);
+	}
+
+	if (result.m_ResultFound)
+	{
+		return result;
+	}
+
+	NextCommonPointResult emptyResult = {};
+	emptyResult.m_ResultFound = false;
+
+	return emptyResult;
+}
+
+CommonPointSequenceResult BaseIntersectionAlgorithm::FindAllCommonPointsInDirection(StartingCommonPointResult startingCommonPoint, dxm::Vector3 direction, MarchingDirection marchingDirection)
+{
+	CommonPointSequenceResult result = {};
+
+	NextCommonPointResult startingPoint = {};
+	startingPoint.m_Parameter = startingCommonPoint.m_Parameter;
+	startingPoint.m_Point = startingCommonPoint.m_Point;
+
+	NextCommonPointResult previousPoint = startingPoint;
+
+	std::optional<dxm::Vector3> previousDirection = std::nullopt;
+
+	while (true)
+	{
+		auto nextPoint = m_MarchingCommonPointFinder->NextPoint(previousPoint.m_Parameter, m_Parameters.m_PointDistance, marchingDirection);
+
+		if (!nextPoint.m_ResultFound && previousDirection.has_value())
+		{
+			previousDirection->Normalize();
+			nextPoint = m_MarchingCommonPointFinder->NextPoint(previousPoint.m_Parameter, previousDirection.value(), m_Parameters.m_PointDistance);
+		}
+
+		if (nextPoint.m_ResultFound)
+		{
+			previousDirection = nextPoint.m_Point - previousPoint.m_Point;
+
+			auto loopResult = m_LoopDetector->DetectLoop(startingPoint, previousPoint, nextPoint);
+
+			if (loopResult.has_value())
+			{
+				result.m_LoopDetected = loopResult;
+				return result;
+			}
+
+			result.m_Points.push_back(nextPoint);
+
+			previousPoint = nextPoint;
+
+			if (nextPoint.m_ShouldContinue)
+			{
+				continue;
+			}
+		}
+
+		break;
+	}
+
+	return result;
+}
+
+PointMappingResult BaseIntersectionAlgorithm::MapWorldPointToSurface(dxm::Vector3 point, std::weak_ptr<SceneObjectCAD> surface)
 {
 	PointMappingResult result = {};
 
@@ -72,7 +148,7 @@ PointMappingResult BaseIntersectionAlgorithm::CloudMapWorldPointToSurface(dxm::V
 	{
 		for (float vFirstLevel = 0.0; vFirstLevel <= 1.0; vFirstLevel += splitSize)
 		{
-			auto newPoint = GetPoint(surface, uFirstLevel, vFirstLevel);
+			auto newPoint = m_Sampler->GetPoint(surface, uFirstLevel, vFirstLevel);
 			
 			float bestSplitDist = dxm::Vector3::DistanceSquared(point, newPoint);
 			float stepSize = splitSize / 4;
@@ -96,7 +172,7 @@ PointMappingResult BaseIntersectionAlgorithm::CloudMapWorldPointToSurface(dxm::V
 						u = std::clamp(u, 0.0f, 1.0f);
 						v = std::clamp(v, 0.0f, 1.0f);
 
-						auto surfacePosition = GetPoint(surface, u, v);
+						auto surfacePosition = m_Sampler->GetPoint(surface, u, v);
 						auto distance = dxm::Vector3::DistanceSquared(point, surfacePosition);
 						
 						if (distance < bestDistance)
@@ -121,7 +197,7 @@ PointMappingResult BaseIntersectionAlgorithm::CloudMapWorldPointToSurface(dxm::V
 			float u = std::clamp(stepU, 0.0f, 1.0f);
 			float v = std::clamp(stepV, 0.0f, 1.0f);
 
-			auto surfacePosition = GetPoint(surface, u, v);
+			auto surfacePosition = m_Sampler->GetPoint(surface, u, v);
 			auto distance = dxm::Vector3::DistanceSquared(point, surfacePosition);
 
 			if (distance < bestDistance)
