@@ -26,6 +26,13 @@ void ObjectUnselectVisitor::Visit(Point& point)
 void ObjectUnselectVisitor::Visit(IntersectionCurve& curve)
 {
 	UnselectManually(m_Caller);
+
+	curve.m_Color = IntersectionCurve::UNSELECTED_COLOR;
+
+	for (auto& segment : curve.m_InstanceData.m_Segments)
+	{
+		segment.m_Color = curve.m_Color;
+	}
 }
 
 void ObjectUnselectVisitor::Visit(BezierCurveC0& curve)

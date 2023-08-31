@@ -5,6 +5,7 @@ struct VSOutput
 	float3 controlPoint1 : CONTROL_POINTS_1;
 	float3 controlPoint2 : CONTROL_POINTS_2;
 	float3 controlPoint3 : CONTROL_POINTS_3;
+    float3 color : COLOR;
 };
 
 struct HSOutput
@@ -13,6 +14,7 @@ struct HSOutput
 	float3 controlPoint1 : CONTROL_POINTS_1;
 	float3 controlPoint2 : CONTROL_POINTS_2;
 	float3 controlPoint3 : CONTROL_POINTS_3;
+    float3 color : COLOR;
 };
 
 struct HSConstantDataOutput
@@ -59,5 +61,7 @@ HSOutput main(
 	o.controlPoint2 = ip[i].controlPoint2;
 	o.controlPoint3 = ip[i].controlPoint3;
 
+    o.color = ip[i].color;
+	
 	return o;
 }

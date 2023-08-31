@@ -10,6 +10,7 @@ struct VSInput
 	float3 controlPoint1 : INS_POINT1;
 	float3 controlPoint2 : INS_POINT2;
 	float3 controlPoint3 : INS_POINT3;
+    float3 color : INS_COLOR;
 	uint instanceId : SV_InstanceID;
 };
 
@@ -20,6 +21,7 @@ struct VSOutput
 	float3 controlPoint1 : CONTROL_POINTS_1;
 	float3 controlPoint2 : CONTROL_POINTS_2;
 	float3 controlPoint3 : CONTROL_POINTS_3;
+    float3 color : COLOR;
 };
 
 VSOutput main(VSInput i)
@@ -32,6 +34,8 @@ VSOutput main(VSInput i)
 	o.controlPoint1 = mul(viewMtx, float4(i.controlPoint1, 1.0)).xyz;
 	o.controlPoint2 = mul(viewMtx, float4(i.controlPoint2, 1.0)).xyz;
 	o.controlPoint3 = mul(viewMtx, float4(i.controlPoint3, 1.0)).xyz;
+	
+    o.color = i.color;
 	
 	return o;
 }

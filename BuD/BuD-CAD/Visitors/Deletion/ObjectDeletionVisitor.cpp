@@ -139,9 +139,7 @@ void ObjectDeletionVisitor::Visit(BezierSurfaceC2& surface)
 
 	for (auto& [id, intersectionCurve] : surface.m_IntersectionCurves)
 	{
-		std::weak_ptr<SceneObjectCAD> intersectionCurveShared = intersectionCurve.lock();
-
-		AbstractVisitor::Visit(intersectionCurveShared);
+		AbstractVisitor::Visit(intersectionCurve);
 	}
 
 	for (auto& bezierPatch : surface.m_BezierPatches)

@@ -6,6 +6,7 @@ IntersectionCurve::IntersectionCurve(BuD::Scene& scene, std::weak_ptr<SceneObjec
 	: SceneObjectCAD(scene), m_Surface(surface), m_IntersectionPoints(intersectionPoints)
 {
 	m_Tag = std::format("Intersection curve {}", Id());
+	m_Color = IntersectionCurve::UNSELECTED_COLOR;
 
 	UpdateInstanceData();
 
@@ -18,7 +19,7 @@ IntersectionCurve::IntersectionCurve(BuD::Scene& scene, std::weak_ptr<SceneObjec
 			{ "INS_POINT", 1, DXGI_FORMAT_R32G32B32_FLOAT, 1, 3 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1},
 			{ "INS_POINT", 2, DXGI_FORMAT_R32G32B32_FLOAT, 1, 6 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 			{ "INS_POINT", 3, DXGI_FORMAT_R32G32B32_FLOAT, 1, 9 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
-			//{ "INS_COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 12 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 12 * sizeof(float), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 		}
 	);
 
@@ -107,6 +108,8 @@ void IntersectionCurve::UpdateInstanceData()
 	for (int segmentIndex = 0; segmentIndex < segmentsCount; segmentIndex++)
 	{
 		auto& segment = m_InstanceData.m_Segments[segmentIndex];
+
+		segment.m_Color = m_Color;
 
 		for (int controlPointIndex = 0; controlPointIndex < 4; controlPointIndex++)
 		{

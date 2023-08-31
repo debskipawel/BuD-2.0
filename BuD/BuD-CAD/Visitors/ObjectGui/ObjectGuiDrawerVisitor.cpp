@@ -83,6 +83,10 @@ void ObjectGuiDrawerVisitor::Visit(Point& point)
 
 void ObjectGuiDrawerVisitor::Visit(IntersectionCurve& curve)
 {
+	DrawGuiForTag(curve);
+
+	ImGui::Separator();
+
 	auto width = ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x;
 
 	if (ImGui::Button("Make interpolation curve", { width, 0 }))
@@ -284,6 +288,12 @@ void ObjectGuiDrawerVisitor::DrawGuiForParameterSpace(ParameterizedObject2D& par
 	constexpr dxm::Vector4 WHITE_COLOR = { 1.0f, 1.0f, 1.0f, 1.0f };
 	constexpr dxm::Vector4 BLACK_COLOR = { 0.0f, 0.0f, 0.0f, 1.0f };
 
+	static const std::map<dxm::Vector4, dxm::Vector4> colorMap =
+	{
+		{ WHITE_COLOR, BLACK_COLOR },
+		{ BLACK_COLOR, WHITE_COLOR },
+	};
+
 	if (parameterized.m_ParameterSpace.has_value() && ImGui::CollapsingHeader("Parameter space ###parameter_space"))
 	{
 		ImGui::TextWrapped("Click on any part of the parameter space to trim.");
@@ -305,13 +315,16 @@ void ObjectGuiDrawerVisitor::DrawGuiForParameterSpace(ParameterizedObject2D& par
 			auto screenSpaceX = std::clamp(static_cast<float>(x) / imageSize.x, 0.0f, 1.0f);
 			auto screenSpaceY = std::clamp(static_cast<float>(y) / imageSize.y, 0.0f, 1.0f);
 
-			// TODO: trim
 			parameterized.m_ParameterSpace->BeginEdit();
 
-			auto color = parameterized.m_ParameterSpace->Sample(screenSpaceX, screenSpaceY);
-			auto fillColor = color == BLACK_COLOR ? WHITE_COLOR : BLACK_COLOR;
+			auto sampledColor = parameterized.m_ParameterSpace->Sample(screenSpaceX, screenSpaceY);
+			
+			if (colorMap.contains(sampledColor))
+			{
+				const auto& fillColor = colorMap.at(sampledColor);
 
-			parameterized.m_ParameterSpace->FloodFill(screenSpaceX, screenSpaceY, fillColor);
+				parameterized.m_ParameterSpace->FloodFill(screenSpaceX, screenSpaceY, fillColor);
+			}
 
 			parameterized.m_ParameterSpace->EndEdit();
 		}

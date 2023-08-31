@@ -15,14 +15,14 @@ public:
 
 	virtual const std::vector<IntersectionPoint>& IntersectionPoints() const { return m_IntersectionPoints; }
 
-	std::weak_ptr<SceneObjectCAD> m_Surface;
+	dxm::Vector3 m_Color;
 
-protected:
-	std::vector<IntersectionPoint> m_IntersectionPoints;
+	std::weak_ptr<SceneObjectCAD> m_Surface;
 
 	struct IntersectionCurveSingleSegment
 	{
 		std::array<dxm::Vector3, 4> m_ControlPoints;
+		dxm::Vector3 m_Color;
 	};
 
 	struct IntersectionCurveInstanceData
@@ -31,4 +31,10 @@ protected:
 	};
 
 	IntersectionCurveInstanceData m_InstanceData;
+
+	inline static dxm::Vector3 SELECTED_COLOR = { 0.0f, 0.5f, 1.0f };
+	inline static dxm::Vector3 UNSELECTED_COLOR = { 1.0f, 0.0f, 0.0f };
+
+protected:
+	std::vector<IntersectionPoint> m_IntersectionPoints;
 };

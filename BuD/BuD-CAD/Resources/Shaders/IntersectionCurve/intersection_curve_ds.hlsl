@@ -9,6 +9,7 @@ struct DSOutput
 {
 	float4 position  : SV_POSITION;
 	float3 worldPosition : WORLD_POS;
+    float3 color : COLOR;
 };
 
 struct HSOutput
@@ -17,6 +18,7 @@ struct HSOutput
 	float3 controlPoint1 : CONTROL_POINTS_1;
 	float3 controlPoint2 : CONTROL_POINTS_2;
 	float3 controlPoint3 : CONTROL_POINTS_3;
+    float3 color : COLOR;
 };
 
 struct HSConstantDataOutput
@@ -65,6 +67,8 @@ DSOutput main(
 	
     o.worldPosition = TrygonometricBlending(controlPoints, t);
 	o.position = mul(projMtx, float4(o.worldPosition, 1.0));
+	
+    o.color = patch[0].color;
 	
 	return o;
 }
