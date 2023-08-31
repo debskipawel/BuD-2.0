@@ -182,6 +182,7 @@
     <ClInclude Include="Behaviors\Mouse\BaseMouseBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h" />
+    <ClInclude Include="Filters\FilterInfo.h" />
     <ClInclude Include="GUI\Intersection\IntersectionGuiLayer.h" />
     <ClInclude Include="Intersection\CommonPointMarching\AbstractCommonPointMarching.h" />
     <ClInclude Include="Intersection\CommonPointMarching\MarchingDirection.h" />
@@ -273,6 +274,7 @@
     <ClInclude Include="Visitors\Validation\BaseValidationVisitor.h" />
     <ClInclude Include="Visitors\Validation\CanAddControlPointValidationVisitor.h" />
     <ClInclude Include="Visitors\Validation\ControlPointValidationVisitor.h" />
+    <ClInclude Include="Visitors\Validation\FilterValidationVisitor.h" />
     <ClInclude Include="Visitors\Validation\IntersectionEligibilityValidationVisitor.h" />
   </ItemGroup>
   <ItemGroup>
@@ -292,6 +294,7 @@
     <ClCompile Include="Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.cpp" />
     <ClCompile Include="Components\TransformComponent.cpp" />
     <ClCompile Include="DataLayers\ViewportDataLayer.cpp" />
+    <ClCompile Include="Filters\FilterInfo.cpp" />
     <ClCompile Include="GUI\BaseGuiLayer.cpp" />
     <ClCompile Include="GUI\Cursor\CursorGuiLayer.cpp" />
     <ClCompile Include="GUI\Intersection\IntersectionGuiLayer.cpp" />
@@ -363,6 +366,7 @@
     <ClCompile Include="Visitors\Validation\BaseValidationVisitor.cpp" />
     <ClCompile Include="Visitors\Validation\CanAddControlPointValidationVisitor.cpp" />
     <ClCompile Include="Visitors\Validation\ControlPointValidationVisitor.cpp" />
+    <ClCompile Include="Visitors\Validation\FilterValidationVisitor.cpp" />
     <ClCompile Include="Visitors\Validation\IntersectionEligibilityValidationVisitor.cpp" />
   </ItemGroup>
   <ItemGroup>

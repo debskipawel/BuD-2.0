@@ -1,9 +1,11 @@
 #include "ObjectListGuiLayer.h"
 
 #include <imgui.h>
+#include <misc/cpp/imgui_stdlib.h>
 
 #include <Visitors/Selection/ObjectSelectVisitor.h>
 #include <Visitors/Selection/ObjectUnselectVisitor.h>
+#include <Visitors/Validation/FilterValidationVisitor.h>
 
 ObjectListGuiLayer::ObjectListGuiLayer(MainDataLayer& dataLayer)
 	: BaseGuiLayer(dataLayer)
@@ -16,72 +18,144 @@ void ObjectListGuiLayer::DrawGui()
 	{
 		DrawGuiForFilters();
 
-		auto& appState = m_MainDataLayer.m_AppStateDataLayer;
-
-		auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
-		auto& objectList = scene.m_ObjectList;
-
-		auto& manuallySelected = m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected;
-
-		ImGuiListClipper clipper(objectList.size(), ImGui::GetTextLineHeightWithSpacing());
-
-		while (clipper.Step())
+		if (m_Filter != FilterInfo::DEFAULT_FILTER)
 		{
-			auto objectPair = objectList.begin();
-
-			for (int i = 0; i < clipper.DisplayStart; i++)
-			{
-				objectPair++;
-			}
-
-			for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
-			{
-				auto& cadObject = (objectPair++)->second;
-
-				auto id = cadObject->Id();
-				auto tag = std::format("{}###{}", cadObject->m_Tag, id);
-				
-				auto selected = manuallySelected.Selected(id);
-				
-				if (!ImGui::Selectable(tag.c_str(), selected))
-				{
-					continue;
-				}
-
-				auto multiselect = appState.m_MultiselectOn;
-				auto newSelected = !selected;
-
-				std::unique_ptr<AbstractVisitor> selectVisitor = std::make_unique<ObjectSelectVisitor>(m_MainDataLayer.m_SceneDataLayer);
-				std::unique_ptr<AbstractVisitor> unselectVisitor = std::make_unique<ObjectUnselectVisitor>(m_MainDataLayer.m_SceneDataLayer);
-
-				if (!multiselect)
-				{
-					while (manuallySelected.Count() > 0)
-					{
-						auto object = manuallySelected.First();
-						unselectVisitor->Visit(object);
-					}
-
-					selectVisitor->Visit(cadObject);
-
-					continue;
-				}
-
-				if (newSelected)
-				{
-					selectVisitor->Visit(cadObject);
-				}
-				else
-				{
-					unselectVisitor->Visit(cadObject);
-				}
-			}
+			DrawListFiltered();
 		}
-
-		clipper.End();
+		else
+		{
+			DrawListClipped();
+		}
 
 		ImGui::End();
 	}
+}
+
+void ObjectListGuiLayer::DrawListFiltered()
+{
+	auto& appState = m_MainDataLayer.m_AppStateDataLayer;
+
+	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
+	auto& objectList = scene.m_ObjectList;
+
+	auto& manuallySelected = m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected;
+
+	std::unique_ptr<BaseValidationVisitor> visitor = std::make_unique<FilterValidationVisitor>(m_Filter);
+
+	for (auto& [id, cadObject] : objectList)
+	{
+		visitor->Visit(cadObject);
+
+		if (!visitor->Valid())
+		{
+			continue;
+		}
+
+		auto id = cadObject->Id();
+		auto tag = std::format("{}###{}", cadObject->m_Tag, id);
+
+		auto selected = manuallySelected.Selected(id);
+
+		if (!ImGui::Selectable(tag.c_str(), selected))
+		{
+			continue;
+		}
+
+		auto multiselect = appState.m_MultiselectOn;
+		auto newSelected = !selected;
+
+		std::unique_ptr<AbstractVisitor> selectVisitor = std::make_unique<ObjectSelectVisitor>(m_MainDataLayer.m_SceneDataLayer);
+		std::unique_ptr<AbstractVisitor> unselectVisitor = std::make_unique<ObjectUnselectVisitor>(m_MainDataLayer.m_SceneDataLayer);
+
+		if (!multiselect)
+		{
+			while (manuallySelected.Count() > 0)
+			{
+				auto object = manuallySelected.First();
+				unselectVisitor->Visit(object);
+			}
+
+			selectVisitor->Visit(cadObject);
+
+			continue;
+		}
+
+		if (newSelected)
+		{
+			selectVisitor->Visit(cadObject);
+		}
+		else
+		{
+			unselectVisitor->Visit(cadObject);
+		}
+	}
+}
+
+void ObjectListGuiLayer::DrawListClipped()
+{
+	auto& appState = m_MainDataLayer.m_AppStateDataLayer;
+
+	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
+	auto& objectList = scene.m_ObjectList;
+
+	auto& manuallySelected = m_MainDataLayer.m_SceneDataLayer.m_ManuallySelected;
+
+	ImGuiListClipper clipper(objectList.size(), ImGui::GetTextLineHeightWithSpacing());
+
+	while (clipper.Step())
+	{
+		auto objectPair = objectList.begin();
+
+		for (int i = 0; i < clipper.DisplayStart; i++)
+		{
+			objectPair++;
+		}
+
+		for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
+		{
+			auto& cadObject = (objectPair++)->second;
+
+			auto id = cadObject->Id();
+			auto tag = std::format("{}###{}", cadObject->m_Tag, id);
+
+			auto selected = manuallySelected.Selected(id);
+
+			if (!ImGui::Selectable(tag.c_str(), selected))
+			{
+				continue;
+			}
+
+			auto multiselect = appState.m_MultiselectOn;
+			auto newSelected = !selected;
+
+			std::unique_ptr<AbstractVisitor> selectVisitor = std::make_unique<ObjectSelectVisitor>(m_MainDataLayer.m_SceneDataLayer);
+			std::unique_ptr<AbstractVisitor> unselectVisitor = std::make_unique<ObjectUnselectVisitor>(m_MainDataLayer.m_SceneDataLayer);
+
+			if (!multiselect)
+			{
+				while (manuallySelected.Count() > 0)
+				{
+					auto object = manuallySelected.First();
+					unselectVisitor->Visit(object);
+				}
+
+				selectVisitor->Visit(cadObject);
+
+				continue;
+			}
+
+			if (newSelected)
+			{
+				selectVisitor->Visit(cadObject);
+			}
+			else
+			{
+				unselectVisitor->Visit(cadObject);
+			}
+		}
+	}
+
+	clipper.End();
 }
 
 void ObjectListGuiLayer::DrawGuiForFilters()
@@ -103,7 +177,12 @@ void ObjectListGuiLayer::DrawGuiForFilters()
 
 	if (ImGui::BeginPopupModal("Filters ###filters_popup"))
 	{
-		ImGui::Text("TODO: No filters implemented yet.");
+		ImGui::Text("Filter by tag", "");
+		ImGui::InputText("###tag_filter", &m_Filter.m_TagFilter);
+
+		ImGui::Separator();
+
+		ImGui::Checkbox("Skip points ###points_filter", &m_Filter.m_SkipPoints);
 
 		auto windowPosition = ImGui::GetWindowPos();
 		auto min = ImGui::GetWindowContentRegionMin();
