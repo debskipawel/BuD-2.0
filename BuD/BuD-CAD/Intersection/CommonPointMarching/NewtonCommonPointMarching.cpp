@@ -8,13 +8,13 @@ NewtonCommonPointMarching::NewtonCommonPointMarching(std::weak_ptr<SceneObjectCA
 	m_Sampler = std::make_unique<VisitorSampler>();
 }
 
-NextCommonPointResult NewtonCommonPointMarching::NextPoint(dxm::Vector4 startingPoint, float distance, MarchingDirection marchDirection)
+NextCommonPointResult NewtonCommonPointMarching::NextPoint(dxm::Vector4 startingParameter, float distance, MarchingDirection marchDirection)
 {
 	NextCommonPointResult result = {};
 	result.m_ShouldContinue = true;
 
-	auto n1 = m_Sampler->GetNormal(m_ParameterizedObject1, startingPoint.x, startingPoint.y);
-	auto n2 = m_Sampler->GetNormal(m_ParameterizedObject2, startingPoint.z, startingPoint.w);
+	auto n1 = m_Sampler->GetNormal(m_ParameterizedObject1, startingParameter.x, startingParameter.y);
+	auto n2 = m_Sampler->GetNormal(m_ParameterizedObject2, startingParameter.z, startingParameter.w);
 
 	auto direction = marchDirection == MarchingDirection::BACKWARD ? n2.Cross(n1) : n1.Cross(n2);
 	
@@ -28,19 +28,19 @@ NextCommonPointResult NewtonCommonPointMarching::NextPoint(dxm::Vector4 starting
 	
 	direction.Normalize();
 
-	return NextPoint(startingPoint, direction, distance);
+	return NextPoint(startingParameter, direction, distance);
 }
 
-NextCommonPointResult NewtonCommonPointMarching::NextPoint(dxm::Vector4 startingPoint, dxm::Vector3 spaceDirection, float distance)
+NextCommonPointResult NewtonCommonPointMarching::NextPoint(dxm::Vector4 startingParameter, dxm::Vector3 spaceDirection, float distance)
 {
 	NextCommonPointResult result = {};
 	result.m_ShouldContinue = true;
 
-	auto P0 = m_Sampler->GetPoint(m_ParameterizedObject1, startingPoint.x, startingPoint.y);
+	auto P0 = m_Sampler->GetPoint(m_ParameterizedObject1, startingParameter.x, startingParameter.y);
 
 	auto xk = dxm::Vector4::Zero;
-	auto xk1 = startingPoint;
-	result.m_Parameter = startingPoint;
+	auto xk1 = startingParameter;
+	result.m_Parameter = startingParameter;
 
 	constexpr auto MAX_ITER = 50;
 
@@ -90,7 +90,7 @@ NextCommonPointResult NewtonCommonPointMarching::NextPoint(dxm::Vector4 starting
 
 		xk1 = dxm::Vector4::Transform(b, dFInv);
 
-		result.m_Step = xk1 - startingPoint;
+		result.m_Step = xk1 - startingParameter;
 
 		auto uvWrapResult = m_Sampler->WrapParameter(m_ParameterizedObject1, xk1.x, xk1.y);
 		auto stWrapResult = m_Sampler->WrapParameter(m_ParameterizedObject2, xk1.z, xk1.w);

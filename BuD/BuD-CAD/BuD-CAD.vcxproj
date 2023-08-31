@@ -225,6 +225,7 @@
     <ClInclude Include="Serializing\SceneSerializer.h" />
     <ClInclude Include="Visitors\Intersection\CalculatorParameterized.h" />
     <ClInclude Include="Visitors\Intersection\CalculatorNormalVector.h" />
+    <ClInclude Include="Visitors\Intersection\CalculatorParameterShortestDistance.h" />
     <ClInclude Include="Visitors\Intersection\CalculatorPartialDerivativeU.h" />
     <ClInclude Include="Visitors\Intersection\CalculatorPartialDerivativeV.h" />
     <ClInclude Include="Visitors\Intersection\CalculatorPointOnSurface.h" />
@@ -333,6 +334,7 @@
     <ClCompile Include="Visitors\Deletion\ObjectDeletionVisitor.cpp" />
     <ClCompile Include="Visitors\Intersection\CalculatorParameterized.cpp" />
     <ClCompile Include="Visitors\Intersection\CalculatorNormalVector.cpp" />
+    <ClCompile Include="Visitors\Intersection\CalculatorParameterShortestDistance.cpp" />
     <ClCompile Include="Visitors\Intersection\CalculatorPartialDerivativeU.cpp" />
     <ClCompile Include="Visitors\Intersection\CalculatorPartialDerivativeV.cpp" />
     <ClCompile Include="Visitors\Intersection\CalculatorPointOnSurface.cpp" />

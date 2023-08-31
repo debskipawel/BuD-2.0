@@ -52,7 +52,7 @@ std::optional<LoopResult> DotProductLoopDetector::DetectLoop(const NextCommonPoi
 	auto startToPrevUV = dxm::Vector2{ startToPrev.x, startToPrev.y };
 	auto startToPrevST = dxm::Vector2{ startToPrev.z, startToPrev.w };
 
-	if (startToNextUV.Dot(startToPrevUV) < 0.0f || startToNextST.Dot(startToPrevST) < 0.0f)
+	if (startToNextUV.Dot(startToPrevUV) < 0.0f && startToNextST.Dot(startToPrevST) < 0.0f)
 	{
 		return LoopResult{ loopWrapU, loopWrapV, loopWrapS, loopWrapT };
 	}
