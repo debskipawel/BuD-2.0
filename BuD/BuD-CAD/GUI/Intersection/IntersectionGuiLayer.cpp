@@ -89,7 +89,7 @@ void IntersectionGuiLayer::DrawGui()
 						{
 							auto result = IntersectionPoint(uvGetter(point.m_Parameter), prevWrapped.x, prevWrapped.y);
 							
-							prevWrapped = uvWrappedGetter(point);
+							prevWrapped = -uvWrappedGetter(point);
 
 							return result;
 						}

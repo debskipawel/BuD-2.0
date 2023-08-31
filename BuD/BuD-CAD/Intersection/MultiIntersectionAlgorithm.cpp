@@ -43,7 +43,44 @@ dxm::Vector4 MultiIntersectionAlgorithm::StartingParameter()
 		return { uv.m_Parameter.x, uv.m_Parameter.y, st.m_Parameter.x, st.m_Parameter.y };
 	}
 
-	return dxm::Vector4{ 0.5f, 0.5f, 0.5f, 0.5f };
+	constexpr auto surfaceDivisionCount = 16;
+	constexpr auto surfaceSubPatchWidth = 1.0f / surfaceDivisionCount;
+
+	constexpr auto minimumParameterDistance = 0.25f;
+	auto bestPoint = dxm::Vector4(0.25f, 0.25f, 0.75f, 0.75f);
+	auto bestPointDistance = FLT_MAX;
+
+	for (auto i = 0; i < surfaceDivisionCount; i++)
+	{
+		for (auto j = 0; j < surfaceDivisionCount; j++)
+		{
+			auto uv = dxm::Vector2{ (i + 0.5f) * surfaceSubPatchWidth, (j + 0.5f) * surfaceSubPatchWidth };
+
+			for (auto k = 0; k < surfaceDivisionCount; k++)
+			{
+				for (auto l = 0; l < surfaceDivisionCount; l++)
+				{
+					auto st = dxm::Vector2{ (k + 0.5f) * surfaceSubPatchWidth, (l + 0.5f) * surfaceSubPatchWidth };
+
+					auto P = m_Sampler->GetPoint(m_ParameterizedObject1, uv.x, uv.y);
+					auto Q = m_Sampler->GetPoint(m_ParameterizedObject2, st.x, st.y);
+
+					auto pointDiff = P - Q;
+					auto midPoint = 0.5f * (P + Q);
+
+					auto pointDistance = pointDiff.Length();
+
+					if (pointDistance < bestPointDistance)
+					{
+						bestPointDistance = pointDistance;
+						bestPoint = dxm::Vector4{ uv.x, uv.y, st.x, st.y };
+					}
+				}
+			}
+		}
+	}
+
+	return bestPoint;
 }
 
 dxm::Vector3 MultiIntersectionAlgorithm::GetInitialDirection(const StartingCommonPointResult& initialPosition)

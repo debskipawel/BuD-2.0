@@ -34,12 +34,10 @@ std::optional<LoopResult> DotProductLoopDetector::DetectLoop(const NextCommonPoi
 
 			return 0.0f;
 		}
-		else if (determinant > 0.0f)
-		{
-			startToPrev = startToNext - step;
+		
+		startToPrev = startToNext - step;
 
-			return wrapped;
-		}
+		return wrapped;
 	};
 
 	auto loopWrapU = wrappingHandler(initialStartToPrev.x, current.m_WrappedU, startToNext.x, startToPrev.x, current.m_Step.x);
