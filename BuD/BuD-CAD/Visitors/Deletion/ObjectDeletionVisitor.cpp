@@ -117,11 +117,11 @@ void ObjectDeletionVisitor::Visit(BezierSurfaceC0& surface)
 	std::unique_ptr<AbstractVisitor> unselectVisitor = std::make_unique<ObjectUnselectVisitor>(m_SceneDataLayer);
 	unselectVisitor->Visit(m_Caller);
 
-	for (auto& [id, intersectionCurve] : surface.m_IntersectionCurves)
+	while (!surface.m_IntersectionCurves.empty())
 	{
-		std::weak_ptr<SceneObjectCAD> intersectionCurveShared = intersectionCurve.lock();
+		auto [id, intersectionCurve] = *surface.m_IntersectionCurves.begin();
 
-		AbstractVisitor::Visit(intersectionCurveShared);
+		AbstractVisitor::Visit(intersectionCurve);
 	}
 
 	for (auto& bezierPatch : surface.m_BezierPatches)
@@ -137,8 +137,10 @@ void ObjectDeletionVisitor::Visit(BezierSurfaceC2& surface)
 	std::unique_ptr<AbstractVisitor> unselectVisitor = std::make_unique<ObjectUnselectVisitor>(m_SceneDataLayer);
 	unselectVisitor->Visit(m_Caller);
 
-	for (auto& [id, intersectionCurve] : surface.m_IntersectionCurves)
+	while (!surface.m_IntersectionCurves.empty())
 	{
+		auto [id, intersectionCurve] = *surface.m_IntersectionCurves.begin();
+
 		AbstractVisitor::Visit(intersectionCurve);
 	}
 
