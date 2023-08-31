@@ -13,8 +13,8 @@ void ParameterWrapperVisitor::Visit(Torus& torus)
 {
 	m_ParameterOutOfRange = false;
 
-	m_WrappedU = m_Parameter.x < 0.0f ? -1.0f : (m_Parameter.x > 1.0f ? 1.0f : 0.0f);
-	m_WrappedV = m_Parameter.y < 0.0f ? -1.0f : (m_Parameter.y > 1.0f ? 1.0f : 0.0f);
+	m_WrappedU = m_Parameter.x < 0.0f ? -1.0f : (m_Parameter.x >= 1.0f ? 1.0f : 0.0f);
+	m_WrappedV = m_Parameter.y < 0.0f ? -1.0f : (m_Parameter.y >= 1.0f ? 1.0f : 0.0f);
 
 	m_Parameter.x -= floor(m_Parameter.x);
 	m_Parameter.y -= floor(m_Parameter.y);
@@ -26,7 +26,7 @@ void ParameterWrapperVisitor::Visit(BezierSurfaceC0& surface)
 
 	if (surface.m_Cylinder)
 	{
-		m_WrappedU = m_Parameter.x < 0.0f ? -1.0f : (m_Parameter.x > 1.0f ? 1.0f : 0.0f);
+		m_WrappedU = m_Parameter.x < 0.0f ? -1.0f : (m_Parameter.x >= 1.0f ? 1.0f : 0.0f);
 
 		m_Parameter.x -= floor(m_Parameter.x);
 	}
@@ -43,7 +43,7 @@ void ParameterWrapperVisitor::Visit(BezierSurfaceC2& surface)
 
 	if (surface.m_Cylinder)
 	{
-		m_WrappedU = m_Parameter.x < 0.0f ? -1.0f : (m_Parameter.x > 1.0f ? 1.0f : 0.0f);
+		m_WrappedU = m_Parameter.x < 0.0f ? -1.0f : (m_Parameter.x >= 1.0f ? 1.0f : 0.0f);
 
 		m_Parameter.x -= floor(m_Parameter.x);
 	}
