@@ -26,8 +26,8 @@ namespace BuD
 
 		leftPlane.m_PointOnPlane = rightPlane.m_PointOnPlane = viewPosition;
 
-		auto horizontalAngle = fov * 0.5f;
-		auto verticalAngle = horizontalAngle / aspectRatio;
+		auto verticalAngle = fov * 0.5f;
+		auto horizontalAngle = verticalAngle * aspectRatio;
 
 		auto rightAngle = (horizontalAngle + 90.0f) * std::numbers::pi / 180;
 		auto leftAngle = -rightAngle;

@@ -14,6 +14,28 @@ namespace BuD
 	InputLayout::InputLayout(const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout)
 		: m_LayoutDescription(layout)
 	{
+		std::map<DXGI_FORMAT, std::string> hlslTypeMap =
+		{
+			{ DXGI_FORMAT_R32G32B32A32_TYPELESS, "" },
+			{ DXGI_FORMAT_R32G32B32A32_FLOAT, "float4" },
+			{ DXGI_FORMAT_R32G32B32A32_UINT, "uint4" },
+			{ DXGI_FORMAT_R32G32B32A32_SINT, "int4" },
+			{ DXGI_FORMAT_R32G32B32_TYPELESS, "" },
+			{ DXGI_FORMAT_R32G32B32_FLOAT, "float3" },
+			{ DXGI_FORMAT_R32G32B32_UINT, "uint3" },
+			{ DXGI_FORMAT_R32G32B32_SINT, "int3" },
+			{ DXGI_FORMAT_R16G16B16A16_TYPELESS, "" },
+			{ DXGI_FORMAT_R16G16B16A16_FLOAT, "half4" },
+			{ DXGI_FORMAT_R32G32_TYPELESS, "" },
+			{ DXGI_FORMAT_R32G32_FLOAT, "float2" },
+			{ DXGI_FORMAT_R32G32_UINT, "uint2" },
+			{ DXGI_FORMAT_R32G32_SINT, "int2" },
+			{ DXGI_FORMAT_D32_FLOAT, "float" },
+			{ DXGI_FORMAT_R32_FLOAT, "float" },
+			{ DXGI_FORMAT_R32_UINT, "uint" },
+			{ DXGI_FORMAT_R32_SINT, "int" },
+		};
+
 		auto graphicsDevice = Renderer::Device();
 		auto& device = graphicsDevice->Device();
 
@@ -26,10 +48,16 @@ namespace BuD
 		
 		auto vertexDefinition = std::accumulate(
 			layout.begin(), layout.end(), std::string(),
-			[&argumentCount](std::string s, D3D11_INPUT_ELEMENT_DESC desc)
+			[&argumentCount, &hlslTypeMap](std::string s, D3D11_INPUT_ELEMENT_DESC desc)
 			{
+				auto res = hlslTypeMap.find(desc.Format);
+
+				std::string type = res == hlslTypeMap.end()
+					? std::format("float{}", HelperFunctions::BytesPerFormat(desc.Format) / 4)
+					: res->second;
+
 				auto byteSize = HelperFunctions::BytesPerFormat(desc.Format);
-				std::string argument = "float" + std::to_string(byteSize / 4) + " arg" + std::to_string(argumentCount++) + " : " + desc.SemanticName + "; ";
+				std::string argument = std::format("{} arg{} : {}{};", type, argumentCount++, desc.SemanticName, desc.SemanticIndex);
 
 				return s + argument;
 			}
@@ -39,7 +67,7 @@ namespace BuD
 
 		ComPtr<ID3DBlob> compiledShaderCode;
 		ComPtr<ID3DBlob> compilerErrors;
-		auto hr = D3DCompile(fakeShader.c_str(), fakeShader.size(), NULL, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "main", "vs_4_0_level_9_1", 0, 0, compiledShaderCode.GetAddressOf(), compilerErrors.GetAddressOf());
+		auto hr = D3DCompile(fakeShader.c_str(), fakeShader.size(), NULL, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "main", "vs_5_0", 0, 0, compiledShaderCode.GetAddressOf(), compilerErrors.GetAddressOf());
 
 		auto inputLayoutRes = device->CreateInputLayout(
 			layout.data(), static_cast<UINT>(layout.size()),
@@ -49,7 +77,7 @@ namespace BuD
 
 		if (FAILED(inputLayoutRes))
 		{
-			Log::WriteError(L"Error while creating input layout");
+			Log::WriteError("Error while creating input layout");
 		}
 	}
 

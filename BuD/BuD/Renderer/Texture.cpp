@@ -20,7 +20,7 @@ namespace BuD
 	{
 		if (!std::filesystem::is_regular_file(filepath))
 		{
-			Log::WriteError(L"Attempting to load a resource which does not exist.");
+			Log::WriteError("Attempting to load a resource which does not exist.");
 			return {};
 		}
 

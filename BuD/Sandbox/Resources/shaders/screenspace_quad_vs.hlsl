@@ -14,8 +14,8 @@ struct VSOut
 
 float3 GetRayDirection(float2 uv)
 {
-	float4 ssPos = float4(uv, 1.0, 1.0);
-	float4 worldPos = mul(invMvp, ssPos);
+	float4 screenSpacePos = float4(uv, 1.0, 1.0);
+    float4 worldPos = mul(invMvp, screenSpacePos);
 	worldPos /= worldPos.w;
 	
 	return normalize(worldPos.xyz - cameraPos.xyz);

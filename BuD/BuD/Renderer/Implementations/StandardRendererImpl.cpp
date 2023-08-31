@@ -11,7 +11,7 @@ namespace BuD
 	StandardRendererImpl::StandardRendererImpl(std::shared_ptr<GraphicsDevice> device)
 		: BaseRendererImpl(device), m_DrawCallsThisFrame(), m_InstancesDrawnThisFrame()
 	{
-		m_InstanceBuffer = std::make_shared<InstanceBuffer>(0, nullptr);
+		m_InstanceBuffer = std::make_shared<InstanceBuffer>(64, nullptr);
 	}
 
 	dxm::Matrix StandardRendererImpl::ProjectionMatrix()
@@ -52,6 +52,11 @@ namespace BuD
 
 			for (auto& renderingPass : renderable.RenderingPasses)
 			{
+				if (renderingPass.m_ShouldSkip)
+				{
+					continue;
+				}
+
 				auto& instancing = renderingPass.m_Instancing;
 
 				auto& pipeline = renderingPass.m_Pipeline;
@@ -59,7 +64,6 @@ namespace BuD
 
 				if (!mesh.m_VertexBuffer || !mesh.m_IndexBuffer || !pipeline.m_VertexShader || !pipeline.m_PixelShader)
 				{
-					Log::WriteWarning(L"Attempting to render without necessary assets (vertex & index buffers, vertex & pixel shaders). Abandoning.");
 					continue;
 				}
 
@@ -70,9 +74,8 @@ namespace BuD
 					auto& aabbCallback = mesh.m_BoundingBoxCallback.value();
 					auto aabb = aabbCallback();
 
-					if (frustum.IsInside(aabb))
+					if (!frustum.IsInside(aabb))
 					{
-						Log::WriteInfo(L"Object outside view frustum, culling.");
 						continue;
 					}
 				}
@@ -89,7 +92,6 @@ namespace BuD
 		}
 
 		DeployInstancedQueue(scene);
-		m_InstanceRenderQueue.Clear();
 
 		auto performanceData = RendererFrameStats{};
 		performanceData.m_DrawCalls = m_DrawCallsThisFrame;
@@ -126,6 +128,7 @@ namespace BuD
 				context->IASetIndexBuffer(ib->Get(), ib->Format(), 0);
 				context->IASetPrimitiveTopology(ib->Topology());
 
+				SetupRasterizerState(renderingPass.m_RasterizerDescription);
 				SetupShaderPipeline(renderingPass.m_Pipeline);
 
 				context->DrawIndexedInstanced(ib->Count(), rawInstanceData.Count(), 0, 0, 0);
@@ -136,5 +139,7 @@ namespace BuD
 				CleanAfterDrawing();
 			}
 		);
+
+		m_InstanceRenderQueue.Clear();
 	}
 }

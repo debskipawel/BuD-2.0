@@ -121,13 +121,13 @@ namespace BuD
 			std::filesystem::path sourceShaderPath = currentPath / shaderPath;
 			std::filesystem::path compiledShaderName = (currentPath / shaderPath).replace_extension(L".cso");
 
-			try
-			{
-				// try loading compiled shader if exists
-				auto bytecode = LoadByteCode(compiledShaderName);
-				shader = std::make_shared<T>(graphicsDevice, bytecode.data(), bytecode.size());
-			}
-			catch (std::exception e)
+			//try
+			//{
+			//	// try loading compiled shader if exists
+			//	auto bytecode = LoadByteCode(compiledShaderName);
+			//	shader = std::make_shared<T>(graphicsDevice, bytecode.data(), bytecode.size());
+			//}
+			//catch (std::exception e)
 			{
 				ID3DBlob* blob = nullptr;
 				auto hr = CompileShader(sourceShaderPath.c_str(), mainFunName.c_str(), shaderVersion.c_str(), &blob);

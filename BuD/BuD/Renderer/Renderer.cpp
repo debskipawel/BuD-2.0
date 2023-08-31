@@ -4,6 +4,7 @@
 #include <Utils/Log.h>
 #include <Utils/Clock.h>
 
+#include "Implementations/AnaglyphRendererImpl.h"
 #include "Implementations/StandardRendererImpl.h"
 #include "Structures/Texture2DDesc.h"
 #include "Structures/ViewportDesc.h"
@@ -15,12 +16,14 @@ namespace BuD
 		s_Device = std::make_shared<GraphicsDevice>(window);
 
 		auto standardImpl = std::make_shared<StandardRendererImpl>(s_Device);
-		//auto anaglyphImpl = nullptr;
+		auto anaglyphImpl = std::make_shared<AnaglyphRendererImpl>(s_Device);
 
 		s_RenderingImplementations.emplace(RenderingMode::STANDARD, standardImpl);
-		//s_RenderingImplementations.emplace(RenderingMode::ANAGLYPH, anaglyphImpl);
+		s_RenderingImplementations.emplace(RenderingMode::ANAGLYPH, anaglyphImpl);
 
-		s_ActiveRendererImpl = standardImpl;
+		s_MultiEyeRendererImplementations.insert(anaglyphImpl);
+
+		s_ActiveRendererImpl = s_RenderingImplementations.at(s_RenderingMode);
 
 		auto width = window->Width();
 		auto height = window->Height();
@@ -63,7 +66,7 @@ namespace BuD
 	{
 		if (s_ActiveRenderTargets.empty())
 		{
-			Log::WriteError(L"Attempting to retrieve a render target without starting it beforehand.");
+			Log::WriteError("Attempting to retrieve a render target without starting it beforehand.");
 			return { nullptr };
 		}
 
@@ -85,6 +88,42 @@ namespace BuD
 		return result;
 	}
 
+	bool Renderer::IsMultiEyeMode()
+	{
+		return std::dynamic_pointer_cast<MultiEyeRendererImpl>(s_ActiveRendererImpl) != std::shared_ptr<MultiEyeRendererImpl>();
+	}
+
+	RenderingMode Renderer::GetRenderingMode()
+	{
+		return s_RenderingMode;
+	}
+
+	void Renderer::SetRenderingMode(RenderingMode mode)
+	{
+		if (mode == s_RenderingMode)
+		{
+			return;
+		}
+
+		s_ActiveRendererImpl = s_RenderingImplementations[mode];
+		s_RenderingMode = mode;
+	}
+
+	MultiEyeSettings Renderer::GetMultiEyeSettings()
+	{
+		return s_MultiEyeSettings;
+	}
+
+	void Renderer::SetMultiEyeSettings(const MultiEyeSettings& settings)
+	{
+		s_MultiEyeSettings = settings;
+
+		for (auto& multiEyeRendererImplementation : s_MultiEyeRendererImplementations)
+		{
+			multiEyeRendererImplementation->SetMultiEyeSettings(settings);
+		}
+	}
+
 	dxm::Matrix Renderer::ProjectionMatrix()
 	{
 		return s_ActiveRendererImpl->ProjectionMatrix();
@@ -94,7 +133,7 @@ namespace BuD
 	{
 		if (!s_Device)
 		{
-			Log::WriteWarning(L"Attempting to begin frame without initializing the renderer.");
+			Log::WriteWarning("Attempting to begin frame without initializing the renderer.");
 			return;
 		}
 
@@ -149,7 +188,7 @@ namespace BuD
 	{
 		if (!s_Device)
 		{
-			Log::WriteWarning(L"Attempting to render scene without initializing the renderer.");
+			Log::WriteWarning("Attempting to render scene without initializing the renderer.");
 			return;
 		}
 
@@ -179,13 +218,13 @@ namespace BuD
 	{
 		if (!s_Device)
 		{
-			Log::WriteWarning(L"Attempting to end frame without initializing the renderer.");
+			Log::WriteWarning("Attempting to end frame without initializing the renderer.");
 			return;
 		}
 
 		if (!s_ActiveRenderTargets.empty())
 		{
-			Log::WriteWarning(L"Not all render targets for this frame have been used");
+			Log::WriteWarning("Not all render targets for this frame have been used");
 		}
 
 		if (!s_RenderingToSwapchain)

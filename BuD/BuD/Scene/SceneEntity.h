@@ -28,10 +28,12 @@ namespace BuD
 			return !(*this == other);
 		}
 
+		operator entt::entity() const { return m_EntityID; }
+
 		Scene* operator->() { return m_Scene; }
 
 	protected:
-		entt::entity m_EntityID{ entt::null };
+		entt::entity m_EntityID { entt::null };
 		Scene* m_Scene = nullptr;
 
 	public:

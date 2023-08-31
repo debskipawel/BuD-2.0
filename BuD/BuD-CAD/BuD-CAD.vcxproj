@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{e722d7f4-699f-4bd4-a85f-c26ada28bb57}</ProjectGuid>
+    <RootNamespace>BuDCAD</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+    </Link>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+    </Link>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+    </Link>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+    </Link>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Actions\TransformAction.h" />
+    <ClInclude Include="Actions\TransformActionList.h" />
+    <ClInclude Include="ApplicationCAD.h" />
+    <ClInclude Include="AppState.h" />
+    <ClInclude Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Keyboard\Multiselect\MultiselectKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Keyboard\Shortcuts\ShortcutsKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Mouse\Action\ActionMouseBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Mouse\BaseMouseBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h" />
+    <ClInclude Include="Filters\FilterInfo.h" />
+    <ClInclude Include="GUI\Intersection\IntersectionGuiLayer.h" />
+    <ClInclude Include="Intersection\CommonPointMarching\AbstractCommonPointMarching.h" />
+    <ClInclude Include="Intersection\CommonPointMarching\MarchingDirection.h" />
+    <ClInclude Include="Intersection\CommonPointMarching\NewtonCommonPointMarching.h" />
+    <ClInclude Include="Intersection\InitialCommonPoint\AbstractInitialCommonPointFinder.h" />
+    <ClInclude Include="Intersection\InitialCommonPoint\LinearApproximationCommonPointFinder.h" />
+    <ClInclude Include="GUI\MenuBar\MenuBarGuiLayer.h" />
+    <ClInclude Include="Intersection\BaseIntersectionAlgorithm.h" />
+    <ClInclude Include="Intersection\IntersectionAlgorithmParameters.h" />
+    <ClInclude Include="Intersection\LoopDetectors\AbstractLoopDetector.h" />
+    <ClInclude Include="Intersection\LoopDetectors\DotProductLoopDetector.h" />
+    <ClInclude Include="Intersection\Sampler\VisitorSampler.h" />
+    <ClInclude Include="Intersection\Structures\CommonPointSequenceResult.h" />
+    <ClInclude Include="Intersection\Structures\IntersectionResult.h" />
+    <ClInclude Include="Intersection\Structures\IntersectionStructures.h" />
+    <ClInclude Include="Intersection\MultiIntersectionAlgorithm.h" />
+    <ClInclude Include="Intersection\InitialCommonPoint\SteepestDescentCommonPointFinder.h" />
+    <ClInclude Include="Intersection\Sampler\ISampler.h" />
+    <ClInclude Include="Intersection\SelfIntersectionAlgorithm.h" />
+    <ClInclude Include="Intersection\Structures\LoopResult.h" />
+    <ClInclude Include="Intersection\Structures\NextCommonPointResult.h" />
+    <ClInclude Include="Intersection\Structures\ParameterWrapResult.h" />
+    <ClInclude Include="Intersection\Structures\PointMappingResult.h" />
+    <ClInclude Include="Intersection\Structures\StartingCommonPointResult.h" />
+    <ClInclude Include="Objects\CAD\Intersection\IntersectionCurve.h" />
+    <ClInclude Include="Objects\CAD\Intersection\IntersectionPoint.h" />
+    <ClInclude Include="Objects\CAD\ParameterizedObject2D.h" />
+    <ClInclude Include="Objects\CAD\PointBased\Curve\BaseCurve.h" />
+    <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC0.h" />
+    <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC2.h" />
+    <ClInclude Include="Objects\CAD\PointBased\Curve\YukselInterpolatingCurveC2.h" />
+    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BaseBezierPatch.h" />
+    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BaseBezierSurface.h" />
+    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BezierPatchC0.h" />
+    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BezierPatchC2.h" />
+    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BezierSurfaceC0.h" />
+    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BezierSurfaceC2.h" />
+    <ClInclude Include="Selection\BaseSelectionSystem.h" />
+    <ClInclude Include="Selection\ManualSelectionSystem.h" />
+    <ClInclude Include="Selection\TransformSelectionSystem.h" />
+    <ClInclude Include="Serializing\SceneSerializer.h" />
+    <ClInclude Include="Visitors\Intersection\CalculatorParameterized.h" />
+    <ClInclude Include="Visitors\Intersection\CalculatorNormalVector.h" />
+    <ClInclude Include="Visitors\Intersection\CalculatorParameterShortestDistance.h" />
+    <ClInclude Include="Visitors\Intersection\CalculatorPartialDerivativeU.h" />
+    <ClInclude Include="Visitors\Intersection\CalculatorPartialDerivativeV.h" />
+    <ClInclude Include="Visitors\Intersection\CalculatorPointOnSurface.h" />
+    <ClInclude Include="Visitors\Intersection\ParameterWrapperVisitor.h" />
+    <ClInclude Include="Visitors\PointBased\PointAddedVisitor.h" />
+    <ClInclude Include="Visitors\PointBased\BasePointActionVisitor.h" />
+    <ClInclude Include="Visitors\PointBased\PointRemovedVisitor.h" />
+    <ClInclude Include="Visitors\Selection\BaseObjectSelectionVisitor.h" />
+    <ClInclude Include="Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.h" />
+    <ClInclude Include="GUI\Cursor\CursorGuiLayer.h" />
+    <ClInclude Include="GUI\ObjectList\ObjectCreationGuiLayer.h" />
+    <ClInclude Include="Objects\Additional\Cursor.h" />
+    <ClInclude Include="Objects\CAD\Point.h" />
+    <ClInclude Include="Objects\CAD\PointBased\PointBasedObjectCAD.h" />
+    <ClInclude Include="Raycasting\RayFactory.h" />
+    <ClInclude Include="Components\TransformComponent.h" />
+    <ClInclude Include="GUI\AppState\AppStateGuiLayer.h" />
+    <ClInclude Include="GUI\BaseGuiLayer.h" />
+    <ClInclude Include="GUI\Console\ConsoleGuiLayer.h" />
+    <ClInclude Include="GUI\MainGuiLayer.h" />
+    <ClInclude Include="GUI\ObjectList\ObjectListGuiLayer.h" />
+    <ClInclude Include="Visitors\Deletion\ObjectDeletionVisitor.h" />
+    <ClInclude Include="Visitors\ObjectGui\ObjectGuiDrawerVisitor.h" />
+    <ClInclude Include="GUI\Performance\PerformanceGuiLayer.h" />
+    <ClInclude Include="GUI\Properties\PropertiesGuiLayer.h" />
+    <ClInclude Include="Visitors\RayIntersection\RayIntersectionVisitor.h" />
+    <ClInclude Include="GUI\Viewport\ViewportGuiLayer.h" />
+    <ClInclude Include="Objects\Additional\Grid.h" />
+    <ClInclude Include="Raycasting\Ray.h" />
+    <ClInclude Include="Objects\CAD\Torus.h" />
+    <ClInclude Include="Scene\SceneCAD.h" />
+    <ClInclude Include="Scene\SceneObjectCAD.h" />
+    <ClInclude Include="DataLayers\AppStateDataLayer.h" />
+    <ClInclude Include="AxisLock.h" />
+    <ClInclude Include="DataLayers\MainDataLayer.h" />
+    <ClInclude Include="DataLayers\SceneDataLayer.h" />
+    <ClInclude Include="DataLayers\ViewportDataLayer.h" />
+    <ClInclude Include="Visitors\AbstractVisitor.h" />
+    <ClInclude Include="Visitors\Selection\ObjectSelectVisitor.h" />
+    <ClInclude Include="Visitors\Selection\ObjectUnselectVisitor.h" />
+    <ClInclude Include="Visitors\Serialization\SerializationVisitor.h" />
+    <ClInclude Include="Visitors\Transform\AfterUpdateTransformVisitor.h" />
+    <ClInclude Include="Visitors\Transform\ApplyGroupTransformVisitor.h" />
+    <ClInclude Include="Visitors\Transform\UpdateTransformVisitor.h" />
+    <ClInclude Include="Visitors\Validation\BaseValidationVisitor.h" />
+    <ClInclude Include="Visitors\Validation\CanAddControlPointValidationVisitor.h" />
+    <ClInclude Include="Visitors\Validation\ControlPointValidationVisitor.h" />
+    <ClInclude Include="Visitors\Validation\FilterValidationVisitor.h" />
+    <ClInclude Include="Visitors\Validation\IntersectionEligibilityValidationVisitor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Actions\TransformActionList.cpp" />
+    <ClCompile Include="ApplicationCAD.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\Multiselect\MultiselectKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\Shortcuts\ShortcutsKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Mouse\Action\ActionMouseBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Mouse\BaseMouseBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Mouse\MainMouseBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.cpp" />
+    <ClCompile Include="Components\TransformComponent.cpp" />
+    <ClCompile Include="DataLayers\ViewportDataLayer.cpp" />
+    <ClCompile Include="Filters\FilterInfo.cpp" />
+    <ClCompile Include="GUI\BaseGuiLayer.cpp" />
+    <ClCompile Include="GUI\Cursor\CursorGuiLayer.cpp" />
+    <ClCompile Include="GUI\Intersection\IntersectionGuiLayer.cpp" />
+    <ClCompile Include="Intersection\CommonPointMarching\AbstractCommonPointMarching.cpp" />
+    <ClCompile Include="Intersection\CommonPointMarching\NewtonCommonPointMarching.cpp" />
+    <ClCompile Include="Intersection\InitialCommonPoint\AbstractInitialCommonPointFinder.cpp" />
+    <ClCompile Include="GUI\MenuBar\MenuBarGuiLayer.cpp" />
+    <ClCompile Include="GUI\ObjectList\ObjectCreationGuiLayer.cpp" />
+    <ClCompile Include="Intersection\BaseIntersectionAlgorithm.cpp" />
+    <ClCompile Include="Intersection\LoopDetectors\DotProductLoopDetector.cpp" />
+    <ClCompile Include="Intersection\MultiIntersectionAlgorithm.cpp" />
+    <ClCompile Include="Intersection\InitialCommonPoint\LinearApproximationCommonPointFinder.cpp" />
+    <ClCompile Include="Intersection\InitialCommonPoint\SteepestDescentCommonPointFinder.cpp" />
+    <ClCompile Include="Intersection\Sampler\VisitorSampler.cpp" />
+    <ClCompile Include="Intersection\SelfIntersectionAlgorithm.cpp" />
+    <ClCompile Include="Objects\Additional\Cursor.cpp" />
+    <ClCompile Include="Objects\CAD\Intersection\IntersectionCurve.cpp" />
+    <ClCompile Include="Objects\CAD\ParameterizedObject2D.cpp" />
+    <ClCompile Include="Objects\CAD\Point.cpp" />
+    <ClCompile Include="Objects\CAD\PointBased\Curve\BaseCurve.cpp" />
+    <ClCompile Include="Objects\CAD\PointBased\Curve\BezierCurveC0.cpp" />
+    <ClCompile Include="Objects\CAD\PointBased\Curve\BezierCurveC2.cpp" />
+    <ClCompile Include="Objects\CAD\PointBased\Curve\YukselInterpolatingCurveC2.cpp" />
+    <ClCompile Include="Objects\CAD\PointBased\PointBasedObjectCAD.cpp" />
+    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BaseBezierPatch.cpp" />
+    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BaseBezierSurface.cpp" />
+    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BezierPatchC0.cpp" />
+    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BezierPatchC2.cpp" />
+    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BezierSurfaceC0.cpp" />
+    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BezierSurfaceC2.cpp" />
+    <ClCompile Include="Raycasting\RayFactory.cpp" />
+    <ClCompile Include="GUI\AppState\AppStateGuiLayer.cpp" />
+    <ClCompile Include="GUI\Console\ConsoleGuiLayer.cpp" />
+    <ClCompile Include="GUI\MainGuiLayer.cpp" />
+    <ClCompile Include="GUI\ObjectList\ObjectListGuiLayer.cpp" />
+    <ClCompile Include="Selection\BaseSelectionSystem.cpp" />
+    <ClCompile Include="Selection\ManualSelectionSystem.cpp" />
+    <ClCompile Include="Selection\TransformSelectionSystem.cpp" />
+    <ClCompile Include="Serializing\SceneSerializer.cpp" />
+    <ClCompile Include="Visitors\Deletion\ObjectDeletionVisitor.cpp" />
+    <ClCompile Include="Visitors\Intersection\CalculatorParameterized.cpp" />
+    <ClCompile Include="Visitors\Intersection\CalculatorNormalVector.cpp" />
+    <ClCompile Include="Visitors\Intersection\CalculatorParameterShortestDistance.cpp" />
+    <ClCompile Include="Visitors\Intersection\CalculatorPartialDerivativeU.cpp" />
+    <ClCompile Include="Visitors\Intersection\CalculatorPartialDerivativeV.cpp" />
+    <ClCompile Include="Visitors\Intersection\CalculatorPointOnSurface.cpp" />
+    <ClCompile Include="Visitors\Intersection\ParameterWrapperVisitor.cpp" />
+    <ClCompile Include="Visitors\ObjectGui\ObjectGuiDrawerVisitor.cpp" />
+    <ClCompile Include="GUI\Performance\PerformanceGuiLayer.cpp" />
+    <ClCompile Include="GUI\Properties\PropertiesGuiLayer.cpp" />
+    <ClCompile Include="Visitors\PointBased\PointAddedVisitor.cpp" />
+    <ClCompile Include="Visitors\PointBased\BasePointActionVisitor.cpp" />
+    <ClCompile Include="Visitors\PointBased\PointRemovedVisitor.cpp" />
+    <ClCompile Include="Visitors\RayIntersection\RayIntersectionVisitor.cpp" />
+    <ClCompile Include="GUI\Viewport\ViewportGuiLayer.cpp" />
+    <ClCompile Include="Objects\Additional\Grid.cpp" />
+    <ClCompile Include="Objects\CAD\Torus.cpp" />
+    <ClCompile Include="Scene\SceneCAD.cpp" />
+    <ClCompile Include="Scene\SceneObjectCAD.cpp" />
+    <ClCompile Include="DataLayers\AppStateDataLayer.cpp" />
+    <ClCompile Include="Visitors\AbstractVisitor.cpp" />
+    <ClCompile Include="Visitors\Selection\BaseObjectSelectionVisitor.cpp" />
+    <ClCompile Include="Visitors\Selection\ObjectSelectVisitor.cpp" />
+    <ClCompile Include="Visitors\Selection\ObjectUnselectVisitor.cpp" />
+    <ClCompile Include="Visitors\Serialization\SerializationVisitor.cpp" />
+    <ClCompile Include="Visitors\Transform\AfterUpdateTransformVisitor.cpp" />
+    <ClCompile Include="Visitors\Transform\ApplyGroupTransformVisitor.cpp" />
+    <ClCompile Include="Visitors\Transform\UpdateTransformVisitor.cpp" />
+    <ClCompile Include="Visitors\Validation\BaseValidationVisitor.cpp" />
+    <ClCompile Include="Visitors\Validation\CanAddControlPointValidationVisitor.cpp" />
+    <ClCompile Include="Visitors\Validation\ControlPointValidationVisitor.cpp" />
+    <ClCompile Include="Visitors\Validation\FilterValidationVisitor.cpp" />
+    <ClCompile Include="Visitors\Validation\IntersectionEligibilityValidationVisitor.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BuD\BuD.vcxproj">
+      <Project>{f37479f4-57c1-4c26-aaa9-b3951514890a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\BuD-audio\BuD-audio.vcxproj">
+      <Project>{c303ffb3-e742-4bd3-9d35-1694214a564f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\DearImGui\DearImGui.vcxproj">
+      <Project>{e86e8410-58d4-4f25-b37f-e22af5c65200}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\DirectXTK\DirectXTK_Desktop_2022.vcxproj">
+      <Project>{e0b52ae7-e160-4d32-bf3f-910b785e5a8e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\ImGuiFileDialog\ImGuiFileDialog.vcxproj">
+      <Project>{0dfd9b16-6876-498f-8455-caea6fb81972}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\Serializer\Serializer.vcxproj">
+      <Project>{f5ad3677-fd39-41a7-8ef3-5e429d816ce0}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Resources\Shaders\Cube\cube_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Cube\cube_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Cursor\cursor_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Cursor\cursor_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Grid\grid_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Grid\grid_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\IntersectionCurve\intersection_curve_ds.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\IntersectionCurve\intersection_curve_hs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Hull</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\IntersectionCurve\intersection_curve_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\IntersectionCurve\intersection_curve_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_border_gs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_border_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_ds.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_hs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_border_bernstein_gs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_border_bernstein_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_border_bspline_gs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_border_bspline_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_hs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Hull</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC2\bezier_curve_c2_ds.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\bezier_patch_c0_ds.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\bezier_patch_c0_hs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Hull</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\bezier_patch_c0_polygon_gs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\bezier_patch_c0_polygon_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\bezier_patch_c0_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\bezier_patch_c0_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\Trimmed\bezier_patch_c0_ds.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\Trimmed\bezier_patch_c0_hs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Hull</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\Trimmed\bezier_patch_c0_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC0\Trimmed\bezier_patch_c0_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_polygon_gs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_polygon_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_ds.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_hs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Hull</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\bezier_patch_c2_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\Trimmed\bezier_patch_c2_ds.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\Trimmed\bezier_patch_c2_hs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Hull</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\Trimmed\bezier_patch_c2_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\Trimmed\bezier_patch_c2_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\YukselCurveC2\yuksel_curve_c2_ds.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\YukselCurveC2\yuksel_curve_c2_hs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Hull</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\YukselCurveC2\yuksel_curve_c2_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PointBased\YukselCurveC2\yuksel_curve_c2_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Point\point_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Point\point_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Torus\torus_instanced_ds.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Torus\torus_instanced_hs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Torus\torus_instanced_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Torus\torus_instanced_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Torus\Trimmed\torus_ds.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Torus\Trimmed\torus_hs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Hull</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Hull</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Torus\Trimmed\torus_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Torus\Trimmed\torus_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -16,7 +16,7 @@ namespace BuD
 
 			if (FAILED(device->CreateVertexShader(code, size, nullptr, m_Shader.GetAddressOf())))
 			{
-				Log::WriteError(L"Error while creating vertex shader");
+				Log::WriteError("Error while creating vertex shader");
 			}
 		}
 

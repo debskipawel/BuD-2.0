@@ -1,0 +1,69 @@
+{
+	"camera": {
+		"focusPoint": {
+			"x": 0.5694749355316162,
+			"y": 3.836884021759033,
+			"z": 2.683265209197998
+		},
+		"distance": 1.0,
+		"rotation": {
+			"x": 22.3330020904541,
+			"y": -26.395973205566406
+		}
+	},
+	"geometry": [
+		{
+			"objectType": "torus",
+			"id": 2097155,
+			"name": "Torus 3",
+			"smallRadius": 1.0,
+			"largeRadius": 3.0,
+			"position": {
+				"x": 0.0,
+				"y": 2.9000000953674316,
+				"z": 0.0
+			},
+			"rotation": {
+				"x": 90.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"samples": {
+				"x": 18,
+				"y": 53
+			}
+		},
+		{
+			"objectType": "torus",
+			"id": 2097156,
+			"name": "Torus 4",
+			"smallRadius": 1.0,
+			"largeRadius": 3.0,
+			"position": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"rotation": {
+				"x": 0.0,
+				"y": 0.0,
+				"z": 0.0
+			},
+			"scale": {
+				"x": 1.0,
+				"y": 1.0,
+				"z": 1.0
+			},
+			"samples": {
+				"x": 36,
+				"y": 56
+			}
+		}
+	],
+	"points": []
+}

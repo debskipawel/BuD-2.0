@@ -7,6 +7,7 @@
 #include <Objects/MeshDetails.h>
 #include <Renderer/ShaderPipeline.h>
 #include <Renderer/InstanceData.h>
+#include <Renderer/RasterizerDescription.h>
 
 namespace BuD
 {
@@ -17,8 +18,11 @@ namespace BuD
 
 		MeshDetails m_Mesh;
 		ShaderPipeline m_Pipeline;
+		RasterizerDescription m_RasterizerDescription;
 
 		std::optional<InstanceComponent> m_Instancing;
+
+		bool m_ShouldSkip = false;
 
 	public:
 		bool operator==(const RenderingPass& other) const;

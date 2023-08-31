@@ -18,7 +18,7 @@ namespace BuD
 		virtual dxm::Vector3 Front() override;
 		virtual dxm::Vector3 Right() override;
 		virtual dxm::Vector3 Up() override;
-		
+
 		virtual void RotateCamera(float dx, float dy) override;
 		virtual void Zoom(float dd) override;
 		
@@ -30,7 +30,7 @@ namespace BuD
 
 		dxm::Vector3 m_Target;
 
-		float m_AngleX, m_AngleZ;
+		float m_AngleX, m_AngleY;
 		float m_Distance, m_MinDistance, m_MaxDistance;
 	};
 }

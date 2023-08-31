@@ -1,6 +1,7 @@
 #include "bud_pch.h"
 #include "BaseRendererImpl.h"
 
+#include <Renderer/Structures/RasterizerDesc.h>
 #include <Utils/Log.h>
 
 namespace BuD
@@ -28,11 +29,39 @@ namespace BuD
 		context->IASetIndexBuffer(ib->Get(), ib->Format(), 0);
 		context->IASetPrimitiveTopology(ib->Topology());
 
+		SetupRasterizerState(renderingPass.m_RasterizerDescription);
 		SetupShaderPipeline(pipeline);
 
 		context->DrawIndexed(ib->Count(), 0, 0);
 
 		CleanAfterDrawing();
+	}
+
+	void BaseRendererImpl::SetupRasterizerState(RasterizerDescription rasterizerDescription)
+	{
+		auto& context = m_Device->Context();
+		auto result = m_RasterizerStates.find(rasterizerDescription);
+
+		if (result != m_RasterizerStates.end())
+		{
+			auto rastState = result->second.Get();
+
+			context->RSSetState(rastState);
+			return;
+		}
+
+		auto device = m_Device->Device();
+		
+		RasterizerDesc rasterizerDesc;
+		rasterizerDesc.CullMode = s_CullModeMap.at(rasterizerDescription.m_CullType);
+		rasterizerDesc.FillMode = s_FillModeMap.at(rasterizerDescription.m_FillMode);
+
+		ComPtr<ID3D11RasterizerState> state;
+		auto hr = device->CreateRasterizerState(&rasterizerDesc, state.GetAddressOf());
+
+		context->RSSetState(state.Get());
+
+		m_RasterizerStates.emplace(rasterizerDescription, state);
 	}
 
 	void BaseRendererImpl::SetupShaderPipeline(const ShaderPipeline& pipeline)
@@ -58,7 +87,7 @@ namespace BuD
 
 		if ((hs && !ds) || (!hs && ds))
 		{
-			Log::WriteError(L"Trying to use tessellation without using either hull and domain shader.");
+			Log::WriteError("Trying to use tessellation without using either hull and domain shader.");
 		}
 
 		if (hs && ds)
@@ -82,16 +111,29 @@ namespace BuD
 	{
 		auto& context = m_Device->Context();
 
-		ID3D11ShaderResourceView* clean[] = { nullptr };
+		ID3D11ShaderResourceView* clean[] = { nullptr, nullptr };
 
-		context->VSSetShaderResources(0, 1, clean);
-		context->GSSetShaderResources(0, 1, clean);
-		context->HSSetShaderResources(0, 1, clean);
-		context->DSSetShaderResources(0, 1, clean);
-		context->PSSetShaderResources(0, 1, clean);
+		context->VSSetShaderResources(0, 2, clean);
+		context->GSSetShaderResources(0, 2, clean);
+		context->HSSetShaderResources(0, 2, clean);
+		context->DSSetShaderResources(0, 2, clean);
+		context->PSSetShaderResources(0, 2, clean);
 
 		context->GSSetShader(nullptr, nullptr, 0);
 		context->HSSetShader(nullptr, nullptr, 0);
 		context->DSSetShader(nullptr, nullptr, 0);
 	}
+
+	std::unordered_map<CullType, D3D11_CULL_MODE> BaseRendererImpl::s_CullModeMap =
+	{
+		{ CullType::BACK, D3D11_CULL_BACK },
+		{ CullType::FRONT, D3D11_CULL_FRONT },
+		{ CullType::NONE, D3D11_CULL_NONE },
+	};
+
+	std::unordered_map<FillMode, D3D11_FILL_MODE> BaseRendererImpl::s_FillModeMap =
+	{
+		{ FillMode::SOLID, D3D11_FILL_SOLID },
+		{ FillMode::WIREFRAME, D3D11_FILL_WIREFRAME },
+	};
 }

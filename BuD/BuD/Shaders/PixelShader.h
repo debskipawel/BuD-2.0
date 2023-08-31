@@ -16,7 +16,7 @@ namespace BuD
 
 			if (FAILED(device->CreatePixelShader(code, size, nullptr, m_Shader.GetAddressOf())))
 			{
-				Log::WriteError(L"Error while creating pixel shader");
+				Log::WriteError("Error while creating pixel shader");
 			}
 		}
 

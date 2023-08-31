@@ -29,5 +29,8 @@ namespace BuD
 		entt::registry m_Registry;
 
 		friend class SceneEntity;
+
+	public:
+		void DestroyEntity(SceneEntity entity);
 	};
 }

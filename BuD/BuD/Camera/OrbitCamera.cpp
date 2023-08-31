@@ -6,7 +6,7 @@ using namespace DirectX;
 namespace BuD
 {
     OrbitCamera::OrbitCamera(dxm::Vector3 target, float minDistance, float maxDistance, float distance)
-        : m_AngleX(-0.1f), m_AngleZ(0.0f), m_Target(target.x, target.y, target.z), m_Distance(distance)
+        : m_AngleX(-0.1f), m_AngleY(0.0f), m_Target(target.x, target.y, target.z), m_Distance(distance)
     {
         if (maxDistance < minDistance)
         {
@@ -28,8 +28,8 @@ namespace BuD
 
         dxm::Vector3 dir = Front();
         dxm::Vector3 up = dxm::Vector3::Transform(
-            dxm::Vector3{ 0.0f, 0.0f, 1.0f },
-            dxm::Matrix::CreateRotationX(m_AngleX) * dxm::Matrix::CreateRotationZ(m_AngleZ)
+            dxm::Vector3{ 0.0f, 1.0f, 0.0f },
+            dxm::Matrix::CreateRotationX(m_AngleX) * dxm::Matrix::CreateRotationY(m_AngleY)
         );
 
         return dxm::Matrix::CreateLookAt(position, position + dir, up);
@@ -44,8 +44,8 @@ namespace BuD
     dxm::Vector3 BuD::OrbitCamera::Front()
     {
         dxm::Vector3 dir = dxm::Vector3::Transform(
-            dxm::Vector3{ 0.0f, 1.0f, 0.0f },
-            dxm::Matrix::CreateRotationX(m_AngleX) * dxm::Matrix::CreateRotationZ(m_AngleZ)
+            dxm::Vector3{ 0.0f, 0.0f, -1.0f },
+            dxm::Matrix::CreateRotationX(m_AngleX) * dxm::Matrix::CreateRotationY(m_AngleY)
         );
 
         return dir;
@@ -55,7 +55,7 @@ namespace BuD
     {
         dxm::Vector3 dir = dxm::Vector3::Transform(
             dxm::Vector3{ 1.0f, 0.0f, 0.0f },
-            dxm::Matrix::CreateRotationZ(m_AngleZ)
+            dxm::Matrix::CreateRotationY(m_AngleY)
         );
 
         return dir;
@@ -64,8 +64,8 @@ namespace BuD
     dxm::Vector3 BuD::OrbitCamera::Up()
     {
         dxm::Vector3 dir = dxm::Vector3::Transform(
-            dxm::Vector3{ 0.0f, 0.0f, 1.0f },
-            dxm::Matrix::CreateRotationX(m_AngleX) * dxm::Matrix::CreateRotationZ(m_AngleZ)
+            dxm::Vector3{ 0.0f, 1.0f, 0.0f },
+            dxm::Matrix::CreateRotationX(m_AngleX) * dxm::Matrix::CreateRotationY(m_AngleY)
         );
 
         return dir;
@@ -74,7 +74,7 @@ namespace BuD
     void BuD::OrbitCamera::RotateCamera(float dx, float dy)
     {
         m_AngleX = XMScalarModAngle(m_AngleX - dy);
-        m_AngleZ = XMScalarModAngle(m_AngleZ - dx);
+        m_AngleY = XMScalarModAngle(m_AngleY - dx);
     }
 
     void BuD::OrbitCamera::Zoom(float dd)

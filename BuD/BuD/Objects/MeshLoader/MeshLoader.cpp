@@ -109,7 +109,7 @@ namespace BuD
 		}
 		else
 		{
-			Log::WriteWarning(L"Trying to load static mesh in " + filepath.extension().wstring() + L" format, which is incorrect or not currently supported.");
+			Log::WriteWarning("Trying to load static mesh in " + filepath.extension().string() + " format, which is incorrect or not currently supported.");
 			return EMPTY;
 		}
 
@@ -139,8 +139,9 @@ namespace BuD
 		case BuD::MeshPrimitiveType::CUBE:
 			primitiveLoader = std::make_unique<Internal::CubeMeshPrimitiveLoader>();
 			break;
-		case BuD::MeshPrimitiveType::POINT:
-			primitiveLoader = std::make_unique<Internal::PointMeshPrimitiveLoader>();
+		case BuD::MeshPrimitiveType::POINT_TESSELLATION:
+		case BuD::MeshPrimitiveType::POINT_STANDARD:
+			primitiveLoader = std::make_unique<Internal::PointMeshPrimitiveLoader>(meshType);
 		default:
 			break;
 		}

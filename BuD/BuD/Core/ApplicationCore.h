@@ -3,6 +3,7 @@
 #include "LayerStack.h"
 #include "GuiLayer.h"
 
+#include <Utils/Timepoint.h>
 #include <Window/Win32Window.h>
 
 namespace BuD

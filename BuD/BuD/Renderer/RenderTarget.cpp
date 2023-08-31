@@ -38,7 +38,7 @@ namespace BuD
 
 		if (FAILED(hr))
 		{
-			Log::WriteError(L"Error while creating SRV for render target");
+			Log::WriteError("Error while creating SRV for render target");
 		}
 	}
 	

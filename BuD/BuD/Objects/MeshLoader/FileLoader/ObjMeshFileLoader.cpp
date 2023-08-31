@@ -24,7 +24,7 @@ namespace BuD::Internal
 		
 		if (!loaded)
 		{
-			Log::WriteError(L"Error while loading an .obj static mesh.");
+			Log::WriteError("Error while loading an .obj static mesh.");
 			return {};
 		}
 
