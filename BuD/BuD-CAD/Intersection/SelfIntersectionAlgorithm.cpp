@@ -5,6 +5,7 @@
 
 #include <Intersection/CommonPointMarching/NewtonCommonPointMarching.h>
 #include <Intersection/LoopDetectors/DotProductLoopDetector.h>
+#include <Intersection/LoopDetectors/ShortestDistanceLoopDetector.h>
 #include <Intersection/Sampler/VisitorSampler.h>
 
 #include <Visitors/Intersection/CalculatorParameterShortestDistance.h>
@@ -18,7 +19,9 @@ SelfIntersectionAlgorithm::SelfIntersectionAlgorithm(IntersectionAlgorithmParame
 	m_NearestCommonPointFinders.emplace_back(std::make_unique<SteepestDescentInitialCommonPointFinder>(m_ParameterizedObject, m_ParameterizedObject, parameters.m_Precision));
 
 	m_MarchingCommonPointFinder = std::make_unique<NewtonCommonPointMarching>(m_ParameterizedObject, m_ParameterizedObject, m_Parameters.m_Precision);
-	m_LoopDetector = std::make_unique<DotProductLoopDetector>(m_Parameters.m_PointDistance);
+	
+	// m_LoopDetector = std::make_unique<DotProductLoopDetector>(m_Parameters.m_PointDistance);
+	m_LoopDetector = std::make_unique<ShortestDistanceLoopDetector>(m_ParameterizedObject, m_ParameterizedObject, m_Parameters.m_PointDistance);
 
 	m_Sampler = std::make_unique<VisitorSampler>();
 }
