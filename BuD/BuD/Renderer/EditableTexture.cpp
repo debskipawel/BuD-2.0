@@ -289,12 +289,15 @@ namespace BuD
 
 	std::pair<int, int> EditableTexture::ScreenSpaceToPixel(float x, float y)
 	{
-		if (m_Width == 0 || m_Height == 0 || x < 0.0f || x > 1.0f || y < 0.0f || y > 1.0f)
+		if (m_Width == 0 || m_Height == 0)
 		{
 			return { 0, 0 };
 		}
 
-		return { static_cast<int>(x * (m_Width - 1)), static_cast<int>(y * (m_Height - 1)) };
+		auto xPixel = roundf(x < 0 ? 0 : (x >= 1.0f ? m_Width - 1 : x * (m_Width - 1)));
+		auto yPixel = roundf(y < 0 ? 0 : (y >= 1.0f ? m_Height - 1 : y * (m_Height - 1)));
+
+		return { static_cast<int>(xPixel), static_cast<int>(yPixel) };
 	}
 
 	void EditableTexture::PutPixel(int x, int y, dxm::Vector4 color)
