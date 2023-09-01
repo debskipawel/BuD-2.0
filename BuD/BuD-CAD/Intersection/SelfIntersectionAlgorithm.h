@@ -11,6 +11,8 @@ protected:
 	virtual dxm::Vector4 StartingParameter() override;
 	virtual dxm::Vector3 GetInitialDirection(const StartingCommonPointResult& initialPosition) override;
 
+	virtual StartingCommonPointResult FindInitialCommonPoint(dxm::Vector4 startingPosition) override;
+
 	virtual dxm::Vector4 StartingParameterFromCursor();
 	virtual dxm::Vector4 StartingParameterFromSubdivision();
 

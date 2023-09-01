@@ -44,6 +44,31 @@ dxm::Vector3 SelfIntersectionAlgorithm::GetInitialDirection(const StartingCommon
 	return direction;
 }
 
+StartingCommonPointResult SelfIntersectionAlgorithm::FindInitialCommonPoint(dxm::Vector4 startingPosition)
+{
+	auto initialCommonPoint = BaseIntersectionAlgorithm::FindInitialCommonPoint(startingPosition);
+
+	auto parameterDistanceCalculator = std::make_unique<CalculatorParameterShortestDistance>();
+
+	auto uv = dxm::Vector2{ initialCommonPoint.m_Parameter.x, initialCommonPoint.m_Parameter.y };
+	auto st = dxm::Vector2{ initialCommonPoint.m_Parameter.z, initialCommonPoint.m_Parameter.w };
+
+	parameterDistanceCalculator->SetParameters(uv, st);
+	parameterDistanceCalculator->Visit(m_ParameterizedObject);
+
+	auto diff = parameterDistanceCalculator->Result();
+
+	if (diff.Length() < 1e-2f)
+	{
+		auto emptyResult = StartingCommonPointResult{};
+		emptyResult.m_ResultFound = false;
+
+		return emptyResult;
+	}
+
+	return initialCommonPoint;
+}
+
 dxm::Vector4 SelfIntersectionAlgorithm::StartingParameterFromCursor()
 {
 	constexpr auto surfaceDivisionCount = 16;

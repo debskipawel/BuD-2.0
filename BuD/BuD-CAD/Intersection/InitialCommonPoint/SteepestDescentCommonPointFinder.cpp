@@ -46,7 +46,7 @@ StartingCommonPointResult SteepestDescentInitialCommonPointFinder::FindNearestCo
 
 		if (gradient.Length() < m_Precision)
 		{
-			result.m_ResultFound = true;
+			result.m_ResultFound = false;
 			break;
 		}
 
