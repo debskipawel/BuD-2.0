@@ -13,6 +13,8 @@
 #include "PixDebugLayer.cpp"
 #endif
 
+#pragma comment(lib, "dxgi.lib")
+
 namespace BuD
 {
 	GraphicsDevice::GraphicsDevice(std::shared_ptr<Win32Window> window)
@@ -28,9 +30,47 @@ namespace BuD
 		LoadPixDebugLayer();
 #endif
 
+		HRESULT hr;
 		D3D_FEATURE_LEVEL featureLevels[] = { D3D_FEATURE_LEVEL_12_0 };
 
-		auto hr = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, flags, nullptr, 0,
+		ComPtr<IDXGIFactory> pFactory = NULL;
+
+		hr = CreateDXGIFactory(__uuidof(IDXGIFactory), reinterpret_cast<void**>(pFactory.GetAddressOf()));
+
+		size_t maxVideoMemory = 0;
+		ComPtr<IDXGIAdapter> adapter = {};
+
+		if (SUCCEEDED(hr))
+		{
+			size_t adapterCount = 0;
+
+			while (true)
+			{
+				ComPtr<IDXGIAdapter> pAdapter = {};
+				DXGI_ADAPTER_DESC adapterDesc = {};
+				
+				auto adapterRes = pFactory->EnumAdapters(adapterCount++, pAdapter.GetAddressOf());
+				
+				if (FAILED(adapterRes))
+				{
+					break;
+				}
+
+				auto descResult = pAdapter->GetDesc(&adapterDesc);
+				auto videoMemory = SUCCEEDED(descResult) ? adapterDesc.DedicatedVideoMemory : 0;
+
+				if (videoMemory > maxVideoMemory)
+				{
+					adapter = pAdapter;
+					maxVideoMemory = videoMemory;
+				}
+			}
+		}
+
+		auto graphicsAdapter = adapter.Get();
+		auto driverType = adapter ? D3D_DRIVER_TYPE_UNKNOWN : D3D_DRIVER_TYPE_HARDWARE;
+
+		hr = D3D11CreateDeviceAndSwapChain(adapter.Get(), driverType, nullptr, flags, nullptr, 0,
 			D3D11_SDK_VERSION, &swapchainDesc, m_Swapchain.GetAddressOf(), m_Device.GetAddressOf(), nullptr, m_Context.GetAddressOf());
 
 		if (FAILED(hr))
