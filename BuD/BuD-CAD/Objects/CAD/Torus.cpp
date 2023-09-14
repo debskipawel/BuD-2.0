@@ -118,6 +118,7 @@ void Torus::CreateInstancedRenderingPass()
 	m_InstancedRenderingPass.m_Instancing = instancing;
 
 	m_InstancedRenderingPass.m_RasterizerDescription.m_FillMode = BuD::FillMode::WIREFRAME;
+	m_InstancedRenderingPass.m_RasterizerDescription.m_CullType = BuD::CullType::NONE;
 
 	m_InstancedRenderingPass.m_PreRenderCallback = [](const BuD::RenderingPass& renderingPass, const BuD::Scene& scene)
 	{

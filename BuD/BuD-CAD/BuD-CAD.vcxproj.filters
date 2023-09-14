@@ -342,6 +342,9 @@
     <ClInclude Include="Visitors\Validation\FilterValidationVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Intersection\LoopDetectors\ShortestDistanceLoopDetector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationCAD.cpp">
@@ -612,6 +615,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Filters\FilterInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Intersection\LoopDetectors\ShortestDistanceLoopDetector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

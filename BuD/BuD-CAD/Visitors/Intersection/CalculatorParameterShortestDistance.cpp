@@ -13,25 +13,56 @@ void CalculatorParameterShortestDistance::Visit(std::weak_ptr<SceneObjectCAD> ob
 
 void CalculatorParameterShortestDistance::Visit(Torus& torus)
 {
-	auto diff = dxm::Vector2{ abs(m_Point2.x - m_Point1.x), abs(m_Point2.y - m_Point1.y) };
+	auto diff = dxm::Vector2{ m_Point2.x - m_Point1.x, m_Point2.y - m_Point1.y };
 
-	m_Result.x = min(diff.x, 1.0f - diff.x);
-	m_Result.y = min(diff.y, 1.0f - diff.y);
+	if (abs(diff.x) > 0.5f)
+	{
+		m_Result.x = diff.x > 0.0f ? diff.x - 1.0f : 1.0f + diff.x;
+	}
+	else
+	{
+		m_Result.x = diff.x;
+	}
+
+	if (abs(diff.y) > 0.5f)
+	{
+		m_Result.y = diff.y > 0.0f ? diff.y - 1.0f : 1.0f + diff.y;
+	}
+	else
+	{
+		m_Result.y = diff.y;
+	}
 }
 
 void CalculatorParameterShortestDistance::Visit(BezierSurfaceC0& surface)
 {
-	auto diff = dxm::Vector2{ abs(m_Point2.x - m_Point1.x), abs(m_Point2.y - m_Point1.y) };
+	auto diff = dxm::Vector2{ m_Point2.x - m_Point1.x, m_Point2.y - m_Point1.y };
 
-	m_Result.x = surface.m_Cylinder ? min(diff.x, 1.0f - diff.x) : diff.x;
+	if (surface.m_Cylinder && abs(diff.x) > 0.5f)
+	{
+		m_Result.x = diff.x > 0.0f ? diff.x - 1.0f : 1.0f + diff.x;
+	}
+	else
+	{
+		m_Result.x = diff.x;
+	}
+
 	m_Result.y = diff.y;
 }
 
 void CalculatorParameterShortestDistance::Visit(BezierSurfaceC2& surface)
 {
-	auto diff = dxm::Vector2{ abs(m_Point2.x - m_Point1.x), abs(m_Point2.y - m_Point1.y) };
+	auto diff = dxm::Vector2{ m_Point2.x - m_Point1.x, m_Point2.y - m_Point1.y };
 
-	m_Result.x = surface.m_Cylinder ? min(diff.x, 1.0f - diff.x) : diff.x;
+	if (surface.m_Cylinder && abs(diff.x) > 0.5f)
+	{
+		m_Result.x = diff.x > 0.0f ? diff.x - 1.0f : 1.0f + diff.x;
+	}
+	else
+	{
+		m_Result.x = diff.x;
+	}
+
 	m_Result.y = diff.y;
 }
 
