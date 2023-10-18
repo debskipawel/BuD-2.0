@@ -42,7 +42,7 @@ NextCommonPointResult NewtonCommonPointMarching::NextPoint(dxm::Vector4 starting
 	auto xk1 = startingParameter;
 	result.m_Parameter = startingParameter;
 
-	constexpr auto MAX_ITER = 50;
+	constexpr auto MAX_ITER = 150;
 
 	for (int i = 0; i < MAX_ITER; i++)
 	{

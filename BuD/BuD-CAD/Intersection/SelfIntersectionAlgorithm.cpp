@@ -5,6 +5,7 @@
 
 #include <Intersection/CommonPointMarching/NewtonCommonPointMarching.h>
 #include <Intersection/LoopDetectors/DotProductLoopDetector.h>
+#include <Intersection/LoopDetectors/ShortestDistanceLoopDetector.h>
 #include <Intersection/Sampler/VisitorSampler.h>
 
 #include <Visitors/Intersection/CalculatorParameterShortestDistance.h>
@@ -18,7 +19,9 @@ SelfIntersectionAlgorithm::SelfIntersectionAlgorithm(IntersectionAlgorithmParame
 	m_NearestCommonPointFinders.emplace_back(std::make_unique<SteepestDescentInitialCommonPointFinder>(m_ParameterizedObject, m_ParameterizedObject, parameters.m_Precision));
 
 	m_MarchingCommonPointFinder = std::make_unique<NewtonCommonPointMarching>(m_ParameterizedObject, m_ParameterizedObject, m_Parameters.m_Precision);
-	m_LoopDetector = std::make_unique<DotProductLoopDetector>(m_Parameters.m_PointDistance);
+	
+	// m_LoopDetector = std::make_unique<DotProductLoopDetector>(m_Parameters.m_PointDistance);
+	m_LoopDetector = std::make_unique<ShortestDistanceLoopDetector>(m_ParameterizedObject, m_ParameterizedObject, m_Parameters.m_PointDistance);
 
 	m_Sampler = std::make_unique<VisitorSampler>();
 }
@@ -39,6 +42,31 @@ dxm::Vector3 SelfIntersectionAlgorithm::GetInitialDirection(const StartingCommon
 	direction.Normalize();
 
 	return direction;
+}
+
+StartingCommonPointResult SelfIntersectionAlgorithm::FindInitialCommonPoint(dxm::Vector4 startingPosition)
+{
+	auto initialCommonPoint = BaseIntersectionAlgorithm::FindInitialCommonPoint(startingPosition);
+
+	auto parameterDistanceCalculator = std::make_unique<CalculatorParameterShortestDistance>();
+
+	auto uv = dxm::Vector2{ initialCommonPoint.m_Parameter.x, initialCommonPoint.m_Parameter.y };
+	auto st = dxm::Vector2{ initialCommonPoint.m_Parameter.z, initialCommonPoint.m_Parameter.w };
+
+	parameterDistanceCalculator->SetParameters(uv, st);
+	parameterDistanceCalculator->Visit(m_ParameterizedObject);
+
+	auto diff = parameterDistanceCalculator->Result();
+
+	if (diff.Length() < 1e-2f)
+	{
+		auto emptyResult = StartingCommonPointResult{};
+		emptyResult.m_ResultFound = false;
+
+		return emptyResult;
+	}
+
+	return initialCommonPoint;
 }
 
 dxm::Vector4 SelfIntersectionAlgorithm::StartingParameterFromCursor()

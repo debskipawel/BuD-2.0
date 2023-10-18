@@ -194,6 +194,7 @@
     <ClInclude Include="Intersection\IntersectionAlgorithmParameters.h" />
     <ClInclude Include="Intersection\LoopDetectors\AbstractLoopDetector.h" />
     <ClInclude Include="Intersection\LoopDetectors\DotProductLoopDetector.h" />
+    <ClInclude Include="Intersection\LoopDetectors\ShortestDistanceLoopDetector.h" />
     <ClInclude Include="Intersection\Sampler\VisitorSampler.h" />
     <ClInclude Include="Intersection\Structures\CommonPointSequenceResult.h" />
     <ClInclude Include="Intersection\Structures\IntersectionResult.h" />
@@ -305,6 +306,7 @@
     <ClCompile Include="GUI\ObjectList\ObjectCreationGuiLayer.cpp" />
     <ClCompile Include="Intersection\BaseIntersectionAlgorithm.cpp" />
     <ClCompile Include="Intersection\LoopDetectors\DotProductLoopDetector.cpp" />
+    <ClCompile Include="Intersection\LoopDetectors\ShortestDistanceLoopDetector.cpp" />
     <ClCompile Include="Intersection\MultiIntersectionAlgorithm.cpp" />
     <ClCompile Include="Intersection\InitialCommonPoint\LinearApproximationCommonPointFinder.cpp" />
     <ClCompile Include="Intersection\InitialCommonPoint\SteepestDescentCommonPointFinder.cpp" />

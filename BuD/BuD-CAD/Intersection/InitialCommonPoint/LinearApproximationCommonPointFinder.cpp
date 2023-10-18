@@ -11,6 +11,7 @@ LinearApproximationCommonPointFinder::LinearApproximationCommonPointFinder(std::
 StartingCommonPointResult LinearApproximationCommonPointFinder::FindNearestCommonPoint(dxm::Vector4 startingPosition)
 {
 	StartingCommonPointResult result = {};
+	result.m_ResultFound = false;
 
 	result.m_Parameter = startingPosition;
 
