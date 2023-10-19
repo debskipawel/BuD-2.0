@@ -15,609 +15,621 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ApplicationCAD.h">
+    <ClInclude Include="Applications\CAD\ApplicationCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\MainGuiLayer.h">
+    <ClInclude Include="Applications\CAD\GUI\MainGuiLayerCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataLayers\MainDataLayer.h">
+    <ClInclude Include="Applications\CAD\DataLayers\MainDataLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataLayers\ViewportDataLayer.h">
+    <ClInclude Include="Applications\CAD\DataLayers\ViewportDataLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\SceneCAD.h">
+    <ClInclude Include="Applications\CAD\Scene\SceneCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\SceneObjectCAD.h">
+    <ClInclude Include="Applications\CAD\Scene\SceneObjectCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\Torus.h">
+    <ClInclude Include="Applications\CAD\Objects\CAD\Torus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AppState.h">
+    <ClInclude Include="Applications\CAD\AppState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataLayers\AppStateDataLayer.h">
+    <ClInclude Include="Applications\CAD\DataLayers\AppStateDataLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AxisLock.h">
+    <ClInclude Include="Applications\CAD\AxisLock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\AbstractVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\AbstractVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\AppState\AppStateGuiLayer.h">
+    <ClInclude Include="Applications\CAD\GUI\AppState\AppStateGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI\BaseGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Properties\PropertiesGuiLayer.h">
+    <ClInclude Include="Applications\CAD\GUI\Properties\PropertiesGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Performance\PerformanceGuiLayer.h">
+    <ClInclude Include="Applications\CAD\GUI\Performance\PerformanceGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Viewport\ViewportGuiLayer.h">
+    <ClInclude Include="Applications\CAD\GUI\Viewport\ViewportGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Console\ConsoleGuiLayer.h">
+    <ClInclude Include="Applications\CAD\GUI\Console\ConsoleGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\ObjectList\ObjectListGuiLayer.h">
+    <ClInclude Include="Applications\CAD\GUI\ObjectList\ObjectListGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataLayers\SceneDataLayer.h">
+    <ClInclude Include="Applications\CAD\DataLayers\SceneDataLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\ObjectGui\ObjectGuiDrawerVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\ObjectGui\ObjectGuiDrawerVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Components\TransformComponent.h">
+    <ClInclude Include="Applications\CAD\Components\TransformComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\Additional\Grid.h">
+    <ClInclude Include="Applications\CAD\Objects\Additional\Grid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Raycasting\Ray.h">
+    <ClInclude Include="Applications\CAD\Raycasting\Ray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\RayIntersection\RayIntersectionVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\RayIntersection\RayIntersectionVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Raycasting\RayFactory.h">
+    <ClInclude Include="Applications\CAD\Raycasting\RayFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\ObjectList\ObjectCreationGuiLayer.h">
+    <ClInclude Include="Applications\CAD\GUI\ObjectList\ObjectCreationGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\Additional\Cursor.h">
+    <ClInclude Include="Applications\CAD\Objects\Additional\Cursor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Cursor\CursorGuiLayer.h">
+    <ClInclude Include="Applications\CAD\GUI\Cursor\CursorGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Behaviors\Mouse\BaseMouseBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h">
+    <ClInclude Include="Applications\CAD\Behaviors\Mouse\MainMouseBehaviorLayerCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Behaviors\Mouse\Action\ActionMouseBehaviorLayer.h">
+    <ClInclude Include="Applications\CAD\Behaviors\Mouse\Action\ActionMouseBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.h">
+    <ClInclude Include="Applications\CAD\Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.h">
+    <ClInclude Include="Applications\CAD\Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.h">
+    <ClInclude Include="Applications\CAD\Behaviors\Keyboard\MainKeyboardBehaviorLayerCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.h">
+    <ClInclude Include="Applications\CAD\Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Behaviors\Keyboard\Multiselect\MultiselectKeyboardBehaviorLayer.h">
+    <ClInclude Include="Applications\CAD\Behaviors\Keyboard\Multiselect\MultiselectKeyboardBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.h">
+    <ClInclude Include="Applications\CAD\Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.h">
+    <ClInclude Include="Applications\CAD\Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\Point.h">
+    <ClInclude Include="Applications\CAD\Objects\CAD\Point.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\PointBased\PointBasedObjectCAD.h">
+    <ClInclude Include="Applications\CAD\Objects\CAD\PointBased\PointBasedObjectCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Selection\ObjectSelectVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\Selection\ObjectSelectVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Selection\ObjectUnselectVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\Selection\ObjectUnselectVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Deletion\ObjectDeletionVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\Deletion\ObjectDeletionVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Transform\ApplyGroupTransformVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\Transform\ApplyGroupTransformVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Selection\BaseObjectSelectionVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\Selection\BaseObjectSelectionVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\MenuBar\MenuBarGuiLayer.h">
+    <ClInclude Include="Applications\CAD\GUI\MenuBar\MenuBarGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC0.h">
+    <ClInclude Include="Applications\CAD\Objects\CAD\PointBased\Curve\BezierCurveC0.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\TransformAction.h">
+    <ClInclude Include="Applications\CAD\Actions\TransformAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Selection\TransformSelectionSystem.h">
+    <ClInclude Include="Applications\CAD\Selection\TransformSelectionSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\TransformActionList.h">
+    <ClInclude Include="Applications\CAD\Actions\TransformActionList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Selection\ManualSelectionSystem.h">
+    <ClInclude Include="Applications\CAD\Selection\ManualSelectionSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Selection\BaseSelectionSystem.h">
+    <ClInclude Include="Applications\CAD\Selection\BaseSelectionSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Validation\BaseValidationVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\Validation\BaseValidationVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Validation\ControlPointValidationVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\Validation\ControlPointValidationVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Transform\UpdateTransformVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\Transform\UpdateTransformVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Behaviors\Keyboard\Shortcuts\ShortcutsKeyboardBehaviorLayer.h">
+    <ClInclude Include="Applications\CAD\Behaviors\Keyboard\Shortcuts\ShortcutsKeyboardBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Validation\CanAddControlPointValidationVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\Validation\CanAddControlPointValidationVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\PointBased\PointAddedVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\PointBased\PointAddedVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC2.h">
+    <ClInclude Include="Applications\CAD\Objects\CAD\PointBased\Curve\BezierCurveC2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\PointBased\Curve\BaseCurve.h">
+    <ClInclude Include="Applications\CAD\Objects\CAD\PointBased\Curve\BaseCurve.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\PointBased\Curve\YukselInterpolatingCurveC2.h">
+    <ClInclude Include="Applications\CAD\Objects\CAD\PointBased\Curve\YukselInterpolatingCurveC2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\PointBased\PointRemovedVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\PointBased\PointRemovedVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\PointBased\BasePointActionVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\PointBased\BasePointActionVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BaseBezierPatch.h">
+    <ClInclude Include="Applications\CAD\Objects\CAD\PointBased\Surfaces\BaseBezierPatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BezierPatchC0.h">
+    <ClInclude Include="Applications\CAD\Objects\CAD\PointBased\Surfaces\BezierPatchC0.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BezierPatchC2.h">
+    <ClInclude Include="Applications\CAD\Objects\CAD\PointBased\Surfaces\BezierPatchC2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BaseBezierSurface.h">
+    <ClInclude Include="Applications\CAD\Objects\CAD\PointBased\Surfaces\BaseBezierSurface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BezierSurfaceC0.h">
+    <ClInclude Include="Applications\CAD\Objects\CAD\PointBased\Surfaces\BezierSurfaceC0.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BezierSurfaceC2.h">
+    <ClInclude Include="Applications\CAD\Objects\CAD\PointBased\Surfaces\BezierSurfaceC2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Serialization\SerializationVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\Serialization\SerializationVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Serializing\SceneSerializer.h">
+    <ClInclude Include="Applications\CAD\Serializing\SceneSerializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Validation\IntersectionEligibilityValidationVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\Validation\IntersectionEligibilityValidationVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Intersection\IntersectionGuiLayer.h">
+    <ClInclude Include="Applications\CAD\GUI\Intersection\IntersectionGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Intersection\CalculatorParameterized.h">
+    <ClInclude Include="Applications\CAD\Visitors\Intersection\CalculatorParameterized.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Intersection\CalculatorPointOnSurface.h">
+    <ClInclude Include="Applications\CAD\Visitors\Intersection\CalculatorPointOnSurface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Intersection\CalculatorPartialDerivativeU.h">
+    <ClInclude Include="Applications\CAD\Visitors\Intersection\CalculatorPartialDerivativeU.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Intersection\CalculatorPartialDerivativeV.h">
+    <ClInclude Include="Applications\CAD\Visitors\Intersection\CalculatorPartialDerivativeV.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Intersection\CalculatorNormalVector.h">
+    <ClInclude Include="Applications\CAD\Visitors\Intersection\CalculatorNormalVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\BaseIntersectionAlgorithm.h">
+    <ClInclude Include="Applications\CAD\Intersection\BaseIntersectionAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\IntersectionAlgorithmParameters.h">
+    <ClInclude Include="Applications\CAD\Intersection\IntersectionAlgorithmParameters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\SelfIntersectionAlgorithm.h">
+    <ClInclude Include="Applications\CAD\Intersection\SelfIntersectionAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\MultiIntersectionAlgorithm.h">
+    <ClInclude Include="Applications\CAD\Intersection\MultiIntersectionAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Intersection\ParameterWrapperVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\Intersection\ParameterWrapperVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\Structures\IntersectionStructures.h">
+    <ClInclude Include="Applications\CAD\Intersection\Structures\IntersectionStructures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\InitialCommonPoint\AbstractInitialCommonPointFinder.h">
+    <ClInclude Include="Applications\CAD\Intersection\InitialCommonPoint\AbstractInitialCommonPointFinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\InitialCommonPoint\LinearApproximationCommonPointFinder.h">
+    <ClInclude Include="Applications\CAD\Intersection\InitialCommonPoint\LinearApproximationCommonPointFinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\InitialCommonPoint\SteepestDescentCommonPointFinder.h">
+    <ClInclude Include="Applications\CAD\Intersection\InitialCommonPoint\SteepestDescentCommonPointFinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\CommonPointMarching\MarchingDirection.h">
+    <ClInclude Include="Applications\CAD\Intersection\CommonPointMarching\MarchingDirection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\CommonPointMarching\AbstractCommonPointMarching.h">
+    <ClInclude Include="Applications\CAD\Intersection\CommonPointMarching\AbstractCommonPointMarching.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\Sampler\ISampler.h">
+    <ClInclude Include="Applications\CAD\Intersection\Sampler\ISampler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\CommonPointMarching\NewtonCommonPointMarching.h">
+    <ClInclude Include="Applications\CAD\Intersection\CommonPointMarching\NewtonCommonPointMarching.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\Structures\StartingCommonPointResult.h">
+    <ClInclude Include="Applications\CAD\Intersection\Structures\StartingCommonPointResult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\Structures\NextCommonPointResult.h">
+    <ClInclude Include="Applications\CAD\Intersection\Structures\NextCommonPointResult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\Structures\CommonPointSequenceResult.h">
+    <ClInclude Include="Applications\CAD\Intersection\Structures\CommonPointSequenceResult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\Structures\PointMappingResult.h">
+    <ClInclude Include="Applications\CAD\Intersection\Structures\PointMappingResult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\Structures\ParameterWrapResult.h">
+    <ClInclude Include="Applications\CAD\Intersection\Structures\ParameterWrapResult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\Structures\IntersectionResult.h">
+    <ClInclude Include="Applications\CAD\Intersection\Structures\IntersectionResult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\Structures\LoopResult.h">
+    <ClInclude Include="Applications\CAD\Intersection\Structures\LoopResult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\Intersection\IntersectionCurve.h">
+    <ClInclude Include="Applications\CAD\Objects\CAD\Intersection\IntersectionCurve.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\Intersection\IntersectionPoint.h">
+    <ClInclude Include="Applications\CAD\Objects\CAD\Intersection\IntersectionPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\CAD\ParameterizedObject2D.h">
+    <ClInclude Include="Applications\CAD\Objects\CAD\ParameterizedObject2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Transform\AfterUpdateTransformVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\Transform\AfterUpdateTransformVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\LoopDetectors\AbstractLoopDetector.h">
+    <ClInclude Include="Applications\CAD\Intersection\LoopDetectors\AbstractLoopDetector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\Sampler\VisitorSampler.h">
+    <ClInclude Include="Applications\CAD\Intersection\Sampler\VisitorSampler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\LoopDetectors\DotProductLoopDetector.h">
+    <ClInclude Include="Applications\CAD\Intersection\LoopDetectors\DotProductLoopDetector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Intersection\CalculatorParameterShortestDistance.h">
+    <ClInclude Include="Applications\CAD\Visitors\Intersection\CalculatorParameterShortestDistance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Filters\FilterInfo.h">
+    <ClInclude Include="Applications\CAD\Filters\FilterInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Visitors\Validation\FilterValidationVisitor.h">
+    <ClInclude Include="Applications\CAD\Visitors\Validation\FilterValidationVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Intersection\LoopDetectors\ShortestDistanceLoopDetector.h">
+    <ClInclude Include="Applications\CAD\Intersection\LoopDetectors\ShortestDistanceLoopDetector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\GUI\BaseGuiLayerCAD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Behaviors\Keyboard\BaseKeyboardBehaviorLayerCAD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Behaviors\Mouse\BaseMouseBehaviorLayerCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ApplicationCAD.cpp">
+    <ClCompile Include="Applications\CAD\ApplicationCAD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\MainGuiLayer.cpp">
+    <ClCompile Include="Applications\CAD\GUI\MainGuiLayerCAD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\SceneCAD.cpp">
+    <ClCompile Include="Applications\CAD\Scene\SceneCAD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\SceneObjectCAD.cpp">
+    <ClCompile Include="Applications\CAD\Scene\SceneObjectCAD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CAD\Torus.cpp">
+    <ClCompile Include="Applications\CAD\Objects\CAD\Torus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\AbstractVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\AbstractVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\AppState\AppStateGuiLayer.cpp">
+    <ClCompile Include="Applications\CAD\GUI\AppState\AppStateGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Properties\PropertiesGuiLayer.cpp">
+    <ClCompile Include="Applications\CAD\GUI\Properties\PropertiesGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Performance\PerformanceGuiLayer.cpp">
+    <ClCompile Include="Applications\CAD\GUI\Performance\PerformanceGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Viewport\ViewportGuiLayer.cpp">
+    <ClCompile Include="Applications\CAD\GUI\Viewport\ViewportGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Console\ConsoleGuiLayer.cpp">
+    <ClCompile Include="Applications\CAD\GUI\Console\ConsoleGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\ObjectList\ObjectListGuiLayer.cpp">
+    <ClCompile Include="Applications\CAD\GUI\ObjectList\ObjectListGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\ObjectGui\ObjectGuiDrawerVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\ObjectGui\ObjectGuiDrawerVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\Additional\Grid.cpp">
+    <ClCompile Include="Applications\CAD\Objects\Additional\Grid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\RayIntersection\RayIntersectionVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\RayIntersection\RayIntersectionVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Raycasting\RayFactory.cpp">
+    <ClCompile Include="Applications\CAD\Raycasting\RayFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\ObjectList\ObjectCreationGuiLayer.cpp">
+    <ClCompile Include="Applications\CAD\GUI\ObjectList\ObjectCreationGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\Additional\Cursor.cpp">
+    <ClCompile Include="Applications\CAD\Objects\Additional\Cursor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataLayers\AppStateDataLayer.cpp">
+    <ClCompile Include="Applications\CAD\DataLayers\AppStateDataLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Cursor\CursorGuiLayer.cpp">
+    <ClCompile Include="Applications\CAD\GUI\Cursor\CursorGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Behaviors\Mouse\MainMouseBehaviorLayer.cpp">
+    <ClCompile Include="Applications\CAD\Behaviors\Mouse\MainMouseBehaviorLayerCAD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Behaviors\Mouse\Action\ActionMouseBehaviorLayer.cpp">
+    <ClCompile Include="Applications\CAD\Behaviors\Mouse\Action\ActionMouseBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Behaviors\Mouse\BaseMouseBehaviorLayer.cpp">
+    <ClCompile Include="Applications\CAD\Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.cpp">
+    <ClCompile Include="Applications\CAD\Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.cpp">
+    <ClCompile Include="Applications\CAD\Behaviors\Keyboard\MainKeyboardBehaviorLayerCAD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.cpp">
+    <ClCompile Include="Applications\CAD\Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Behaviors\Keyboard\Multiselect\MultiselectKeyboardBehaviorLayer.cpp">
+    <ClCompile Include="Applications\CAD\Behaviors\Keyboard\Multiselect\MultiselectKeyboardBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.cpp">
+    <ClCompile Include="Applications\CAD\Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.cpp">
+    <ClCompile Include="Applications\CAD\Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CAD\Point.cpp">
+    <ClCompile Include="Applications\CAD\Objects\CAD\Point.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CAD\PointBased\PointBasedObjectCAD.cpp">
+    <ClCompile Include="Applications\CAD\Objects\CAD\PointBased\PointBasedObjectCAD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\BaseGuiLayer.cpp">
+    <ClCompile Include="Applications\CAD\DataLayers\ViewportDataLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataLayers\ViewportDataLayer.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Selection\ObjectSelectVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Selection\ObjectSelectVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Selection\ObjectUnselectVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Selection\ObjectUnselectVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Deletion\ObjectDeletionVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Deletion\ObjectDeletionVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Components\TransformComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Components\TransformComponent.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Transform\ApplyGroupTransformVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Transform\ApplyGroupTransformVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Selection\BaseObjectSelectionVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Selection\BaseObjectSelectionVisitor.cpp">
+    <ClCompile Include="Applications\CAD\GUI\MenuBar\MenuBarGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\MenuBar\MenuBarGuiLayer.cpp">
+    <ClCompile Include="Applications\CAD\Objects\CAD\PointBased\Curve\BezierCurveC0.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CAD\PointBased\Curve\BezierCurveC0.cpp">
+    <ClCompile Include="Applications\CAD\Selection\TransformSelectionSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Selection\TransformSelectionSystem.cpp">
+    <ClCompile Include="Applications\CAD\Actions\TransformActionList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\TransformActionList.cpp">
+    <ClCompile Include="Applications\CAD\Selection\ManualSelectionSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Selection\ManualSelectionSystem.cpp">
+    <ClCompile Include="Applications\CAD\Selection\BaseSelectionSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Selection\BaseSelectionSystem.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Validation\BaseValidationVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Validation\BaseValidationVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Validation\ControlPointValidationVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Validation\ControlPointValidationVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Transform\UpdateTransformVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Transform\UpdateTransformVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Behaviors\Keyboard\Shortcuts\ShortcutsKeyboardBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Behaviors\Keyboard\Shortcuts\ShortcutsKeyboardBehaviorLayer.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Validation\CanAddControlPointValidationVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Validation\CanAddControlPointValidationVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\PointBased\PointAddedVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\PointBased\PointAddedVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Objects\CAD\PointBased\Curve\BezierCurveC2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CAD\PointBased\Curve\BezierCurveC2.cpp">
+    <ClCompile Include="Applications\CAD\Objects\CAD\PointBased\Curve\BaseCurve.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CAD\PointBased\Curve\BaseCurve.cpp">
+    <ClCompile Include="Applications\CAD\Objects\CAD\PointBased\Curve\YukselInterpolatingCurveC2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CAD\PointBased\Curve\YukselInterpolatingCurveC2.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\PointBased\PointRemovedVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\PointBased\PointRemovedVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\PointBased\BasePointActionVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\PointBased\BasePointActionVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Objects\CAD\PointBased\Surfaces\BaseBezierPatch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BaseBezierPatch.cpp">
+    <ClCompile Include="Applications\CAD\Objects\CAD\PointBased\Surfaces\BezierPatchC0.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BezierPatchC0.cpp">
+    <ClCompile Include="Applications\CAD\Objects\CAD\PointBased\Surfaces\BezierPatchC2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BezierPatchC2.cpp">
+    <ClCompile Include="Applications\CAD\Objects\CAD\PointBased\Surfaces\BaseBezierSurface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BaseBezierSurface.cpp">
+    <ClCompile Include="Applications\CAD\Objects\CAD\PointBased\Surfaces\BezierSurfaceC0.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BezierSurfaceC0.cpp">
+    <ClCompile Include="Applications\CAD\Objects\CAD\PointBased\Surfaces\BezierSurfaceC2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BezierSurfaceC2.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Serialization\SerializationVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Serialization\SerializationVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Serializing\SceneSerializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Serializing\SceneSerializer.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Validation\IntersectionEligibilityValidationVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Validation\IntersectionEligibilityValidationVisitor.cpp">
+    <ClCompile Include="Applications\CAD\GUI\Intersection\IntersectionGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Intersection\IntersectionGuiLayer.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Intersection\CalculatorParameterized.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Intersection\CalculatorParameterized.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Intersection\CalculatorPointOnSurface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Intersection\CalculatorPointOnSurface.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Intersection\CalculatorPartialDerivativeU.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Intersection\CalculatorPartialDerivativeU.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Intersection\CalculatorPartialDerivativeV.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Intersection\CalculatorPartialDerivativeV.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Intersection\CalculatorNormalVector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Intersection\CalculatorNormalVector.cpp">
+    <ClCompile Include="Applications\CAD\Intersection\BaseIntersectionAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Intersection\BaseIntersectionAlgorithm.cpp">
+    <ClCompile Include="Applications\CAD\Intersection\SelfIntersectionAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Intersection\SelfIntersectionAlgorithm.cpp">
+    <ClCompile Include="Applications\CAD\Intersection\MultiIntersectionAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Intersection\MultiIntersectionAlgorithm.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Intersection\ParameterWrapperVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Intersection\ParameterWrapperVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Intersection\InitialCommonPoint\AbstractInitialCommonPointFinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Intersection\InitialCommonPoint\AbstractInitialCommonPointFinder.cpp">
+    <ClCompile Include="Applications\CAD\Intersection\InitialCommonPoint\LinearApproximationCommonPointFinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Intersection\InitialCommonPoint\LinearApproximationCommonPointFinder.cpp">
+    <ClCompile Include="Applications\CAD\Intersection\InitialCommonPoint\SteepestDescentCommonPointFinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Intersection\InitialCommonPoint\SteepestDescentCommonPointFinder.cpp">
+    <ClCompile Include="Applications\CAD\Intersection\CommonPointMarching\AbstractCommonPointMarching.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Intersection\CommonPointMarching\AbstractCommonPointMarching.cpp">
+    <ClCompile Include="Applications\CAD\Intersection\CommonPointMarching\NewtonCommonPointMarching.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Intersection\CommonPointMarching\NewtonCommonPointMarching.cpp">
+    <ClCompile Include="Applications\CAD\Objects\CAD\ParameterizedObject2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CAD\ParameterizedObject2D.cpp">
+    <ClCompile Include="Applications\CAD\Objects\CAD\Intersection\IntersectionCurve.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\CAD\Intersection\IntersectionCurve.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Transform\AfterUpdateTransformVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Transform\AfterUpdateTransformVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Intersection\Sampler\VisitorSampler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Intersection\Sampler\VisitorSampler.cpp">
+    <ClCompile Include="Applications\CAD\Intersection\LoopDetectors\DotProductLoopDetector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Intersection\LoopDetectors\DotProductLoopDetector.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Intersection\CalculatorParameterShortestDistance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Intersection\CalculatorParameterShortestDistance.cpp">
+    <ClCompile Include="Applications\CAD\Visitors\Validation\FilterValidationVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Visitors\Validation\FilterValidationVisitor.cpp">
+    <ClCompile Include="Applications\CAD\Filters\FilterInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Filters\FilterInfo.cpp">
+    <ClCompile Include="Applications\CAD\Intersection\LoopDetectors\ShortestDistanceLoopDetector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Intersection\LoopDetectors\ShortestDistanceLoopDetector.cpp">
+    <ClCompile Include="Applications\CAD\GUI\BaseGuiLayerCAD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Behaviors\Keyboard\BaseKeyboardBehaviorLayerCAD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Behaviors\Mouse\BaseMouseBehaviorLayerCAD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

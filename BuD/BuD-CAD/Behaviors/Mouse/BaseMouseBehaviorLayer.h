@@ -1,11 +1,8 @@
 #pragma once
 
-#include <DataLayers/MainDataLayer.h>
-
 class BaseMouseBehaviorLayer
 {
 public:
-	BaseMouseBehaviorLayer(MainDataLayer& dataLayer);
 	virtual ~BaseMouseBehaviorLayer() = default;
 
 	virtual void OnLeftButtonDown(int x, int y) {}
@@ -18,9 +15,4 @@ public:
 
 	virtual void OnScroll(int x, int y, int delta) {}
 	virtual void OnMouseMove(int dx, int dy) {}
-
-protected:
-	virtual dxm::Vector2 ViewportScreenSpaceCoords(int x, int y);
-
-	MainDataLayer& m_MainDataLayer;
 };
