@@ -8,7 +8,7 @@
 class IntersectionGuiLayer : public BaseGuiLayerCAD
 {
 public:
-	explicit IntersectionGuiLayer(MainDataLayer& dataLayer);
+	explicit IntersectionGuiLayer(MainDataLayerCAD& dataLayer);
 
 	virtual void DrawGui() override;
 

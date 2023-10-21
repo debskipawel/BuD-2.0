@@ -1,12 +1,12 @@
 #pragma once
 
-#include <Applications/CAD/DataLayers/SceneDataLayer.h>
+#include <Applications/CAD/DataLayers/SceneDataLayerCAD.h>
 #include <Applications/CAD/Visitors/AbstractVisitor.h>
 
 class ObjectDeletionVisitor : public AbstractVisitor
 {
 public:
-	ObjectDeletionVisitor(SceneDataLayer& dataLayer);
+	ObjectDeletionVisitor(SceneDataLayerCAD& dataLayer);
 
 	virtual void Visit(Torus& torus) override;
 	virtual void Visit(Point& point) override;
@@ -26,5 +26,5 @@ public:
 protected:
 	virtual void NotifyControlPointsAboutDeletion(PointBasedObjectCAD& object);
 
-	SceneDataLayer& m_SceneDataLayer;
+	SceneDataLayerCAD& m_SceneDataLayer;
 };

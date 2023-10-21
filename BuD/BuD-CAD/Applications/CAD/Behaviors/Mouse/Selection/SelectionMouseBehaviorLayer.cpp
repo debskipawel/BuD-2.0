@@ -6,7 +6,7 @@
 #include <Applications/CAD/Visitors/Selection/ObjectSelectVisitor.h>
 #include <Applications/CAD/Visitors/Selection/ObjectUnselectVisitor.h>
 
-SelectionMouseBehaviorLayer::SelectionMouseBehaviorLayer(MainDataLayer& dataLayer)
+SelectionMouseBehaviorLayer::SelectionMouseBehaviorLayer(MainDataLayerCAD& dataLayer)
 	: BaseMouseBehaviorLayerCAD(dataLayer)
 {
 }

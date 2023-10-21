@@ -4,7 +4,7 @@
 
 #include <Applications/CAD/Visitors/Serialization/SerializationVisitor.h>
 
-SceneSerializer::SceneSerializer(MainDataLayer& dataLayer)
+SceneSerializer::SceneSerializer(MainDataLayerCAD& dataLayer)
     : m_MainDataLayer(dataLayer)
 {
 }

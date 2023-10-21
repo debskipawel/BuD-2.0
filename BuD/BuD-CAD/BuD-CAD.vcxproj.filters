@@ -21,10 +21,10 @@
     <ClInclude Include="Applications\CAD\GUI\MainGuiLayerCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CAD\DataLayers\MainDataLayer.h">
+    <ClInclude Include="Applications\CAD\DataLayers\MainDataLayerCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CAD\DataLayers\ViewportDataLayer.h">
+    <ClInclude Include="Applications\CAD\DataLayers\ViewportDataLayerCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CAD\Scene\SceneCAD.h">
@@ -39,7 +39,7 @@
     <ClInclude Include="Applications\CAD\AppState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CAD\DataLayers\AppStateDataLayer.h">
+    <ClInclude Include="Applications\CAD\DataLayers\AppStateDataLayerCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CAD\AxisLock.h">
@@ -69,7 +69,7 @@
     <ClInclude Include="Applications\CAD\GUI\ObjectList\ObjectListGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CAD\DataLayers\SceneDataLayer.h">
+    <ClInclude Include="Applications\CAD\DataLayers\SceneDataLayerCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CAD\Visitors\ObjectGui\ObjectGuiDrawerVisitor.h">
@@ -354,6 +354,33 @@
     <ClInclude Include="Applications\CAD\Behaviors\Mouse\BaseMouseBehaviorLayerCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Applications\Switcher\ApplicationSwitcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\Switcher\DataLayers\MainDataLayerSwitcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\Switcher\GUI\MainGuiLayerSwitcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\Switcher\GUI\TabSwitch\TabSwitchGuiLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\Switcher\GUI\BaseGuiLayerSwitcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\ApplicationCNC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\GUI\BaseGuiLayerCNC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\DataLayers\MainDataLayerCNC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\GUI\MainGuiLayerCNC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Applications\CAD\ApplicationCAD.cpp">
@@ -410,7 +437,7 @@
     <ClCompile Include="Applications\CAD\Objects\Additional\Cursor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Applications\CAD\DataLayers\AppStateDataLayer.cpp">
+    <ClCompile Include="Applications\CAD\DataLayers\AppStateDataLayerCAD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CAD\GUI\Cursor\CursorGuiLayer.cpp">
@@ -452,7 +479,7 @@
     <ClCompile Include="Applications\CAD\Objects\CAD\PointBased\PointBasedObjectCAD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Applications\CAD\DataLayers\ViewportDataLayer.cpp">
+    <ClCompile Include="Applications\CAD\DataLayers\ViewportDataLayerCAD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CAD\Visitors\Selection\ObjectSelectVisitor.cpp">
@@ -630,6 +657,33 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CAD\Behaviors\Mouse\BaseMouseBehaviorLayerCAD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\Switcher\ApplicationSwitcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\Switcher\DataLayers\MainDataLayerSwitcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\Switcher\GUI\MainGuiLayerSwitcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\Switcher\GUI\BaseGuiLayerSwitcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\Switcher\GUI\TabSwitch\TabSwitchGuiLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\ApplicationCNC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\GUI\BaseGuiLayerCNC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\GUI\MainGuiLayerCNC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

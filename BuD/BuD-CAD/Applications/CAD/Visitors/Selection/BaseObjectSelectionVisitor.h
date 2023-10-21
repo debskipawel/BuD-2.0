@@ -1,15 +1,15 @@
 #pragma once
 
-#include <Applications/CAD/DataLayers/SceneDataLayer.h>
+#include <Applications/CAD/DataLayers/SceneDataLayerCAD.h>
 #include <Applications/CAD/Visitors/AbstractVisitor.h>
 
 class BaseObjectSelectionVisitor : public AbstractVisitor
 {
 public:
-	BaseObjectSelectionVisitor(SceneDataLayer& sceneDataLayer);
+	BaseObjectSelectionVisitor(SceneDataLayerCAD& sceneDataLayer);
 
 protected:
 	virtual void SetCursorToCentroid();
 
-	SceneDataLayer& m_SceneDataLayer;
+	SceneDataLayerCAD& m_SceneDataLayer;
 };

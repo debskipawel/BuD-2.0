@@ -1,6 +1,6 @@
 #include "AppStateHeyboardBehaviorLayer.h"
 
-AppStateKeyboardBehaviorLayer::AppStateKeyboardBehaviorLayer(MainDataLayer& dataLayer)
+AppStateKeyboardBehaviorLayer::AppStateKeyboardBehaviorLayer(MainDataLayerCAD& dataLayer)
 	: BaseKeyboardBehaviorLayerCAD(dataLayer)
 {
 }

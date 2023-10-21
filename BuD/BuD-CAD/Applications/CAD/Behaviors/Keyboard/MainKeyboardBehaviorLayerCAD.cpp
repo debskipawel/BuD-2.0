@@ -6,7 +6,7 @@
 #include <Applications/CAD/Behaviors/Keyboard/Shortcuts/ShortcutsKeyboardBehaviorLayer.h>
 #include <Applications/CAD/Behaviors/Keyboard/Multiselect/MultiselectKeyboardBehaviorLayer.h>
 
-MainKeyboardBehaviorLayerCAD::MainKeyboardBehaviorLayerCAD(MainDataLayer& dataLayer)
+MainKeyboardBehaviorLayerCAD::MainKeyboardBehaviorLayerCAD(MainDataLayerCAD& dataLayer)
 	: BaseKeyboardBehaviorLayerCAD(dataLayer)
 {
 	m_BehaviorLayers.emplace_back(std::make_unique<ShortcutsKeyboardBehaviorLayer>(dataLayer));

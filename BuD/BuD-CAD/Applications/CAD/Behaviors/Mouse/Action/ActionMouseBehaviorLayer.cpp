@@ -5,7 +5,7 @@
 #include <Applications/CAD/Visitors/Transform/AfterUpdateTransformVisitor.h>
 #include <Applications/CAD/Visitors/Transform/ApplyGroupTransformVisitor.h>
 
-ActionMouseBehaviorLayer::ActionMouseBehaviorLayer(MainDataLayer& dataLayer)
+ActionMouseBehaviorLayer::ActionMouseBehaviorLayer(MainDataLayerCAD& dataLayer)
 	: BaseMouseBehaviorLayerCAD(dataLayer)
 {
 }

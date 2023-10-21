@@ -1,6 +1,6 @@
 #include "MultiselectKeyboardBehaviorLayer.h"
 
-MultiselectKeyboardBehaviorLayer::MultiselectKeyboardBehaviorLayer(MainDataLayer& dataLayer)
+MultiselectKeyboardBehaviorLayer::MultiselectKeyboardBehaviorLayer(MainDataLayerCAD& dataLayer)
 	: BaseKeyboardBehaviorLayerCAD(dataLayer)
 {
 }

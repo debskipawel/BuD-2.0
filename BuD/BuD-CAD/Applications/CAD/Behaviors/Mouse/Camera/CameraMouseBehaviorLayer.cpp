@@ -1,6 +1,6 @@
 #include "CameraMouseBehaviorLayer.h"
 
-CameraMouseBehaviorLayer::CameraMouseBehaviorLayer(MainDataLayer& dataLayer)
+CameraMouseBehaviorLayer::CameraMouseBehaviorLayer(MainDataLayerCAD& dataLayer)
 	: BaseMouseBehaviorLayerCAD(dataLayer)
 {
 }

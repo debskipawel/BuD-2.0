@@ -5,7 +5,7 @@
 class ObjectSelectVisitor : public BaseObjectSelectionVisitor
 {
 public:
-	ObjectSelectVisitor(SceneDataLayer& sceneDataLayer);
+	ObjectSelectVisitor(SceneDataLayerCAD& sceneDataLayer);
 
 	virtual void Visit(Torus& torus) override;
 	virtual void Visit(Point& point) override;

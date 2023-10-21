@@ -1,11 +1,11 @@
 #pragma once
 
-#include <Applications/CAD/DataLayers/MainDataLayer.h>
+#include <Applications/CAD/DataLayers/MainDataLayerCAD.h>
 
 class SceneSerializer
 {
 public:
-	SceneSerializer(MainDataLayer& dataLayer);
+	SceneSerializer(MainDataLayerCAD& dataLayer);
 	
 	virtual bool Save();
 	virtual bool Load();
@@ -15,5 +15,5 @@ protected:
 
 	virtual void ConstructLoadedScene();
 
-	MainDataLayer& m_MainDataLayer;
+	MainDataLayerCAD& m_MainDataLayer;
 };

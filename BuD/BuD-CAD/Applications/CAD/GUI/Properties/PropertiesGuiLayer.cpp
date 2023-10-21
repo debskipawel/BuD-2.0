@@ -9,7 +9,7 @@
 #include <Applications/CAD/Visitors/Transform/AfterUpdateTransformVisitor.h>
 #include <Applications/CAD/Visitors/Transform/ApplyGroupTransformVisitor.h>
 
-PropertiesGuiLayer::PropertiesGuiLayer(MainDataLayer& dataLayer)
+PropertiesGuiLayer::PropertiesGuiLayer(MainDataLayerCAD& dataLayer)
 	: BaseGuiLayerCAD(dataLayer)
 {
 }

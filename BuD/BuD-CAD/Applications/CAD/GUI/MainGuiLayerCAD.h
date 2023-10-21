@@ -2,12 +2,12 @@
 
 #include <Applications/CAD/GUI/BaseGuiLayerCAD.h>
 
-#include <Applications/CAD/DataLayers/MainDataLayer.h>
+#include <Applications/CAD/DataLayers/MainDataLayerCAD.h>
 
 class MainGuiLayerCAD : public BaseGuiLayerCAD
 {
 public:
-	MainGuiLayerCAD(MainDataLayer& viewModel);
+	MainGuiLayerCAD(MainDataLayerCAD& viewModel);
 
 	virtual void DrawGui() override;
 

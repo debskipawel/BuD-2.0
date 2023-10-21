@@ -7,7 +7,7 @@
 
 #include <Applications/CAD/Visitors/Intersection/CalculatorPointOnSurface.h>
 
-IntersectionGuiLayer::IntersectionGuiLayer(MainDataLayer& dataLayer)
+IntersectionGuiLayer::IntersectionGuiLayer(MainDataLayerCAD& dataLayer)
 	: BaseGuiLayerCAD(dataLayer)
 {
 	m_PointOnSurfaceCalculator = std::make_unique<CalculatorPointOnSurface>();

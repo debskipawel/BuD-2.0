@@ -5,7 +5,7 @@
 #include <Applications/CAD/Selection/ManualSelectionSystem.h>
 #include <Applications/CAD/Selection/TransformSelectionSystem.h>
 
-struct SceneDataLayer
+struct SceneDataLayerCAD
 {
 public:
 	SceneCAD m_SceneCAD;

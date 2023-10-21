@@ -7,7 +7,7 @@
 class PropertiesGuiLayer : public BaseGuiLayerCAD
 {
 public:
-	PropertiesGuiLayer(MainDataLayer& dataLayer);
+	PropertiesGuiLayer(MainDataLayerCAD& dataLayer);
 
 	virtual void DrawGui() override;
 

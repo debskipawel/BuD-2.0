@@ -11,7 +11,7 @@
 #include <Applications/CAD/Visitors/Transform/AfterUpdateTransformVisitor.h>
 #include <Applications/CAD/Visitors/Transform/UpdateTransformVisitor.h>
 
-ObjectGuiDrawerVisitor::ObjectGuiDrawerVisitor(SceneDataLayer& dataLayer)
+ObjectGuiDrawerVisitor::ObjectGuiDrawerVisitor(SceneDataLayerCAD& dataLayer)
 	: m_SceneDataLayer(dataLayer)
 {
 }

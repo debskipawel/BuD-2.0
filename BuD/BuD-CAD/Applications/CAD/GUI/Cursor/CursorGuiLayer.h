@@ -5,7 +5,7 @@
 class CursorGuiLayer : public BaseGuiLayerCAD
 {
 public:
-	CursorGuiLayer(MainDataLayer& dataLayer);
+	CursorGuiLayer(MainDataLayerCAD& dataLayer);
 
 	virtual void DrawGui() override;
 };

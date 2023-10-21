@@ -7,7 +7,7 @@
 #include <Applications/CAD/Visitors/Selection/ObjectUnselectVisitor.h>
 #include <Applications/CAD/Visitors/Validation/FilterValidationVisitor.h>
 
-ObjectListGuiLayer::ObjectListGuiLayer(MainDataLayer& dataLayer)
+ObjectListGuiLayer::ObjectListGuiLayer(MainDataLayerCAD& dataLayer)
 	: BaseGuiLayerCAD(dataLayer)
 {
 }

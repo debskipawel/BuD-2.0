@@ -5,7 +5,7 @@
 class MultiselectKeyboardBehaviorLayer : public BaseKeyboardBehaviorLayerCAD
 {
 public:
-	MultiselectKeyboardBehaviorLayer(MainDataLayer& dataLayer);
+	MultiselectKeyboardBehaviorLayer(MainDataLayerCAD& dataLayer);
 
 	virtual bool OnKeyPress(BuD::KeyboardKeys key) override;
 	virtual bool OnKeyRelease(BuD::KeyboardKeys key) override;

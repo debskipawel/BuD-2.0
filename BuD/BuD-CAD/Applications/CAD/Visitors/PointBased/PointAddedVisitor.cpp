@@ -1,6 +1,6 @@
 #include "PointAddedVisitor.h"
 
-PointAddedVisitor::PointAddedVisitor(SceneDataLayer& dataLayer, std::weak_ptr<Point> pointAdded)
+PointAddedVisitor::PointAddedVisitor(SceneDataLayerCAD& dataLayer, std::weak_ptr<Point> pointAdded)
 	: BasePointActionVisitor(dataLayer, pointAdded)
 {
 }

@@ -5,7 +5,7 @@
 class PointRemovedVisitor : public BasePointActionVisitor
 {
 public:
-	PointRemovedVisitor(SceneDataLayer& dataLayer, std::weak_ptr<Point> pointAdded);
+	PointRemovedVisitor(SceneDataLayerCAD& dataLayer, std::weak_ptr<Point> pointAdded);
 
 	virtual void Visit(BezierCurveC0& curve) override;
 	virtual void Visit(BezierCurveC2& curve) override;

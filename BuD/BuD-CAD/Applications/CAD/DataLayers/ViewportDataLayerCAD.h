@@ -4,7 +4,7 @@
 
 #include <BuD.h>
 
-struct ViewportDataLayer
+struct ViewportDataLayerCAD
 {
 	BuD::Texture m_ViewportImage;
 

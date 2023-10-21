@@ -7,7 +7,7 @@
 class ShortcutsKeyboardBehaviorLayer : public BaseKeyboardBehaviorLayerCAD
 {
 public:
-	ShortcutsKeyboardBehaviorLayer(MainDataLayer& dataLayer);
+	ShortcutsKeyboardBehaviorLayer(MainDataLayerCAD& dataLayer);
 
 	virtual bool OnKeyPress(BuD::KeyboardKeys key) override;
 	virtual bool OnKeyRelease(BuD::KeyboardKeys key) override;

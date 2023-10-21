@@ -5,7 +5,7 @@
 class AxisLockKeyboardBehaviorLayer : public BaseKeyboardBehaviorLayerCAD
 {
 public:
-	AxisLockKeyboardBehaviorLayer(MainDataLayer& dataLayer);
+	AxisLockKeyboardBehaviorLayer(MainDataLayerCAD& dataLayer);
 
 	virtual bool OnKeyPress(BuD::KeyboardKeys key) override;
 	virtual bool OnKeyRelease(BuD::KeyboardKeys key) override;

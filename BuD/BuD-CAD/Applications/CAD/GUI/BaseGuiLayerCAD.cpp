@@ -1,6 +1,6 @@
 #include "BaseGuiLayerCAD.h"
 
-BaseGuiLayerCAD::BaseGuiLayerCAD(MainDataLayer& dataLayer)
+BaseGuiLayerCAD::BaseGuiLayerCAD(MainDataLayerCAD& dataLayer)
 	: m_MainDataLayer(dataLayer)
 {
 }

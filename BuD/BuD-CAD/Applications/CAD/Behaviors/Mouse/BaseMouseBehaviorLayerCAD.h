@@ -1,15 +1,15 @@
 #pragma once
 
-#include <Applications/CAD/DataLayers/MainDataLayer.h>
+#include <Applications/CAD/DataLayers/MainDataLayerCAD.h>
 #include <Behaviors/Mouse/BaseMouseBehaviorLayer.h>
 
 class BaseMouseBehaviorLayerCAD : public BaseMouseBehaviorLayer
 {
 public:
-	BaseMouseBehaviorLayerCAD(MainDataLayer& dataLayer);
+	BaseMouseBehaviorLayerCAD(MainDataLayerCAD& dataLayer);
 
 protected:
 	virtual dxm::Vector2 ViewportScreenSpaceCoords(int x, int y);
 
-	MainDataLayer& m_MainDataLayer;
+	MainDataLayerCAD& m_MainDataLayer;
 };

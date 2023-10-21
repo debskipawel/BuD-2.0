@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-ViewportGuiLayer::ViewportGuiLayer(MainDataLayer& dataLayer)
+ViewportGuiLayer::ViewportGuiLayer(MainDataLayerCAD& dataLayer)
 	: BaseGuiLayerCAD(dataLayer)
 {
 }

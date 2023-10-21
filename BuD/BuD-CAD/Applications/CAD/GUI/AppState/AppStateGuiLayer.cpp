@@ -4,7 +4,7 @@
 
 #include <Applications/CAD/AppState.h>
 
-AppStateGuiLayer::AppStateGuiLayer(MainDataLayer& dataLayer)
+AppStateGuiLayer::AppStateGuiLayer(MainDataLayerCAD& dataLayer)
 	: BaseGuiLayerCAD(dataLayer)
 {
 	m_ButtonMap =

@@ -1,6 +1,6 @@
 #include "BasePointActionVisitor.h"
 
-BasePointActionVisitor::BasePointActionVisitor(SceneDataLayer& dataLayer, std::weak_ptr<Point> point)
+BasePointActionVisitor::BasePointActionVisitor(SceneDataLayerCAD& dataLayer, std::weak_ptr<Point> point)
 	: m_SceneDataLayer(dataLayer)
 {
 }

@@ -1,6 +1,6 @@
-#include "ViewportDataLayer.h"
+#include "ViewportDataLayerCAD.h"
 
-bool ViewportDataLayer::IsMouseOnViewport(int x, int y)
+bool ViewportDataLayerCAD::IsMouseOnViewport(int x, int y)
 {
 	auto viewportPosX = x - m_ViewportPosition.x;
 	auto viewportPosY = y - m_ViewportPosition.y;

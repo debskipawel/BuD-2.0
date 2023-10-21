@@ -1,6 +1,6 @@
 #include "CameraKeyboardBehaviorLayer.h"
 
-CameraKeyboardBehaviorLayer::CameraKeyboardBehaviorLayer(MainDataLayer& dataLayer)
+CameraKeyboardBehaviorLayer::CameraKeyboardBehaviorLayer(MainDataLayerCAD& dataLayer)
 	: BaseKeyboardBehaviorLayerCAD(dataLayer)
 {
 }

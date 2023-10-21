@@ -2,7 +2,7 @@
 
 #include <Applications/CAD/Visitors/Transform/UpdateTransformVisitor.h>
 
-ShortcutsKeyboardBehaviorLayer::ShortcutsKeyboardBehaviorLayer(MainDataLayer& dataLayer)
+ShortcutsKeyboardBehaviorLayer::ShortcutsKeyboardBehaviorLayer(MainDataLayerCAD& dataLayer)
 	: BaseKeyboardBehaviorLayerCAD(dataLayer)
 {
 	m_ErrorSoundEffect = BuD::Audio::AudioSystem::Load("./Resources/Sounds/powiadomienie.mp3");

@@ -2,14 +2,14 @@
 
 #include <BuD.h>
 
-#include <Applications/CAD/DataLayers/MainDataLayer.h>
+#include <Applications/CAD/DataLayers/MainDataLayerCAD.h>
 #include <Behaviors/Keyboard/BaseKeyboardBehaviorLayer.h>
 
 class BaseKeyboardBehaviorLayerCAD : public BaseKeyboardBehaviorLayer
 {
 public:
-	BaseKeyboardBehaviorLayerCAD(MainDataLayer& dataLayer);
+	BaseKeyboardBehaviorLayerCAD(MainDataLayerCAD& dataLayer);
 
 protected:
-	MainDataLayer& m_MainDataLayer;
+	MainDataLayerCAD& m_MainDataLayer;
 };

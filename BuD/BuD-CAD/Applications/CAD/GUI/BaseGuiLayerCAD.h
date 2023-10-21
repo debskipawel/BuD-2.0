@@ -1,14 +1,14 @@
 #pragma once
 
-#include <Applications/CAD/DataLayers/MainDataLayer.h>
+#include <Applications/CAD/DataLayers/MainDataLayerCAD.h>
 #include <GUI/BaseGuiLayer.h>
 
 class BaseGuiLayerCAD : public BaseGuiLayer
 {
 public:
-	BaseGuiLayerCAD(MainDataLayer& dataLayer);
+	BaseGuiLayerCAD(MainDataLayerCAD& dataLayer);
 	virtual ~BaseGuiLayerCAD() = default;
 
 protected:
-	MainDataLayer& m_MainDataLayer;
+	MainDataLayerCAD& m_MainDataLayer;
 };

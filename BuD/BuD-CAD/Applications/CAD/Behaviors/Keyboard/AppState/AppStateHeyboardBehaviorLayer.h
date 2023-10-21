@@ -5,7 +5,7 @@
 class AppStateKeyboardBehaviorLayer : public BaseKeyboardBehaviorLayerCAD
 {
 public:
-	AppStateKeyboardBehaviorLayer(MainDataLayer& dataLayer);
+	AppStateKeyboardBehaviorLayer(MainDataLayerCAD& dataLayer);
 
 	virtual bool OnKeyPress(BuD::KeyboardKeys key) override;
 

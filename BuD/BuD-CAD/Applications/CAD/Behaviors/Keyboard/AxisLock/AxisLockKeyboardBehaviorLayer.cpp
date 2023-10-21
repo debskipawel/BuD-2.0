@@ -1,6 +1,6 @@
 #include "AxisLockKeyboardBehaviorLayer.h"
 
-AxisLockKeyboardBehaviorLayer::AxisLockKeyboardBehaviorLayer(MainDataLayer& dataLayer)
+AxisLockKeyboardBehaviorLayer::AxisLockKeyboardBehaviorLayer(MainDataLayerCAD& dataLayer)
 	: BaseKeyboardBehaviorLayerCAD(dataLayer)
 {
 }

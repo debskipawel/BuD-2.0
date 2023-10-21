@@ -3,7 +3,7 @@
 #include <BuD.h>
 #include <imgui.h>
 
-PerformanceGuiLayer::PerformanceGuiLayer(MainDataLayer& dataLayer)
+PerformanceGuiLayer::PerformanceGuiLayer(MainDataLayerCAD& dataLayer)
 	: BaseGuiLayerCAD(dataLayer)
 {
 }

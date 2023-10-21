@@ -13,7 +13,7 @@
 #include <Applications/CAD/GUI/Properties/PropertiesGuiLayer.h>
 #include <Applications/CAD/GUI/Viewport/ViewportGuiLayer.h>
 
-MainGuiLayerCAD::MainGuiLayerCAD(MainDataLayer& dataLayer)
+MainGuiLayerCAD::MainGuiLayerCAD(MainDataLayerCAD& dataLayer)
 	: BaseGuiLayerCAD(dataLayer)
 {
 	m_GuiLayers.emplace_back(std::make_unique<AppStateGuiLayer>(m_MainDataLayer));

@@ -2,7 +2,7 @@
 
 #include <Applications/CAD/Visitors/Deletion/ObjectDeletionVisitor.h>
 
-PointRemovedVisitor::PointRemovedVisitor(SceneDataLayer& dataLayer, std::weak_ptr<Point> point)
+PointRemovedVisitor::PointRemovedVisitor(SceneDataLayerCAD& dataLayer, std::weak_ptr<Point> point)
 	: BasePointActionVisitor(dataLayer, point)
 {
 }

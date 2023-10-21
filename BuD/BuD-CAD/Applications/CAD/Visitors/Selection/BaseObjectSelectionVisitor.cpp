@@ -2,7 +2,7 @@
 
 #include <Applications/CAD/Visitors/Transform/ApplyGroupTransformVisitor.h>
 
-BaseObjectSelectionVisitor::BaseObjectSelectionVisitor(SceneDataLayer& sceneDataLayer)
+BaseObjectSelectionVisitor::BaseObjectSelectionVisitor(SceneDataLayerCAD& sceneDataLayer)
 	: m_SceneDataLayer(sceneDataLayer)
 {
 }

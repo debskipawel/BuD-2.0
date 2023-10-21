@@ -5,7 +5,7 @@
 class CameraKeyboardBehaviorLayer : public BaseKeyboardBehaviorLayerCAD
 {
 public:
-	CameraKeyboardBehaviorLayer(MainDataLayer& dataLayer);
+	CameraKeyboardBehaviorLayer(MainDataLayerCAD& dataLayer);
 
 	virtual bool OnKeyPress(BuD::KeyboardKeys key) override;
 	virtual bool OnKeyRelease(BuD::KeyboardKeys key) override;

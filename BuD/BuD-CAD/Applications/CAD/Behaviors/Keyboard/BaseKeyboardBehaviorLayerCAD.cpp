@@ -1,6 +1,6 @@
 #include "BaseKeyboardBehaviorLayerCAD.h"
 
-BaseKeyboardBehaviorLayerCAD::BaseKeyboardBehaviorLayerCAD(MainDataLayer& dataLayer)
+BaseKeyboardBehaviorLayerCAD::BaseKeyboardBehaviorLayerCAD(MainDataLayerCAD& dataLayer)
 	: m_MainDataLayer(dataLayer)
 {
 }

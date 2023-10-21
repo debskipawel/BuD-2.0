@@ -3,7 +3,7 @@
 #include <Applications/CAD/AppState.h>
 #include <Applications/CAD/AxisLock.h>
 
-struct AppStateDataLayer
+struct AppStateDataLayerCAD
 {
 	AppState m_AppState = AppState::IDLE;
 	AxisLock m_AxisLock = AxisLock::NONE;

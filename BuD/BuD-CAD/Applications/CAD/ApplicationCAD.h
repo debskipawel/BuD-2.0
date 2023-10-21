@@ -1,14 +1,13 @@
 #pragma once
 
 #include <BuD.h>
-#include <Core/EntryPoint.h>
 
 #include <Behaviors/Mouse/BaseMouseBehaviorLayer.h>
 #include <Behaviors/Keyboard/BaseKeyboardBehaviorLayer.h>
 #include <GUI/BaseGuiLayer.h>
 
 #include <Applications/CAD/Scene/SceneCAD.h>
-#include <Applications/CAD/DataLayers/MainDataLayer.h>
+#include <Applications/CAD/DataLayers/MainDataLayerCAD.h>
 
 class ApplicationCAD : public BuD::AppLayer
 {
@@ -32,10 +31,5 @@ private:
 	std::unique_ptr<BaseMouseBehaviorLayer> m_MouseBehaviorLayer;
 	std::unique_ptr<BaseKeyboardBehaviorLayer> m_KeyboardBehaviorLayer;
 
-	MainDataLayer m_MainDataLayer;
+	MainDataLayerCAD m_MainDataLayer;
 };
-
-std::shared_ptr<BuD::AppLayer> BuD::CreateClientApp()
-{
-	return std::shared_ptr<BuD::AppLayer>(new ApplicationCAD());
-}

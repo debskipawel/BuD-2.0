@@ -5,7 +5,7 @@
 class MenuBarGuiLayer : public BaseGuiLayerCAD
 {
 public:
-	MenuBarGuiLayer(MainDataLayer& dataLayer);
+	MenuBarGuiLayer(MainDataLayerCAD& dataLayer);
 
 	virtual void DrawGui() override;
 

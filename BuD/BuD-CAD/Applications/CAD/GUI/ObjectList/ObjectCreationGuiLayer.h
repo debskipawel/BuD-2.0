@@ -5,7 +5,7 @@
 class ObjectCreationGuiLayer : public BaseGuiLayerCAD
 {
 public:
-	ObjectCreationGuiLayer(MainDataLayer& dataLayer);
+	ObjectCreationGuiLayer(MainDataLayerCAD& dataLayer);
 
 	virtual void DrawGui() override;
 

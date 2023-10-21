@@ -7,7 +7,7 @@
 class AppStateGuiLayer : public BaseGuiLayerCAD
 {
 public:
-	AppStateGuiLayer(MainDataLayer& dataLayer);
+	AppStateGuiLayer(MainDataLayerCAD& dataLayer);
 
 	virtual void DrawGui() override;
 

@@ -3,7 +3,7 @@
 #include <imgui.h>
 #include <codecvt>
 
-ConsoleGuiLayer::ConsoleGuiLayer(MainDataLayer& dataLayer)
+ConsoleGuiLayer::ConsoleGuiLayer(MainDataLayerCAD& dataLayer)
 	: BaseGuiLayerCAD(dataLayer)
 {
 	BuD::Log::RegisterLogHandle([this](const BuD::Log::LogRecord& record) 

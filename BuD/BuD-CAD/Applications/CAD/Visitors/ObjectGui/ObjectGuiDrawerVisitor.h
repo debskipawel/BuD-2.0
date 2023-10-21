@@ -1,12 +1,12 @@
 #pragma once
 
-#include <Applications/CAD/DataLayers/SceneDataLayer.h>
+#include <Applications/CAD/DataLayers/SceneDataLayerCAD.h>
 #include <Applications/CAD/Visitors/AbstractVisitor.h>
 
 class ObjectGuiDrawerVisitor : public AbstractVisitor
 {
 public:
-	ObjectGuiDrawerVisitor(SceneDataLayer& dataLayer);
+	ObjectGuiDrawerVisitor(SceneDataLayerCAD& dataLayer);
 
 	virtual void Visit(Torus& torus) override;
 	virtual void Visit(Point& point) override;
@@ -31,5 +31,5 @@ protected:
 	virtual bool DrawGuiForTag(SceneObjectCAD& object);
 	virtual bool DrawGuiForTransform(TransformComponent& transform);
 
-	SceneDataLayer& m_SceneDataLayer;
+	SceneDataLayerCAD& m_SceneDataLayer;
 };

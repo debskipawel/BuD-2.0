@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-CursorGuiLayer::CursorGuiLayer(MainDataLayer& dataLayer)
+CursorGuiLayer::CursorGuiLayer(MainDataLayerCAD& dataLayer)
 	: BaseGuiLayerCAD(dataLayer)
 {
 }

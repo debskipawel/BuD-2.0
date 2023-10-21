@@ -1,6 +1,6 @@
 #include "BaseMouseBehaviorLayerCAD.h"
 
-BaseMouseBehaviorLayerCAD::BaseMouseBehaviorLayerCAD(MainDataLayer& dataLayer)
+BaseMouseBehaviorLayerCAD::BaseMouseBehaviorLayerCAD(MainDataLayerCAD& dataLayer)
 	: m_MainDataLayer(dataLayer)
 {
 }

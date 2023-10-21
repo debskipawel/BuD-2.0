@@ -4,7 +4,7 @@
 #include <Applications/CAD/Behaviors/Mouse/Selection/SelectionMouseBehaviorLayer.h>
 #include <Applications/CAD/Behaviors/Mouse/Camera/CameraMouseBehaviorLayer.h>
 
-MainMouseBehaviorLayerCAD::MainMouseBehaviorLayerCAD(MainDataLayer& dataLayer)
+MainMouseBehaviorLayerCAD::MainMouseBehaviorLayerCAD(MainDataLayerCAD& dataLayer)
 	: BaseMouseBehaviorLayerCAD(dataLayer)
 {
 	m_BehaviorLayers.emplace_back(std::make_unique<ActionMouseBehaviorLayer>(dataLayer));

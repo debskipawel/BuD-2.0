@@ -6,7 +6,7 @@
 class ObjectListGuiLayer : public BaseGuiLayerCAD
 {
 public:
-	ObjectListGuiLayer(MainDataLayer& dataLayer);
+	ObjectListGuiLayer(MainDataLayerCAD& dataLayer);
 
 	virtual void DrawGui() override;
 

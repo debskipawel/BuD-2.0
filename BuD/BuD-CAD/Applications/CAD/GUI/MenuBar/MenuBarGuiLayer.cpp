@@ -8,7 +8,7 @@
 #include <Applications/CAD/Visitors/Transform/UpdateTransformVisitor.h>
 #include <Applications/CAD/Visitors/Serialization/SerializationVisitor.h>
 
-MenuBarGuiLayer::MenuBarGuiLayer(MainDataLayer& dataLayer)
+MenuBarGuiLayer::MenuBarGuiLayer(MainDataLayerCAD& dataLayer)
 	: BaseGuiLayerCAD(dataLayer), m_MultiEyeSettingsPopupOpen(false)
 {
     m_MenuItems.emplace_back("File", [this]() { DrawFileSettings(); });

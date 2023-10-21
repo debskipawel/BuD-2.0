@@ -5,7 +5,7 @@
 class ConsoleGuiLayer : public BaseGuiLayerCAD
 {
 public:
-	ConsoleGuiLayer(MainDataLayer& dataLayer);
+	ConsoleGuiLayer(MainDataLayerCAD& dataLayer);
 
 	virtual void DrawGui() override;
 

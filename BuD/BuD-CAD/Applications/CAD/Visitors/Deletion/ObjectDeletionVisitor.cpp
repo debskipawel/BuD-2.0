@@ -4,7 +4,7 @@
 #include <Applications/CAD/Visitors/Selection/ObjectUnselectVisitor.h>
 #include <Applications/CAD/Visitors/PointBased/PointRemovedVisitor.h>
 
-ObjectDeletionVisitor::ObjectDeletionVisitor(SceneDataLayer& dataLayer)
+ObjectDeletionVisitor::ObjectDeletionVisitor(SceneDataLayerCAD& dataLayer)
 	: m_SceneDataLayer(dataLayer)
 {
 }

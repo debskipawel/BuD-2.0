@@ -5,7 +5,7 @@
 class ViewportGuiLayer : public BaseGuiLayerCAD
 {
 public:
-	ViewportGuiLayer(MainDataLayer& dataLayer);
+	ViewportGuiLayer(MainDataLayerCAD& dataLayer);
 
 	virtual void DrawGui() override;
 };

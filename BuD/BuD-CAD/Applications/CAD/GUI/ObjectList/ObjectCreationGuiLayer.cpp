@@ -4,7 +4,7 @@
 
 #include <Applications/CAD/Visitors/PointBased/PointAddedVisitor.h>
 
-ObjectCreationGuiLayer::ObjectCreationGuiLayer(MainDataLayer& dataLayer)
+ObjectCreationGuiLayer::ObjectCreationGuiLayer(MainDataLayerCAD& dataLayer)
 	: BaseGuiLayerCAD(dataLayer), m_OpenPopupForSurfaceC0(), m_OpenPopupForSurfaceC2()
 {
 	m_Buttons.emplace_back(ButtonInfo{ "Create torus", [this]() { CreateTorus(); } });
