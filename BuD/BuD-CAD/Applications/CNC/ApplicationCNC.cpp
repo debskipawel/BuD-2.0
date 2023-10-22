@@ -1,9 +1,11 @@
 #include "ApplicationCNC.h"
 
-#include <GCodeParser.h>
+#include <Applications/CNC/GUI/MainGuiLayerCNC.h>
 
 ApplicationCNC::ApplicationCNC()
+	: m_MainDataLayer()
 {
+	m_GuiLayer = std::make_unique<MainGuiLayerCNC>(m_MainDataLayer);
 }
 
 void ApplicationCNC::OnUpdate(float deltaTime)
@@ -16,6 +18,7 @@ void ApplicationCNC::OnRender()
 
 void ApplicationCNC::OnGuiRender()
 {
+	m_GuiLayer->DrawGui();
 }
 
 void ApplicationCNC::OnConcreteEvent(BuD::MouseMovedEvent& e)

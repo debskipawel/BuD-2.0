@@ -11,7 +11,7 @@
 #include <Applications/CAD/GUI/ObjectList/ObjectCreationGuiLayer.h>
 #include <Applications/CAD/GUI/Performance/PerformanceGuiLayer.h>
 #include <Applications/CAD/GUI/Properties/PropertiesGuiLayer.h>
-#include <Applications/CAD/GUI/Viewport/ViewportGuiLayer.h>
+#include <Applications/CAD/GUI/Viewport/ViewportGuiLayerCAD.h>
 
 MainGuiLayerCAD::MainGuiLayerCAD(MainDataLayerCAD& dataLayer)
 	: BaseGuiLayerCAD(dataLayer)
@@ -25,7 +25,7 @@ MainGuiLayerCAD::MainGuiLayerCAD(MainDataLayerCAD& dataLayer)
 	m_GuiLayers.emplace_back(std::make_unique<ObjectCreationGuiLayer>(m_MainDataLayer));
 	m_GuiLayers.emplace_back(std::make_unique<PerformanceGuiLayer>(m_MainDataLayer));
 	m_GuiLayers.emplace_back(std::make_unique<PropertiesGuiLayer>(m_MainDataLayer));
-	m_GuiLayers.emplace_back(std::make_unique<ViewportGuiLayer>(m_MainDataLayer));
+	m_GuiLayers.emplace_back(std::make_unique<ViewportGuiLayerCAD>(m_MainDataLayer));
 }
 
 void MainGuiLayerCAD::DrawGui()

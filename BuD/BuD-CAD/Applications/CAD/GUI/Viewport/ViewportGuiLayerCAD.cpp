@@ -1,13 +1,13 @@
-#include "ViewportGuiLayer.h"
+#include "ViewportGuiLayerCAD.h"
 
 #include <imgui.h>
 
-ViewportGuiLayer::ViewportGuiLayer(MainDataLayerCAD& dataLayer)
+ViewportGuiLayerCAD::ViewportGuiLayerCAD(MainDataLayerCAD& dataLayer)
 	: BaseGuiLayerCAD(dataLayer)
 {
 }
 
-void ViewportGuiLayer::DrawGui()
+void ViewportGuiLayerCAD::DrawGui()
 {
 	if (ImGui::Begin("Viewport"))
 	{

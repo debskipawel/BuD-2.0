@@ -178,8 +178,10 @@
     <ClInclude Include="Applications\CAD\Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.h" />
     <ClInclude Include="Applications\CNC\ApplicationCNC.h" />
     <ClInclude Include="Applications\CNC\DataLayers\MainDataLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\DataLayers\PathListDataLayer.h" />
     <ClInclude Include="Applications\CNC\GUI\BaseGuiLayerCNC.h" />
     <ClInclude Include="Applications\CNC\GUI\MainGuiLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\GUI\PathList\PathListGuiLayerCNC.h" />
     <ClInclude Include="Applications\Switcher\ApplicationSwitcher.h" />
     <ClInclude Include="Applications\Switcher\DataLayers\MainDataLayerSwitcher.h" />
     <ClInclude Include="Applications\Switcher\GUI\BaseGuiLayerSwitcher.h" />
@@ -266,7 +268,7 @@
     <ClInclude Include="Applications\CAD\GUI\Performance\PerformanceGuiLayer.h" />
     <ClInclude Include="Applications\CAD\GUI\Properties\PropertiesGuiLayer.h" />
     <ClInclude Include="Applications\CAD\Visitors\RayIntersection\RayIntersectionVisitor.h" />
-    <ClInclude Include="Applications\CAD\GUI\Viewport\ViewportGuiLayer.h" />
+    <ClInclude Include="Applications\CAD\GUI\Viewport\ViewportGuiLayerCAD.h" />
     <ClInclude Include="Applications\CAD\Objects\Additional\Grid.h" />
     <ClInclude Include="Applications\CAD\Raycasting\Ray.h" />
     <ClInclude Include="Applications\CAD\Objects\CAD\Torus.h" />
@@ -300,6 +302,7 @@
     <ClCompile Include="Applications\CNC\ApplicationCNC.cpp" />
     <ClCompile Include="Applications\CNC\GUI\BaseGuiLayerCNC.cpp" />
     <ClCompile Include="Applications\CNC\GUI\MainGuiLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\GUI\PathList\PathListGuiLayerCNC.cpp" />
     <ClCompile Include="Applications\Switcher\ApplicationSwitcher.cpp" />
     <ClCompile Include="Applications\Switcher\DataLayers\MainDataLayerSwitcher.cpp" />
     <ClCompile Include="Applications\Switcher\GUI\BaseGuiLayerSwitcher.cpp" />
@@ -373,7 +376,7 @@
     <ClCompile Include="Applications\CAD\Visitors\PointBased\BasePointActionVisitor.cpp" />
     <ClCompile Include="Applications\CAD\Visitors\PointBased\PointRemovedVisitor.cpp" />
     <ClCompile Include="Applications\CAD\Visitors\RayIntersection\RayIntersectionVisitor.cpp" />
-    <ClCompile Include="Applications\CAD\GUI\Viewport\ViewportGuiLayer.cpp" />
+    <ClCompile Include="Applications\CAD\GUI\Viewport\ViewportGuiLayerCAD.cpp" />
     <ClCompile Include="Applications\CAD\Objects\Additional\Grid.cpp" />
     <ClCompile Include="Applications\CAD\Objects\CAD\Torus.cpp" />
     <ClCompile Include="Applications\CAD\Scene\SceneCAD.cpp" />

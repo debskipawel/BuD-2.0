@@ -1,8 +1,8 @@
 #pragma once
 
-#include <vector>
+#include <Applications/CNC/DataLayers/PathListDataLayer.h>
 
 struct MainDataLayerCNC
 {
-	std::vector<int> m_Placeholder;
+	PathListDataLayer m_PathListDataLayer;
 };

@@ -2,10 +2,10 @@
 
 #include <Applications/CAD/GUI/BaseGuiLayerCAD.h>
 
-class ViewportGuiLayer : public BaseGuiLayerCAD
+class ViewportGuiLayerCAD : public BaseGuiLayerCAD
 {
 public:
-	ViewportGuiLayer(MainDataLayerCAD& dataLayer);
+	ViewportGuiLayerCAD(MainDataLayerCAD& dataLayer);
 
 	virtual void DrawGui() override;
 };

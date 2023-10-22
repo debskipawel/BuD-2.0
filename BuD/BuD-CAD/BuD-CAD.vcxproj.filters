@@ -60,7 +60,7 @@
     <ClInclude Include="Applications\CAD\GUI\Performance\PerformanceGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CAD\GUI\Viewport\ViewportGuiLayer.h">
+    <ClInclude Include="Applications\CAD\GUI\Viewport\ViewportGuiLayerCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CAD\GUI\Console\ConsoleGuiLayer.h">
@@ -381,6 +381,12 @@
     <ClInclude Include="Applications\CNC\GUI\MainGuiLayerCNC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Applications\CNC\GUI\PathList\PathListGuiLayerCNC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\DataLayers\PathListDataLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Applications\CAD\ApplicationCAD.cpp">
@@ -410,7 +416,7 @@
     <ClCompile Include="Applications\CAD\GUI\Performance\PerformanceGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Applications\CAD\GUI\Viewport\ViewportGuiLayer.cpp">
+    <ClCompile Include="Applications\CAD\GUI\Viewport\ViewportGuiLayerCAD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CAD\GUI\Console\ConsoleGuiLayer.cpp">
@@ -684,6 +690,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CNC\GUI\MainGuiLayerCNC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\GUI\PathList\PathListGuiLayerCNC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

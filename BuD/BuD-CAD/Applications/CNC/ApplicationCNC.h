@@ -2,6 +2,9 @@
 
 #include <BuD.h>
 
+#include <Applications/CNC/DataLayers/MainDataLayerCNC.h>
+#include <GUI/BaseGuiLayer.h>
+
 class ApplicationCNC : public BuD::AppLayer
 {
 public:
@@ -18,4 +21,9 @@ public:
 
 	virtual void OnConcreteEvent(BuD::KeyDownEvent& e) override;
 	virtual void OnConcreteEvent(BuD::KeyReleaseEvent& e) override;
+
+protected:
+	std::unique_ptr<BaseGuiLayer> m_GuiLayer;
+
+	MainDataLayerCNC m_MainDataLayer;
 };
