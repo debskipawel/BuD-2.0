@@ -1,5 +1,7 @@
 #include "ApplicationCNC.h"
 
+#include <GCodeParser.h>
+
 ApplicationCNC::ApplicationCNC()
 {
 }
