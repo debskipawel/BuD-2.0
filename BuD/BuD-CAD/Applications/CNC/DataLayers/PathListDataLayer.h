@@ -18,4 +18,6 @@ struct ToolPath
 struct PathListDataLayer
 {
 	std::vector<std::shared_ptr<ToolPath>> m_PathList;
+
+	std::shared_ptr<ToolPath> m_SelectedPath = std::shared_ptr<ToolPath>();
 };

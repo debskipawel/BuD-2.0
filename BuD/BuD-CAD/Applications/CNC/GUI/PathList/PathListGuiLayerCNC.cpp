@@ -40,8 +40,13 @@ void PathListGuiLayerCNC::DrawPathList()
 
 		auto selectableWidth = std::max(50.0f, panelWidth - padding - 3 * (buttonSize.x + padding));
 
-		bool selected = false;
-		ImGui::Selectable(name.c_str(), &selected, 0, ImVec2(selectableWidth, 0));
+		bool selected = path == m_MainDataLayer.m_PathListDataLayer.m_SelectedPath;
+
+		if (ImGui::Selectable(name.c_str(), &selected, 0, ImVec2(selectableWidth, 0)))
+		{
+			m_MainDataLayer.m_PathListDataLayer.m_SelectedPath = selected ? path : std::shared_ptr<ToolPath>();
+		}
+		
 		ImGui::SameLine(selectableWidth + padding, padding);
 
 		if (ImGui::SmallButton("up"))
