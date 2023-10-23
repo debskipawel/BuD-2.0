@@ -4,11 +4,11 @@
 
 #include "SceneObjectCAD.h"
 
-#include <Applications/CAD/Objects/Additional/Cursor.h>
-#include <Applications/CAD/Objects/Additional/Grid.h>
+#include <Applications/Shared/Objects/Cursor.h>
+#include <Applications/Shared/Objects/Grid.h>
 
-#include <Applications/CAD/Objects/CAD/Point.h>
-#include <Applications/CAD/Objects/CAD/Intersection/IntersectionPoint.h>
+#include <Applications/CAD/Objects/Point.h>
+#include <Applications/CAD/Objects/Intersection/IntersectionPoint.h>
 
 class SceneCAD
 {

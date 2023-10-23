@@ -3,7 +3,7 @@
 #include <BuD.h>
 
 #include <Applications/CAD/DataLayers/MainDataLayerCAD.h>
-#include <Behaviors/Keyboard/BaseKeyboardBehaviorLayer.h>
+#include <Applications/Shared/Behaviors/Keyboard/BaseKeyboardBehaviorLayer.h>
 
 class BaseKeyboardBehaviorLayerCAD : public BaseKeyboardBehaviorLayer
 {

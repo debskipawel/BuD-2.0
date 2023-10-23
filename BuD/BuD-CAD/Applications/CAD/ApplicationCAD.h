@@ -2,9 +2,9 @@
 
 #include <BuD.h>
 
-#include <Behaviors/Mouse/BaseMouseBehaviorLayer.h>
-#include <Behaviors/Keyboard/BaseKeyboardBehaviorLayer.h>
-#include <GUI/BaseGuiLayer.h>
+#include <Applications/Shared/Behaviors/Mouse/BaseMouseBehaviorLayer.h>
+#include <Applications/Shared/Behaviors/Keyboard/BaseKeyboardBehaviorLayer.h>
+#include <Applications/Shared/GUI/BaseGuiLayer.h>
 
 #include <Applications/CAD/Scene/SceneCAD.h>
 #include <Applications/CAD/DataLayers/MainDataLayerCAD.h>

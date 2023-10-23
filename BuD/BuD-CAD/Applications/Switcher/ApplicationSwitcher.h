@@ -3,7 +3,7 @@
 #include <BuD.h>
 
 #include <Applications/Switcher/DataLayers/MainDataLayerSwitcher.h>
-#include <Applications/Switcher/GUI/BaseGuiLayerSwitcher.h>
+#include <Applications/Shared/GUI/BaseGuiLayer.h>
 
 class ApplicationSwitcher : public BuD::AppLayer
 {
@@ -25,5 +25,5 @@ public:
 protected:
 	MainDataLayerSwitcher m_MainDataLayer;
 
-	std::unique_ptr<BaseGuiLayerSwitcher> m_MainGuiLayer;
+	std::unique_ptr<BaseGuiLayer> m_MainGuiLayer;
 };

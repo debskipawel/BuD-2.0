@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Applications/CAD/DataLayers/MainDataLayerCAD.h>
-#include <GUI/BaseGuiLayer.h>
+#include <Applications/Shared/GUI/BaseGuiLayer.h>
 
 class BaseGuiLayerCAD : public BaseGuiLayer
 {

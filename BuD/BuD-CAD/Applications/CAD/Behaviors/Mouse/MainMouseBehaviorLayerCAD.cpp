@@ -2,14 +2,14 @@
 
 #include <Applications/CAD/Behaviors/Mouse/Action/ActionMouseBehaviorLayer.h>
 #include <Applications/CAD/Behaviors/Mouse/Selection/SelectionMouseBehaviorLayer.h>
-#include <Applications/CAD/Behaviors/Mouse/Camera/CameraMouseBehaviorLayer.h>
+#include <Applications/CAD/Behaviors/Mouse/Camera/CameraMouseBehaviorLayerCAD.h>
 
 MainMouseBehaviorLayerCAD::MainMouseBehaviorLayerCAD(MainDataLayerCAD& dataLayer)
 	: BaseMouseBehaviorLayerCAD(dataLayer)
 {
 	m_BehaviorLayers.emplace_back(std::make_unique<ActionMouseBehaviorLayer>(dataLayer));
 	m_BehaviorLayers.emplace_back(std::make_unique<SelectionMouseBehaviorLayer>(dataLayer));
-	m_BehaviorLayers.emplace_back(std::make_unique<CameraMouseBehaviorLayer>(dataLayer));
+	m_BehaviorLayers.emplace_back(std::make_unique<CameraMouseBehaviorLayerCAD>(dataLayer));
 }
 
 void MainMouseBehaviorLayerCAD::OnLeftButtonDown(int x, int y)

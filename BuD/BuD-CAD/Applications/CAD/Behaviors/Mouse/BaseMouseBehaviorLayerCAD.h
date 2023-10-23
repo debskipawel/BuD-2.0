@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Applications/CAD/DataLayers/MainDataLayerCAD.h>
-#include <Behaviors/Mouse/BaseMouseBehaviorLayer.h>
+#include <Applications/Shared/Behaviors/Mouse/BaseMouseBehaviorLayer.h>
 
 class BaseMouseBehaviorLayerCAD : public BaseMouseBehaviorLayer
 {

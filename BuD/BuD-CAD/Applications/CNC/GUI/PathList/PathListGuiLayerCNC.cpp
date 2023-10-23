@@ -38,9 +38,9 @@ void PathListGuiLayerCNC::DrawPathList()
 		auto panelWidth = ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x;
 		auto padding = ImGui::GetStyle().ItemSpacing.x;
 
-		auto selectableWidth = std::max(50.0f, panelWidth - padding - 3 * (buttonSize.x + padding));
+		auto selectableWidth = max(50.0f, panelWidth - padding - 3 * (buttonSize.x + padding));
 
-		bool selected = path == m_MainDataLayer.m_PathListDataLayer.m_SelectedPath;
+		bool selected = (path == m_MainDataLayer.m_PathListDataLayer.m_SelectedPath);
 
 		if (ImGui::Selectable(name.c_str(), &selected, 0, ImVec2(selectableWidth, 0)))
 		{

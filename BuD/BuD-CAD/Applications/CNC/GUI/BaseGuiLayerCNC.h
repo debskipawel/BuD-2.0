@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Applications/CNC/DataLayers/MainDataLayerCNC.h>
-#include <GUI/BaseGuiLayer.h>
+#include <Applications/Shared/GUI/BaseGuiLayer.h>
 
 class BaseGuiLayerCNC : public BaseGuiLayer
 {

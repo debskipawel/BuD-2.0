@@ -3,7 +3,10 @@
 #include <BuD.h>
 
 #include <Applications/CNC/DataLayers/MainDataLayerCNC.h>
-#include <GUI/BaseGuiLayer.h>
+
+#include <Applications/Shared/Objects/Grid.h>
+#include <Applications/Shared/Behaviors/Mouse/BaseMouseBehaviorLayer.h>
+#include <Applications/Shared/GUI/BaseGuiLayer.h>
 
 class ApplicationCNC : public BuD::AppLayer
 {
@@ -24,6 +27,9 @@ public:
 
 protected:
 	std::unique_ptr<BaseGuiLayer> m_GuiLayer;
+	std::unique_ptr<BaseMouseBehaviorLayer> m_MouseBehaviorLayer;
+
+	std::unique_ptr<Grid> m_Grid;
 
 	MainDataLayerCNC m_MainDataLayer;
 };

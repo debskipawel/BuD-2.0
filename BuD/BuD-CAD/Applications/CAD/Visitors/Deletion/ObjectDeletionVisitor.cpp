@@ -1,6 +1,6 @@
 #include "ObjectDeletionVisitor.h"
 
-#include <Applications/CAD/Objects/CAD/PointBased/PointBasedObjectCAD.h>
+#include <Applications/CAD/Objects/PointBased/PointBasedObjectCAD.h>
 #include <Applications/CAD/Visitors/Selection/ObjectUnselectVisitor.h>
 #include <Applications/CAD/Visitors/PointBased/PointRemovedVisitor.h>
 

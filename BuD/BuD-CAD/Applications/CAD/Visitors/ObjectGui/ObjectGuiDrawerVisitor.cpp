@@ -3,7 +3,7 @@
 #include <imgui.h>
 #include <misc/cpp/imgui_stdlib.h>
 
-#include <Applications/CAD/Objects/CAD/PointBased/PointBasedObjectCAD.h>
+#include <Applications/CAD/Objects/PointBased/PointBasedObjectCAD.h>
 
 #include <Applications/CAD/Visitors/Intersection/CalculatorPointOnSurface.h>
 

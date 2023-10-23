@@ -2,19 +2,19 @@
 
 #include <Applications/CAD/Scene/SceneObjectCAD.h>
 
-#include <Applications/CAD/Objects/CAD/Point.h>
-#include <Applications/CAD/Objects/CAD/Torus.h>
+#include <Applications/CAD/Objects/Point.h>
+#include <Applications/CAD/Objects/Torus.h>
 
-#include <Applications/CAD/Objects/CAD/Intersection/IntersectionCurve.h>
+#include <Applications/CAD/Objects/Intersection/IntersectionCurve.h>
 
-#include <Applications/CAD/Objects/CAD/PointBased/Curve/BezierCurveC0.h>
-#include <Applications/CAD/Objects/CAD/PointBased/Curve/BezierCurveC2.h>
-#include <Applications/CAD/Objects/CAD/PointBased/Curve/YukselInterpolatingCurveC2.h>
+#include <Applications/CAD/Objects/PointBased/Curve/BezierCurveC0.h>
+#include <Applications/CAD/Objects/PointBased/Curve/BezierCurveC2.h>
+#include <Applications/CAD/Objects/PointBased/Curve/YukselInterpolatingCurveC2.h>
 
-#include <Applications/CAD/Objects/CAD/PointBased/Surfaces/BezierSurfaceC0.h>
-#include <Applications/CAD/Objects/CAD/PointBased/Surfaces/BezierSurfaceC2.h>
-#include <Applications/CAD/Objects/CAD/PointBased/Surfaces/BezierPatchC0.h>
-#include <Applications/CAD/Objects/CAD/PointBased/Surfaces/BezierPatchC2.h>
+#include <Applications/CAD/Objects/PointBased/Surfaces/BezierSurfaceC0.h>
+#include <Applications/CAD/Objects/PointBased/Surfaces/BezierSurfaceC2.h>
+#include <Applications/CAD/Objects/PointBased/Surfaces/BezierPatchC0.h>
+#include <Applications/CAD/Objects/PointBased/Surfaces/BezierPatchC2.h>
 
 class AbstractVisitor
 {

@@ -2,12 +2,12 @@
 
 #include "AppStateDataLayerCAD.h"
 #include "SceneDataLayerCAD.h"
-#include "ViewportDataLayerCAD.h"
+#include <Applications/Shared/DataLayers/ViewportDataLayer.h>
 
 struct MainDataLayerCAD
 {
 public:
 	AppStateDataLayerCAD m_AppStateDataLayer;
 	SceneDataLayerCAD m_SceneDataLayer;
-	ViewportDataLayerCAD m_ViewportDataLayer;
+	ViewportDataLayer m_ViewportDataLayer;
 };

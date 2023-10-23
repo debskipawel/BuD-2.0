@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Applications/Switcher/DataLayers/MainDataLayerSwitcher.h>
-#include <GUI/BaseGuiLayer.h>
+#include <Applications/Shared/GUI/BaseGuiLayer.h>
 
 class BaseGuiLayerSwitcher : public BaseGuiLayer
 {
