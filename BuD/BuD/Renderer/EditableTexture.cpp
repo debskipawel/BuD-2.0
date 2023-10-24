@@ -309,8 +309,6 @@ namespace BuD
 
 		auto index = 4 * (m_Width * y + x);
 
-		float mappedColor[4] = { std::clamp(color.x, 0.0f, 1.0f), std::clamp(color.y, 0.0f, 1.0f), std::clamp(color.z, 0.0f, 1.0f), std::clamp(color.w, 0.0f, 1.0f) };
-
-		memcpy(&m_Buffer[index], mappedColor, 4 * sizeof(float));
+		memcpy(&m_Buffer[index], &color, 4 * sizeof(float));
 	}
 }

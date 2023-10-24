@@ -177,6 +177,9 @@
     <ClCompile Include="Renderer\EditableTexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\MeshLoader\PrimitiveLoader\TessellationQuadMeshPrimitiveLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bud_pch.h">
@@ -435,6 +438,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\EditableTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MeshLoader\PrimitiveLoader\TessellationQuadMeshPrimitiveLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

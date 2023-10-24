@@ -411,6 +411,9 @@
     <ClInclude Include="Applications\CNC\Behaviors\Mouse\Camera\CameraMouseBehaviorLayerCNC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Applications\CAD\ApplicationCAD.cpp">
@@ -740,6 +743,9 @@
     <ClCompile Include="Applications\CNC\Behaviors\Mouse\Camera\CameraMouseBehaviorLayerCNC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Applications\CNC\Objects\MaterialBlock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Torus\torus_instanced_vs.hlsl" />
@@ -800,8 +806,17 @@
     <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\Trimmed\bezier_patch_c2_hs.hlsl" />
     <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\Trimmed\bezier_patch_c2_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\PointBased\BezierPatchC2\Trimmed\bezier_patch_c2_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_hs.hlsl" />
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_ds.hlsl" />
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_ps.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="testfile.f14" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Textures\wood_light.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
