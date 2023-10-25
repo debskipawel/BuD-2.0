@@ -414,6 +414,15 @@
     <ClInclude Include="Applications\CNC\Objects\MaterialBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Applications\CNC\DataLayers\CameraDataLayerCNC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockTopMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockSidesMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Applications\CAD\ApplicationCAD.cpp">
@@ -746,6 +755,9 @@
     <ClCompile Include="Applications\CNC\Objects\MaterialBlock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockTopMesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Torus\torus_instanced_vs.hlsl" />
@@ -816,6 +828,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Textures\wood_light.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Textures\stone_heightmap.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

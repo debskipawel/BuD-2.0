@@ -23,7 +23,19 @@ PSOutput main(DSOutput i)
 {
     PSOutput o = (PSOutput) 0;
     
-    o.color = surfaceTexture.Sample(surfaceSampler, i.uv);
+    float3 lightPos = float3(-4.0f, 10.0f, 0.0f);
+    
+    float3 N = normalize(cross(ddy(i.worldPos), ddx(i.worldPos)));
+    float3 L = normalize(lightPos - i.worldPos);
+    
+    float ambient = 0.0f;
+    float diffuse = 0.6f * dot(L, N);
+    
+    float3 albedo = surfaceTexture.Sample(surfaceSampler, i.uv).xyz;
+    
+    float3 color = ambient * albedo + diffuse * albedo;
+    
+    o.color = float4(color, 1.0f);
     
     return o;
 }

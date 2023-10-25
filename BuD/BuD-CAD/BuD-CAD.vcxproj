@@ -180,6 +180,7 @@
     <ClInclude Include="Applications\CNC\Behaviors\Mouse\BaseMouseBehaviorLayerCNC.h" />
     <ClInclude Include="Applications\CNC\Behaviors\Mouse\Camera\CameraMouseBehaviorLayerCNC.h" />
     <ClInclude Include="Applications\CNC\Behaviors\Mouse\MainMouseBehaviorLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\DataLayers\CameraDataLayerCNC.h" />
     <ClInclude Include="Applications\CNC\DataLayers\MainDataLayerCNC.h" />
     <ClInclude Include="Applications\CNC\DataLayers\PathListDataLayer.h" />
     <ClInclude Include="Applications\CNC\DataLayers\SceneDataLayerCNC.h" />
@@ -191,6 +192,8 @@
     <ClInclude Include="Applications\CNC\GUI\StartingParameters\StartingParametersGuiLayer.h" />
     <ClInclude Include="Applications\CNC\GUI\Viewport\ViewportGuiLayerCNC.h" />
     <ClInclude Include="Applications\CNC\Objects\MaterialBlock.h" />
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockSidesMesh.h" />
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockTopMesh.h" />
     <ClInclude Include="Applications\Shared\DataLayers\ViewportDataLayer.h" />
     <ClInclude Include="Applications\Switcher\ApplicationSwitcher.h" />
     <ClInclude Include="Applications\Switcher\DataLayers\MainDataLayerSwitcher.h" />
@@ -320,6 +323,7 @@
     <ClCompile Include="Applications\CNC\GUI\StartingParameters\StartingParametersGuiLayer.cpp" />
     <ClCompile Include="Applications\CNC\GUI\Viewport\ViewportGuiLayerCNC.cpp" />
     <ClCompile Include="Applications\CNC\Objects\MaterialBlock.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockTopMesh.cpp" />
     <ClCompile Include="Applications\Shared\DataLayers\ViewportDataLayer.cpp" />
     <ClCompile Include="Applications\Switcher\ApplicationSwitcher.cpp" />
     <ClCompile Include="Applications\Switcher\DataLayers\MainDataLayerSwitcher.cpp" />
@@ -858,6 +862,7 @@
     <None Include="testfile.f14" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Resources\Textures\stone_heightmap.jpg" />
     <Image Include="Resources\Textures\wood_light.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -21,6 +21,9 @@ namespace BuD
 		void DrawLine(float x1, float y1, float x2, float y2, dxm::Vector4 color);
 		void FloodFill(float x, float y, dxm::Vector4 color);
 
+		virtual uint32_t Width() const { return m_Width; }
+		virtual uint32_t Height() const { return m_Height; }
+
 	protected:
 		void DrawLineLow(int x1, int y1, int x2, int y2, dxm::Vector4 color);
 		void DrawLineHigh(int x1, int y1, int x2, int y2, dxm::Vector4 color);

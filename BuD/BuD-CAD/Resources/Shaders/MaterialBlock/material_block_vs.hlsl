@@ -26,8 +26,6 @@ VSOutput main(VSInput i)
     
     // rotate in x by 90 degrees (quad is nominally defined on the XY plane, we want it on the XZ plane)
     float3 localPosition = 0.5f * i.materialSize * float3(i.position.x, i.position.z, i.position.y);
-    float3 localNormal = float3(i.position.x, i.position.z, i.position.y);
-    
     float3 worldPosition = localPosition + i.materialPosition;
     
     o.worldPos = worldPosition;

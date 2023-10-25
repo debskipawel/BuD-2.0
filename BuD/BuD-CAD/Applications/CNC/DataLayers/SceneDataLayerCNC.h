@@ -7,7 +7,7 @@
 struct SceneDataLayerCNC
 {
 	SceneDataLayerCNC()
-		: m_Scene(), m_Material(m_Scene, {3.0f, 3.0f, 2.0f}, 1024, 1024)
+		: m_Scene(), m_Material(m_Scene, {3.0f, 2.0f, 2.0f}, 1024, 1024)
 	{
 		
 	}
