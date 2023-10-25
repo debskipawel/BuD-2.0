@@ -54,7 +54,7 @@
     <ClInclude Include="Applications\CAD\GUI\Properties\PropertiesGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CAD\GUI\Performance\PerformanceGuiLayer.h">
+    <ClInclude Include="Applications\Shared\GUI\Performance\PerformanceGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CAD\GUI\Viewport\ViewportGuiLayerCAD.h">
@@ -449,7 +449,7 @@
     <ClCompile Include="Applications\CAD\GUI\Properties\PropertiesGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Applications\CAD\GUI\Performance\PerformanceGuiLayer.cpp">
+    <ClCompile Include="Applications\Shared\GUI\Performance\PerformanceGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CAD\GUI\Viewport\ViewportGuiLayerCAD.cpp">

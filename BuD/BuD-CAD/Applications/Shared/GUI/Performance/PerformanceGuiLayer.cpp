@@ -3,14 +3,16 @@
 #include <BuD.h>
 #include <imgui.h>
 
-PerformanceGuiLayer::PerformanceGuiLayer(MainDataLayerCAD& dataLayer)
-	: BaseGuiLayerCAD(dataLayer)
+PerformanceGuiLayer::PerformanceGuiLayer(std::string panelId)
+	: m_PanelId(panelId)
 {
 }
 
 void PerformanceGuiLayer::DrawGui()
 {
-	if (ImGui::Begin("Performance"))
+	auto panelId = std::format("Performance {}", m_PanelId);
+
+	if (ImGui::Begin(panelId.c_str()))
 	{
 		auto frameStats = BuD::Renderer::GetLastFrameStats();
 		auto frameTime = BuD::Profiler::FrameTime();

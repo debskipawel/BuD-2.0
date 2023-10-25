@@ -278,7 +278,7 @@
     <ClInclude Include="Applications\CAD\GUI\ObjectList\ObjectListGuiLayer.h" />
     <ClInclude Include="Applications\CAD\Visitors\Deletion\ObjectDeletionVisitor.h" />
     <ClInclude Include="Applications\CAD\Visitors\ObjectGui\ObjectGuiDrawerVisitor.h" />
-    <ClInclude Include="Applications\CAD\GUI\Performance\PerformanceGuiLayer.h" />
+    <ClInclude Include="Applications\Shared\GUI\Performance\PerformanceGuiLayer.h" />
     <ClInclude Include="Applications\CAD\GUI\Properties\PropertiesGuiLayer.h" />
     <ClInclude Include="Applications\CAD\Visitors\RayIntersection\RayIntersectionVisitor.h" />
     <ClInclude Include="Applications\CAD\GUI\Viewport\ViewportGuiLayerCAD.h" />
@@ -391,7 +391,7 @@
     <ClCompile Include="Applications\CAD\Visitors\Intersection\CalculatorPointOnSurface.cpp" />
     <ClCompile Include="Applications\CAD\Visitors\Intersection\ParameterWrapperVisitor.cpp" />
     <ClCompile Include="Applications\CAD\Visitors\ObjectGui\ObjectGuiDrawerVisitor.cpp" />
-    <ClCompile Include="Applications\CAD\GUI\Performance\PerformanceGuiLayer.cpp" />
+    <ClCompile Include="Applications\Shared\GUI\Performance\PerformanceGuiLayer.cpp" />
     <ClCompile Include="Applications\CAD\GUI\Properties\PropertiesGuiLayer.cpp" />
     <ClCompile Include="Applications\CAD\Visitors\PointBased\PointAddedVisitor.cpp" />
     <ClCompile Include="Applications\CAD\Visitors\PointBased\BasePointActionVisitor.cpp" />

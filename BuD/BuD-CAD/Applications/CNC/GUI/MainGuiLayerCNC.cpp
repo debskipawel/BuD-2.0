@@ -6,6 +6,8 @@
 #include <Applications/CNC/GUI/PathList/PathListGuiLayerCNC.h>
 #include <Applications/CNC/GUI/Viewport/ViewportGuiLayerCNC.h>
 
+#include <Applications/Shared/GUI/Performance/PerformanceGuiLayer.h>
+
 MainGuiLayerCNC::MainGuiLayerCNC(MainDataLayerCNC& dataLayer)
 	: BaseGuiLayerCNC(dataLayer)
 {
@@ -14,6 +16,7 @@ MainGuiLayerCNC::MainGuiLayerCNC(MainDataLayerCNC& dataLayer)
 	m_GuiLayers.emplace_back(std::make_unique<StartingParametersGuiLayer>(m_MainDataLayer));
 	m_GuiLayers.emplace_back(std::make_unique<PathListGuiLayerCNC>(m_MainDataLayer));
 	m_GuiLayers.emplace_back(std::make_unique<ViewportGuiLayerCNC>(m_MainDataLayer));
+	m_GuiLayers.emplace_back(std::make_unique<PerformanceGuiLayer>("###cnc_performance"));
 }
 
 void MainGuiLayerCNC::DrawGui()
