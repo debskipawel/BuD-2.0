@@ -60,7 +60,7 @@
     <ClInclude Include="Applications\CAD\GUI\Viewport\ViewportGuiLayerCAD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CAD\GUI\Console\ConsoleGuiLayer.h">
+    <ClInclude Include="Applications\Shared\GUI\Console\ConsoleGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CAD\GUI\ObjectList\ObjectListGuiLayer.h">
@@ -381,7 +381,7 @@
     <ClInclude Include="Applications\CNC\GUI\PathList\PathListGuiLayerCNC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CNC\DataLayers\PathListDataLayer.h">
+    <ClInclude Include="Applications\CNC\DataLayers\PathList\PathListDataLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CNC\GUI\MenuBar\MenuBarGuiLayerCNC.h">
@@ -411,7 +411,7 @@
     <ClInclude Include="Applications\CNC\Behaviors\Mouse\Camera\CameraMouseBehaviorLayerCNC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CNC\Objects\MaterialBlock.h">
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CNC\DataLayers\CameraDataLayerCNC.h">
@@ -421,6 +421,39 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockSidesMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Objects\Tools\MillingTool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Objects\Tools\FlatMillingTool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Objects\Tools\SphericalMillingTool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockParameters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Objects\Tools\MillingToolParameters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Factories\MillingTool\MillingToolFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Factories\MillingTool\FlatMillingToolFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Factories\MillingTool\SphericalMillingToolFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Factories\MillingTool\MainMillingToolFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\DataLayers\Simulation\UnitSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\DataLayers\Simulation\SimulationDataLayerCNC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -455,7 +488,7 @@
     <ClCompile Include="Applications\CAD\GUI\Viewport\ViewportGuiLayerCAD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Applications\CAD\GUI\Console\ConsoleGuiLayer.cpp">
+    <ClCompile Include="Applications\Shared\GUI\Console\ConsoleGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CAD\GUI\ObjectList\ObjectListGuiLayer.cpp">
@@ -752,10 +785,46 @@
     <ClCompile Include="Applications\CNC\Behaviors\Mouse\Camera\CameraMouseBehaviorLayerCNC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Applications\CNC\Objects\MaterialBlock.cpp">
+    <ClCompile Include="Applications\CNC\Objects\MaterialBlock\MaterialBlock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockTopMesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Objects\Tools\MillingTool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Objects\Tools\FlatMillingTool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Objects\Tools\SphericalMillingTool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\DataLayers\SceneDataLayerCNC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockParameters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Objects\Tools\MillingToolParameters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\PathProgram.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\PathProgram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Factories\MillingTool\FlatMillingToolFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Factories\MillingTool\SphericalMillingToolFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Factories\MillingTool\MainMillingToolFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\DataLayers\Simulation\SimulationDataLayerCNC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -822,6 +891,8 @@
     <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_hs.hlsl" />
     <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_ds.hlsl" />
     <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\MillingTool\Flat\flatTool_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\MillingTool\Flat\flatTool_ps.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="testfile.f14" />

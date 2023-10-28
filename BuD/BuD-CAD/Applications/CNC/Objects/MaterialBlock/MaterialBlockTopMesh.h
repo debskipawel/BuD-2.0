@@ -2,14 +2,18 @@
 
 #include <BuD.h>
 
+#include <Applications/CNC/Objects/MaterialBlock/MaterialBlockParameters.h>
+
 class MaterialBlockTopMesh
 {
 public:
-	MaterialBlockTopMesh(BuD::Scene& scene, std::shared_ptr<BuD::EditableTexture> heightMap, std::shared_ptr<BuD::Texture> surfaceTexture, dxm::Vector3 size, dxm::Vector3 position);
+	MaterialBlockTopMesh(BuD::Scene& scene, std::shared_ptr<BuD::EditableTexture> heightMap, std::shared_ptr<BuD::Texture> surfaceTexture, MaterialBlockParameters blockParameters, dxm::Vector3 position);
 
-	virtual void UpdateSize(dxm::Vector3 size);
+	virtual void UpdateMaterialBlockParameters(MaterialBlockParameters blockParameters);
 	virtual void UpdatePosition(dxm::Vector3 position);
 	virtual void UpdateHeightMap(std::shared_ptr<BuD::EditableTexture> heightMap);
+
+	virtual void UpdateBlock(std::shared_ptr<BuD::EditableTexture> heightMap, MaterialBlockParameters blockParameters, dxm::Vector3 position);
 
 protected:
 	struct SingleQuadInstanceData
@@ -27,6 +31,6 @@ protected:
 	std::shared_ptr<BuD::EditableTexture> m_HeightMap;
 	std::shared_ptr<BuD::Texture> m_SurfaceTexture;
 
-	dxm::Vector3 m_MaterialSize;
+	MaterialBlockParameters m_BlockParameters;
 	dxm::Vector3 m_Position;
 };

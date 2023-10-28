@@ -89,7 +89,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\gcode-parser\gcode-parser\src;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -110,7 +110,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\gcode-parser\gcode-parser\src;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -152,7 +152,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\gcode-parser\gcode-parser\src;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -182,8 +182,14 @@
     <ClInclude Include="Applications\CNC\Behaviors\Mouse\MainMouseBehaviorLayerCNC.h" />
     <ClInclude Include="Applications\CNC\DataLayers\CameraDataLayerCNC.h" />
     <ClInclude Include="Applications\CNC\DataLayers\MainDataLayerCNC.h" />
-    <ClInclude Include="Applications\CNC\DataLayers\PathListDataLayer.h" />
+    <ClInclude Include="Applications\CNC\DataLayers\PathList\PathListDataLayer.h" />
     <ClInclude Include="Applications\CNC\DataLayers\SceneDataLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\DataLayers\Simulation\SimulationDataLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\DataLayers\Simulation\UnitSystem.h" />
+    <ClInclude Include="Applications\CNC\Factories\MillingTool\FlatMillingToolFactory.h" />
+    <ClInclude Include="Applications\CNC\Factories\MillingTool\MainMillingToolFactory.h" />
+    <ClInclude Include="Applications\CNC\Factories\MillingTool\MillingToolFactory.h" />
+    <ClInclude Include="Applications\CNC\Factories\MillingTool\SphericalMillingToolFactory.h" />
     <ClInclude Include="Applications\CNC\GUI\BaseGuiLayerCNC.h" />
     <ClInclude Include="Applications\CNC\GUI\MainGuiLayerCNC.h" />
     <ClInclude Include="Applications\CNC\GUI\MenuBar\MenuBarGuiLayerCNC.h" />
@@ -191,9 +197,14 @@
     <ClInclude Include="Applications\CNC\GUI\SimulationParameters\SimulationParametersGuiLayer.h" />
     <ClInclude Include="Applications\CNC\GUI\StartingParameters\StartingParametersGuiLayer.h" />
     <ClInclude Include="Applications\CNC\GUI\Viewport\ViewportGuiLayerCNC.h" />
-    <ClInclude Include="Applications\CNC\Objects\MaterialBlock.h" />
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlock.h" />
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockParameters.h" />
     <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockSidesMesh.h" />
     <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockTopMesh.h" />
+    <ClInclude Include="Applications\CNC\Objects\Tools\FlatMillingTool.h" />
+    <ClInclude Include="Applications\CNC\Objects\Tools\MillingTool.h" />
+    <ClInclude Include="Applications\CNC\Objects\Tools\MillingToolParameters.h" />
+    <ClInclude Include="Applications\CNC\Objects\Tools\SphericalMillingTool.h" />
     <ClInclude Include="Applications\Shared\DataLayers\ViewportDataLayer.h" />
     <ClInclude Include="Applications\Switcher\ApplicationSwitcher.h" />
     <ClInclude Include="Applications\Switcher\DataLayers\MainDataLayerSwitcher.h" />
@@ -273,7 +284,7 @@
     <ClInclude Include="Applications\CAD\Components\TransformComponent.h" />
     <ClInclude Include="Applications\CAD\GUI\AppState\AppStateGuiLayer.h" />
     <ClInclude Include="Applications\Shared\GUI\BaseGuiLayer.h" />
-    <ClInclude Include="Applications\CAD\GUI\Console\ConsoleGuiLayer.h" />
+    <ClInclude Include="Applications\Shared\GUI\Console\ConsoleGuiLayer.h" />
     <ClInclude Include="Applications\CAD\GUI\MainGuiLayerCAD.h" />
     <ClInclude Include="Applications\CAD\GUI\ObjectList\ObjectListGuiLayer.h" />
     <ClInclude Include="Applications\CAD\Visitors\Deletion\ObjectDeletionVisitor.h" />
@@ -315,6 +326,13 @@
     <ClCompile Include="Applications\CNC\Behaviors\Mouse\BaseMouseBehaviorLayerCNC.cpp" />
     <ClCompile Include="Applications\CNC\Behaviors\Mouse\Camera\CameraMouseBehaviorLayerCNC.cpp" />
     <ClCompile Include="Applications\CNC\Behaviors\Mouse\MainMouseBehaviorLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\PathProgram.cpp" />
+    <ClCompile Include="Applications\CNC\PathProgram.h" />
+    <ClCompile Include="Applications\CNC\DataLayers\SceneDataLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\DataLayers\Simulation\SimulationDataLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\Factories\MillingTool\FlatMillingToolFactory.cpp" />
+    <ClCompile Include="Applications\CNC\Factories\MillingTool\MainMillingToolFactory.cpp" />
+    <ClCompile Include="Applications\CNC\Factories\MillingTool\SphericalMillingToolFactory.cpp" />
     <ClCompile Include="Applications\CNC\GUI\BaseGuiLayerCNC.cpp" />
     <ClCompile Include="Applications\CNC\GUI\MainGuiLayerCNC.cpp" />
     <ClCompile Include="Applications\CNC\GUI\MenuBar\MenuBarGuiLayerCNC.cpp" />
@@ -322,8 +340,13 @@
     <ClCompile Include="Applications\CNC\GUI\SimulationParameters\SimulationParametersGuiLayer.cpp" />
     <ClCompile Include="Applications\CNC\GUI\StartingParameters\StartingParametersGuiLayer.cpp" />
     <ClCompile Include="Applications\CNC\GUI\Viewport\ViewportGuiLayerCNC.cpp" />
-    <ClCompile Include="Applications\CNC\Objects\MaterialBlock.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\MaterialBlock\MaterialBlock.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockParameters.cpp" />
     <ClCompile Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockTopMesh.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\Tools\FlatMillingTool.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\Tools\MillingTool.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\Tools\MillingToolParameters.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\Tools\SphericalMillingTool.cpp" />
     <ClCompile Include="Applications\Shared\DataLayers\ViewportDataLayer.cpp" />
     <ClCompile Include="Applications\Switcher\ApplicationSwitcher.cpp" />
     <ClCompile Include="Applications\Switcher\DataLayers\MainDataLayerSwitcher.cpp" />
@@ -375,7 +398,7 @@
     <ClCompile Include="Applications\CAD\Objects\PointBased\Surfaces\BezierSurfaceC2.cpp" />
     <ClCompile Include="Applications\CAD\Raycasting\RayFactory.cpp" />
     <ClCompile Include="Applications\CAD\GUI\AppState\AppStateGuiLayer.cpp" />
-    <ClCompile Include="Applications\CAD\GUI\Console\ConsoleGuiLayer.cpp" />
+    <ClCompile Include="Applications\Shared\GUI\Console\ConsoleGuiLayer.cpp" />
     <ClCompile Include="Applications\CAD\GUI\MainGuiLayerCAD.cpp" />
     <ClCompile Include="Applications\CAD\GUI\ObjectList\ObjectListGuiLayer.cpp" />
     <ClCompile Include="Applications\CAD\Selection\BaseSelectionSystem.cpp" />
@@ -528,6 +551,18 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\MillingTool\Flat\flatTool_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\MillingTool\Flat\flatTool_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>

@@ -2,8 +2,8 @@
 
 #include <execution>
 
-MaterialBlockTopMesh::MaterialBlockTopMesh(BuD::Scene& scene, std::shared_ptr<BuD::EditableTexture> heightMap, std::shared_ptr<BuD::Texture> surfaceTexture, dxm::Vector3 size, dxm::Vector3 position)
-	: m_TopEntity(scene), m_SurfaceTexture(surfaceTexture), m_MaterialSize(size), m_Position(position)
+MaterialBlockTopMesh::MaterialBlockTopMesh(BuD::Scene& scene, std::shared_ptr<BuD::EditableTexture> heightMap, std::shared_ptr<BuD::Texture> surfaceTexture, MaterialBlockParameters blockParameters, dxm::Vector3 position)
+	: m_TopEntity(scene), m_SurfaceTexture(surfaceTexture), m_BlockParameters(blockParameters), m_Position(position)
 {
 	UpdateHeightMap(heightMap);
 
@@ -69,19 +69,19 @@ MaterialBlockTopMesh::MaterialBlockTopMesh(BuD::Scene& scene, std::shared_ptr<Bu
 	m_TopEntity.AddComponent<BuD::IRenderable>(renderingPasses);
 }
 
-void MaterialBlockTopMesh::UpdateSize(dxm::Vector3 size)
+void MaterialBlockTopMesh::UpdateMaterialBlockParameters(MaterialBlockParameters blockParameters)
 {
-	if (m_MaterialSize == size)
+	if (m_BlockParameters == blockParameters)
 	{
 		return;
 	}
 
-	m_MaterialSize = size;
+	m_BlockParameters = blockParameters;
 
 	std::for_each(std::execution::par, m_InstanceData.begin(), m_InstanceData.end(),
-		[&size](SingleQuadInstanceData& data)
+		[&blockParameters](SingleQuadInstanceData& data)
 		{
-			data.m_MaterialSize = size;
+			data.m_MaterialSize = blockParameters.m_Size;
 		}
 	);
 }
@@ -134,8 +134,16 @@ void MaterialBlockTopMesh::UpdateHeightMap(std::shared_ptr<BuD::EditableTexture>
 			quad.m_TessellationFactor.x = min(resolutionWidth - col * TESSELLATION_LIMIT, TESSELLATION_LIMIT);
 			quad.m_TessellationFactor.y = min(resolutionHeight - row * TESSELLATION_LIMIT, TESSELLATION_LIMIT);
 
-			quad.m_Position = dxm::Vector3::Zero;
-			quad.m_MaterialSize = m_MaterialSize;
+			quad.m_Position = m_Position;
+			quad.m_MaterialSize = m_BlockParameters.m_Size;
 		}
 	);
+}
+
+void MaterialBlockTopMesh::UpdateBlock(std::shared_ptr<BuD::EditableTexture> heightMap, MaterialBlockParameters blockParameters, dxm::Vector3 position)
+{
+	m_BlockParameters = blockParameters;
+	m_Position = position;
+
+	UpdateHeightMap(heightMap);
 }

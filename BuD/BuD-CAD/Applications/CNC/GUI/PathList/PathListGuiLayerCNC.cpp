@@ -1,15 +1,19 @@
-#include "PathListGuiLayerCNC.h"
+﻿#include "PathListGuiLayerCNC.h"
 
 #include <GCodeParser.h>
 
 #include <filesystem>
 #include <format>
 #include <imgui.h>
+#include <imgui_internal.h>
 #include <ImGuiFileDialog.h>
+
+#include <Applications/CNC/Factories/MillingTool/MainMillingToolFactory.h>
 
 PathListGuiLayerCNC::PathListGuiLayerCNC(MainDataLayerCNC& dataLayer)
 	: BaseGuiLayerCNC(dataLayer)
 {
+	m_MillingToolFactory = std::make_unique<MainMillingToolFactory>();
 }
 
 void PathListGuiLayerCNC::DrawGui()
@@ -28,51 +32,103 @@ void PathListGuiLayerCNC::DrawGui()
 
 void PathListGuiLayerCNC::DrawPathList()
 {
-	auto pathIndex = 0;
+	auto& pathList = m_MainDataLayer.m_PathListDataLayer.m_PathList;
 
-	for (const auto& path : m_MainDataLayer.m_PathListDataLayer.m_PathList)
+	for (size_t pathIndex = 0; pathIndex < pathList.size(); ++pathIndex)
 	{
-		auto name = path ? std::format("{} ###path_{}", path->m_PathName, pathIndex) : "dupa";
-
+		const auto& path = pathList[pathIndex];
+		
 		auto buttonSize = ImVec2(20.0f, 20.0f);
 		auto panelWidth = ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x;
 		auto padding = ImGui::GetStyle().ItemSpacing.x;
 
 		auto selectableWidth = max(50.0f, panelWidth - padding - 3 * (buttonSize.x + padding));
 
-		bool selected = (path == m_MainDataLayer.m_PathListDataLayer.m_SelectedPath);
+		DrawPathSelectable(path, selectableWidth);
 
-		if (ImGui::Selectable(name.c_str(), &selected, 0, ImVec2(selectableWidth, 0)))
-		{
-			m_MainDataLayer.m_PathListDataLayer.m_SelectedPath = selected ? path : std::shared_ptr<ToolPath>();
-		}
-		
 		ImGui::SameLine(selectableWidth + padding, padding);
 
-		if (ImGui::SmallButton("up"))
+		// ------------------------- BUTTON FOR MOVING PATH UP -----------------------
+		if (pathIndex == 0)
 		{
-			// TODO: swap this and previous path
+			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+		}
+
+		if (ImGui::Button("+", buttonSize))
+		{
+			auto temp = pathList[pathIndex - 1];
+			pathList[pathIndex - 1] = m_MainDataLayer.m_PathListDataLayer.m_PathList[pathIndex];
+			m_MainDataLayer.m_PathListDataLayer.m_PathList[pathIndex] = temp;
+		}
+
+		if (pathIndex == 0)
+		{
+			ImGui::PopItemFlag();
+			ImGui::PopStyleVar();
 		}
 
 		ImGui::SameLine();
 
-		if (ImGui::SmallButton("down"))
+		// ------------------------ BUTTON FOR MOVING PATH DOWN ----------------------
+		if (pathIndex >= pathList.size() - 1)
 		{
-			// TODO: swap this and next path
+			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+		}
+
+		if (ImGui::Button("-", buttonSize))
+		{
+			auto temp = pathList[pathIndex + 1];
+			pathList[pathIndex + 1] = pathList[pathIndex];
+			pathList[pathIndex] = temp;
+		}
+
+		if (pathIndex >= pathList.size() - 1)
+		{
+			ImGui::PopItemFlag();
+			ImGui::PopStyleVar();
 		}
 
 		ImGui::SameLine();
 
+		// ------------------------ BUTTON FOR REMOVING PATH -----------------------
 		ImGui::PushStyleColor(ImGuiCol_Button, { 0.6f, 0.0f, 0.0f, 1.0f });
 
-		if (ImGui::SmallButton("X"))
+		if (ImGui::Button("X", buttonSize))
 		{
-			// TODO: remove path from the list
+			pathList.erase(pathList.begin() + pathIndex);
+			pathIndex--;
 		}
 
 		ImGui::PopStyleColor();
+	}
+}
 
-		pathIndex++;
+void PathListGuiLayerCNC::DrawPathSelectable(std::shared_ptr<PathProgram> toolPath, float selectableWidth)
+{
+	auto name = toolPath ? std::format("{} ###path_{}", toolPath->m_PathName, toolPath->m_PathName) : "dupa";
+
+	bool selected = (toolPath == m_MainDataLayer.m_SimulationDataLayer.m_SelectedPath);
+
+	if (ImGui::Selectable(name.c_str(), &selected, 0, ImVec2(selectableWidth, 0)))
+	{
+		auto& selectedPath = m_MainDataLayer.m_SimulationDataLayer.m_SelectedPath;
+		
+		if (selectedPath)
+		{
+			selectedPath->m_Tool->DisableRendering();
+		}
+		
+		if (selected)
+		{
+			m_MainDataLayer.m_SimulationDataLayer.m_SelectedPath = toolPath;
+			m_MainDataLayer.m_SimulationDataLayer.m_SelectedPath->m_Tool->EnableRendering();
+		}
+		else
+		{
+			m_MainDataLayer.m_SimulationDataLayer.m_SelectedPath = std::shared_ptr<PathProgram>();
+		}
 	}
 }
 
@@ -117,18 +173,31 @@ void PathListGuiLayerCNC::DrawImportPathDialog()
 	{
 		if (fileDialog->IsOk())
 		{
+			auto& scene = m_MainDataLayer.m_SceneDataLayer.m_Scene;
 			std::filesystem::path path = fileDialog->GetFilePathName();
 
-			auto gCodeParser = GCP::GCodeParser();
-			auto parsingResult = gCodeParser.LoadFromFile(path);
+			auto millingTool = m_MillingToolFactory->Create(scene, path);
 
-			if (parsingResult.m_Result == GCP::GCodeParserCode::SUCCESS)
+			if (millingTool)
 			{
-				auto& pathList = m_MainDataLayer.m_PathListDataLayer.m_PathList;
+				auto gCodeParser = GCP::GCodeParser();
+				auto parsingResult = gCodeParser.LoadFromFile(path);
 
-				pathList.emplace_back(
-					std::make_shared<ToolPath>(path.filename().string(), parsingResult.m_Program)
-				);
+				if (parsingResult.m_Result == GCP::GCodeParserCode::SUCCESS)
+				{
+					auto& pathList = m_MainDataLayer.m_PathListDataLayer.m_PathList;
+
+					pathList.emplace_back(
+						std::make_shared<PathProgram>(path.filename().string(), parsingResult.m_Program, millingTool)
+					);
+
+					if (m_MainDataLayer.m_SimulationDataLayer.m_SelectedPath)
+					{
+						m_MainDataLayer.m_SimulationDataLayer.m_SelectedPath->m_Tool->DisableRendering();
+					}
+
+					m_MainDataLayer.m_SimulationDataLayer.m_SelectedPath = pathList.back();
+				}
 			}
 		}
 

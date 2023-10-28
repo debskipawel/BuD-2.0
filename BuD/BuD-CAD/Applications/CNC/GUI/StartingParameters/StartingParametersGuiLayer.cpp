@@ -3,14 +3,79 @@
 #include <imgui.h>
 
 StartingParametersGuiLayer::StartingParametersGuiLayer(MainDataLayerCNC& dataLayer)
-	: BaseGuiLayerCNC(dataLayer)
+	: BaseGuiLayerCNC(dataLayer), m_ResolutionSelectedIndex(1), m_BlockParameters(MaterialBlockParameters::DEFAULT_PARAMETERS)
 {
+	m_AvailableResolutions = { 512, 1024, 2048, 4096, 8192 };
 }
 
 void StartingParametersGuiLayer::DrawGui()
 {
 	if (ImGui::Begin("Starting parameters ###starting_parameters"))
 	{
+		DrawResolutionComboBox();
+		DrawSizeControls();
+
+		DrawResetSizeButton();
+
 		ImGui::End();
+	}
+}
+
+void StartingParametersGuiLayer::DrawResolutionComboBox()
+{
+	auto selectedResolution = m_AvailableResolutions[m_ResolutionSelectedIndex];
+	auto comboBoxPreviewValue = std::format("{} x {}", selectedResolution, selectedResolution);
+
+	ImGui::Text("Mesh resolution", "");
+
+	if (ImGui::BeginCombo("###cnc_resolution", comboBoxPreviewValue.c_str()))
+	{
+		for (auto i = 0; i < m_AvailableResolutions.size(); i++)
+		{
+			const auto& resolution = m_AvailableResolutions[i];
+
+			auto optionLabel = std::format("{} x {}", resolution, resolution);
+			auto selected = (resolution == selectedResolution);
+
+			if (ImGui::Selectable(optionLabel.c_str(), &selected) && m_ResolutionSelectedIndex != i)
+			{
+				m_ResolutionSelectedIndex = i;
+			}
+		}
+
+		ImGui::EndCombo();
+	}
+}
+
+void StartingParametersGuiLayer::DrawSizeControls()
+{
+	ImGui::Text("Material size");
+	ImGui::DragFloat3("###material_block_size", reinterpret_cast<float*>(&m_BlockParameters.m_Size), 0.1f, 1.0f, 30.0f);
+}
+
+void StartingParametersGuiLayer::DrawResetSizeButton()
+{
+	auto max = ImGui::GetWindowContentRegionMax();
+	auto min = ImGui::GetWindowContentRegionMin();
+
+	auto cursorPos = ImGui::GetCursorPos();
+	auto style = ImGui::GetStyle();
+
+	auto buttonHeight = 20;
+	auto buttonHeightWithSpacing = buttonHeight + style.ItemInnerSpacing.y;
+	auto fullHeight = buttonHeightWithSpacing;
+
+	if (max.y - fullHeight > cursorPos.y)
+	{
+		ImGui::SetCursorPos({ min.x, max.y - fullHeight });
+	}
+
+	ImGui::Separator();
+
+	if (ImGui::Button("Reset material", ImVec2(max.x - min.x, buttonHeight)))
+	{
+		auto resolution = m_AvailableResolutions[m_ResolutionSelectedIndex];
+
+		m_MainDataLayer.m_SceneDataLayer.m_Material.UpdateParameters(m_BlockParameters, resolution, resolution);
 	}
 }

@@ -1,5 +1,7 @@
 #include "MainGuiLayerSwitcher.h"
 
+#include <imgui.h>
+
 #include <Applications/Switcher/GUI/TabSwitch/TabSwitchGuiLayer.h>
 
 MainGuiLayerSwitcher::MainGuiLayerSwitcher(MainDataLayerSwitcher& dataLayer)

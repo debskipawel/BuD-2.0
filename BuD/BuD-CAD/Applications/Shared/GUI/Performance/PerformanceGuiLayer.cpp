@@ -10,7 +10,7 @@ PerformanceGuiLayer::PerformanceGuiLayer(std::string panelId)
 
 void PerformanceGuiLayer::DrawGui()
 {
-	auto panelId = std::format("Performance {}", m_PanelId);
+	auto panelId = std::format("Performance ###{}", m_PanelId);
 
 	if (ImGui::Begin(panelId.c_str()))
 	{

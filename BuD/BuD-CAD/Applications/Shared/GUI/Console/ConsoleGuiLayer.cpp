@@ -3,8 +3,8 @@
 #include <imgui.h>
 #include <codecvt>
 
-ConsoleGuiLayer::ConsoleGuiLayer(MainDataLayerCAD& dataLayer)
-	: BaseGuiLayerCAD(dataLayer)
+ConsoleGuiLayer::ConsoleGuiLayer(std::string panelId)
+	: m_PanelId(panelId)
 {
 	BuD::Log::RegisterLogHandle([this](const BuD::Log::LogRecord& record) 
 		{
@@ -30,7 +30,9 @@ void ConsoleGuiLayer::DrawGui()
 		{ BuD::LogSeverity::LS_ERROR, "[ERROR]  " },
 	};
 
-	if (ImGui::Begin("Console"))
+	auto panelLabel = std::format("Console ###{}", m_PanelId);
+
+	if (ImGui::Begin(panelLabel.c_str()))
 	{
 		ImGuiListClipper clipper(m_LogRecords.size(), ImGui::GetTextLineHeightWithSpacing());
 

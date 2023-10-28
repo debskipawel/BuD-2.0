@@ -126,12 +126,17 @@ namespace BuD
 			return;
 		}
 
-		float mappedColor[4] = { std::clamp(color.x, 0.0f, 1.0f), std::clamp(color.y, 0.0f, 1.0f), std::clamp(color.z, 0.0f, 1.0f), std::clamp(color.w, 0.0f, 1.0f) };
+		auto dataStart = m_Buffer.data();
 
-		for (size_t i = 0; i < m_Buffer.size(); i++)
-		{
-			m_Buffer[i] = mappedColor[i % 4];
-		}
+		std::for_each(std::execution::par, m_Buffer.begin(), m_Buffer.end(),
+			[color, dataStart](float& in)
+			{
+				auto channel = (&in - dataStart) % 4;
+				auto colorPtr = reinterpret_cast<float*>(const_cast<dxm::Vector4*>(&color));
+
+				in = *(colorPtr + channel);
+			}
+		);
 	}
 
 	void EditableTexture::DrawLine(float x1, float y1, float x2, float y2, dxm::Vector4 color)
