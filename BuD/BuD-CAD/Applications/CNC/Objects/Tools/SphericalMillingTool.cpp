@@ -87,3 +87,33 @@ void SphericalMillingTool::DisableRendering()
 		renderingPass.m_ShouldSkip = true;
 	}
 }
+
+float SphericalMillingTool::LocalHeight(float x, float y)
+{
+	auto radius = m_Parameters.m_Radius;
+
+	if (x * x + y * y > radius * radius)
+	{
+		return INFINITY;
+	}
+
+	return radius - sqrtf(radius * radius - (x * x + y * y));
+}
+
+dxm::Vector3 SphericalMillingTool::LocalNormal(float x, float y)
+{
+	auto radius = m_Parameters.m_Radius;
+
+	if (x * x + y * y > radius * radius)
+	{
+		return dxm::Vector3::Zero;
+	}
+
+	auto dx = dxm::Vector3(1.0f, 0.0f, x / sqrtf(radius * radius - (x * x + y * y)));
+	auto dy = dxm::Vector3(0.0f, 1.0f, y / sqrtf(radius * radius - (x * x + y * y)));
+
+	auto normal = dy.Cross(dx);
+	normal.Normalize();
+
+	return normal;
+}

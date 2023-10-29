@@ -64,3 +64,23 @@ void FlatMillingTool::DisableRendering()
 		renderingPass.m_ShouldSkip = true;
 	}
 }
+
+float FlatMillingTool::LocalHeight(float x, float y)
+{
+	if (x * x + y * y > m_Parameters.m_Radius * m_Parameters.m_Radius)
+	{
+		return INFINITY;
+	}
+
+	return 0.0f;
+}
+
+dxm::Vector3 FlatMillingTool::LocalNormal(float x, float y)
+{
+	if (x * x + y * y > m_Parameters.m_Radius * m_Parameters.m_Radius)
+	{
+		return dxm::Vector3::Zero;
+	}
+
+	return { 0.0f, -1.0f, 0.0f };
+}

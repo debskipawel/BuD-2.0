@@ -9,4 +9,7 @@ public:
 
 	virtual void EnableRendering() override;
 	virtual void DisableRendering() override;
+
+	virtual float LocalHeight(float x, float y) override;
+	virtual dxm::Vector3 LocalNormal(float x, float y) override;
 };

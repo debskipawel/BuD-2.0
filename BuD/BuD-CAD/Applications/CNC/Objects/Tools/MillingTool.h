@@ -17,6 +17,9 @@ public:
 
 	virtual dxm::Vector3 Position() const;
 
+	virtual float LocalHeight(float x, float y) = 0;
+	virtual dxm::Vector3 LocalNormal(float x, float y) = 0;
+
 protected:
 	MillingToolParameters m_Parameters;
 	dxm::Vector3 m_Position;
