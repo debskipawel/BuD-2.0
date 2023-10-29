@@ -60,6 +60,4 @@ protected:
 
 private:
 	static std::unordered_map<GCP::GCodeUnitSystem, float> m_CentimeterScaleValuesMap;
-
-	friend class MillingSimulatorCommandVisitor;
 };

@@ -122,30 +122,7 @@ void MillingSimulator::Visit(GCP::FastToolMoveCommand& command)
 		command.m_Z.value_or(m_PreviousToolPosition.z)
 	);
 
-	auto toolMoveVector = finalToolPosition - m_PreviousToolPosition;
-	toolMoveVector.Normalize();
-
-	auto& tool = m_UploadedProgram->m_Tool;
-
-	auto currentToolPosition = tool->Position();
-	auto shiftLeft = finalToolPosition - currentToolPosition;
-
-	auto distanceLeft = shiftLeft.Length();
-	auto distance = speed * m_TimeLeft;
-
-	auto timeFractionUsed = std::clamp(distanceLeft / distance, 0.0f, 1.0f);
-	m_TimeLeft = (1.0f - timeFractionUsed) * m_TimeLeft;
-
-	auto positionIncrement = m_TimeLeft > 0
-		? finalToolPosition - currentToolPosition 
-		: timeFractionUsed * distance * toolMoveVector;
-
-	tool->MoveBy(positionIncrement);
-
-	if (m_TimeLeft > 0.0f)
-	{
-		m_PreviousToolPosition = finalToolPosition;
-	}
+	MoveTool(finalToolPosition, speed);
 }
 
 void MillingSimulator::Visit(GCP::SlowToolMoveCommand& command)
@@ -162,30 +139,7 @@ void MillingSimulator::Visit(GCP::SlowToolMoveCommand& command)
 		command.m_Z.value_or(m_PreviousToolPosition.z)
 	);
 
-	auto toolMoveVector = finalToolPosition - m_PreviousToolPosition;
-	toolMoveVector.Normalize();
-
-	auto& tool = m_UploadedProgram->m_Tool;
-
-	auto currentToolPosition = tool->Position();
-	auto shiftLeft = finalToolPosition - currentToolPosition;
-
-	auto distanceLeft = shiftLeft.Length();
-	auto distance = speed * m_TimeLeft;
-
-	auto timeFractionUsed = std::clamp(distanceLeft / distance, 0.0f, 1.0f);
-	m_TimeLeft = (1.0f - timeFractionUsed) * m_TimeLeft;
-
-	auto positionIncrement = m_TimeLeft > 0
-		? finalToolPosition - currentToolPosition
-		: timeFractionUsed * distance * toolMoveVector;
-
-	tool->MoveBy(positionIncrement);
-
-	if (m_TimeLeft > 0.0f)
-	{
-		m_PreviousToolPosition = finalToolPosition;
-	}
+	MoveTool(finalToolPosition, speed);
 }
 
 void MillingSimulator::Visit(GCP::InchesUnitSystemSelectionCommand& command)
@@ -211,6 +165,34 @@ void MillingSimulator::Visit(GCP::ToolPositioningAbsoluteCommand& command)
 void MillingSimulator::Visit(GCP::ToolPositioningIncrementalCommand& command)
 {
 	m_PositioningAbsolute = false;
+}
+
+void MillingSimulator::MoveTool(const dxm::Vector3& finalToolPosition, float speed)
+{
+	auto toolMoveVector = finalToolPosition - m_PreviousToolPosition;
+	toolMoveVector.Normalize();
+
+	auto& tool = m_UploadedProgram->m_Tool;
+
+	auto currentToolPosition = tool->Position();
+	auto shiftLeft = finalToolPosition - currentToolPosition;
+
+	auto distanceLeft = shiftLeft.Length();
+	auto distance = speed * m_TimeLeft;
+
+	auto timeFractionUsed = std::clamp(distanceLeft / distance, 0.0f, 1.0f);
+	m_TimeLeft = (1.0f - timeFractionUsed) * m_TimeLeft;
+
+	auto positionIncrement = m_TimeLeft > 0
+		? finalToolPosition - currentToolPosition
+		: timeFractionUsed * distance * toolMoveVector;
+
+	tool->MoveBy(positionIncrement);
+
+	if (m_TimeLeft > 0.0f)
+	{
+		m_PreviousToolPosition = finalToolPosition;
+	}
 }
 
 std::unordered_map<GCP::GCodeUnitSystem, float> MillingSimulator::m_CentimeterScaleValuesMap = {
