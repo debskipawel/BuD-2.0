@@ -15,6 +15,7 @@ ApplicationCNC::ApplicationCNC()
 
 void ApplicationCNC::OnUpdate(float deltaTime)
 {
+	m_MainDataLayer.m_SimulationDataLayer.Update(deltaTime);
 }
 
 void ApplicationCNC::OnRender()

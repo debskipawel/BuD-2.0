@@ -5,26 +5,28 @@
 #include <Commands/UnitSystem/GCodeUnitSystem.h>
 
 #include <Applications/CNC/PathProgram.h>
+#include <Applications/CNC/Simulator/MillingSimulator.h>
 
 struct SimulationDataLayerCNC
 {
 public:
 	SimulationDataLayerCNC();
 
-	virtual void ResetToDefault();
+	virtual void Update(float deltaTime);
 
-	bool m_SimulationRunning;
+	virtual void StartSimulation();
+	virtual void StopSimulation();
 
-	bool m_PositioningAbsolute;
-	bool m_CutterCompensationEnabled;
+	virtual bool Running() const;
+	virtual bool Paused() const;
 
-	float m_ToolMovementSpeed;
-	float m_ToolRotationSpeed;
+	auto GetSelectedPath() const -> std::shared_ptr<PathProgram>;
+	auto SetSelectedPath(std::shared_ptr<PathProgram> selectedPath) -> void;
 
-	GCP::GCodeUnitSystem m_UnitSystem;
+	float m_SimulationSpeed;
+
+protected:
+	MillingSimulator m_MillingSimulator;
 
 	std::shared_ptr<PathProgram> m_SelectedPath = std::shared_ptr<PathProgram>();
-
-private:
-	static std::unordered_map<GCP::GCodeUnitSystem, float> m_CentimeterScaleValuesMap;
 };

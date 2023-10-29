@@ -109,26 +109,13 @@ void PathListGuiLayerCNC::DrawPathSelectable(std::shared_ptr<PathProgram> toolPa
 {
 	auto name = toolPath ? std::format("{} ###path_{}", toolPath->m_PathName, toolPath->m_PathName) : "dupa";
 
-	bool selected = (toolPath == m_MainDataLayer.m_SimulationDataLayer.m_SelectedPath);
+	auto& simulationDataLayer = m_MainDataLayer.m_SimulationDataLayer;
+
+	auto selected = (toolPath == simulationDataLayer.GetSelectedPath());
 
 	if (ImGui::Selectable(name.c_str(), &selected, 0, ImVec2(selectableWidth, 0)))
 	{
-		auto& selectedPath = m_MainDataLayer.m_SimulationDataLayer.m_SelectedPath;
-		
-		if (selectedPath)
-		{
-			selectedPath->m_Tool->DisableRendering();
-		}
-		
-		if (selected)
-		{
-			m_MainDataLayer.m_SimulationDataLayer.m_SelectedPath = toolPath;
-			m_MainDataLayer.m_SimulationDataLayer.m_SelectedPath->m_Tool->EnableRendering();
-		}
-		else
-		{
-			m_MainDataLayer.m_SimulationDataLayer.m_SelectedPath = std::shared_ptr<PathProgram>();
-		}
+		simulationDataLayer.SetSelectedPath(selected ? toolPath : std::shared_ptr<PathProgram>());
 	}
 }
 
@@ -191,12 +178,7 @@ void PathListGuiLayerCNC::DrawImportPathDialog()
 						std::make_shared<PathProgram>(path.filename().string(), parsingResult.m_Program, millingTool)
 					);
 
-					if (m_MainDataLayer.m_SimulationDataLayer.m_SelectedPath)
-					{
-						m_MainDataLayer.m_SimulationDataLayer.m_SelectedPath->m_Tool->DisableRendering();
-					}
-
-					m_MainDataLayer.m_SimulationDataLayer.m_SelectedPath = pathList.back();
+					m_MainDataLayer.m_SimulationDataLayer.SetSelectedPath(pathList.back());
 				}
 			}
 		}

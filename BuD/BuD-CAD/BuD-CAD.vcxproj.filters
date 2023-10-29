@@ -456,6 +456,12 @@
     <ClInclude Include="Applications\CNC\DataLayers\Simulation\SimulationDataLayerCNC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Applications\CNC\Simulator\MillingSimulator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Simulator\MillingSimulatorCommandVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Applications\CAD\ApplicationCAD.cpp">
@@ -825,6 +831,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CNC\DataLayers\Simulation\SimulationDataLayerCNC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Simulator\MillingSimulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Simulator\MillingSimulatorCommandVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,23 +1,61 @@
 #include "SimulationDataLayerCNC.h"
 
 SimulationDataLayerCNC::SimulationDataLayerCNC()
-	: m_SimulationRunning(false), m_CutterCompensationEnabled(false), m_PositioningAbsolute(true), m_ToolMovementSpeed(25.0f), m_ToolRotationSpeed(10000.0f), m_UnitSystem(GCP::GCodeUnitSystem::MILLIMETER)
+	: m_SimulationSpeed(1.0f), m_MillingSimulator()
 {
 }
 
-void SimulationDataLayerCNC::ResetToDefault()
+
+void SimulationDataLayerCNC::Update(float deltaTime)
 {
-	m_SimulationRunning = false;
-	m_CutterCompensationEnabled = false;
-	m_PositioningAbsolute = true;
+	if (!Running())
+	{
+		return;
+	}
 
-	m_ToolMovementSpeed = 25.0f;
-	m_ToolRotationSpeed = 10000.0f;
+	auto scaledDeltaTime = m_SimulationSpeed * deltaTime;
 
-	m_UnitSystem = GCP::GCodeUnitSystem::MILLIMETER;
+	m_MillingSimulator.Update(scaledDeltaTime);
 }
 
-std::unordered_map<GCP::GCodeUnitSystem, float> SimulationDataLayerCNC::m_CentimeterScaleValuesMap = {
-	{ GCP::GCodeUnitSystem::MILLIMETER, 0.1f },
-	{ GCP::GCodeUnitSystem::INCHES, 2.54f }
-};
+void SimulationDataLayerCNC::StartSimulation()
+{
+	m_MillingSimulator.Start();
+}
+
+void SimulationDataLayerCNC::StopSimulation()
+{
+	m_MillingSimulator.Stop();
+}
+
+bool SimulationDataLayerCNC::Running() const
+{
+	return m_MillingSimulator.Running();
+}
+
+auto SimulationDataLayerCNC::GetSelectedPath() const -> std::shared_ptr<PathProgram>
+{
+	return m_SelectedPath;
+}
+
+auto SimulationDataLayerCNC::SetSelectedPath(std::shared_ptr<PathProgram> selectedPath) -> void
+{
+	if (Running())
+	{
+		return;
+	}
+	
+	if (m_SelectedPath)
+	{
+		m_SelectedPath->m_Tool->DisableRendering();
+	}
+	
+	m_SelectedPath = selectedPath;
+
+	if (m_SelectedPath)
+	{
+		m_SelectedPath->m_Tool->EnableRendering();
+	}
+
+	m_MillingSimulator.UploadPath(selectedPath);
+}

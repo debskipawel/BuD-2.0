@@ -20,10 +20,17 @@ void SimulationParametersGuiLayer::DrawGui()
 
 void SimulationParametersGuiLayer::DrawParameters()
 {
+	ImGui::Text("Simulation speed");
+	ImGui::DragFloat("###cnc_simulation_speed", &m_MainDataLayer.m_SimulationDataLayer.m_SimulationSpeed, 0.1f, 0.1f, 10.0f, "%.1f", ImGuiSliderFlags_AlwaysClamp);
 }
 
 void SimulationParametersGuiLayer::DrawStartAndSkipButtons()
 {
+	if (!m_MainDataLayer.m_SimulationDataLayer.GetSelectedPath())
+	{
+		return;
+	}
+
 	auto max = ImGui::GetWindowContentRegionMax();
 	auto min = ImGui::GetWindowContentRegionMin();
 
@@ -41,9 +48,23 @@ void SimulationParametersGuiLayer::DrawStartAndSkipButtons()
 
 	ImGui::Separator();
 
-	if (ImGui::Button("Start simulation", ImVec2(max.x - min.x, 0.0f)))
+	if (m_MainDataLayer.m_SimulationDataLayer.Running())
 	{
+		ImGui::PushStyleColor(ImGuiCol_Button, { 0.6f, 0.0f, 0.0f, 1.0f });
 
+		if (ImGui::Button("Pause simulation", ImVec2(max.x - min.x, 0.0f)))
+		{
+			m_MainDataLayer.m_SimulationDataLayer.StopSimulation();
+		}
+
+		ImGui::PopStyleColor();
+	}
+	else
+	{
+		if (ImGui::Button("Start simulation", ImVec2(max.x - min.x, 0.0f)))
+		{
+			m_MainDataLayer.m_SimulationDataLayer.StartSimulation();
+		}
 	}
 
 	if (ImGui::Button("Skip simulation", ImVec2(max.x - min.x, 0.0f)))
