@@ -179,6 +179,12 @@ void PathListGuiLayerCNC::DrawImportPathDialog()
 					);
 
 					m_MainDataLayer.m_SimulationDataLayer.SetSelectedPath(pathList.back());
+
+					BuD::Log::WriteInfo(std::format("[CNC] GCode file {} parsed successfully.", path.filename().string()));
+				}
+				else
+				{
+					BuD::Log::WriteError(std::format("[CNC] GCode parser failed with message: \"{}\"", parsingResult.m_Message));
 				}
 			}
 		}

@@ -41,6 +41,8 @@ public:
 	virtual void Visit(GCP::ToolPositioningIncrementalCommand& command) override;
 
 protected:
+	virtual void MoveTool(const dxm::Vector3& finalToolPosition, float speed);
+
 	bool m_Running;
 	bool m_Paused;
 
