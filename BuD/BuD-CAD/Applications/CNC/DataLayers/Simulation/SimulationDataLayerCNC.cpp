@@ -33,6 +33,11 @@ bool SimulationDataLayerCNC::Running() const
 	return m_MillingSimulator.Running();
 }
 
+bool SimulationDataLayerCNC::Paused() const
+{
+	return m_MillingSimulator.Paused();
+}
+
 auto SimulationDataLayerCNC::GetSelectedPath() const -> std::shared_ptr<PathProgram>
 {
 	return m_SelectedPath;

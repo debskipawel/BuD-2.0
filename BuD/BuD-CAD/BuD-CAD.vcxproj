@@ -185,7 +185,6 @@
     <ClInclude Include="Applications\CNC\DataLayers\PathList\PathListDataLayer.h" />
     <ClInclude Include="Applications\CNC\DataLayers\SceneDataLayerCNC.h" />
     <ClInclude Include="Applications\CNC\DataLayers\Simulation\SimulationDataLayerCNC.h" />
-    <ClInclude Include="Applications\CNC\DataLayers\Simulation\UnitSystem.h" />
     <ClInclude Include="Applications\CNC\Factories\MillingTool\FlatMillingToolFactory.h" />
     <ClInclude Include="Applications\CNC\Factories\MillingTool\MainMillingToolFactory.h" />
     <ClInclude Include="Applications\CNC\Factories\MillingTool\MillingToolFactory.h" />
@@ -206,7 +205,6 @@
     <ClInclude Include="Applications\CNC\Objects\Tools\MillingToolParameters.h" />
     <ClInclude Include="Applications\CNC\Objects\Tools\SphericalMillingTool.h" />
     <ClInclude Include="Applications\CNC\Simulator\MillingSimulator.h" />
-    <ClInclude Include="Applications\CNC\Simulator\MillingSimulatorCommandVisitor.h" />
     <ClInclude Include="Applications\Shared\DataLayers\ViewportDataLayer.h" />
     <ClInclude Include="Applications\Switcher\ApplicationSwitcher.h" />
     <ClInclude Include="Applications\Switcher\DataLayers\MainDataLayerSwitcher.h" />
@@ -350,7 +348,6 @@
     <ClCompile Include="Applications\CNC\Objects\Tools\MillingToolParameters.cpp" />
     <ClCompile Include="Applications\CNC\Objects\Tools\SphericalMillingTool.cpp" />
     <ClCompile Include="Applications\CNC\Simulator\MillingSimulator.cpp" />
-    <ClCompile Include="Applications\CNC\Simulator\MillingSimulatorCommandVisitor.cpp" />
     <ClCompile Include="Applications\Shared\DataLayers\ViewportDataLayer.cpp" />
     <ClCompile Include="Applications\Switcher\ApplicationSwitcher.cpp" />
     <ClCompile Include="Applications\Switcher\DataLayers\MainDataLayerSwitcher.cpp" />

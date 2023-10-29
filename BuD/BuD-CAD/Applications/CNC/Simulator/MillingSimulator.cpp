@@ -1,5 +1,11 @@
 #include "MillingSimulator.h"
 
+constexpr auto SLOW_MOVEMENT_SPEED = 25.0f;
+constexpr auto FAST_MOVEMENT_SPEED = 100.0f;
+constexpr auto ROTATION_SPEED = 10000.0f / 60.0f;
+
+constexpr auto SAFE_MILLING_TOOL_POSITION = dxm::Vector3(0.0f, 30.0f, 0.0f);
+
 MillingSimulator::MillingSimulator()
 	: m_Running(false)
 {
@@ -23,6 +29,9 @@ void MillingSimulator::Start()
 		return;
 	}
 	
+	m_UploadedProgram->m_Tool->MoveTo(SAFE_MILLING_TOOL_POSITION);
+	m_PreviousToolPosition = m_UploadedProgram->m_Tool->Position();
+
 	ResetToDefault();
 
 	m_Running = true;
@@ -63,33 +72,16 @@ void MillingSimulator::Update(float deltaTime)
 
 void MillingSimulator::ResetToDefault()
 {
-	constexpr auto SLOW_MOVEMENT_SPEED = 25.0f;
-	constexpr auto FAST_MOVEMENT_SPEED = 100.0f;
-	constexpr auto ROTATION_SPEED = 10000.0f / 60.0f;
-
-	constexpr auto SAFE_MILLING_TOOL_POSITION = dxm::Vector3(0.0f, 30.0f, 0.0f);
-
-	m_UploadedProgram->m_Tool->MoveTo(SAFE_MILLING_TOOL_POSITION);
-	m_PreviousToolPosition = m_UploadedProgram->m_Tool->Position();
-
-	SetPositioningAbsolute();
+	m_PositioningAbsolute = true;
 	
-	SetToolMovementSpeed(SLOW_MOVEMENT_SPEED, FAST_MOVEMENT_SPEED);
-	SetToolRotationSpeed(10000.0f / 60.0f);
+	m_ToolMovementFastSpeed = FAST_MOVEMENT_SPEED;
+	m_ToolMovementSlowSpeed = SLOW_MOVEMENT_SPEED;
 
-	SetUnitSystem(GCP::GCodeUnitSystem::MILLIMETER);
+	m_ToolRotationSpeed = ROTATION_SPEED;
+
+	m_UnitSystem = GCP::GCodeUnitSystem::MILLIMETER;
 
 	m_TimeLeft = 0.0f;
-}
-
-void MillingSimulator::SetPositioningAbsolute()
-{
-	m_PositioningAbsolute = true;
-}
-
-void MillingSimulator::SetPositioningIncremental()
-{
-	m_PositioningAbsolute = false;
 }
 
 void MillingSimulator::SetToolMovementSpeed(float movementSpeedSlow, float movementSpeedFast)
@@ -103,24 +95,24 @@ void MillingSimulator::SetToolRotationSpeed(float rotationSpeed)
 	m_ToolRotationSpeed = rotationSpeed;
 }
 
-void MillingSimulator::SetUnitSystem(GCP::GCodeUnitSystem unitSystem)
-{
-	m_UnitSystem = unitSystem;
-}
-
 void MillingSimulator::Visit(GCP::FastToolMoveCommand& command)
 {
 	m_ToolMovementFastSpeed = command.m_MoveSpeed.value_or(m_ToolMovementFastSpeed);
 
 	auto speed = m_ToolMovementFastSpeed;
 
-	auto unitScale = m_CentimeterScaleValuesMap.at(m_UnitSystem);
+	auto unitScale = s_CentimeterScaleValuesMap.at(m_UnitSystem);
 
 	auto finalToolPosition = unitScale * dxm::Vector3(
 		command.m_X.value_or(m_PreviousToolPosition.x),
 		command.m_Y.value_or(m_PreviousToolPosition.y),
 		command.m_Z.value_or(m_PreviousToolPosition.z)
 	);
+
+	if (!m_PositioningAbsolute)
+	{
+		finalToolPosition += m_PreviousToolPosition;
+	}
 
 	MoveTool(finalToolPosition, speed);
 }
@@ -131,7 +123,7 @@ void MillingSimulator::Visit(GCP::SlowToolMoveCommand& command)
 
 	auto speed = m_ToolMovementSlowSpeed;
 
-	auto unitScale = m_CentimeterScaleValuesMap.at(m_UnitSystem);
+	auto unitScale = s_CentimeterScaleValuesMap.at(m_UnitSystem);
 
 	auto finalToolPosition = unitScale * dxm::Vector3(
 		command.m_X.value_or(m_PreviousToolPosition.x),
@@ -139,17 +131,22 @@ void MillingSimulator::Visit(GCP::SlowToolMoveCommand& command)
 		command.m_Z.value_or(m_PreviousToolPosition.z)
 	);
 
+	if (!m_PositioningAbsolute)
+	{
+		finalToolPosition += m_PreviousToolPosition;
+	}
+
 	MoveTool(finalToolPosition, speed);
 }
 
 void MillingSimulator::Visit(GCP::InchesUnitSystemSelectionCommand& command)
 {
-	SetUnitSystem(GCP::GCodeUnitSystem::INCHES);
+	m_UnitSystem = GCP::GCodeUnitSystem::INCHES;
 }
 
 void MillingSimulator::Visit(GCP::MillimetersUnitSystemSelectionCommand& command)
 {
-	SetUnitSystem(GCP::GCodeUnitSystem::MILLIMETER);
+	m_UnitSystem = GCP::GCodeUnitSystem::MILLIMETER;
 }
 
 void MillingSimulator::Visit(GCP::ProgramStopCommand& command)
@@ -195,7 +192,7 @@ void MillingSimulator::MoveTool(const dxm::Vector3& finalToolPosition, float spe
 	}
 }
 
-std::unordered_map<GCP::GCodeUnitSystem, float> MillingSimulator::m_CentimeterScaleValuesMap = {
+std::unordered_map<GCP::GCodeUnitSystem, float> MillingSimulator::s_CentimeterScaleValuesMap = {
 	{ GCP::GCodeUnitSystem::MILLIMETER, 0.1f },
 	{ GCP::GCodeUnitSystem::INCHES, 2.54f }
 };

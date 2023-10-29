@@ -170,21 +170,36 @@ void PathListGuiLayerCNC::DrawImportPathDialog()
 				auto gCodeParser = GCP::GCodeParser();
 				auto parsingResult = gCodeParser.LoadFromFile(path);
 
-				if (parsingResult.m_Result == GCP::GCodeParserCode::SUCCESS)
+				switch (parsingResult.m_Result)
 				{
-					auto& pathList = m_MainDataLayer.m_PathListDataLayer.m_PathList;
+					case GCP::GCodeParserCode::SUCCESS:
+					{
+						auto& pathList = m_MainDataLayer.m_PathListDataLayer.m_PathList;
 
-					pathList.emplace_back(
-						std::make_shared<PathProgram>(path.filename().string(), parsingResult.m_Program, millingTool)
-					);
+						pathList.emplace_back(
+							std::make_shared<PathProgram>(path.filename().string(), parsingResult.m_Program, millingTool)
+						);
 
-					m_MainDataLayer.m_SimulationDataLayer.SetSelectedPath(pathList.back());
+						m_MainDataLayer.m_SimulationDataLayer.SetSelectedPath(pathList.back());
 
-					BuD::Log::WriteInfo(std::format("[CNC] GCode file {} parsed successfully.", path.filename().string()));
-				}
-				else
-				{
-					BuD::Log::WriteError(std::format("[CNC] GCode parser failed with message: \"{}\"", parsingResult.m_Message));
+						BuD::Log::WriteInfo(std::format("[CNC] GCode file {} parsed successfully.", path.filename().string()));
+
+						break;
+					}
+					case GCP::GCodeParserCode::WARNING:
+					{
+						BuD::Log::WriteWarning(std::format("[CNC] GCode parser succeeded with warnings: \"{}\"", parsingResult.m_Message));
+						break;
+					}
+					case GCP::GCodeParserCode::PARSER_ERROR:
+					{
+						BuD::Log::WriteError(std::format("[CNC] GCode parser failed with message: \"{}\"", parsingResult.m_Message));
+						break;
+					}
+					default:
+					{
+						break;
+					}
 				}
 			}
 		}

@@ -21,13 +21,8 @@ public:
 	virtual void Update(float deltaTime);
 	virtual void ResetToDefault();
 
-	virtual void SetPositioningAbsolute();
-	virtual void SetPositioningIncremental();
-
 	virtual void SetToolMovementSpeed(float movementSpeedSlow, float movementSpeedFast);
 	virtual void SetToolRotationSpeed(float rotationSpeed);
-
-	virtual void SetUnitSystem(GCP::GCodeUnitSystem unitSystem);
 
 	virtual void Visit(GCP::FastToolMoveCommand& command) override;
 	virtual void Visit(GCP::SlowToolMoveCommand& command) override;
@@ -61,5 +56,5 @@ protected:
 	dxm::Vector3 m_PreviousToolPosition;
 
 private:
-	static std::unordered_map<GCP::GCodeUnitSystem, float> m_CentimeterScaleValuesMap;
+	static std::unordered_map<GCP::GCodeUnitSystem, float> s_CentimeterScaleValuesMap;
 };
