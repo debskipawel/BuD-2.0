@@ -13,6 +13,7 @@ public:
 	SimulationDataLayerCNC();
 
 	virtual void Update(float deltaTime);
+	virtual void ResetMaterial(const MaterialBlockParameters& materialParameters, uint32_t resolutionWidth, uint32_t resolutionHeight);
 
 	virtual void StartSimulation();
 	virtual void StopSimulation();
@@ -23,9 +24,12 @@ public:
 	auto GetSelectedPath() const -> std::shared_ptr<PathProgram>;
 	auto SetSelectedPath(std::shared_ptr<PathProgram> selectedPath) -> void;
 
+	BuD::Scene m_Scene;
+
 	float m_SimulationSpeed;
 
 protected:
+
 	MillingSimulator m_MillingSimulator;
 
 	std::shared_ptr<PathProgram> m_SelectedPath = std::shared_ptr<PathProgram>();

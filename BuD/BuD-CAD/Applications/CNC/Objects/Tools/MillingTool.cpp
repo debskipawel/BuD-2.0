@@ -19,3 +19,8 @@ dxm::Vector3 MillingTool::Position() const
 {
 	return m_Position;
 }
+
+float MillingTool::Radius() const
+{
+	return m_Parameters.m_Radius;
+}

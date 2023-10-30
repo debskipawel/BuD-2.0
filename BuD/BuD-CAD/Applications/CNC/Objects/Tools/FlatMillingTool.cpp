@@ -65,6 +65,11 @@ void FlatMillingTool::DisableRendering()
 	}
 }
 
+dxm::Vector3 FlatMillingTool::CenterPoint() const
+{
+	return m_Position;
+}
+
 float FlatMillingTool::LocalHeight(float x, float y)
 {
 	if (x * x + y * y > m_Parameters.m_Radius * m_Parameters.m_Radius)

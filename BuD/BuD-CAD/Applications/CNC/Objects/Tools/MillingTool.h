@@ -15,7 +15,9 @@ public:
 	virtual void MoveTo(dxm::Vector3 position);
 	virtual void MoveBy(dxm::Vector3 difference);
 
+	virtual dxm::Vector3 CenterPoint() const = 0;
 	virtual dxm::Vector3 Position() const;
+	virtual float Radius() const;
 
 	virtual float LocalHeight(float x, float y) = 0;
 	virtual dxm::Vector3 LocalNormal(float x, float y) = 0;

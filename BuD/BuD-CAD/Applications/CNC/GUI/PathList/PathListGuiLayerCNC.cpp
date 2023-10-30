@@ -160,7 +160,7 @@ void PathListGuiLayerCNC::DrawImportPathDialog()
 	{
 		if (fileDialog->IsOk())
 		{
-			auto& scene = m_MainDataLayer.m_SceneDataLayer.m_Scene;
+			auto& scene = m_MainDataLayer.m_SimulationDataLayer.m_Scene;
 			std::filesystem::path path = fileDialog->GetFilePathName();
 
 			auto millingTool = m_MillingToolFactory->Create(scene, path);

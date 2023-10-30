@@ -399,9 +399,6 @@
     <ClInclude Include="Applications\Shared\DataLayers\ViewportDataLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CNC\DataLayers\SceneDataLayerCNC.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Applications\CNC\Behaviors\Mouse\BaseMouseBehaviorLayerCNC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -454,6 +451,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CNC\Simulator\MillingSimulator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Simulator\MaterialBlockCutter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Simulator\CyrusBeckClippingAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -800,9 +803,6 @@
     <ClCompile Include="Applications\CNC\Objects\Tools\SphericalMillingTool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Applications\CNC\DataLayers\SceneDataLayerCNC.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockParameters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -828,6 +828,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CNC\Simulator\MillingSimulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Simulator\MaterialBlockCutter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Simulator\CyrusBeckClippingAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

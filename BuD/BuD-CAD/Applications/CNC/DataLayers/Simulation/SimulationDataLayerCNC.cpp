@@ -1,10 +1,14 @@
 #include "SimulationDataLayerCNC.h"
 
-SimulationDataLayerCNC::SimulationDataLayerCNC()
-	: m_SimulationSpeed(1.0f), m_MillingSimulator()
-{
-}
+#include <numbers>
 
+SimulationDataLayerCNC::SimulationDataLayerCNC()
+	: m_Scene(), m_SimulationSpeed(1.0f), m_MillingSimulator(m_Scene)
+{
+	auto camera = m_Scene.ActiveCamera();
+	camera->Zoom(20.0f);
+	camera->RotateCamera(-std::numbers::pi_v<float> / 4.0f, std::numbers::pi_v<float> / 6.0f);
+}
 
 void SimulationDataLayerCNC::Update(float deltaTime)
 {
@@ -16,6 +20,11 @@ void SimulationDataLayerCNC::Update(float deltaTime)
 	auto scaledDeltaTime = m_SimulationSpeed * deltaTime;
 
 	m_MillingSimulator.Update(scaledDeltaTime);
+}
+
+void SimulationDataLayerCNC::ResetMaterial(const MaterialBlockParameters& materialParameters, uint32_t resolutionWidth, uint32_t resolutionHeight)
+{
+	m_MillingSimulator.ResetMaterial(materialParameters, resolutionWidth, resolutionHeight);
 }
 
 void SimulationDataLayerCNC::StartSimulation()

@@ -10,6 +10,11 @@ StartingParametersGuiLayer::StartingParametersGuiLayer(MainDataLayerCNC& dataLay
 
 void StartingParametersGuiLayer::DrawGui()
 {
+	if (m_MainDataLayer.m_SimulationDataLayer.Running())
+	{
+		return;
+	}
+
 	if (ImGui::Begin("Starting parameters ###starting_parameters"))
 	{
 		DrawResolutionComboBox();
@@ -76,6 +81,6 @@ void StartingParametersGuiLayer::DrawResetSizeButton()
 	{
 		auto resolution = m_AvailableResolutions[m_ResolutionSelectedIndex];
 
-		m_MainDataLayer.m_SceneDataLayer.m_Material.UpdateParameters(m_BlockParameters, resolution, resolution);
+		m_MainDataLayer.m_SimulationDataLayer.ResetMaterial(m_BlockParameters, resolution, resolution);
 	}
 }

@@ -12,6 +12,11 @@ public:
 
 	void UpdateParameters(const MaterialBlockParameters& blockParameters, uint32_t resolutionWidth, uint32_t resolutionHeight);
 
+	std::shared_ptr<BuD::EditableTexture> HeightMap() const;
+	
+	dxm::Vector3 Position() const;
+	dxm::Vector3 Size() const;
+
 protected:
 	MaterialBlockParameters m_BlockParameters;
 	dxm::Vector3 m_Position;

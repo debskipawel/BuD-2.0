@@ -1,13 +1,15 @@
 #include "MillingSimulator.h"
 
+#include <Applications/CNC/Simulator/MaterialBlockCutter.h>
+
 constexpr auto SLOW_MOVEMENT_SPEED = 25.0f;
 constexpr auto FAST_MOVEMENT_SPEED = 100.0f;
 constexpr auto ROTATION_SPEED = 10000.0f / 60.0f;
 
 constexpr auto SAFE_MILLING_TOOL_POSITION = dxm::Vector3(0.0f, 30.0f, 0.0f);
 
-MillingSimulator::MillingSimulator()
-	: m_Running(false)
+MillingSimulator::MillingSimulator(BuD::Scene& scene)
+	: m_Running(false), m_MaterialBlock(std::make_unique<MaterialBlock>(scene, MaterialBlockParameters::DEFAULT_PARAMETERS, 1024U, 1024U))
 {
 	ResetToDefault();
 }
@@ -22,6 +24,11 @@ void MillingSimulator::UploadPath(std::shared_ptr<PathProgram> pathProgram)
 	m_UploadedProgram = pathProgram;
 }
 
+void MillingSimulator::ResetMaterial(const MaterialBlockParameters& materialParameters, uint32_t resolutionWidth, uint32_t resolutionHeight)
+{
+	m_MaterialBlock->UpdateParameters(materialParameters, resolutionWidth, resolutionHeight);
+}
+
 void MillingSimulator::Start()
 {
 	if (!m_UploadedProgram)
@@ -29,6 +36,9 @@ void MillingSimulator::Start()
 		return;
 	}
 	
+	m_TimeLeft = 0.0f;
+	m_CommandIndex = 0;
+
 	m_UploadedProgram->m_Tool->MoveTo(SAFE_MILLING_TOOL_POSITION);
 	m_PreviousToolPosition = m_UploadedProgram->m_Tool->Position();
 
@@ -82,17 +92,6 @@ void MillingSimulator::ResetToDefault()
 	m_UnitSystem = GCP::GCodeUnitSystem::MILLIMETER;
 
 	m_TimeLeft = 0.0f;
-}
-
-void MillingSimulator::SetToolMovementSpeed(float movementSpeedSlow, float movementSpeedFast)
-{
-	m_ToolMovementSlowSpeed = movementSpeedSlow;
-	m_ToolMovementFastSpeed = movementSpeedFast;
-}
-
-void MillingSimulator::SetToolRotationSpeed(float rotationSpeed)
-{
-	m_ToolRotationSpeed = rotationSpeed;
 }
 
 void MillingSimulator::Visit(GCP::FastToolMoveCommand& command)
@@ -164,6 +163,10 @@ void MillingSimulator::Visit(GCP::ToolPositioningIncrementalCommand& command)
 	m_PositioningAbsolute = false;
 }
 
+void MillingSimulator::SimulationLoop()
+{
+}
+
 void MillingSimulator::MoveTool(const dxm::Vector3& finalToolPosition, float speed)
 {
 	auto toolMoveVector = finalToolPosition - m_PreviousToolPosition;
@@ -184,7 +187,9 @@ void MillingSimulator::MoveTool(const dxm::Vector3& finalToolPosition, float spe
 		? finalToolPosition - currentToolPosition
 		: timeFractionUsed * distance * toolMoveVector;
 
-	tool->MoveBy(positionIncrement);
+	auto materialCutter = MaterialBlockCutter(*m_MaterialBlock);
+
+	materialCutter.MoveMillingTool(tool, currentToolPosition + positionIncrement);
 
 	if (m_TimeLeft > 0.0f)
 	{

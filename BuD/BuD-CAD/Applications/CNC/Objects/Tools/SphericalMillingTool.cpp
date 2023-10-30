@@ -88,6 +88,11 @@ void SphericalMillingTool::DisableRendering()
 	}
 }
 
+dxm::Vector3 SphericalMillingTool::CenterPoint() const
+{
+	return m_Position + dxm::Vector3::UnitY * Radius();
+}
+
 float SphericalMillingTool::LocalHeight(float x, float y)
 {
 	auto radius = m_Parameters.m_Radius;
@@ -109,10 +114,10 @@ dxm::Vector3 SphericalMillingTool::LocalNormal(float x, float y)
 		return dxm::Vector3::Zero;
 	}
 
-	auto dx = dxm::Vector3(1.0f, 0.0f, x / sqrtf(radius * radius - (x * x + y * y)));
-	auto dy = dxm::Vector3(0.0f, 1.0f, y / sqrtf(radius * radius - (x * x + y * y)));
+	auto height = LocalHeight(x, y);
+	dxm::Vector3 pointOnTool = dxm::Vector3(x, height, y);
 
-	auto normal = dy.Cross(dx);
+	auto normal = pointOnTool - dxm::Vector3::UnitY;
 	normal.Normalize();
 
 	return normal;

@@ -40,3 +40,18 @@ void MaterialBlock::UpdateParameters(const MaterialBlockParameters& blockParamet
 		m_TopPlane->UpdateBlock(m_HeightMap, blockParameters, m_Position);
 	}
 }
+
+std::shared_ptr<BuD::EditableTexture> MaterialBlock::HeightMap() const
+{
+	return m_HeightMap;
+}
+
+dxm::Vector3 MaterialBlock::Position() const
+{
+	return m_Position;
+}
+
+dxm::Vector3 MaterialBlock::Size() const
+{
+	return m_BlockParameters.m_Size;
+}

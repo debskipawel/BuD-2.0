@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Applications/CNC/DataLayers/PathList/PathListDataLayer.h>
-#include <Applications/CNC/DataLayers/SceneDataLayerCNC.h>
 #include <Applications/CNC/DataLayers/CameraDataLayerCNC.h>
 #include <Applications/CNC/DataLayers/Simulation/SimulationDataLayerCNC.h>
 
@@ -14,6 +13,5 @@ struct MainDataLayerCNC
 
 	PathListDataLayer m_PathListDataLayer;
 	
-	SceneDataLayerCNC m_SceneDataLayer;
 	ViewportDataLayer m_ViewportDataLayer;
 };

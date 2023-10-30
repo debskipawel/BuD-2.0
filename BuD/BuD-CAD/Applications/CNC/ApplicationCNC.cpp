@@ -10,7 +10,7 @@ ApplicationCNC::ApplicationCNC()
 
 	m_MouseBehaviorLayer = std::make_unique<MainMouseBehaviorLayerCNC>(m_MainDataLayer);
 
-	m_Grid = std::make_unique<Grid>(m_MainDataLayer.m_SceneDataLayer.m_Scene);
+	m_Grid = std::make_unique<Grid>(m_MainDataLayer.m_SimulationDataLayer.m_Scene);
 }
 
 void ApplicationCNC::OnUpdate(float deltaTime)
@@ -26,7 +26,7 @@ void ApplicationCNC::OnRender()
 
 	BuD::Renderer::Clear(0.0f, 0.0f, 0.0f, 1.0f);
 
-	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_Scene;
+	auto& scene = m_MainDataLayer.m_SimulationDataLayer.m_Scene;
 
 	BuD::Renderer::Render(scene);
 
