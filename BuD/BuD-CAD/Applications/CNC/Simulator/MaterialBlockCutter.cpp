@@ -1,6 +1,7 @@
 #include "MaterialBlockCutter.h"
 
-#include "CyrusBeckClippingAlgorithm.h"
+#include "Algorithms/CyrusBeckClippingAlgorithm.h"
+#include "Algorithms/BresenhamAlgorithm.h"
 
 #include <numbers>
 
@@ -100,7 +101,25 @@ void MaterialBlockCutter::MoveMillingTool(std::shared_ptr<MillingTool> millingTo
 			auto xStart = xMin + dx, xEnd = xStart + pixelDiff.x;
 			auto zStart = zMin + dz, zEnd = zStart + pixelDiff.y;
 
-			CutLine(xStart, zStart, startHeight, xEnd, zEnd, endHeight);
+			bresenhamAlgorithm(xStart, zStart, xEnd, zEnd,
+				[startHeight, endHeight, heightMap](int x, int y, float t)
+				{
+					if (x < 0 || x >= heightMap->Width() || y < 0 || y >= heightMap->Height())
+					{
+						return;
+					}
+
+					auto color = heightMap->Sample(x, y);
+
+					auto currentHeight = color.x;
+					auto toolPointHeight = startHeight + t * (endHeight - startHeight);
+
+					if (toolPointHeight < currentHeight)
+					{
+						heightMap->PutPixel(x, y, { toolPointHeight, toolPointHeight, toolPointHeight, toolPointHeight });
+					}
+				}
+			);
 		}
 	}
 
@@ -199,121 +218,15 @@ void MaterialBlockCutter::MoveMillingToolVertically(std::shared_ptr<MillingTool>
 			auto color = heightMap->Sample(x, z);
 
 			auto localHeight = millingTool->LocalHeight(toPixel.x, toPixel.z);
-			auto resultHeight = min(endPosition.y + localHeight, color.x);
+			
+			auto previousHeight = color.x;
+			auto resultHeight = min(endPosition.y + localHeight, previousHeight);
 
 			heightMap->PutPixel(x, z, { resultHeight, resultHeight, resultHeight, resultHeight });
 		}
 	}
 
 	heightMap->EndEdit();
-}
-
-void MaterialBlockCutter::CutLine(int x1, int z1, float h1, int x2, int z2, float h2)
-{
-	auto dx = x2 - x1;
-	auto dz = z2 - z1;
-	auto D = 2.0f * dz - dx;
-
-	auto z = z1;
-
-	if (abs(dz) < abs(dx))
-	{
-		if (dx < 0.0f)
-		{
-			CutLineLow(x2, z2, h2, x1, z1, h1);
-		}
-		else
-		{
-			CutLineLow(x1, z1, h1, x2, z2, h2);
-		}
-	}
-	else
-	{
-		if (dz < 0.0f)
-		{
-			CutLineHigh(x2, z2, h2, x1, z1, h1);
-		}
-		else
-		{
-			CutLineHigh(x1, z1, h1, x2, z2, h2);
-		}
-	}
-}
-
-void MaterialBlockCutter::CutLineLow(int x1, int z1, float h1, int x2, int z2, float h2)
-{
-	auto dx = x2 - x1, dz = z2 - z1;
-	auto zi = 1.0f;
-
-	auto heightMap = m_MaterialBlock.HeightMap();
-
-	if (dz < 0)
-	{
-		zi = -1;
-		dz = -dz;
-	}
-
-	auto D = 2.0f * dz - dx;
-	auto z = z1;
-
-	for (int x = x1; x <= x2; x++)
-	{
-		if (x >= 0 && x < heightMap->Width() && z >= 0 && z < heightMap->Height())
-		{
-			auto color = heightMap->Sample(x, z);
-
-			auto t = static_cast<float>(x - x1) / static_cast<float>(x2 - x1);
-			auto h = min(h1 + t * (h2 - h1), color.x);
-
-			heightMap->PutPixel(x, z, { h, h, h, h });
-		}
-
-		if (D > 0.0f)
-		{
-			z += zi;
-			D -= 2.0f * dx;
-		}
-
-		D += 2.0f * dz;
-	}
-}
-
-void MaterialBlockCutter::CutLineHigh(int x1, int z1, float h1, int x2, int z2, float h2)
-{
-	auto dx = x2 - x1, dz = z2 - z1;
-	auto xi = 1.0f;
-
-	auto heightMap = m_MaterialBlock.HeightMap();
-
-	if (dx < 0)
-	{
-		xi = -1;
-		dx = -dx;
-	}
-
-	auto D = 2.0f * dx - dz;
-	auto x = x1;
-
-	for (int z = z1; z <= z2; z++)
-	{
-		if (x >= 0 && x < heightMap->Width() && z >= 0 && z < heightMap->Height())
-		{
-			auto color = heightMap->Sample(x, z);
-
-			auto t = static_cast<float>(z - z1) / static_cast<float>(z2 - z1);
-			auto h = min(h1 + t * (h2 - h1), color.x);
-
-			heightMap->PutPixel(x, z, { h, h, h, h });
-		}
-
-		if (D > 0.0f)
-		{
-			x += xi;
-			D -= 2.0f * dz;
-		}
-
-		D += 2.0f * dx;
-	}
 }
 
 dxm::Vector3 MaterialBlockCutter::MapPixelToWorldSpace(uint32_t x, uint32_t y)

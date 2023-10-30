@@ -11,6 +11,7 @@ MaterialBlock::MaterialBlock(BuD::Scene& scene, const MaterialBlockParameters& b
 	UpdateParameters(blockParameters, resolutionWidth, resolutonHeight);
 
 	m_TopPlane = std::make_unique<MaterialBlockTopMesh>(scene, m_HeightMap, m_SurfaceTexture, blockParameters, m_Position);
+	m_SidesPlane = std::make_unique<MaterialBlockSidesMesh>(scene, m_HeightMap, m_SurfaceTexture, blockParameters, m_Position);
 }
 
 void MaterialBlock::UpdateParameters(const MaterialBlockParameters& blockParameters, uint32_t resolutionWidth, uint32_t resolutionHeight)
@@ -38,6 +39,11 @@ void MaterialBlock::UpdateParameters(const MaterialBlockParameters& blockParamet
 	if (m_TopPlane)
 	{
 		m_TopPlane->UpdateBlock(m_HeightMap, blockParameters, m_Position);
+	}
+
+	if (m_SidesPlane)
+	{
+		m_SidesPlane->UpdateBlock(m_HeightMap, blockParameters, m_Position);
 	}
 }
 

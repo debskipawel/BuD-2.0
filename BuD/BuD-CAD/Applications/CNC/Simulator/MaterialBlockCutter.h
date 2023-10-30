@@ -15,10 +15,6 @@ protected:
 
 	virtual void MoveMillingToolVertically(std::shared_ptr<MillingTool> millingTool, const dxm::Vector3& endPosition);
 
-	virtual void CutLine(int x1, int z1, float h1, int x2, int z2, float h2);
-	virtual void CutLineLow(int x1, int z1, float h1, int x2, int z2, float h2);
-	virtual void CutLineHigh(int x1, int z1, float h1, int x2, int z2, float h2);
-
 	virtual dxm::Vector3 MapPixelToWorldSpace(uint32_t x, uint32_t y);
 	virtual dxm::Vector2 MapWorldSpaceToPixelSpace(const dxm::Vector3& p);
 

@@ -3,7 +3,9 @@
 #include <BuD.h>
 
 #include <Applications/CNC/Objects/MaterialBlock/MaterialBlockParameters.h>
-#include <Applications/CNC/Objects/MaterialBlock/MaterialBlockTopMesh.h>
+
+#include <Applications/CNC/Objects/MaterialBlock/Mesh/MaterialBlockTopMesh.h>
+#include <Applications/CNC/Objects/MaterialBlock/Mesh/MaterialBlockSidesMesh.h>
 
 class MaterialBlock
 {
@@ -25,4 +27,5 @@ protected:
 	std::shared_ptr<BuD::EditableTexture> m_HeightMap;
 
 	std::unique_ptr<MaterialBlockTopMesh> m_TopPlane;
+	std::unique_ptr<MaterialBlockSidesMesh> m_SidesPlane;
 };

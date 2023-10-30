@@ -414,10 +414,10 @@
     <ClInclude Include="Applications\CNC\DataLayers\CameraDataLayerCNC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockTopMesh.h">
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\Mesh\MaterialBlockTopMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockSidesMesh.h">
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\Mesh\MaterialBlockSidesMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CNC\Objects\Tools\MillingTool.h">
@@ -456,7 +456,10 @@
     <ClInclude Include="Applications\CNC\Simulator\MaterialBlockCutter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CNC\Simulator\CyrusBeckClippingAlgorithm.h">
+    <ClInclude Include="Applications\CNC\Simulator\Algorithms\CyrusBeckClippingAlgorithm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Simulator\Algorithms\BresenhamAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -791,7 +794,7 @@
     <ClCompile Include="Applications\CNC\Objects\MaterialBlock\MaterialBlock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockTopMesh.cpp">
+    <ClCompile Include="Applications\CNC\Objects\MaterialBlock\Mesh\MaterialBlockTopMesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CNC\Objects\Tools\MillingTool.cpp">
@@ -833,7 +836,13 @@
     <ClCompile Include="Applications\CNC\Simulator\MaterialBlockCutter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Applications\CNC\Simulator\CyrusBeckClippingAlgorithm.cpp">
+    <ClCompile Include="Applications\CNC\Simulator\Algorithms\CyrusBeckClippingAlgorithm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Objects\MaterialBlock\Mesh\MaterialBlockSidesMesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Simulator\Algorithms\BresenhamAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -902,6 +911,9 @@
     <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\MillingTool\Flat\flatTool_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\MillingTool\Flat\flatTool_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_hs.hlsl" />
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_ds.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="testfile.f14" />

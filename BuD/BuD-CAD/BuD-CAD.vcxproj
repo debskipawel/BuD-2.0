@@ -197,13 +197,14 @@
     <ClInclude Include="Applications\CNC\GUI\Viewport\ViewportGuiLayerCNC.h" />
     <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlock.h" />
     <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockParameters.h" />
-    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockSidesMesh.h" />
-    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockTopMesh.h" />
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\Mesh\MaterialBlockSidesMesh.h" />
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\Mesh\MaterialBlockTopMesh.h" />
     <ClInclude Include="Applications\CNC\Objects\Tools\FlatMillingTool.h" />
     <ClInclude Include="Applications\CNC\Objects\Tools\MillingTool.h" />
     <ClInclude Include="Applications\CNC\Objects\Tools\MillingToolParameters.h" />
     <ClInclude Include="Applications\CNC\Objects\Tools\SphericalMillingTool.h" />
-    <ClInclude Include="Applications\CNC\Simulator\CyrusBeckClippingAlgorithm.h" />
+    <ClInclude Include="Applications\CNC\Simulator\Algorithms\BresenhamAlgorithm.h" />
+    <ClInclude Include="Applications\CNC\Simulator\Algorithms\CyrusBeckClippingAlgorithm.h" />
     <ClInclude Include="Applications\CNC\Simulator\MaterialBlockCutter.h" />
     <ClInclude Include="Applications\CNC\Simulator\MillingSimulator.h" />
     <ClInclude Include="Applications\Shared\DataLayers\ViewportDataLayer.h" />
@@ -327,6 +328,7 @@
     <ClCompile Include="Applications\CNC\Behaviors\Mouse\BaseMouseBehaviorLayerCNC.cpp" />
     <ClCompile Include="Applications\CNC\Behaviors\Mouse\Camera\CameraMouseBehaviorLayerCNC.cpp" />
     <ClCompile Include="Applications\CNC\Behaviors\Mouse\MainMouseBehaviorLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\MaterialBlock\Mesh\MaterialBlockSidesMesh.cpp" />
     <ClCompile Include="Applications\CNC\PathProgram.cpp" />
     <ClCompile Include="Applications\CNC\PathProgram.h" />
     <ClCompile Include="Applications\CNC\DataLayers\Simulation\SimulationDataLayerCNC.cpp" />
@@ -342,12 +344,13 @@
     <ClCompile Include="Applications\CNC\GUI\Viewport\ViewportGuiLayerCNC.cpp" />
     <ClCompile Include="Applications\CNC\Objects\MaterialBlock\MaterialBlock.cpp" />
     <ClCompile Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockParameters.cpp" />
-    <ClCompile Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockTopMesh.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\MaterialBlock\Mesh\MaterialBlockTopMesh.cpp" />
     <ClCompile Include="Applications\CNC\Objects\Tools\FlatMillingTool.cpp" />
     <ClCompile Include="Applications\CNC\Objects\Tools\MillingTool.cpp" />
     <ClCompile Include="Applications\CNC\Objects\Tools\MillingToolParameters.cpp" />
     <ClCompile Include="Applications\CNC\Objects\Tools\SphericalMillingTool.cpp" />
-    <ClCompile Include="Applications\CNC\Simulator\CyrusBeckClippingAlgorithm.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\Algorithms\BresenhamAlgorithm.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\Algorithms\CyrusBeckClippingAlgorithm.cpp" />
     <ClCompile Include="Applications\CNC\Simulator\MaterialBlockCutter.cpp" />
     <ClCompile Include="Applications\CNC\Simulator\MillingSimulator.cpp" />
     <ClCompile Include="Applications\Shared\DataLayers\ViewportDataLayer.cpp" />
@@ -552,6 +555,32 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Hull</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_ds.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_hs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
