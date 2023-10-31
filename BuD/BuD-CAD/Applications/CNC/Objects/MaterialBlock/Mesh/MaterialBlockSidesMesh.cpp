@@ -22,7 +22,7 @@ MaterialBlockSidesMesh::MaterialBlockSidesMesh(BuD::Scene& scene, std::shared_pt
 	shaderPipeline.m_VertexShader = BuD::ShaderLoader::VSLoad("Resources/Shaders/MaterialBlock/material_block_sides_vs.hlsl");
 	shaderPipeline.m_HullShader = BuD::ShaderLoader::HSLoad("Resources/Shaders/MaterialBlock/material_block_sides_hs.hlsl");
 	shaderPipeline.m_DomainShader = BuD::ShaderLoader::DSLoad("Resources/Shaders/MaterialBlock/material_block_sides_ds.hlsl", { 2 * sizeof(dxm::Matrix) });
-	shaderPipeline.m_PixelShader = BuD::ShaderLoader::PSLoad("Resources/Shaders/MaterialBlock/material_block_ps.hlsl");
+	shaderPipeline.m_PixelShader = BuD::ShaderLoader::PSLoad("Resources/Shaders/MaterialBlock/material_block_sides_ps.hlsl");
 
 	auto instancing = BuD::InstanceComponent();
 	instancing.m_InstanceCallback = [this]()

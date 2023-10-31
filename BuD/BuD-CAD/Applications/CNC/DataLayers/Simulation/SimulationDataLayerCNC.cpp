@@ -37,6 +37,14 @@ void SimulationDataLayerCNC::StopSimulation()
 	m_MillingSimulator.Stop();
 }
 
+void SimulationDataLayerCNC::SkipSimulation()
+{
+	while (Running())
+	{
+		m_MillingSimulator.Update(10.0f);
+	}
+}
+
 bool SimulationDataLayerCNC::Running() const
 {
 	return m_MillingSimulator.Running();

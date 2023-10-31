@@ -17,6 +17,7 @@ public:
 
 	virtual void StartSimulation();
 	virtual void StopSimulation();
+	virtual void SkipSimulation();
 
 	virtual bool Running() const;
 	virtual bool Paused() const;

@@ -52,7 +52,7 @@ void SimulationParametersGuiLayer::DrawStartAndSkipButtons()
 	{
 		ImGui::PushStyleColor(ImGuiCol_Button, { 0.6f, 0.0f, 0.0f, 1.0f });
 
-		if (ImGui::Button("Pause simulation", ImVec2(max.x - min.x, 0.0f)))
+		if (ImGui::Button("Stop simulation", ImVec2(max.x - min.x, 0.0f)))
 		{
 			m_MainDataLayer.m_SimulationDataLayer.StopSimulation();
 		}
@@ -69,6 +69,11 @@ void SimulationParametersGuiLayer::DrawStartAndSkipButtons()
 
 	if (ImGui::Button("Skip simulation", ImVec2(max.x - min.x, 0.0f)))
 	{
+		if (!m_MainDataLayer.m_SimulationDataLayer.Running())
+		{
+			m_MainDataLayer.m_SimulationDataLayer.StartSimulation();
+		}
 
+		m_MainDataLayer.m_SimulationDataLayer.SkipSimulation();
 	}
 }

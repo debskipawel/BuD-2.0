@@ -914,6 +914,7 @@
     <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_hs.hlsl" />
     <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_ds.hlsl" />
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_ps.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="testfile.f14" />
