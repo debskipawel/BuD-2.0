@@ -3,6 +3,7 @@
 #include "Algorithms/CyrusBeckClippingAlgorithm.h"
 #include "Algorithms/BresenhamAlgorithm.h"
 
+#include <execution>
 #include <numbers>
 
 MaterialBlockCutter::MaterialBlockCutter(MaterialBlock& materialBlock)
@@ -43,89 +44,7 @@ void MaterialBlockCutter::MoveMillingTool(std::shared_ptr<MillingTool> millingTo
 
 	auto& [betterStartPosition, betterEndPosition] = clippingResult.value();
 
-	auto A = MapWorldSpaceToPixelSpace(betterStartPosition);
-	auto B = MapWorldSpaceToPixelSpace(betterEndPosition);
-
-	auto pixelDiff = B - A;
-
-	auto A1P = MapWorldSpaceToPixelSpace(betterStartPosition - dxm::Vector3(radius, 0.0f, radius));
-	auto A2P = MapWorldSpaceToPixelSpace(betterStartPosition + dxm::Vector3(radius, 0.0f, radius));
-
-	auto xMin = min(A1P.x, A2P.x), xMax = max(A1P.x, A2P.x);
-	auto zMin = min(A1P.y, A2P.y), zMax = max(A1P.y, A2P.y);
-
-	auto materialSize = m_MaterialBlock.Size();
-	auto heightMap = m_MaterialBlock.HeightMap();
-	
-	auto errorMargin = 2.0f * std::numbers::sqrt2_v<float> * max(materialSize.x / heightMap->Width(), materialSize.z / heightMap->Height());
-
-	heightMap->BeginEdit();
-
-	auto maxIterations = 0.0;
-	auto iterationsNotSkipped = 0.0f;
-
-	for (auto dx = 0; dx < xMax - xMin; dx++)
-	{
-		for (auto dz = 0; dz < zMax - zMin; dz++)
-		{
-			maxIterations++;
-
-			auto millingToolCenter = millingTool->CenterPoint();
-			
-			auto pixelInWorldSpace = MapPixelToWorldSpace(xMin + dx, zMin + dz);
-			auto startToPixel = pixelInWorldSpace - startPosition;
-
-			auto localHeight = millingTool->LocalHeight(startToPixel.x, startToPixel.z);
-			auto startHeight = startPosition.y + localHeight, endHeight = endPosition.y + localHeight;
-
-			startToPixel.y = startHeight - millingToolCenter.y;
-
-			auto centerDistanceSq = startToPixel.LengthSquared();
-			auto radiusSq = radius * radius;
-
-			// we only consider points sufficiently close to the border
-			if (centerDistanceSq - radiusSq > 0.0f || centerDistanceSq - radiusSq < -errorMargin)
-			{
-				continue;
-			}
-
-			auto localNormal = millingTool->LocalNormal(startToPixel.x, startToPixel.z);
-
-			if (direction.Dot(localNormal) * direction.Dot(startToPixel) > 0.0f)
-			{
-				continue;
-			}
-
-			iterationsNotSkipped++;
-
-			auto xStart = xMin + dx, xEnd = xStart + pixelDiff.x;
-			auto zStart = zMin + dz, zEnd = zStart + pixelDiff.y;
-
-			bresenhamAlgorithm(xStart, zStart, xEnd, zEnd,
-				[startHeight, endHeight, heightMap](int x, int y, float t)
-				{
-					if (x < 0 || x >= heightMap->Width() || y < 0 || y >= heightMap->Height())
-					{
-						return;
-					}
-
-					auto color = heightMap->Sample(x, y);
-
-					auto currentHeight = color.x;
-					auto toolPointHeight = startHeight + t * (endHeight - startHeight);
-
-					if (toolPointHeight < currentHeight)
-					{
-						heightMap->PutPixel(x, y, { toolPointHeight, toolPointHeight, toolPointHeight, toolPointHeight });
-					}
-				}
-			);
-		}
-	}
-
-	auto percentNotSkipped = 100.0f * iterationsNotSkipped / maxIterations;
-
-	heightMap->EndEdit();
+	MoveMillingToolHorizontally(millingTool, betterStartPosition, betterEndPosition);
 
 	millingTool->MoveTo(endPosition);
 }
@@ -225,6 +144,90 @@ void MaterialBlockCutter::MoveMillingToolVertically(std::shared_ptr<MillingTool>
 			heightMap->PutPixel(x, z, { resultHeight, resultHeight, resultHeight, resultHeight });
 		}
 	}
+
+	heightMap->EndEdit();
+}
+
+void MaterialBlockCutter::MoveMillingToolHorizontally(std::shared_ptr<MillingTool> millingTool, const dxm::Vector3& startPosition, const dxm::Vector3& endPosition)
+{
+	auto direction = endPosition - startPosition;
+	
+	if (direction.LengthSquared() < 1e-3f)
+	{
+		return;
+	}
+	
+	auto worldUp = dxm::Vector3::UnitY;
+
+	auto tangent = direction.Cross(worldUp);
+
+	if (tangent.LengthSquared() < 1e-3f)
+	{
+		return;
+	}
+
+	auto radius = millingTool->Radius();
+
+	tangent.Normalize();
+
+	auto startPointLeftPixel = MapWorldSpaceToPixelSpace(startPosition + radius * tangent);
+	auto startPointRightPixel = MapWorldSpaceToPixelSpace(startPosition - radius * tangent);
+
+	std::vector<std::pair<int, int>> pixelsOnDiameter;
+
+	bresenhamAlgorithm(startPointLeftPixel.x, startPointLeftPixel.y, startPointRightPixel.x, startPointRightPixel.y,
+		[&pixelsOnDiameter](int x, int y, float)
+		{
+			pixelsOnDiameter.emplace_back(x, y);
+		}
+	);
+
+	auto heightMap = m_MaterialBlock.HeightMap();
+	heightMap->BeginEdit();
+
+	std::for_each(std::execution::par, pixelsOnDiameter.begin(), pixelsOnDiameter.end(),
+		[&](std::pair<int, int> arg)
+		{
+			auto& [x, y] = arg;
+
+			auto startPointOnToolDiameter = MapPixelToWorldSpace(x, y);
+			auto startPointOnToolDiameterLocal = startPointOnToolDiameter - startPosition;
+
+			auto cutterStartPointLocal = millingTool->GetCuttingPointInDirection(startPointOnToolDiameterLocal, direction);
+			auto cutterStartPoint = cutterStartPointLocal + startPosition;
+			auto cutterEndPoint = cutterStartPoint + direction;
+
+			auto localHeight = cutterStartPointLocal.y;
+
+			auto globalHeightStart = localHeight + startPosition.y;
+			auto globalHeightEnd = localHeight + endPosition.y;
+
+			auto cutterStartPointPixel = MapWorldSpaceToPixelSpace(cutterStartPoint);
+			auto cutterEndPointPixel = MapWorldSpaceToPixelSpace(cutterEndPoint);
+
+			bresenhamAlgorithm(cutterStartPointPixel.x, cutterStartPointPixel.y, cutterEndPointPixel.x, cutterEndPointPixel.y,
+				[globalHeightStart, globalHeightEnd, heightMap](int x, int y, float t)
+				{
+					if (x < 0 || x >= heightMap->Width() || y < 0 || y >= heightMap->Height())
+					{
+						return;
+					}
+
+					auto color = heightMap->Sample(x, y);
+
+					auto previousHeight = color.x;
+					auto currentHeight = globalHeightStart + t * (globalHeightEnd - globalHeightStart);
+
+					if (currentHeight < previousHeight)
+					{
+						color = dxm::Vector4(currentHeight);
+
+						heightMap->PutPixel(x, y, color);
+					}
+				}
+			);
+		}
+	);
 
 	heightMap->EndEdit();
 }

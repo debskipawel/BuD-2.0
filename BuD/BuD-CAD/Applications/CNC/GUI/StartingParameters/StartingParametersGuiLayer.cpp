@@ -3,9 +3,9 @@
 #include <imgui.h>
 
 StartingParametersGuiLayer::StartingParametersGuiLayer(MainDataLayerCNC& dataLayer)
-	: BaseGuiLayerCNC(dataLayer), m_ResolutionSelectedIndex(1), m_BlockParameters(MaterialBlockParameters::DEFAULT_PARAMETERS)
+	: BaseGuiLayerCNC(dataLayer), m_ResolutionSelectedIndex(2), m_BlockParameters(MaterialBlockParameters::DEFAULT_PARAMETERS)
 {
-	m_AvailableResolutions = { 512, 1024, 2048, 4096, 8192 };
+	m_AvailableResolutions = { 256, 512, 1024, 2048 };
 }
 
 void StartingParametersGuiLayer::DrawGui()

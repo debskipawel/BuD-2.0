@@ -70,6 +70,32 @@ dxm::Vector3 FlatMillingTool::CenterPoint() const
 	return m_Position;
 }
 
+dxm::Vector3 FlatMillingTool::GetCuttingPointInDirection(dxm::Vector3 pointOnDiameter, dxm::Vector3 direction)
+{
+	auto directionOnXZ = dxm::Vector3(direction.x, 0.0f, direction.z);
+	auto worldUp = dxm::Vector3::UnitY;
+	
+	pointOnDiameter.y = LocalHeight(pointOnDiameter.x, pointOnDiameter.z);
+
+	if (direction.LengthSquared() < 1e-3f || directionOnXZ.LengthSquared() < 1e-3f)
+	{
+		return pointOnDiameter;
+	}
+
+	direction.Normalize();
+
+	auto x = pointOnDiameter.x, y = pointOnDiameter.z;
+	auto radius = Radius();
+	
+	auto shiftSq = std::fmaxf(radius * radius - (x * x + y * y), 0.0f);
+	auto shift = std::sqrtf(shiftSq);
+	auto scale = (worldUp.Dot(direction) >= 0 ? 1.0f : -1.0f);
+
+	auto newPoint = pointOnDiameter + scale * shift * direction;
+
+	return newPoint;
+}
+
 float FlatMillingTool::LocalHeight(float x, float y)
 {
 	if (x * x + y * y > m_Parameters.m_Radius * m_Parameters.m_Radius)

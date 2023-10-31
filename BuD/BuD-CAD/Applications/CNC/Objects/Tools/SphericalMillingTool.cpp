@@ -93,6 +93,46 @@ dxm::Vector3 SphericalMillingTool::CenterPoint() const
 	return m_Position + dxm::Vector3::UnitY * Radius();
 }
 
+dxm::Vector3 SphericalMillingTool::GetCuttingPointInDirection(dxm::Vector3 pointOnDiameter, dxm::Vector3 direction)
+{
+	auto directionOnXZ = dxm::Vector3(direction.x, 0.0f, direction.z);
+	auto worldUp = dxm::Vector3::UnitY;
+
+	pointOnDiameter.y = LocalHeight(pointOnDiameter.x, pointOnDiameter.z);
+
+	if (direction.LengthSquared() < 1e-3f || directionOnXZ.LengthSquared() < 1e-3f)
+	{
+		return pointOnDiameter;
+	}
+
+	auto k = direction.Cross(directionOnXZ);
+
+	if (k.LengthSquared() < 1e-3f)
+	{
+		return pointOnDiameter;
+	}
+
+	k.Normalize();
+
+	directionOnXZ.Normalize();
+	direction.Normalize();
+
+	auto ca = direction.Dot(directionOnXZ);
+	auto sa = std::sqrtf(1.0f - ca * ca);
+
+	auto centerPoint = CenterPoint();
+	auto localCenterPoint = centerPoint - m_Position;
+
+	auto v = pointOnDiameter - localCenterPoint;
+
+	// Rodrigues formula
+	auto vRot = v * ca + k.Cross(v) * sa + (1.0f - ca) * k.Dot(v) * k;
+
+	auto newPoint = localCenterPoint + vRot;
+
+	return newPoint;
+}
+
 float SphericalMillingTool::LocalHeight(float x, float y)
 {
 	auto radius = m_Parameters.m_Radius;
