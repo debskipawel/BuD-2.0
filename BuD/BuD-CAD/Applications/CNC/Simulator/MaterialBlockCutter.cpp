@@ -115,8 +115,8 @@ void MaterialBlockCutter::MoveMillingToolVertically(std::shared_ptr<MillingTool>
 
 	auto minPixelX = std::clamp(static_cast<int>(minPointPixel.x), 0, static_cast<int>(pixelWidth - 1));
 	auto maxPixelX = std::clamp(static_cast<int>(maxPointPixel.x), 0, static_cast<int>(pixelWidth - 1));
-	auto minPixelZ = std::clamp(static_cast<int>(minPointPixel.x), 0, static_cast<int>(pixelHeight - 1));
-	auto maxPixelZ = std::clamp(static_cast<int>(maxPointPixel.x), 0, static_cast<int>(pixelHeight - 1));
+	auto minPixelZ = std::clamp(static_cast<int>(minPointPixel.y), 0, static_cast<int>(pixelHeight - 1));
+	auto maxPixelZ = std::clamp(static_cast<int>(maxPointPixel.y), 0, static_cast<int>(pixelHeight - 1));
 
 	heightMap->BeginEdit();
 
@@ -185,7 +185,7 @@ void MaterialBlockCutter::MoveMillingToolHorizontally(std::shared_ptr<MillingToo
 	auto heightMap = m_MaterialBlock.HeightMap();
 	heightMap->BeginEdit();
 
-	std::for_each(std::execution::par, pixelsOnDiameter.begin(), pixelsOnDiameter.end(),
+	std::for_each(pixelsOnDiameter.begin(), pixelsOnDiameter.end(),
 		[&](std::pair<int, int> arg)
 		{
 			auto& [x, y] = arg;
@@ -193,7 +193,7 @@ void MaterialBlockCutter::MoveMillingToolHorizontally(std::shared_ptr<MillingToo
 			auto startPointOnToolDiameter = MapPixelToWorldSpace(x, y);
 			auto startPointOnToolDiameterLocal = startPointOnToolDiameter - startPosition;
 
-			auto cutterStartPointLocal = millingTool->GetCuttingPointInDirection(startPointOnToolDiameterLocal, direction);
+			auto cutterStartPointLocal = millingTool->GetCuttingPointInDirection(startPointOnToolDiameterLocal.x, startPointOnToolDiameterLocal.z, direction);
 			auto cutterStartPoint = cutterStartPointLocal + startPosition;
 			auto cutterEndPoint = cutterStartPoint + direction;
 
@@ -228,6 +228,47 @@ void MaterialBlockCutter::MoveMillingToolHorizontally(std::shared_ptr<MillingToo
 			);
 		}
 	);
+
+	auto minPoint = endPosition - dxm::Vector3(radius, 0.0f, radius);
+	auto maxPoint = endPosition + dxm::Vector3(radius, 0.0f, radius);
+
+	auto minPointPixel = MapWorldSpaceToPixelSpace(minPoint);
+	auto maxPointPixel = MapWorldSpaceToPixelSpace(maxPoint);
+
+	auto pixelWidth = heightMap->Width(), pixelHeight = heightMap->Height();
+
+	auto minPixelX = std::clamp(static_cast<int>(minPointPixel.x), 0, static_cast<int>(pixelWidth - 1));
+	auto maxPixelX = std::clamp(static_cast<int>(maxPointPixel.x), 0, static_cast<int>(pixelWidth - 1));
+	auto minPixelZ = std::clamp(static_cast<int>(minPointPixel.y), 0, static_cast<int>(pixelHeight - 1));
+	auto maxPixelZ = std::clamp(static_cast<int>(maxPointPixel.y), 0, static_cast<int>(pixelHeight - 1));
+
+	for (auto x = min(minPixelX, maxPixelX); x <= max(minPixelX, maxPixelX); ++x)
+	{
+		for (auto z = min(minPixelZ, maxPixelZ); z <= max(minPixelZ, maxPixelZ); ++z)
+		{
+			auto pixel = MapPixelToWorldSpace(x, z);
+			auto toPixel = pixel - endPosition;
+
+			toPixel.y = 0.0f;
+
+			if (toPixel.LengthSquared() > radius * radius)
+			{
+				continue;
+			}
+
+			auto color = heightMap->Sample(x, z);
+
+			auto localHeight = millingTool->LocalHeight(toPixel.x, toPixel.z);
+
+			auto previousHeight = color.x;
+			auto currentHeight = endPosition.y + localHeight;
+
+			if (currentHeight < previousHeight)
+			{
+				heightMap->PutPixel(x, z, { currentHeight, currentHeight, currentHeight, currentHeight });
+			}
+		}
+	}
 
 	heightMap->EndEdit();
 }

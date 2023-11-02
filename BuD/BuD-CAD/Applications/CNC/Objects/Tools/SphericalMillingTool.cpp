@@ -93,12 +93,12 @@ dxm::Vector3 SphericalMillingTool::CenterPoint() const
 	return m_Position + dxm::Vector3::UnitY * Radius();
 }
 
-dxm::Vector3 SphericalMillingTool::GetCuttingPointInDirection(dxm::Vector3 pointOnDiameter, dxm::Vector3 direction)
+dxm::Vector3 SphericalMillingTool::GetCuttingPointInDirection(float x, float y, dxm::Vector3 direction)
 {
 	auto directionOnXZ = dxm::Vector3(direction.x, 0.0f, direction.z);
 	auto worldUp = dxm::Vector3::UnitY;
 
-	pointOnDiameter.y = LocalHeight(pointOnDiameter.x, pointOnDiameter.z);
+	auto pointOnDiameter = dxm::Vector3(x, LocalHeight(x, y), y);
 
 	if (direction.LengthSquared() < 1e-3f || directionOnXZ.LengthSquared() < 1e-3f)
 	{
