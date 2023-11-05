@@ -209,6 +209,14 @@
     <ClInclude Include="Applications\CNC\Simulator\MillingSimulatorAsync.h" />
     <ClInclude Include="Applications\CNC\Simulator\MillingSimulatorThread.h" />
     <ClInclude Include="Applications\CNC\Simulator\MillingValidation.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\NonMillingPartToolMoveValidationLayer.h" />
+    <ClInclude Include="Applications\CNC\Simulator\ToolCut.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\AbstractToolMoveValidationLayer.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ToolMoveValidationAggregator.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ToolMoveValidationError.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\AnyContactToolMoveValidationLayer.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\ToolImmersionToolMoveValidationLayer.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\VerticalMovementToolMoveValidationLayer.h" />
     <ClInclude Include="Applications\Shared\DataLayers\ViewportDataLayer.h" />
     <ClInclude Include="Applications\Switcher\ApplicationSwitcher.h" />
     <ClInclude Include="Applications\Switcher\DataLayers\MainDataLayerSwitcher.h" />
@@ -356,6 +364,11 @@
     <ClCompile Include="Applications\CNC\Simulator\MaterialBlockCutter.cpp" />
     <ClCompile Include="Applications\CNC\Simulator\MillingSimulatorAsync.cpp" />
     <ClCompile Include="Applications\CNC\Simulator\MillingSimulatorThread.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ToolMoveValidationAggregator.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\AnyContactToolMoveValidationLayer.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\NonMillingPartToolMoveValidationLayer.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\ToolImmersionToolMoveValidationLayer.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\VerticalMovementToolMoveValidationLayer.cpp" />
     <ClCompile Include="Applications\Shared\DataLayers\ViewportDataLayer.cpp" />
     <ClCompile Include="Applications\Switcher\ApplicationSwitcher.cpp" />
     <ClCompile Include="Applications\Switcher\DataLayers\MainDataLayerSwitcher.cpp" />

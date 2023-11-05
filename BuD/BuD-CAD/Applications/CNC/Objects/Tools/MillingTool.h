@@ -17,7 +17,9 @@ public:
 
 	virtual dxm::Vector3 CenterPoint() const = 0;
 	virtual dxm::Vector3 Position() const;
+	
 	virtual float Radius() const;
+	virtual float Height() const;
 
 	virtual dxm::Vector3 GetCuttingPointInDirection(float x, float y, dxm::Vector3 direction) = 0;
 

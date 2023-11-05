@@ -1,0 +1,23 @@
+#include "ToolMoveValidationAggregator.h"
+
+ToolMoveValidationAgregator::ToolMoveValidationAgregator(const std::vector<std::shared_ptr<AbstractToolMoveValidationLayer>>& validationLayers)
+    : m_ValidationLayers(validationLayers)
+{
+}
+
+std::vector<ToolMoveValidationError> ToolMoveValidationAgregator::ValidateMove(const ToolCut& toolCut)
+{
+    auto errors = std::vector<ToolMoveValidationError>();
+
+    for (const auto& validationLayer : m_ValidationLayers)
+    {
+        auto validationResult = validationLayer->ValidateMove(toolCut);
+
+        if (validationResult.has_value())
+        {
+            errors.push_back(validationResult.value());
+        }
+    }
+
+    return errors;
+}

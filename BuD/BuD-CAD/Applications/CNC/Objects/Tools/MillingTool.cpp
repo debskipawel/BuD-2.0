@@ -24,3 +24,8 @@ float MillingTool::Radius() const
 {
 	return m_Parameters.m_Radius;
 }
+
+float MillingTool::Height() const
+{
+	return m_Parameters.m_Height;
+}

@@ -468,6 +468,30 @@
     <ClInclude Include="Applications\CNC\Simulator\MillingValidation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ToolMoveValidationError.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\AbstractToolMoveValidationLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ToolMoveValidationAggregator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\AnyContactToolMoveValidationLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\VerticalMovementToolMoveValidationLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Simulator\ToolCut.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\ToolImmersionToolMoveValidationLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\NonMillingPartToolMoveValidationLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Applications\CAD\ApplicationCAD.cpp">
@@ -852,6 +876,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CNC\Simulator\MillingSimulatorThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ToolMoveValidationAggregator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\AnyContactToolMoveValidationLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\VerticalMovementToolMoveValidationLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\ToolImmersionToolMoveValidationLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\NonMillingPartToolMoveValidationLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
