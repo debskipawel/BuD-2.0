@@ -1,32 +1,22 @@
 #pragma once
 
-#include <mutex>
-#include <thread>
+#include <vector>
 
-#include <Commands/UnitSystem/GCodeUnitSystem.h>
 #include <Visitors/GCodeCommandVisitor.h>
 
 #include <Applications/CNC/PathProgram.h>
-#include <Applications/CNC/Objects/MaterialBlock/MaterialBlock.h>
+#include <Applications/CNC/Objects/MaterialBlock/MaterialBlockParameters.h>
+#include <Applications/CNC/Simulator/MillingValidation.h>
 
-class MillingSimulator : public GCP::GCodeCommandVisitor
+class MillingSimulatorThread : public GCP::GCodeCommandVisitor
 {
 public:
-	MillingSimulator(BuD::Scene& scene);
-
-	virtual void UploadPath(std::shared_ptr<PathProgram> pathProgram);
-	virtual void ResetMaterial(const MaterialBlockParameters& materialParameters, uint32_t resolutionWidth, uint32_t resolutionHeight);
-
-	virtual void Start();
-	virtual void Stop();
-
-	virtual bool Running() const { return m_Running; }
-	virtual bool Paused() const { return m_Paused; }
+	MillingSimulatorThread(MaterialBlockParameters blockParameters, std::shared_ptr<PathProgram> program, std::vector<float>& heightMap);
 
 	virtual void Update(float deltaTime);
-	virtual void ResetToDefault();
 
-	virtual void SimulationLoop();
+	virtual void ResetSettingsToDefault();
+	virtual bool Finished() const;
 
 	virtual void Visit(GCP::FastToolMoveCommand& command) override;
 	virtual void Visit(GCP::SlowToolMoveCommand& command) override;
@@ -40,12 +30,14 @@ public:
 	virtual void Visit(GCP::ToolPositioningIncrementalCommand& command) override;
 
 protected:
-	virtual void MoveTool(const dxm::Vector3& finalToolPosition, float speed);
+	virtual void MoveTool(dxm::Vector3 finalToolPosition, float speed, MillingValidation validationType);
 
-	std::jthread m_SimulationThread;
+	MaterialBlockParameters m_MaterialBlockParameters;
+	std::shared_ptr<PathProgram> m_Program;
+	std::vector<float>& m_HeightMap;
 
-	bool m_Running;
-	bool m_Paused;
+	uint32_t m_CommandIndex;
+	float m_TimeLeft;
 
 	bool m_PositioningAbsolute;
 
@@ -55,15 +47,7 @@ protected:
 
 	GCP::GCodeUnitSystem m_UnitSystem;
 
-	float m_TimeLeft;
-	std::mutex m_TimeLeftMutex;
-
-	size_t m_CommandIndex;
-
 	dxm::Vector3 m_PreviousToolPosition;
-
-	std::shared_ptr<PathProgram> m_UploadedProgram;
-	std::unique_ptr<MaterialBlock> m_MaterialBlock;
 
 private:
 	static std::unordered_map<GCP::GCodeUnitSystem, float> s_CentimeterScaleValuesMap;

@@ -5,7 +5,8 @@
 #include <Commands/UnitSystem/GCodeUnitSystem.h>
 
 #include <Applications/CNC/PathProgram.h>
-#include <Applications/CNC/Simulator/MillingSimulator.h>
+#include <Applications/CNC/Simulator/MillingSimulatorAsync.h>
+#include <Applications/CNC/Objects/MaterialBlock/MaterialBlock.h>
 
 struct SimulationDataLayerCNC
 {
@@ -13,7 +14,7 @@ public:
 	SimulationDataLayerCNC();
 
 	virtual void Update(float deltaTime);
-	virtual void ResetMaterial(const MaterialBlockParameters& materialParameters, uint32_t resolutionWidth, uint32_t resolutionHeight);
+	virtual void ResetMaterial(const MaterialBlockParameters& materialParameters);
 
 	virtual void StartSimulation();
 	virtual void StopSimulation();
@@ -31,7 +32,9 @@ public:
 
 protected:
 
-	MillingSimulator m_MillingSimulator;
+	MillingSimulatorAsync m_MillingSimulator;
+
+	MaterialBlock m_MaterialBlockMesh;
 
 	std::shared_ptr<PathProgram> m_SelectedPath = std::shared_ptr<PathProgram>();
 };

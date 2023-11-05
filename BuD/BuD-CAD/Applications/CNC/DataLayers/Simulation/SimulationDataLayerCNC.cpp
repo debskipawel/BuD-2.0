@@ -3,7 +3,7 @@
 #include <numbers>
 
 SimulationDataLayerCNC::SimulationDataLayerCNC()
-	: m_Scene(), m_SimulationSpeed(1.0f), m_MillingSimulator(m_Scene)
+	: m_Scene(), m_SimulationSpeed(1.0f), m_MillingSimulator(), m_MaterialBlockMesh(m_Scene, MaterialBlockParameters::DEFAULT_PARAMETERS)
 {
 	auto camera = m_Scene.ActiveCamera();
 	camera->Zoom(20.0f);
@@ -20,11 +20,22 @@ void SimulationDataLayerCNC::Update(float deltaTime)
 	auto scaledDeltaTime = m_SimulationSpeed * deltaTime;
 
 	m_MillingSimulator.Update(scaledDeltaTime);
+
+	// TODO: update the heightmap texture based on data from the simulation
+	auto heightMap = m_MaterialBlockMesh.HeightMap();
+
+	heightMap->BeginEdit();
+
+	heightMap->CopyFromBuffer(m_MillingSimulator.Results());
+
+	heightMap->EndEdit();
 }
 
-void SimulationDataLayerCNC::ResetMaterial(const MaterialBlockParameters& materialParameters, uint32_t resolutionWidth, uint32_t resolutionHeight)
+void SimulationDataLayerCNC::ResetMaterial(const MaterialBlockParameters& materialParameters)
 {
-	m_MillingSimulator.ResetMaterial(materialParameters, resolutionWidth, resolutionHeight);
+	m_MillingSimulator.ResetMaterial(materialParameters);
+
+	m_MaterialBlockMesh = MaterialBlock(m_Scene, materialParameters);
 }
 
 void SimulationDataLayerCNC::StartSimulation()
@@ -39,10 +50,7 @@ void SimulationDataLayerCNC::StopSimulation()
 
 void SimulationDataLayerCNC::SkipSimulation()
 {
-	while (Running())
-	{
-		m_MillingSimulator.Update(10.0f);
-	}
+	m_MillingSimulator.Skip();
 }
 
 bool SimulationDataLayerCNC::Running() const

@@ -15,6 +15,8 @@ namespace BuD
 		void BeginEdit();
 		void EndEdit();
 
+		void CopyFromBuffer(const std::vector<float>& buffer);
+
 		dxm::Vector4 Sample(float x, float y);
 
 		void Clear(dxm::Vector4 color);

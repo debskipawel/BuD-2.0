@@ -8,6 +8,7 @@ class MaterialBlockSidesMesh
 {
 public:
 	MaterialBlockSidesMesh(BuD::Scene& scene, std::shared_ptr<BuD::EditableTexture> heightMap, std::shared_ptr<BuD::Texture> surfaceTexture, MaterialBlockParameters blockParameters, dxm::Vector3 position);
+	~MaterialBlockSidesMesh();
 
 	virtual void UpdateMaterialBlockParameters(MaterialBlockParameters blockParameters);
 	virtual void UpdatePosition(dxm::Vector3 position);

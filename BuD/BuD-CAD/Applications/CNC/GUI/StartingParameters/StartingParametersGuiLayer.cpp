@@ -81,6 +81,9 @@ void StartingParametersGuiLayer::DrawResetSizeButton()
 	{
 		auto resolution = m_AvailableResolutions[m_ResolutionSelectedIndex];
 
-		m_MainDataLayer.m_SimulationDataLayer.ResetMaterial(m_BlockParameters, resolution, resolution);
+		m_BlockParameters.m_ResolutionWidth = resolution;
+		m_BlockParameters.m_ResolutionHeight = resolution;
+
+		m_MainDataLayer.m_SimulationDataLayer.ResetMaterial(m_BlockParameters);
 	}
 }

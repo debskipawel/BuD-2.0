@@ -69,6 +69,11 @@ MaterialBlockSidesMesh::MaterialBlockSidesMesh(BuD::Scene& scene, std::shared_pt
 	m_SidesEntity.AddComponent<BuD::IRenderable>(renderingPasses);
 }
 
+MaterialBlockSidesMesh::~MaterialBlockSidesMesh()
+{
+	m_SidesEntity->DestroyEntity(m_SidesEntity);
+}
+
 void MaterialBlockSidesMesh::UpdateMaterialBlockParameters(MaterialBlockParameters blockParameters)
 {
 	if (m_BlockParameters == blockParameters)

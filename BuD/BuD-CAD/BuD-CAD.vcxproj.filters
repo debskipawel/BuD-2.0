@@ -450,9 +450,6 @@
     <ClInclude Include="Applications\CNC\DataLayers\Simulation\SimulationDataLayerCNC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CNC\Simulator\MillingSimulator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Applications\CNC\Simulator\MaterialBlockCutter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -460,6 +457,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CNC\Simulator\Algorithms\BresenhamAlgorithm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Simulator\MillingSimulatorAsync.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Simulator\MillingSimulatorThread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Simulator\MillingValidation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -830,9 +836,6 @@
     <ClCompile Include="Applications\CNC\DataLayers\Simulation\SimulationDataLayerCNC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Applications\CNC\Simulator\MillingSimulator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Applications\CNC\Simulator\MaterialBlockCutter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -843,6 +846,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CNC\Simulator\Algorithms\BresenhamAlgorithm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Simulator\MillingSimulatorAsync.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Simulator\MillingSimulatorThread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

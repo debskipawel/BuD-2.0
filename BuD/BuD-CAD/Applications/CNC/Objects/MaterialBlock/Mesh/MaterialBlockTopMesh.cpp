@@ -69,6 +69,11 @@ MaterialBlockTopMesh::MaterialBlockTopMesh(BuD::Scene& scene, std::shared_ptr<Bu
 	m_TopEntity.AddComponent<BuD::IRenderable>(renderingPasses);
 }
 
+MaterialBlockTopMesh::~MaterialBlockTopMesh()
+{
+	m_TopEntity->DestroyEntity(m_TopEntity);
+}
+
 void MaterialBlockTopMesh::UpdateMaterialBlockParameters(MaterialBlockParameters blockParameters)
 {
 	if (m_BlockParameters == blockParameters)
