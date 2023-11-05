@@ -6,7 +6,7 @@
 #include <execution>
 #include <numbers>
 
-MaterialBlockCutter::MaterialBlockCutter(MaterialBlockParameters materialBlock, std::function<void(int, int, float)> putPixelHandler)
+MaterialBlockCutter::MaterialBlockCutter(MaterialBlockParameters materialBlock, std::function<void(int, int, ToolCut&)> putPixelHandler)
 	: m_MaterialBlock(materialBlock), m_PutPixelHandler(putPixelHandler)
 {
 }
@@ -156,16 +156,21 @@ void MaterialBlockCutter::MoveMillingToolHorizontally(std::shared_ptr<MillingToo
 			auto cutterEndPointPixel = MapWorldSpaceToPixelSpace(cutterEndPoint);
 
 			bresenhamAlgorithm(cutterStartPointPixel.x, cutterStartPointPixel.y, cutterEndPointPixel.x, cutterEndPointPixel.y,
-				[this, globalHeightStart, globalHeightEnd, width, height](int x, int y, float t)
+				[&](int x, int y, float t)
 				{
 					if (x < 0 || x >= width || y < 0 || y >= height)
 					{
 						return;
 					}
 
-					auto currentHeight = globalHeightStart + t * (globalHeightEnd - globalHeightStart);
+					auto toolCut = ToolCut();
 
-					m_PutPixelHandler(x, y, currentHeight);
+					toolCut.m_Direction = direction;
+					toolCut.m_PointOnTool = cutterStartPointLocal;
+					toolCut.m_RequestedHeight = globalHeightStart + t * (globalHeightEnd - globalHeightStart);
+					toolCut.m_Tool = millingTool;
+
+					m_PutPixelHandler(x, y, toolCut);
 				}
 			);
 		}
@@ -205,10 +210,14 @@ void MaterialBlockCutter::CutCircle(std::shared_ptr<MillingTool> millingTool, co
 				continue;
 			}
 
-			auto localHeight = millingTool->LocalHeight(toPixel.x, toPixel.z);
-			auto currentHeight = endPosition.y + localHeight;
+			auto toolCut = ToolCut();
 
-			m_PutPixelHandler(x, z, currentHeight);
+			toolCut.m_PointOnTool = dxm::Vector3(toPixel.x, millingTool->LocalHeight(toPixel.x, toPixel.z), toPixel.z);
+			toolCut.m_RequestedHeight = endPosition.y + toolCut.m_PointOnTool.y;
+			toolCut.m_Direction = dxm::Vector3::UnitY;
+			toolCut.m_Tool = millingTool;
+
+			m_PutPixelHandler(x, z, toolCut);
 		}
 	}
 }

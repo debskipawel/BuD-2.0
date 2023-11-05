@@ -3,10 +3,12 @@
 #include <Applications/CNC/Objects/Tools/MillingTool.h>
 #include <Applications/CNC/Objects/MaterialBlock/MaterialBlockParameters.h>
 
+#include <Applications/CNC/Simulator/ToolCut.h>
+
 class MaterialBlockCutter
 {
 public:
-	MaterialBlockCutter(MaterialBlockParameters materialBlock, std::function<void(int, int, float)> putPixelHandler);
+	MaterialBlockCutter(MaterialBlockParameters materialBlock, std::function<void(int, int, ToolCut&)> putPixelHandler);
 
 	virtual void MoveMillingTool(std::shared_ptr<MillingTool> millingTool, const dxm::Vector3& endPosition);
 
@@ -25,5 +27,5 @@ protected:
 	virtual dxm::Vector2 MapLocalMaterialSpaceToPixelSpace(const dxm::Vector3& p);
 
 	MaterialBlockParameters m_MaterialBlock;
-	std::function<void(int, int, float)> m_PutPixelHandler;
+	std::function<void(int, int, ToolCut&)> m_PutPixelHandler;
 };

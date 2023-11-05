@@ -150,24 +150,24 @@ void MillingSimulatorThread::MoveTool(dxm::Vector3 finalToolPosition, float spee
 		: timeFractionUsed * distance * toolMoveVector;
 
 	auto materialCutter = MaterialBlockCutter(m_MaterialBlockParameters, 
-		[this](int x, int y, float height) 
+		[this](int x, int y, ToolCut& toolCut) 
 		{
 			auto pixelWidth = m_MaterialBlockParameters.m_ResolutionWidth;
 			auto pixelHeight = m_MaterialBlockParameters.m_ResolutionHeight;
 
 			auto index = 4 * (y * pixelWidth + x);
 
-			auto currentHeight = m_HeightMap[index];
+			toolCut.m_PreviousHeight = m_HeightMap[index];
 
-			if (currentHeight <= height || std::isnan(height))
+			if (std::isnan(toolCut.m_RequestedHeight) || toolCut.m_PreviousHeight <= toolCut.m_RequestedHeight)
 			{
 				return;
 			}
 
-			m_HeightMap[index] = height;
-			m_HeightMap[index + 1] = height;
-			m_HeightMap[index + 2] = height;
-			m_HeightMap[index + 3] = height;
+			m_HeightMap[index] = toolCut.m_RequestedHeight;
+			m_HeightMap[index + 1] = toolCut.m_RequestedHeight;
+			m_HeightMap[index + 2] = toolCut.m_RequestedHeight;
+			m_HeightMap[index + 3] = toolCut.m_RequestedHeight;
 		}
 	);
 
