@@ -30,8 +30,9 @@ public:
 	virtual float LocalHeight(float x, float y) = 0;
 	virtual dxm::Vector3 LocalNormal(float x, float y) = 0;
 
-protected:
 	MillingToolParameters m_Parameters;
+
+protected:
 	dxm::Vector3 m_Position;
 
 	BuD::SceneEntity m_MillEntity;

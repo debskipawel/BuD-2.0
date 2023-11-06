@@ -19,10 +19,16 @@ void MaterialBlockCutter::MoveMillingTool(std::shared_ptr<MillingTool> millingTo
 	auto worldUp = dxm::Vector3::UnitY;
 
 	auto direction = endPosition - startPosition;
+	
+	if (direction.LengthSquared() < 1e-6f)
+	{
+		return;
+	}
+	
 	auto tangent = direction.Cross(worldUp);
 	
 	// edge case - vertical move (not validated yet)
-	if (tangent.LengthSquared() < 1e-4)
+	if (tangent.LengthSquared() < 1e-6f)
 	{
 		MoveMillingToolVertically(millingTool, endPosition);
 
@@ -50,7 +56,7 @@ std::optional<std::pair<dxm::Vector3, dxm::Vector3>> MaterialBlockCutter::ClipMi
 
 	auto tangent = worldDirection.Cross(worldUp);
 
-	if (tangent.LengthSquared() < 1e-3f)
+	if (tangent.LengthSquared() < 1e-6f)
 	{
 		return std::nullopt;
 	}
@@ -96,14 +102,14 @@ std::optional<std::pair<dxm::Vector3, dxm::Vector3>> MaterialBlockCutter::ClipMi
 
 void MaterialBlockCutter::MoveMillingToolVertically(std::shared_ptr<MillingTool> millingTool, const dxm::Vector3& endPosition)
 {
-	CutCircle(millingTool, endPosition);
+	CutCircle(millingTool, endPosition, dxm::Vector3::UnitY);
 }
 
 void MaterialBlockCutter::MoveMillingToolHorizontally(std::shared_ptr<MillingTool> millingTool, const dxm::Vector3& startPosition, const dxm::Vector3& endPosition)
 {
 	auto direction = endPosition - startPosition;
 	
-	if (direction.LengthSquared() < 1e-3f)
+	if (direction.LengthSquared() < 1e-6f)
 	{
 		return;
 	}
@@ -112,7 +118,7 @@ void MaterialBlockCutter::MoveMillingToolHorizontally(std::shared_ptr<MillingToo
 
 	auto tangent = direction.Cross(worldUp);
 
-	if (tangent.LengthSquared() < 1e-3f)
+	if (tangent.LengthSquared() < 1e-6f)
 	{
 		return;
 	}
@@ -176,10 +182,10 @@ void MaterialBlockCutter::MoveMillingToolHorizontally(std::shared_ptr<MillingToo
 		}
 	);
 
-	CutCircle(millingTool, endPosition);
+	CutCircle(millingTool, endPosition, direction);
 }
 
-void MaterialBlockCutter::CutCircle(std::shared_ptr<MillingTool> millingTool, const dxm::Vector3& endPosition)
+void MaterialBlockCutter::CutCircle(std::shared_ptr<MillingTool> millingTool, const dxm::Vector3& endPosition, const dxm::Vector3& direction)
 {
 	auto radius = millingTool->Radius();
 
@@ -214,7 +220,7 @@ void MaterialBlockCutter::CutCircle(std::shared_ptr<MillingTool> millingTool, co
 
 			toolCut.m_PointOnTool = dxm::Vector3(toPixel.x, millingTool->LocalHeight(toPixel.x, toPixel.z), toPixel.z);
 			toolCut.m_RequestedHeight = endPosition.y + toolCut.m_PointOnTool.y;
-			toolCut.m_Direction = dxm::Vector3::UnitY;
+			toolCut.m_Direction = direction;
 			toolCut.m_Tool = millingTool;
 
 			m_PutPixelHandler(x, z, toolCut);

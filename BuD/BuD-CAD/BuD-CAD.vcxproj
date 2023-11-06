@@ -191,6 +191,7 @@
     <ClInclude Include="Applications\CNC\GUI\BaseGuiLayerCNC.h" />
     <ClInclude Include="Applications\CNC\GUI\MainGuiLayerCNC.h" />
     <ClInclude Include="Applications\CNC\GUI\MenuBar\MenuBarGuiLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\GUI\MillingTool\MillingToolGuiLayerCNC.h" />
     <ClInclude Include="Applications\CNC\GUI\PathList\PathListGuiLayerCNC.h" />
     <ClInclude Include="Applications\CNC\GUI\SimulationParameters\SimulationParametersGuiLayer.h" />
     <ClInclude Include="Applications\CNC\GUI\StartingParameters\StartingParametersGuiLayer.h" />
@@ -340,6 +341,7 @@
     <ClCompile Include="Applications\CNC\Behaviors\Mouse\BaseMouseBehaviorLayerCNC.cpp" />
     <ClCompile Include="Applications\CNC\Behaviors\Mouse\Camera\CameraMouseBehaviorLayerCNC.cpp" />
     <ClCompile Include="Applications\CNC\Behaviors\Mouse\MainMouseBehaviorLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\GUI\MillingTool\MillingToolGuiLayerCNC.cpp" />
     <ClCompile Include="Applications\CNC\Objects\MaterialBlock\Mesh\MaterialBlockSidesMesh.cpp" />
     <ClCompile Include="Applications\CNC\Objects\Tools\Visitors\MillingToolVisitor.cpp" />
     <ClCompile Include="Applications\CNC\Objects\Tools\Visitors\ValidationAggregatorFactoryMillingToolVisitor.cpp" />

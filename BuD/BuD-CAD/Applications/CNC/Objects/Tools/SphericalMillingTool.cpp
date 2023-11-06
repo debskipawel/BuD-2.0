@@ -29,7 +29,7 @@ SphericalMillingTool::SphericalMillingTool(BuD::Scene& scene, const MillingToolP
 
 		renderingPass.m_PreRenderCallback = [this](const BuD::RenderingPass& renderingPass, const BuD::Scene& scene)
 		{
-			auto modelMatrix = dxm::Matrix::CreateScale(m_Parameters.m_Radius, m_Parameters.m_Height / BASE_MESH_MILLING_TOOL_HEIGHT, m_Parameters.m_Radius) 
+			auto modelMatrix = dxm::Matrix::CreateScale(m_Parameters.m_Radius, (m_Parameters.m_Height - m_Parameters.m_Radius) / BASE_MESH_MILLING_TOOL_HEIGHT, m_Parameters.m_Radius)
 				* dxm::Matrix::CreateTranslation(m_Position + m_Parameters.m_Radius * dxm::Vector3::UnitY);
 			auto viewMatrix = scene.ActiveCamera()->ViewMatrix();
 			auto projMatrix = BuD::Renderer::ProjectionMatrix();
