@@ -78,10 +78,12 @@ void MillingSimulatorWorkerThread::Visit(GCP::FastToolMoveCommand& command)
 
 	auto unitScale = s_CentimeterScaleValuesMap.at(m_UnitSystem);
 
-	auto finalToolPosition = unitScale * dxm::Vector3(
-		command.m_X.value_or(m_PositioningAbsolute ? m_PreviousToolPosition.x : 0.0f),
-		command.m_Y.value_or(m_PositioningAbsolute ? m_PreviousToolPosition.y : 0.0f),
-		command.m_Z.value_or(m_PositioningAbsolute ? m_PreviousToolPosition.z : 0.0f)
+	auto previousPosition = m_PositioningAbsolute ? m_PreviousToolPosition : dxm::Vector3::Zero;
+
+	auto finalToolPosition = dxm::Vector3(
+		command.m_X.has_value() ? (unitScale * command.m_X.value()) : previousPosition.x,
+		command.m_Y.has_value() ? (unitScale * command.m_Y.value()) : previousPosition.y,
+		command.m_Z.has_value() ? (unitScale * command.m_Z.value()) : previousPosition.z
 	);
 
 	if (!m_PositioningAbsolute)
@@ -100,10 +102,12 @@ void MillingSimulatorWorkerThread::Visit(GCP::SlowToolMoveCommand& command)
 
 	auto unitScale = s_CentimeterScaleValuesMap.at(m_UnitSystem);
 
-	auto finalToolPosition = unitScale * dxm::Vector3(
-		command.m_X.value_or(m_PositioningAbsolute ? m_PreviousToolPosition.x : 0.0f),
-		command.m_Y.value_or(m_PositioningAbsolute ? m_PreviousToolPosition.y : 0.0f),
-		command.m_Z.value_or(m_PositioningAbsolute ? m_PreviousToolPosition.z : 0.0f)
+	auto previousPosition = m_PositioningAbsolute ? m_PreviousToolPosition : dxm::Vector3::Zero;
+
+	auto finalToolPosition = dxm::Vector3(
+		command.m_X.has_value() ? (unitScale * command.m_X.value()) : previousPosition.x,
+		command.m_Y.has_value() ? (unitScale * command.m_Y.value()) : previousPosition.y,
+		command.m_Z.has_value() ? (unitScale * command.m_Z.value()) : previousPosition.z
 	);
 
 	if (!m_PositioningAbsolute)
