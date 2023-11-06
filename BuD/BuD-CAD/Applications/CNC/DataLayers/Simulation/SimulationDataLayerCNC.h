@@ -5,7 +5,7 @@
 #include <Commands/UnitSystem/GCodeUnitSystem.h>
 
 #include <Applications/CNC/PathProgram.h>
-#include <Applications/CNC/Simulator/MillingSimulatorAsync.h>
+#include <Applications/CNC/Simulator/MillingSimulator.h>
 #include <Applications/CNC/Objects/MaterialBlock/MaterialBlock.h>
 
 struct SimulationDataLayerCNC
@@ -31,7 +31,7 @@ public:
 
 protected:
 
-	MillingSimulatorAsync m_MillingSimulator;
+	MillingSimulator m_MillingSimulator;
 
 	MaterialBlock m_MaterialBlockMesh;
 

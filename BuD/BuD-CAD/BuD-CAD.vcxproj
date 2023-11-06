@@ -208,8 +208,8 @@
     <ClInclude Include="Applications\CNC\Simulator\Algorithms\BresenhamAlgorithm.h" />
     <ClInclude Include="Applications\CNC\Simulator\Algorithms\CyrusBeckClippingAlgorithm.h" />
     <ClInclude Include="Applications\CNC\Simulator\MaterialBlockCutter.h" />
-    <ClInclude Include="Applications\CNC\Simulator\MillingSimulatorAsync.h" />
-    <ClInclude Include="Applications\CNC\Simulator\MillingSimulatorThread.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MillingSimulator.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MillingSimulatorWorkerThread.h" />
     <ClInclude Include="Applications\CNC\Simulator\MillingValidation.h" />
     <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\NonMillingPartToolMoveValidationLayer.h" />
     <ClInclude Include="Applications\CNC\Simulator\ToolCut.h" />
@@ -366,8 +366,8 @@
     <ClCompile Include="Applications\CNC\Simulator\Algorithms\BresenhamAlgorithm.cpp" />
     <ClCompile Include="Applications\CNC\Simulator\Algorithms\CyrusBeckClippingAlgorithm.cpp" />
     <ClCompile Include="Applications\CNC\Simulator\MaterialBlockCutter.cpp" />
-    <ClCompile Include="Applications\CNC\Simulator\MillingSimulatorAsync.cpp" />
-    <ClCompile Include="Applications\CNC\Simulator\MillingSimulatorThread.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\MillingSimulator.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\MillingSimulatorWorkerThread.cpp" />
     <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ToolMoveValidationAggregator.cpp" />
     <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\AbstractToolMoveValidationLayer.cpp" />
     <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\AnyContactToolMoveValidationLayer.cpp" />

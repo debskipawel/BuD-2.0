@@ -1,4 +1,4 @@
-#include "MillingSimulatorThread.h"
+#include "MillingSimulatorWorkerThread.h"
 
 #include <Applications/CNC/Objects/Tools/Visitors/ValidationAggregatorFactoryMillingToolVisitor.h>
 #include <Applications/CNC/Simulator/MaterialBlockCutter.h>
@@ -11,7 +11,7 @@ constexpr auto ROTATION_SPEED = 10000.0f / 60.0f;
 constexpr auto SAFE_MILLING_TOOL_POSITION = dxm::Vector3(0.0f, 30.0f, 0.0f);
 
 
-MillingSimulatorThread::MillingSimulatorThread(MaterialBlockParameters blockParameters, std::shared_ptr<PathProgram> program, std::vector<float>& heightMap)
+MillingSimulatorWorkerThread::MillingSimulatorWorkerThread(MaterialBlockParameters blockParameters, std::shared_ptr<PathProgram> program, std::vector<float>& heightMap)
 	: m_MaterialBlockParameters(blockParameters), m_Program(program), m_HeightMap(heightMap), m_CommandIndex(0U), m_TimeLeft(0.0f), m_StoppedOnValidationError(false)
 {
 	ResetSettingsToDefault();
@@ -20,7 +20,7 @@ MillingSimulatorThread::MillingSimulatorThread(MaterialBlockParameters blockPara
 	m_PreviousToolPosition = m_Program->m_Tool->Position();
 }
 
-bool MillingSimulatorThread::Update(float deltaTime)
+bool MillingSimulatorWorkerThread::Update(float deltaTime)
 {
 	auto& commandList = m_Program->m_Program.m_Commands;
 
@@ -49,7 +49,7 @@ bool MillingSimulatorThread::Update(float deltaTime)
 	return true;
 }
 
-void MillingSimulatorThread::ResetSettingsToDefault()
+void MillingSimulatorWorkerThread::ResetSettingsToDefault()
 {
 	m_PositioningAbsolute = true;
 
@@ -63,14 +63,14 @@ void MillingSimulatorThread::ResetSettingsToDefault()
 	m_TimeLeft = 0.0f;
 }
 
-bool MillingSimulatorThread::Finished() const
+bool MillingSimulatorWorkerThread::Finished() const
 {
 	const auto& commands = m_Program->m_Program.m_Commands;
 
 	return m_CommandIndex >= commands.size();
 }
 
-void MillingSimulatorThread::Visit(GCP::FastToolMoveCommand& command)
+void MillingSimulatorWorkerThread::Visit(GCP::FastToolMoveCommand& command)
 {
 	m_ToolMovementSlowSpeed = command.m_MoveSpeed.value_or(m_ToolMovementSlowSpeed);
 
@@ -92,7 +92,7 @@ void MillingSimulatorThread::Visit(GCP::FastToolMoveCommand& command)
 	MoveTool(finalToolPosition, speed, MillingValidation::EVERY_CONTACT);
 }
 
-void MillingSimulatorThread::Visit(GCP::SlowToolMoveCommand& command)
+void MillingSimulatorWorkerThread::Visit(GCP::SlowToolMoveCommand& command)
 {
 	m_ToolMovementSlowSpeed = command.m_MoveSpeed.value_or(m_ToolMovementSlowSpeed);
 
@@ -114,7 +114,7 @@ void MillingSimulatorThread::Visit(GCP::SlowToolMoveCommand& command)
 	MoveTool(finalToolPosition, speed, MillingValidation::TOOL_SPECIFIC);
 }
 
-void MillingSimulatorThread::MoveTool(dxm::Vector3 finalToolPosition, float speed, MillingValidation validationType)
+void MillingSimulatorWorkerThread::MoveTool(dxm::Vector3 finalToolPosition, float speed, MillingValidation validationType)
 {
 	auto toolMoveVector = finalToolPosition - m_PreviousToolPosition;
 	toolMoveVector.Normalize();
@@ -187,7 +187,7 @@ void MillingSimulatorThread::MoveTool(dxm::Vector3 finalToolPosition, float spee
 	}
 }
 
-std::shared_ptr<ToolMoveValidationAggregator> MillingSimulatorThread::GetValidationAggregator(MillingValidation validationType)
+std::shared_ptr<ToolMoveValidationAggregator> MillingSimulatorWorkerThread::GetValidationAggregator(MillingValidation validationType)
 {
 	std::shared_ptr<ToolMoveValidationAggregator> validationAggregator;
 
@@ -230,27 +230,27 @@ std::shared_ptr<ToolMoveValidationAggregator> MillingSimulatorThread::GetValidat
 	return validationAggregator;
 }
 
-void MillingSimulatorThread::Visit(GCP::InchesUnitSystemSelectionCommand& command)
+void MillingSimulatorWorkerThread::Visit(GCP::InchesUnitSystemSelectionCommand& command)
 {
 	m_UnitSystem = GCP::GCodeUnitSystem::INCHES;
 }
 
-void MillingSimulatorThread::Visit(GCP::MillimetersUnitSystemSelectionCommand& command)
+void MillingSimulatorWorkerThread::Visit(GCP::MillimetersUnitSystemSelectionCommand& command)
 {
 	m_UnitSystem = GCP::GCodeUnitSystem::MILLIMETER;
 }
 
-void MillingSimulatorThread::Visit(GCP::ToolPositioningAbsoluteCommand& command)
+void MillingSimulatorWorkerThread::Visit(GCP::ToolPositioningAbsoluteCommand& command)
 {
 	m_PositioningAbsolute = true;
 }
 
-void MillingSimulatorThread::Visit(GCP::ToolPositioningIncrementalCommand& command)
+void MillingSimulatorWorkerThread::Visit(GCP::ToolPositioningIncrementalCommand& command)
 {
 	m_PositioningAbsolute = false;
 }
 
-std::unordered_map<GCP::GCodeUnitSystem, float> MillingSimulatorThread::s_CentimeterScaleValuesMap = {
+std::unordered_map<GCP::GCodeUnitSystem, float> MillingSimulatorWorkerThread::s_CentimeterScaleValuesMap = {
 	{ GCP::GCodeUnitSystem::MILLIMETER, 0.1f },
 	{ GCP::GCodeUnitSystem::INCHES, 2.54f }
 };

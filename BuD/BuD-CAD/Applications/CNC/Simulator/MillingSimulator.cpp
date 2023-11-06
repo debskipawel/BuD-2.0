@@ -1,19 +1,19 @@
-#include "MillingSimulatorAsync.h"
+#include "MillingSimulator.h"
 
-#include <Applications/CNC/Simulator/MillingSimulatorThread.h>
+#include <Applications/CNC/Simulator/MillingSimulatorWorkerThread.h>
 
-MillingSimulatorAsync::MillingSimulatorAsync()
+MillingSimulator::MillingSimulator()
 	: m_MaterialParameters(MaterialBlockParameters::DEFAULT_PARAMETERS), m_Running(false), m_TimeLeft()
 {
 	ResetMaterial(m_MaterialParameters);
 }
 
-MillingSimulatorAsync::~MillingSimulatorAsync()
+MillingSimulator::~MillingSimulator()
 {
 	Stop();
 }
 
-void MillingSimulatorAsync::UploadPath(std::shared_ptr<PathProgram> pathProgram)
+void MillingSimulator::UploadPath(std::shared_ptr<PathProgram> pathProgram)
 {
 	if (m_Running)
 	{
@@ -23,7 +23,7 @@ void MillingSimulatorAsync::UploadPath(std::shared_ptr<PathProgram> pathProgram)
 	m_UploadedProgram = pathProgram;
 }
 
-void MillingSimulatorAsync::ResetMaterial(const MaterialBlockParameters& materialParameters)
+void MillingSimulator::ResetMaterial(const MaterialBlockParameters& materialParameters)
 {
 	auto width = materialParameters.m_ResolutionWidth;
 	auto height = materialParameters.m_ResolutionHeight;
@@ -39,7 +39,7 @@ void MillingSimulatorAsync::ResetMaterial(const MaterialBlockParameters& materia
 	m_MaterialParameters = materialParameters;
 }
 
-void MillingSimulatorAsync::Update(float deltaTime)
+void MillingSimulator::Update(float deltaTime)
 {
 	if (this->Running())
 	{
@@ -49,7 +49,7 @@ void MillingSimulatorAsync::Update(float deltaTime)
 	}
 }
 
-void MillingSimulatorAsync::Skip()
+void MillingSimulator::Skip()
 {
 	if (!this->Running())
 	{
@@ -59,11 +59,11 @@ void MillingSimulatorAsync::Skip()
 	m_ToSkip = true;
 }
 
-void MillingSimulatorAsync::SimulationLoop()
+void MillingSimulator::SimulationLoop()
 {
-	auto simulationThread = std::make_unique<MillingSimulatorThread>(m_MaterialParameters, m_UploadedProgram, std::ref(m_HeightMap));
+	auto simulationWorkerThread = std::make_unique<MillingSimulatorWorkerThread>(m_MaterialParameters, m_UploadedProgram, std::ref(m_HeightMap));
 
-	while (!simulationThread->Finished() && !this->Stopped())
+	while (!Stopped() && !simulationWorkerThread->Finished())
 	{
 		auto deltaTime = 0.0f;
 		
@@ -79,7 +79,7 @@ void MillingSimulatorAsync::SimulationLoop()
 			m_TimeLeft = 0.0f;
 		}
 
-		if (!simulationThread->Update(deltaTime))
+		if (!simulationWorkerThread->Update(deltaTime))
 		{
 			m_Running = false;
 
@@ -87,13 +87,13 @@ void MillingSimulatorAsync::SimulationLoop()
 		}
 	}
 
-	if (simulationThread->Finished())
+	if (simulationWorkerThread->Finished())
 	{
 		m_Running = false;
 	}
 }
 
-void MillingSimulatorAsync::Start()
+void MillingSimulator::Start()
 {
 	if (this->Running())
 	{
@@ -108,7 +108,7 @@ void MillingSimulatorAsync::Start()
 	m_SimulatorThread = std::jthread([this]() { this->SimulationLoop(); });
 }
 
-void MillingSimulatorAsync::Stop()
+void MillingSimulator::Stop()
 {
 	if (this->Stopped())
 	{

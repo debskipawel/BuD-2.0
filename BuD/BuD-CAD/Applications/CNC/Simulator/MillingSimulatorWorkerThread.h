@@ -10,10 +10,10 @@
 #include <Applications/CNC/Simulator/MillingValidation.h>
 #include <Applications/CNC/Simulator/MoveValidation/ToolMoveValidationAggregator.h>
 
-class MillingSimulatorThread : public GCP::GCodeCommandVisitor
+class MillingSimulatorWorkerThread : public GCP::GCodeCommandVisitor
 {
 public:
-	MillingSimulatorThread(MaterialBlockParameters blockParameters, std::shared_ptr<PathProgram> program, std::vector<float>& heightMap);
+	MillingSimulatorWorkerThread(MaterialBlockParameters blockParameters, std::shared_ptr<PathProgram> program, std::vector<float>& heightMap);
 
 	virtual bool Update(float deltaTime);
 

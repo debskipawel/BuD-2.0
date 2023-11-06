@@ -8,11 +8,11 @@
 #include <Applications/CNC/PathProgram.h>
 #include <Applications/CNC/Objects/MaterialBlock/MaterialBlockParameters.h>
 
-class MillingSimulatorAsync
+class MillingSimulator
 {
 public:
-	MillingSimulatorAsync();
-	~MillingSimulatorAsync();
+	MillingSimulator();
+	~MillingSimulator();
 
 	virtual void UploadPath(std::shared_ptr<PathProgram> pathProgram);
 	virtual void ResetMaterial(const MaterialBlockParameters& materialParameters);

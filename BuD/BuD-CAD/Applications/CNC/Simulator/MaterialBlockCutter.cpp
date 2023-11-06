@@ -133,7 +133,7 @@ void MaterialBlockCutter::MoveMillingToolHorizontally(std::shared_ptr<MillingToo
 		}
 	);
 
-	std::for_each(std::execution::par, pixelsOnDiameter.begin(), pixelsOnDiameter.end(),
+	std::for_each(pixelsOnDiameter.begin(), pixelsOnDiameter.end(),
 		[&](std::pair<int, int> arg)
 		{
 			auto& [x, y] = arg;
