@@ -188,6 +188,14 @@ void PathListGuiLayerCNC::DrawImportPathDialog()
 					}
 					case GCP::GCodeParserCode::WARNING:
 					{
+						auto& pathList = m_MainDataLayer.m_PathListDataLayer.m_PathList;
+
+						pathList.emplace_back(
+							std::make_shared<PathProgram>(path.filename().string(), parsingResult.m_Program, millingTool)
+						);
+
+						m_MainDataLayer.m_SimulationDataLayer.SetSelectedPath(pathList.back());
+
 						BuD::Log::WriteWarning(std::format("[CNC] GCode parser succeeded with warnings: \"{}\"", parsingResult.m_Message));
 						break;
 					}
