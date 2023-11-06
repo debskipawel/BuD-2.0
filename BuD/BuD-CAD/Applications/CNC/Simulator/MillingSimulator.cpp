@@ -103,6 +103,8 @@ void MillingSimulator::Start()
 	m_Running = true;
 	m_ToSkip = false;
 
+	m_TimeLeft = 0.0f;
+
 	BuD::Log::WriteInfo("Milling simulation started.");
 
 	m_SimulatorThread = std::jthread([this]() { this->SimulationLoop(); });
