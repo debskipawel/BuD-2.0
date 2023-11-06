@@ -1,6 +1,8 @@
 #include "MillingSimulatorThread.h"
 
+#include <Applications/CNC/Objects/Tools/Visitors/ValidationAggregatorFactoryMillingToolVisitor.h>
 #include <Applications/CNC/Simulator/MaterialBlockCutter.h>
+#include <Applications/CNC/Simulator/MoveValidation/ValidationLayers/AnyContactToolMoveValidationLayer.h>
 
 constexpr auto SLOW_MOVEMENT_SPEED = 25.0f;
 constexpr auto FAST_MOVEMENT_SPEED = 100.0f;
@@ -10,7 +12,7 @@ constexpr auto SAFE_MILLING_TOOL_POSITION = dxm::Vector3(0.0f, 30.0f, 0.0f);
 
 
 MillingSimulatorThread::MillingSimulatorThread(MaterialBlockParameters blockParameters, std::shared_ptr<PathProgram> program, std::vector<float>& heightMap)
-	: m_MaterialBlockParameters(blockParameters), m_Program(program), m_HeightMap(heightMap), m_CommandIndex(0U), m_TimeLeft(0.0f)
+	: m_MaterialBlockParameters(blockParameters), m_Program(program), m_HeightMap(heightMap), m_CommandIndex(0U), m_TimeLeft(0.0f), m_StoppedOnValidationError(false)
 {
 	ResetSettingsToDefault();
 
@@ -18,7 +20,7 @@ MillingSimulatorThread::MillingSimulatorThread(MaterialBlockParameters blockPara
 	m_PreviousToolPosition = m_Program->m_Tool->Position();
 }
 
-void MillingSimulatorThread::Update(float deltaTime)
+bool MillingSimulatorThread::Update(float deltaTime)
 {
 	auto& commandList = m_Program->m_Program.m_Commands;
 
@@ -30,6 +32,11 @@ void MillingSimulatorThread::Update(float deltaTime)
 
 		GCP::GCodeCommandVisitor::Visit(*command);
 
+		if (m_StoppedOnValidationError)
+		{
+			return false;
+		}
+
 		if (m_TimeLeft > 0.0f)
 		{
 			m_CommandIndex++;
@@ -38,6 +45,8 @@ void MillingSimulatorThread::Update(float deltaTime)
 
 		break;
 	}
+
+	return true;
 }
 
 void MillingSimulatorThread::ResetSettingsToDefault()
@@ -105,30 +114,6 @@ void MillingSimulatorThread::Visit(GCP::SlowToolMoveCommand& command)
 	MoveTool(finalToolPosition, speed, MillingValidation::TOOL_SPECIFIC);
 }
 
-void MillingSimulatorThread::Visit(GCP::InchesUnitSystemSelectionCommand& command)
-{
-	m_UnitSystem = GCP::GCodeUnitSystem::INCHES;
-}
-
-void MillingSimulatorThread::Visit(GCP::MillimetersUnitSystemSelectionCommand& command)
-{
-	m_UnitSystem = GCP::GCodeUnitSystem::MILLIMETER;
-}
-
-void MillingSimulatorThread::Visit(GCP::ProgramStopCommand& command)
-{
-}
-
-void MillingSimulatorThread::Visit(GCP::ToolPositioningAbsoluteCommand& command)
-{
-	m_PositioningAbsolute = true;
-}
-
-void MillingSimulatorThread::Visit(GCP::ToolPositioningIncrementalCommand& command)
-{
-	m_PositioningAbsolute = false;
-}
-
 void MillingSimulatorThread::MoveTool(dxm::Vector3 finalToolPosition, float speed, MillingValidation validationType)
 {
 	auto toolMoveVector = finalToolPosition - m_PreviousToolPosition;
@@ -149,9 +134,16 @@ void MillingSimulatorThread::MoveTool(dxm::Vector3 finalToolPosition, float spee
 		? finalToolPosition - currentToolPosition
 		: timeFractionUsed * distance * toolMoveVector;
 
+	auto validationAggregator = GetValidationAggregator(validationType);
+
 	auto materialCutter = MaterialBlockCutter(m_MaterialBlockParameters, 
-		[this](int x, int y, ToolCut& toolCut) 
+		[this, validationAggregator](int x, int y, ToolCut& toolCut)
 		{
+			if (this->m_StoppedOnValidationError)
+			{
+				return;
+			}
+			
 			auto pixelWidth = m_MaterialBlockParameters.m_ResolutionWidth;
 			auto pixelHeight = m_MaterialBlockParameters.m_ResolutionHeight;
 
@@ -161,6 +153,20 @@ void MillingSimulatorThread::MoveTool(dxm::Vector3 finalToolPosition, float spee
 
 			if (std::isnan(toolCut.m_RequestedHeight) || toolCut.m_PreviousHeight <= toolCut.m_RequestedHeight)
 			{
+				return;
+			}
+
+			auto validationErrors = validationAggregator->ValidateMove(toolCut);
+
+			if (validationErrors.size() > 0)
+			{
+				for (const auto& validationError : validationErrors)
+				{
+					BuD::Log::WriteError(validationError.m_ErrorMessage);
+				}
+				
+				this->m_StoppedOnValidationError = true;
+
 				return;
 			}
 
@@ -179,6 +185,69 @@ void MillingSimulatorThread::MoveTool(dxm::Vector3 finalToolPosition, float spee
 	{
 		m_PreviousToolPosition = finalToolPosition;
 	}
+}
+
+std::shared_ptr<ToolMoveValidationAggregator> MillingSimulatorThread::GetValidationAggregator(MillingValidation validationType)
+{
+	std::shared_ptr<ToolMoveValidationAggregator> validationAggregator;
+
+	switch (validationType)
+	{
+		case MillingValidation::NONE:
+		{
+			std::vector<std::shared_ptr<AbstractToolMoveValidationLayer>> validationLayers;
+			
+			validationAggregator = std::make_shared<ToolMoveValidationAggregator>(validationLayers);
+
+			break;
+		}
+		case MillingValidation::EVERY_CONTACT:
+		{
+			std::vector<std::shared_ptr<AbstractToolMoveValidationLayer>> validationLayers = { std::make_shared<AnyContactToolMoveValidationLayer>(m_MaterialBlockParameters) };
+
+			validationAggregator = std::make_shared<ToolMoveValidationAggregator>(validationLayers);
+
+			break;
+		}
+		case MillingValidation::TOOL_SPECIFIC:
+		{
+			auto visitor = std::make_unique<ValidationAggregatorFactoryMillingToolVisitor>(m_MaterialBlockParameters);
+			
+			const auto& tool = m_Program->m_Tool;
+
+			visitor->Visit(*tool);
+
+			validationAggregator = visitor->CreateValidationAggregator();
+
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
+
+	return validationAggregator;
+}
+
+void MillingSimulatorThread::Visit(GCP::InchesUnitSystemSelectionCommand& command)
+{
+	m_UnitSystem = GCP::GCodeUnitSystem::INCHES;
+}
+
+void MillingSimulatorThread::Visit(GCP::MillimetersUnitSystemSelectionCommand& command)
+{
+	m_UnitSystem = GCP::GCodeUnitSystem::MILLIMETER;
+}
+
+void MillingSimulatorThread::Visit(GCP::ToolPositioningAbsoluteCommand& command)
+{
+	m_PositioningAbsolute = true;
+}
+
+void MillingSimulatorThread::Visit(GCP::ToolPositioningIncrementalCommand& command)
+{
+	m_PositioningAbsolute = false;
 }
 
 std::unordered_map<GCP::GCodeUnitSystem, float> MillingSimulatorThread::s_CentimeterScaleValuesMap = {

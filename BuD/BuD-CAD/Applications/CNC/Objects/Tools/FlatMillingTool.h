@@ -7,6 +7,8 @@ class FlatMillingTool : public MillingTool
 public:
 	FlatMillingTool(BuD::Scene& scene, const MillingToolParameters& millingToolParameters);
 
+	virtual void Accept(MillingToolVisitor& visitor) override;
+
 	virtual void EnableRendering() override;
 	virtual void DisableRendering() override;
 

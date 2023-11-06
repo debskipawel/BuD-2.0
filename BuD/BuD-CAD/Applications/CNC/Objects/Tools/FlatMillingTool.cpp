@@ -2,6 +2,8 @@
 
 #include <numbers>
 
+#include <Applications/CNC/Objects/Tools/Visitors/MillingToolVisitor.h>
+
 FlatMillingTool::FlatMillingTool(BuD::Scene& scene, const MillingToolParameters& millingToolParameters)
 	: MillingTool(scene, millingToolParameters)
 {
@@ -43,6 +45,11 @@ FlatMillingTool::FlatMillingTool(BuD::Scene& scene, const MillingToolParameters&
 	}
 
 	m_MillEntity.AddComponent<BuD::IRenderable>(renderingPasses);
+}
+
+void FlatMillingTool::Accept(MillingToolVisitor& visitor)
+{
+	visitor.Visit(*this);
 }
 
 void FlatMillingTool::EnableRendering()

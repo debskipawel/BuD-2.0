@@ -5,7 +5,7 @@
 class AnyContactToolMoveValidationLayer : public AbstractToolMoveValidationLayer
 {
 public:
-	AnyContactToolMoveValidationLayer();
+	AnyContactToolMoveValidationLayer(MaterialBlockParameters materialParameters);
 
 	virtual std::optional<ToolMoveValidationError> ValidateMove(const ToolCut& toolCut) override;
 };

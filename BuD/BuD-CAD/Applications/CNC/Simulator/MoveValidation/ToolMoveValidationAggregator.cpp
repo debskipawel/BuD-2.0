@@ -1,11 +1,11 @@
 #include "ToolMoveValidationAggregator.h"
 
-ToolMoveValidationAgregator::ToolMoveValidationAgregator(const std::vector<std::shared_ptr<AbstractToolMoveValidationLayer>>& validationLayers)
+ToolMoveValidationAggregator::ToolMoveValidationAggregator(const std::vector<std::shared_ptr<AbstractToolMoveValidationLayer>>& validationLayers)
     : m_ValidationLayers(validationLayers)
 {
 }
 
-std::vector<ToolMoveValidationError> ToolMoveValidationAgregator::ValidateMove(const ToolCut& toolCut)
+std::vector<ToolMoveValidationError> ToolMoveValidationAggregator::ValidateMove(const ToolCut& toolCut)
 {
     auto errors = std::vector<ToolMoveValidationError>();
 

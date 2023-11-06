@@ -1,5 +1,10 @@
 #include "NonMillingPartToolMoveValidationLayer.h"
 
+NonMillingPartToolMoveValidationLayer::NonMillingPartToolMoveValidationLayer(MaterialBlockParameters materialParameters)
+    : AbstractToolMoveValidationLayer(materialParameters)
+{
+}
+
 std::optional<ToolMoveValidationError> NonMillingPartToolMoveValidationLayer::ValidateMove(const ToolCut& toolCut)
 {
     const auto& tool = toolCut.m_Tool;

@@ -21,7 +21,6 @@ public:
 	virtual void SkipSimulation();
 
 	virtual bool Running() const;
-	virtual bool Paused() const;
 
 	auto GetSelectedPath() const -> std::shared_ptr<PathProgram>;
 	auto SetSelectedPath(std::shared_ptr<PathProgram> selectedPath) -> void;

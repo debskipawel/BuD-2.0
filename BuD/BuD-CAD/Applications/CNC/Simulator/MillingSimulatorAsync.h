@@ -25,12 +25,9 @@ public:
 	virtual void SimulationLoop();
 
 	virtual void Start();
-	virtual void Pause();
-	virtual void Resume();
 	virtual void Stop();
 
-	virtual constexpr bool Running() const { return m_Running && !m_Paused; }
-	virtual constexpr bool Paused() const { return m_Running && m_Paused; }
+	virtual constexpr bool Running() const { return m_Running; }
 	virtual constexpr bool Stopped() const { return !m_Running; }
 
 protected:
@@ -45,7 +42,6 @@ protected:
 	std::mutex m_TimeLeftMutex;
 
 	bool m_Running;
-	bool m_Paused;
 
 	bool m_ToSkip;
 };

@@ -5,10 +5,10 @@
 
 #include <Applications/CNC/Simulator/MoveValidation/ValidationLayers/AbstractToolMoveValidationLayer.h>
 
-class ToolMoveValidationAgregator
+class ToolMoveValidationAggregator
 {
 public:
-	ToolMoveValidationAgregator(const std::vector<std::shared_ptr<AbstractToolMoveValidationLayer>>& validationLayers);
+	ToolMoveValidationAggregator(const std::vector<std::shared_ptr<AbstractToolMoveValidationLayer>>& validationLayers);
 
 	virtual std::vector<ToolMoveValidationError> ValidateMove(const ToolCut& toolCut);
 

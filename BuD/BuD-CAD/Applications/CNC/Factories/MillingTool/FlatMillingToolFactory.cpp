@@ -29,7 +29,7 @@ std::shared_ptr<MillingTool> FlatMillingToolFactory::Create(BuD::Scene& scene, s
     auto radiusInMillimeter = 0.5f * std::stof(number);
     auto radiusInCentimeter = 0.1f * radiusInMillimeter;
 
-    auto millingToolParameters = MillingToolParameters(radiusInCentimeter, radiusInCentimeter);
+    auto millingToolParameters = MillingToolParameters(radiusInCentimeter, 2.0f * radiusInCentimeter);
     auto millingTool = std::make_shared<FlatMillingTool>(scene, millingToolParameters);
 
     return millingTool;

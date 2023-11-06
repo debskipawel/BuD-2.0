@@ -1,6 +1,7 @@
 #include "AnyContactToolMoveValidationLayer.h"
 
-AnyContactToolMoveValidationLayer::AnyContactToolMoveValidationLayer()
+AnyContactToolMoveValidationLayer::AnyContactToolMoveValidationLayer(MaterialBlockParameters materialParameters)
+    : AbstractToolMoveValidationLayer(materialParameters)
 {
 }
 

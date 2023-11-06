@@ -6,14 +6,16 @@
 
 #include <Applications/CNC/PathProgram.h>
 #include <Applications/CNC/Objects/MaterialBlock/MaterialBlockParameters.h>
+
 #include <Applications/CNC/Simulator/MillingValidation.h>
+#include <Applications/CNC/Simulator/MoveValidation/ToolMoveValidationAggregator.h>
 
 class MillingSimulatorThread : public GCP::GCodeCommandVisitor
 {
 public:
 	MillingSimulatorThread(MaterialBlockParameters blockParameters, std::shared_ptr<PathProgram> program, std::vector<float>& heightMap);
 
-	virtual void Update(float deltaTime);
+	virtual bool Update(float deltaTime);
 
 	virtual void ResetSettingsToDefault();
 	virtual bool Finished() const;
@@ -24,13 +26,15 @@ public:
 	virtual void Visit(GCP::InchesUnitSystemSelectionCommand& command) override;
 	virtual void Visit(GCP::MillimetersUnitSystemSelectionCommand& command) override;
 
-	virtual void Visit(GCP::ProgramStopCommand& command) override;
-
 	virtual void Visit(GCP::ToolPositioningAbsoluteCommand& command) override;
 	virtual void Visit(GCP::ToolPositioningIncrementalCommand& command) override;
 
+	bool m_StoppedOnValidationError;
+
 protected:
 	virtual void MoveTool(dxm::Vector3 finalToolPosition, float speed, MillingValidation validationType);
+
+	virtual std::shared_ptr<ToolMoveValidationAggregator> GetValidationAggregator(MillingValidation validationType);
 
 	MaterialBlockParameters m_MaterialBlockParameters;
 	std::shared_ptr<PathProgram> m_Program;
@@ -39,6 +43,7 @@ protected:
 	uint32_t m_CommandIndex;
 	float m_TimeLeft;
 
+	// ---------- MACHINE PARAMETERS ------------
 	bool m_PositioningAbsolute;
 
 	float m_ToolMovementSlowSpeed;

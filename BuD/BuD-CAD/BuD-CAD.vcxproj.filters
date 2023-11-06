@@ -492,6 +492,12 @@
     <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\NonMillingPartToolMoveValidationLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Applications\CNC\Objects\Tools\Visitors\MillingToolVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\Objects\Tools\Visitors\ValidationAggregatorFactoryMillingToolVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Applications\CAD\ApplicationCAD.cpp">
@@ -891,6 +897,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\NonMillingPartToolMoveValidationLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Objects\Tools\Visitors\MillingToolVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Objects\Tools\Visitors\ValidationAggregatorFactoryMillingToolVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\AbstractToolMoveValidationLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

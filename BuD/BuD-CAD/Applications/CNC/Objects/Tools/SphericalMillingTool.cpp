@@ -1,5 +1,7 @@
 #include "SphericalMillingTool.h"
 
+#include <Applications/CNC/Objects/Tools/Visitors/MillingToolVisitor.h>
+
 SphericalMillingTool::SphericalMillingTool(BuD::Scene& scene, const MillingToolParameters& millingToolParameters)
 	: MillingTool(scene, millingToolParameters)
 {
@@ -66,6 +68,11 @@ SphericalMillingTool::SphericalMillingTool(BuD::Scene& scene, const MillingToolP
 	}
 
 	m_MillEntity.AddComponent<BuD::IRenderable>(renderingPasses);
+}
+
+void SphericalMillingTool::Accept(MillingToolVisitor& visitor)
+{
+	visitor.Visit(*this);
 }
 
 void SphericalMillingTool::EnableRendering()

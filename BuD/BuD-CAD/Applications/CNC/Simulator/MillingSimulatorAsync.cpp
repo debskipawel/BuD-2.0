@@ -3,14 +3,14 @@
 #include <Applications/CNC/Simulator/MillingSimulatorThread.h>
 
 MillingSimulatorAsync::MillingSimulatorAsync()
-	: m_MaterialParameters(MaterialBlockParameters::DEFAULT_PARAMETERS), m_Running(false), m_Paused(false), m_TimeLeft()
+	: m_MaterialParameters(MaterialBlockParameters::DEFAULT_PARAMETERS), m_Running(false), m_TimeLeft()
 {
 	ResetMaterial(m_MaterialParameters);
 }
 
 MillingSimulatorAsync::~MillingSimulatorAsync()
 {
-	this->Stop();
+	Stop();
 }
 
 void MillingSimulatorAsync::UploadPath(std::shared_ptr<PathProgram> pathProgram)
@@ -25,23 +25,16 @@ void MillingSimulatorAsync::UploadPath(std::shared_ptr<PathProgram> pathProgram)
 
 void MillingSimulatorAsync::ResetMaterial(const MaterialBlockParameters& materialParameters)
 {
-	try
-	{
-		auto width = materialParameters.m_ResolutionWidth;
-		auto height = materialParameters.m_ResolutionHeight;
+	auto width = materialParameters.m_ResolutionWidth;
+	auto height = materialParameters.m_ResolutionHeight;
 
-		auto pixels = 4 * width * height;
+	auto pixels = 4 * width * height;
 
-		auto baseHeight = m_MaterialParameters.m_Size.y;
+	auto baseHeight = materialParameters.m_Size.y;
 
-		m_HeightMap.resize(pixels);
+	m_HeightMap.resize(pixels);
 
-		std::fill(m_HeightMap.begin(), m_HeightMap.end(), baseHeight);
-	}
-	catch (std::bad_alloc e)
-	{
-		BuD::Log::WriteError("Bad alloc exception while resizing material height map");
-	}
+	std::fill(m_HeightMap.begin(), m_HeightMap.end(), baseHeight);
 
 	m_MaterialParameters = materialParameters;
 }
@@ -58,7 +51,7 @@ void MillingSimulatorAsync::Update(float deltaTime)
 
 void MillingSimulatorAsync::Skip()
 {
-	if (!this->Running() && !this->Paused())
+	if (!this->Running())
 	{
 		this->Start();
 	}
@@ -86,7 +79,12 @@ void MillingSimulatorAsync::SimulationLoop()
 			m_TimeLeft = 0.0f;
 		}
 
-		simulationThread->Update(deltaTime);
+		if (!simulationThread->Update(deltaTime))
+		{
+			m_Running = false;
+
+			return;
+		}
 	}
 
 	if (simulationThread->Finished())
@@ -97,37 +95,17 @@ void MillingSimulatorAsync::SimulationLoop()
 
 void MillingSimulatorAsync::Start()
 {
-	if (this->Running() || this->Paused())
+	if (this->Running())
 	{
 		return;
 	}
 
 	m_Running = true;
-	m_Paused = false;
-
 	m_ToSkip = false;
 
+	BuD::Log::WriteInfo("Milling simulation started.");
+
 	m_SimulatorThread = std::jthread([this]() { this->SimulationLoop(); });
-}
-
-void MillingSimulatorAsync::Pause()
-{
-	if (this->Stopped())
-	{
-		return;
-	}
-
-	m_Paused = true;
-}
-
-void MillingSimulatorAsync::Resume()
-{
-	if (!this->Paused())
-	{
-		return;
-	}
-
-	m_Paused = false;
 }
 
 void MillingSimulatorAsync::Stop()
@@ -140,4 +118,6 @@ void MillingSimulatorAsync::Stop()
 	m_Running = false;
 
 	m_SimulatorThread.join();
+
+	BuD::Log::WriteInfo("Milling simulation stopped.");
 }

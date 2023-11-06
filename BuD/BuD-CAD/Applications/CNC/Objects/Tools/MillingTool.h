@@ -4,10 +4,14 @@
 
 #include <Applications/CNC/Objects/Tools/MillingToolParameters.h>
 
+class MillingToolVisitor;
+
 class MillingTool
 {
 public:
 	MillingTool(BuD::Scene& scene, const MillingToolParameters& millingToolParameters);
+
+	virtual void Accept(MillingToolVisitor& visitor) = 0;
 
 	virtual void EnableRendering() = 0;
 	virtual void DisableRendering() = 0;

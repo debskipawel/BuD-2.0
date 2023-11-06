@@ -5,7 +5,7 @@
 class VerticalMovementToolMoveValidationLayer : public AbstractToolMoveValidationLayer
 {
 public:
-	VerticalMovementToolMoveValidationLayer();
+	VerticalMovementToolMoveValidationLayer(MaterialBlockParameters materialParameters);
 
 	virtual std::optional<ToolMoveValidationError> ValidateMove(const ToolCut& toolCut) override;
 };

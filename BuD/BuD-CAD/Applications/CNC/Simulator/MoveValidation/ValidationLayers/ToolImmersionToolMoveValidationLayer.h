@@ -5,5 +5,7 @@
 class ToolImmersionToolMoveValidationLayer : public AbstractToolMoveValidationLayer
 {
 public:
+	ToolImmersionToolMoveValidationLayer(MaterialBlockParameters materialParameters);
+
 	virtual std::optional<ToolMoveValidationError> ValidateMove(const ToolCut& toolCut) override;
 };
