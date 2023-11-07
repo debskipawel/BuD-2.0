@@ -56,6 +56,11 @@ void StartingParametersGuiLayer::DrawSizeControls()
 {
 	ImGui::Text("Material size");
 	ImGui::DragFloat3("###material_block_size", reinterpret_cast<float*>(&m_BlockParameters.m_Size), 0.1f, 1.0f, 30.0f);
+
+	ImGui::Separator();
+
+	ImGui::Text("Max tool immersion");
+	ImGui::DragFloat("###material_block_tool_immersion", &m_BlockParameters.m_MaxImmersion, 0.1f, 0.0f, m_BlockParameters.m_Size.y, "%.3f", ImGuiSliderFlags_AlwaysClamp);
 }
 
 void StartingParametersGuiLayer::DrawResetSizeButton()

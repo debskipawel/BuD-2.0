@@ -3,6 +3,7 @@
 MaterialBlockParameters::MaterialBlockParameters(const dxm::Vector3& size, const dxm::Vector3& position, uint32_t resolutionWidth, uint32_t resolutionHeight)
 	: m_Size(size), m_Position(position), m_ResolutionWidth(resolutionWidth), m_ResolutionHeight(resolutionHeight)
 {
+	m_MaxImmersion = 0.2f * m_Size.y;
 }
 
 bool MaterialBlockParameters::operator==(const MaterialBlockParameters& other)

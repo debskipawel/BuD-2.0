@@ -7,7 +7,7 @@ ToolImmersionToolMoveValidationLayer::ToolImmersionToolMoveValidationLayer(Mater
 
 std::optional<ToolMoveValidationError> ToolImmersionToolMoveValidationLayer::ValidateMove(const ToolCut& toolCut)
 {
-    auto minimumHeight = 0.2f * m_MaterialParameters.m_Size.y;
+    auto minimumHeight = m_MaterialParameters.m_MaxImmersion;
 
     if (toolCut.m_RequestedHeight >= minimumHeight)
     {

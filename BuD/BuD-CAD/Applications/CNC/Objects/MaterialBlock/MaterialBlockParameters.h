@@ -16,6 +16,8 @@ public:
 	dxm::Vector3 m_Size;
 	dxm::Vector3 m_Position;
 
+	float m_MaxImmersion;
+
 	uint32_t m_ResolutionWidth;
 	uint32_t m_ResolutionHeight;
 
