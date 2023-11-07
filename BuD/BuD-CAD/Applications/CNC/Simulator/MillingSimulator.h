@@ -30,6 +30,8 @@ public:
 	virtual constexpr bool Running() const { return m_Running; }
 	virtual constexpr bool Stopped() const { return !m_Running; }
 
+	virtual bool JustFinished();
+
 protected:
 	std::vector<float> m_HeightMap;
 
@@ -42,6 +44,9 @@ protected:
 	std::mutex m_TimeLeftMutex;
 
 	bool m_Running;
+
+	bool m_JustFinished;
+	std::mutex m_JustFinishedMutex;
 
 	bool m_ToSkip;
 };

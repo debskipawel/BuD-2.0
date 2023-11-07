@@ -30,9 +30,6 @@ public:
 	float m_SimulationSpeed;
 
 protected:
-	virtual bool JustFinished();
-
-	bool m_JustFinished;
 
 	MillingSimulator m_MillingSimulator;
 	MaterialBlock m_MaterialBlockMesh;

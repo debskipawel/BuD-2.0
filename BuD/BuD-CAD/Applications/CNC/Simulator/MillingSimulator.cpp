@@ -91,6 +91,9 @@ void MillingSimulator::SimulationLoop()
 	{
 		m_Running = false;
 	}
+
+	auto lockGuard = std::lock_guard<std::mutex>(m_JustFinishedMutex);
+	m_JustFinished = true;
 }
 
 void MillingSimulator::Start()
@@ -101,6 +104,7 @@ void MillingSimulator::Start()
 	}
 
 	m_Running = true;
+	m_JustFinished = false;
 	m_ToSkip = false;
 
 	m_TimeLeft = 0.0f;
@@ -122,4 +126,15 @@ void MillingSimulator::Stop()
 	m_SimulatorThread.join();
 
 	BuD::Log::WriteInfo("Milling simulation stopped.");
+}
+
+bool MillingSimulator::JustFinished()
+{
+	auto lockGuard = std::lock_guard<std::mutex>(m_JustFinishedMutex);
+	
+	auto justFinished = m_JustFinished;
+	
+	m_JustFinished = false;
+	
+	return justFinished;
 }

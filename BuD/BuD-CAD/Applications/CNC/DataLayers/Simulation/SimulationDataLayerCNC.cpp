@@ -3,7 +3,7 @@
 #include <numbers>
 
 SimulationDataLayerCNC::SimulationDataLayerCNC()
-	: m_Scene(), m_SimulationSpeed(1.0f), m_MillingSimulator(), m_MaterialBlockMesh(m_Scene, MaterialBlockParameters::DEFAULT_PARAMETERS), m_JustFinished(false)
+	: m_Scene(), m_SimulationSpeed(1.0f), m_MillingSimulator(), m_MaterialBlockMesh(m_Scene, MaterialBlockParameters::DEFAULT_PARAMETERS)
 {
 	auto camera = m_Scene.ActiveCamera();
 	camera->Zoom(20.0f);
@@ -12,7 +12,7 @@ SimulationDataLayerCNC::SimulationDataLayerCNC()
 
 void SimulationDataLayerCNC::Update(float deltaTime)
 {
-	if (!Running() && !JustFinished())
+	if (!(this->Running() || m_MillingSimulator.JustFinished()))
 	{
 		return;
 	}
@@ -37,15 +37,11 @@ void SimulationDataLayerCNC::ResetMaterial(const MaterialBlockParameters& materi
 
 void SimulationDataLayerCNC::StartSimulation()
 {
-	m_JustFinished = false;
-
 	m_MillingSimulator.Start();
 }
 
 void SimulationDataLayerCNC::StopSimulation()
 {
-	m_JustFinished = true;
-
 	m_MillingSimulator.Stop();
 }
 
@@ -57,11 +53,6 @@ void SimulationDataLayerCNC::SkipSimulation()
 bool SimulationDataLayerCNC::Running()
 {
 	auto running = m_MillingSimulator.Running();
-
-	if (!running && !m_JustFinished)
-	{
-		m_JustFinished = true;
-	}
 
 	return running;
 }
@@ -91,13 +82,4 @@ auto SimulationDataLayerCNC::SetSelectedPath(std::shared_ptr<PathProgram> select
 	}
 
 	m_MillingSimulator.UploadPath(selectedPath);
-}
-
-bool SimulationDataLayerCNC::JustFinished()
-{
-	auto justFinished = m_JustFinished;
-
-	m_JustFinished = false;
-
-	return justFinished;
 }
