@@ -26,7 +26,7 @@ PSOutput main(DSOutput i)
     float3 lightPos = float3(-4.0f, 10.0f, 0.0f);
     
     float3 N = normalize(cross(ddy(i.worldPos), ddx(i.worldPos)));
-    float3 L = normalize(lightPos - i.worldPos);
+    float3 L = float3(0.0f, 1.0f, 0.0f);
     
     float ambient = 0.0f;
     float diffuse = 0.6f * dot(L, N);
