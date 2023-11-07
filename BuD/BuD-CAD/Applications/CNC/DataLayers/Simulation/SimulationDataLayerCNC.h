@@ -20,7 +20,7 @@ public:
 	virtual void StopSimulation();
 	virtual void SkipSimulation();
 
-	virtual bool Running() const;
+	virtual bool Running();
 
 	auto GetSelectedPath() const -> std::shared_ptr<PathProgram>;
 	auto SetSelectedPath(std::shared_ptr<PathProgram> selectedPath) -> void;
@@ -30,9 +30,11 @@ public:
 	float m_SimulationSpeed;
 
 protected:
+	virtual bool JustFinished();
+
+	bool m_JustFinished;
 
 	MillingSimulator m_MillingSimulator;
-
 	MaterialBlock m_MaterialBlockMesh;
 
 	std::shared_ptr<PathProgram> m_SelectedPath = std::shared_ptr<PathProgram>();

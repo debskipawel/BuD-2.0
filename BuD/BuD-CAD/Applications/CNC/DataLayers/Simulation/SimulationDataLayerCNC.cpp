@@ -3,7 +3,7 @@
 #include <numbers>
 
 SimulationDataLayerCNC::SimulationDataLayerCNC()
-	: m_Scene(), m_SimulationSpeed(1.0f), m_MillingSimulator(), m_MaterialBlockMesh(m_Scene, MaterialBlockParameters::DEFAULT_PARAMETERS)
+	: m_Scene(), m_SimulationSpeed(1.0f), m_MillingSimulator(), m_MaterialBlockMesh(m_Scene, MaterialBlockParameters::DEFAULT_PARAMETERS), m_JustFinished(false)
 {
 	auto camera = m_Scene.ActiveCamera();
 	camera->Zoom(20.0f);
@@ -12,7 +12,7 @@ SimulationDataLayerCNC::SimulationDataLayerCNC()
 
 void SimulationDataLayerCNC::Update(float deltaTime)
 {
-	if (!Running())
+	if (!Running() && !JustFinished())
 	{
 		return;
 	}
@@ -21,13 +21,10 @@ void SimulationDataLayerCNC::Update(float deltaTime)
 
 	m_MillingSimulator.Update(scaledDeltaTime);
 
-	// TODO: update the heightmap texture based on data from the simulation
 	auto heightMap = m_MaterialBlockMesh.HeightMap();
 
 	heightMap->BeginEdit();
-
 	heightMap->CopyFromBuffer(m_MillingSimulator.Results());
-
 	heightMap->EndEdit();
 }
 
@@ -40,11 +37,15 @@ void SimulationDataLayerCNC::ResetMaterial(const MaterialBlockParameters& materi
 
 void SimulationDataLayerCNC::StartSimulation()
 {
+	m_JustFinished = false;
+
 	m_MillingSimulator.Start();
 }
 
 void SimulationDataLayerCNC::StopSimulation()
 {
+	m_JustFinished = true;
+
 	m_MillingSimulator.Stop();
 }
 
@@ -53,9 +54,16 @@ void SimulationDataLayerCNC::SkipSimulation()
 	m_MillingSimulator.Skip();
 }
 
-bool SimulationDataLayerCNC::Running() const
+bool SimulationDataLayerCNC::Running()
 {
-	return m_MillingSimulator.Running();
+	auto running = m_MillingSimulator.Running();
+
+	if (!running && !m_JustFinished)
+	{
+		m_JustFinished = true;
+	}
+
+	return running;
 }
 
 auto SimulationDataLayerCNC::GetSelectedPath() const -> std::shared_ptr<PathProgram>
@@ -83,4 +91,13 @@ auto SimulationDataLayerCNC::SetSelectedPath(std::shared_ptr<PathProgram> select
 	}
 
 	m_MillingSimulator.UploadPath(selectedPath);
+}
+
+bool SimulationDataLayerCNC::JustFinished()
+{
+	auto justFinished = m_JustFinished;
+
+	m_JustFinished = false;
+
+	return justFinished;
 }

@@ -14,5 +14,5 @@ std::optional<ToolMoveValidationError> ToolImmersionToolMoveValidationLayer::Val
         return std::nullopt;
     }
 
-    return ToolMoveValidationError("Milling tool immersed too deeply into material");
+    return ToolMoveValidationError("[CNC] Milling tool immersed too deeply into material");
 }

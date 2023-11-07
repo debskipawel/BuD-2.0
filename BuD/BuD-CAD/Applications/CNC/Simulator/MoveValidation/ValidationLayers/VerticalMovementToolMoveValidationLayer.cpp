@@ -14,5 +14,5 @@ std::optional<ToolMoveValidationError> VerticalMovementToolMoveValidationLayer::
         return std::nullopt;
     }
 
-    return ToolMoveValidationError("Vertical movement inside material block.");
+    return ToolMoveValidationError("[CNC] Vertical movement inside material block.");
 }

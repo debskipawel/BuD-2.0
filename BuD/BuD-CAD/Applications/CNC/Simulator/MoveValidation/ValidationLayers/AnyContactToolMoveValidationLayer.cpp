@@ -12,5 +12,5 @@ std::optional<ToolMoveValidationError> AnyContactToolMoveValidationLayer::Valida
         return std::nullopt;
     }
 
-    return ToolMoveValidationError("Contact with material detected");
+    return ToolMoveValidationError("[CNC] Contact with material detected");
 }

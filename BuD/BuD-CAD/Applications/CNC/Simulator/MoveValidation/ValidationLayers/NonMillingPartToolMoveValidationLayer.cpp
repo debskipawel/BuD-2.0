@@ -18,5 +18,5 @@ std::optional<ToolMoveValidationError> NonMillingPartToolMoveValidationLayer::Va
         return std::nullopt;
     }
 
-    return ToolMoveValidationError("Milling using non-milling part detected.");
+    return ToolMoveValidationError("[CNC] Milling using non-milling part detected.");
 }
