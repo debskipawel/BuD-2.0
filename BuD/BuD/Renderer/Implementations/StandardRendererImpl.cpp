@@ -30,10 +30,7 @@ namespace BuD
 		
 		auto frustum = Frustum(camera->EyePosition(), camera->Front(), camera->Right(), aspectRatio, fov, nearDistance, farDistance);
 
-		m_ProjectionMatrix = dxm::Matrix::CreatePerspectiveFieldOfView(
-			DirectX::XMConvertToRadians(fov), 
-			aspectRatio, nearDistance, farDistance
-		);
+		CalculateProjectionMatrix(aspectRatio, fov, nearDistance, farDistance);
 
 		m_DrawCallsThisFrame = 0;
 		m_InstancesDrawnThisFrame = 0;
@@ -98,6 +95,18 @@ namespace BuD
 		performanceData.m_InstancesDrawn = m_InstancesDrawnThisFrame;
 
 		return performanceData;
+	}
+
+	void StandardRendererImpl::CalculateProjectionMatrix(float aspectRatio, float fov, float nearPlane, float farPlane)
+	{
+		if (m_UseRightHandCoordinateSystem)
+		{
+			XMStoreFloat4x4(&m_ProjectionMatrix, DirectX::XMMatrixPerspectiveFovRH(fov, aspectRatio, nearPlane, farPlane));
+		}
+		else
+		{
+			XMStoreFloat4x4(&m_ProjectionMatrix, DirectX::XMMatrixPerspectiveFovLH(fov, aspectRatio, nearPlane, farPlane));
+		}
 	}
 
 	void StandardRendererImpl::DeployInstancedQueue(Scene& scene)

@@ -25,6 +25,9 @@ namespace BuD
 		static void BeginTarget(int width, int height);
 		static Texture EndTarget();
 
+		static void UseLeftHandCoordinateSystem();
+		static void UseRightHandCoordinateSystem();
+
 		static bool IsMultiEyeMode();
 
 		static RenderingMode GetRenderingMode();

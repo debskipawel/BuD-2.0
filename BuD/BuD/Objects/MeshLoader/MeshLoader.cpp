@@ -8,6 +8,7 @@
 #include <Objects/MeshLoader/PrimitiveLoader/CubeMeshPrimitiveLoader.h>
 #include <Objects/MeshLoader/PrimitiveLoader/PointMeshPrimitiveLoader.h>
 #include <Objects/MeshLoader/PrimitiveLoader/QuadMeshPrimitiveLoader.h>
+#include <Objects/MeshLoader/PrimitiveLoader/TessellationQuadMeshPrimitiveLoader.h>
 
 namespace BuD
 {
@@ -142,6 +143,10 @@ namespace BuD
 		case BuD::MeshPrimitiveType::POINT_TESSELLATION:
 		case BuD::MeshPrimitiveType::POINT_STANDARD:
 			primitiveLoader = std::make_unique<Internal::PointMeshPrimitiveLoader>(meshType);
+			break;
+		case BuD::MeshPrimitiveType::QUAD_TESSELLATION:
+			primitiveLoader = std::make_unique<Internal::TessellationQuadMeshPrimitiveLoader>();
+			break;
 		default:
 			break;
 		}

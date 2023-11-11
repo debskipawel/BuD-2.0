@@ -88,6 +88,22 @@ namespace BuD
 		return result;
 	}
 
+	void Renderer::UseLeftHandCoordinateSystem()
+	{
+		for (auto& [renderingMode, implementation] : s_RenderingImplementations)
+		{
+			implementation->UseLeftHandCoordinateSystem();
+		}
+	}
+
+	void Renderer::UseRightHandCoordinateSystem()
+	{
+		for (auto& [renderingMode, implementation] : s_RenderingImplementations)
+		{
+			implementation->UseRightHandCoordinateSystem();
+		}
+	}
+
 	bool Renderer::IsMultiEyeMode()
 	{
 		return std::dynamic_pointer_cast<MultiEyeRendererImpl>(s_ActiveRendererImpl) != std::shared_ptr<MultiEyeRendererImpl>();

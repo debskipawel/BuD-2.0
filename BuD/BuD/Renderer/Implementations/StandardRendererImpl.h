@@ -21,6 +21,7 @@ namespace BuD
 		virtual RendererFrameStats Render(Scene& scene, const RenderTargetInfo& renderTarget) override;
 
 	protected:
+		virtual void CalculateProjectionMatrix(float aspectRatio, float fov, float nearPlane, float farPlane);
 		virtual void DeployInstancedQueue(Scene& scene);
 
 		InstanceRenderQueue m_InstanceRenderQueue;

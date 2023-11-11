@@ -8,5 +8,6 @@ namespace BuD
 		CUBE = 2,
 		POINT_TESSELLATION = 3,
 		POINT_STANDARD = 4,
+		QUAD_TESSELLATION = 5,
 	};
 }

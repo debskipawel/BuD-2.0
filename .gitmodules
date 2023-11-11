@@ -1,0 +1,3 @@
+[submodule "BuD/Dependencies/gcode-parser"]
+	path = BuD/Dependencies/gcode-parser
+	url = https://github.com/debskipawel/gcode-parser

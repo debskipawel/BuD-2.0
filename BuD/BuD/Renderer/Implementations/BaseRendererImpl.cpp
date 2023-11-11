@@ -6,6 +6,15 @@
 
 namespace BuD
 {
+	void BaseRendererImpl::UseLeftHandCoordinateSystem()
+	{
+		m_UseRightHandCoordinateSystem = false;
+	}
+	void BaseRendererImpl::UseRightHandCoordinateSystem()
+	{
+		m_UseRightHandCoordinateSystem = true;
+	}
+
 	void BaseRendererImpl::RenderIndividually(const RenderingPass& renderingPass, Scene& scene)
 	{
 		auto& pipeline = renderingPass.m_Pipeline;

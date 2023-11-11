@@ -28,11 +28,8 @@ HS_CONSTANT_DATA_OUTPUT CalcHSPatchConstants(
 {
 	HS_CONSTANT_DATA_OUTPUT Output;
 
-    Output.EdgeTessFactor[0] = Output.EdgeTessFactor[2] = ip[PatchID].segments.g;
-    Output.EdgeTessFactor[1] = Output.EdgeTessFactor[3] = ip[PatchID].segments.r;
-    
-    Output.InsideTessFactor[0] = ip[PatchID].segments.r;
-    Output.InsideTessFactor[1] = ip[PatchID].segments.g;
+    Output.EdgeTessFactor[0] = Output.EdgeTessFactor[2] = Output.InsideTessFactor[1] = clamp(ip[0].segments.g, 1.0, 64.0);
+    Output.EdgeTessFactor[1] = Output.EdgeTessFactor[3] = Output.InsideTessFactor[0] = clamp(ip[0].segments.r, 1.0, 64.0);
 
 	return Output;
 }

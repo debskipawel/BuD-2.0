@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -89,7 +89,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\gcode-parser\gcode-parser\src;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -110,7 +110,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\gcode-parser\gcode-parser\src;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -131,7 +131,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\gcode-parser\gcode-parser\src;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -152,7 +152,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)BuD\;$(SolutionDir)Dependencies\BuD-audio\include;$(SolutionDir)Dependencies\DirectXTK\Inc;$(SolutionDir)Dependencies\DearImGui;$(SolutionDir)Dependencies\entt-3.11.1\single_include;$(SolutionDir)Dependencies\gcode-parser\gcode-parser\src;$(SolutionDir)Dependencies\ImGuiFileDialog\src;$(SolutionDir)Dependencies\Serializer</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -167,209 +167,307 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Actions\TransformAction.h" />
-    <ClInclude Include="Actions\TransformActionList.h" />
-    <ClInclude Include="ApplicationCAD.h" />
-    <ClInclude Include="AppState.h" />
-    <ClInclude Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.h" />
-    <ClInclude Include="Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.h" />
-    <ClInclude Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.h" />
-    <ClInclude Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.h" />
-    <ClInclude Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.h" />
-    <ClInclude Include="Behaviors\Keyboard\Multiselect\MultiselectKeyboardBehaviorLayer.h" />
-    <ClInclude Include="Behaviors\Keyboard\Shortcuts\ShortcutsKeyboardBehaviorLayer.h" />
-    <ClInclude Include="Behaviors\Mouse\Action\ActionMouseBehaviorLayer.h" />
-    <ClInclude Include="Behaviors\Mouse\BaseMouseBehaviorLayer.h" />
-    <ClInclude Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.h" />
-    <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h" />
-    <ClInclude Include="Filters\FilterInfo.h" />
-    <ClInclude Include="GUI\Intersection\IntersectionGuiLayer.h" />
-    <ClInclude Include="Intersection\CommonPointMarching\AbstractCommonPointMarching.h" />
-    <ClInclude Include="Intersection\CommonPointMarching\MarchingDirection.h" />
-    <ClInclude Include="Intersection\CommonPointMarching\NewtonCommonPointMarching.h" />
-    <ClInclude Include="Intersection\InitialCommonPoint\AbstractInitialCommonPointFinder.h" />
-    <ClInclude Include="Intersection\InitialCommonPoint\LinearApproximationCommonPointFinder.h" />
-    <ClInclude Include="GUI\MenuBar\MenuBarGuiLayer.h" />
-    <ClInclude Include="Intersection\BaseIntersectionAlgorithm.h" />
-    <ClInclude Include="Intersection\IntersectionAlgorithmParameters.h" />
-    <ClInclude Include="Intersection\LoopDetectors\AbstractLoopDetector.h" />
-    <ClInclude Include="Intersection\LoopDetectors\DotProductLoopDetector.h" />
-    <ClInclude Include="Intersection\LoopDetectors\ShortestDistanceLoopDetector.h" />
-    <ClInclude Include="Intersection\Sampler\VisitorSampler.h" />
-    <ClInclude Include="Intersection\Structures\CommonPointSequenceResult.h" />
-    <ClInclude Include="Intersection\Structures\IntersectionResult.h" />
-    <ClInclude Include="Intersection\Structures\IntersectionStructures.h" />
-    <ClInclude Include="Intersection\MultiIntersectionAlgorithm.h" />
-    <ClInclude Include="Intersection\InitialCommonPoint\SteepestDescentCommonPointFinder.h" />
-    <ClInclude Include="Intersection\Sampler\ISampler.h" />
-    <ClInclude Include="Intersection\SelfIntersectionAlgorithm.h" />
-    <ClInclude Include="Intersection\Structures\LoopResult.h" />
-    <ClInclude Include="Intersection\Structures\NextCommonPointResult.h" />
-    <ClInclude Include="Intersection\Structures\ParameterWrapResult.h" />
-    <ClInclude Include="Intersection\Structures\PointMappingResult.h" />
-    <ClInclude Include="Intersection\Structures\StartingCommonPointResult.h" />
-    <ClInclude Include="Objects\CAD\Intersection\IntersectionCurve.h" />
-    <ClInclude Include="Objects\CAD\Intersection\IntersectionPoint.h" />
-    <ClInclude Include="Objects\CAD\ParameterizedObject2D.h" />
-    <ClInclude Include="Objects\CAD\PointBased\Curve\BaseCurve.h" />
-    <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC0.h" />
-    <ClInclude Include="Objects\CAD\PointBased\Curve\BezierCurveC2.h" />
-    <ClInclude Include="Objects\CAD\PointBased\Curve\YukselInterpolatingCurveC2.h" />
-    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BaseBezierPatch.h" />
-    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BaseBezierSurface.h" />
-    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BezierPatchC0.h" />
-    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BezierPatchC2.h" />
-    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BezierSurfaceC0.h" />
-    <ClInclude Include="Objects\CAD\PointBased\Surfaces\BezierSurfaceC2.h" />
-    <ClInclude Include="Selection\BaseSelectionSystem.h" />
-    <ClInclude Include="Selection\ManualSelectionSystem.h" />
-    <ClInclude Include="Selection\TransformSelectionSystem.h" />
-    <ClInclude Include="Serializing\SceneSerializer.h" />
-    <ClInclude Include="Visitors\Intersection\CalculatorParameterized.h" />
-    <ClInclude Include="Visitors\Intersection\CalculatorNormalVector.h" />
-    <ClInclude Include="Visitors\Intersection\CalculatorParameterShortestDistance.h" />
-    <ClInclude Include="Visitors\Intersection\CalculatorPartialDerivativeU.h" />
-    <ClInclude Include="Visitors\Intersection\CalculatorPartialDerivativeV.h" />
-    <ClInclude Include="Visitors\Intersection\CalculatorPointOnSurface.h" />
-    <ClInclude Include="Visitors\Intersection\ParameterWrapperVisitor.h" />
-    <ClInclude Include="Visitors\PointBased\PointAddedVisitor.h" />
-    <ClInclude Include="Visitors\PointBased\BasePointActionVisitor.h" />
-    <ClInclude Include="Visitors\PointBased\PointRemovedVisitor.h" />
-    <ClInclude Include="Visitors\Selection\BaseObjectSelectionVisitor.h" />
-    <ClInclude Include="Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.h" />
-    <ClInclude Include="GUI\Cursor\CursorGuiLayer.h" />
-    <ClInclude Include="GUI\ObjectList\ObjectCreationGuiLayer.h" />
-    <ClInclude Include="Objects\Additional\Cursor.h" />
-    <ClInclude Include="Objects\CAD\Point.h" />
-    <ClInclude Include="Objects\CAD\PointBased\PointBasedObjectCAD.h" />
-    <ClInclude Include="Raycasting\RayFactory.h" />
-    <ClInclude Include="Components\TransformComponent.h" />
-    <ClInclude Include="GUI\AppState\AppStateGuiLayer.h" />
-    <ClInclude Include="GUI\BaseGuiLayer.h" />
-    <ClInclude Include="GUI\Console\ConsoleGuiLayer.h" />
-    <ClInclude Include="GUI\MainGuiLayer.h" />
-    <ClInclude Include="GUI\ObjectList\ObjectListGuiLayer.h" />
-    <ClInclude Include="Visitors\Deletion\ObjectDeletionVisitor.h" />
-    <ClInclude Include="Visitors\ObjectGui\ObjectGuiDrawerVisitor.h" />
-    <ClInclude Include="GUI\Performance\PerformanceGuiLayer.h" />
-    <ClInclude Include="GUI\Properties\PropertiesGuiLayer.h" />
-    <ClInclude Include="Visitors\RayIntersection\RayIntersectionVisitor.h" />
-    <ClInclude Include="GUI\Viewport\ViewportGuiLayer.h" />
-    <ClInclude Include="Objects\Additional\Grid.h" />
-    <ClInclude Include="Raycasting\Ray.h" />
-    <ClInclude Include="Objects\CAD\Torus.h" />
-    <ClInclude Include="Scene\SceneCAD.h" />
-    <ClInclude Include="Scene\SceneObjectCAD.h" />
-    <ClInclude Include="DataLayers\AppStateDataLayer.h" />
-    <ClInclude Include="AxisLock.h" />
-    <ClInclude Include="DataLayers\MainDataLayer.h" />
-    <ClInclude Include="DataLayers\SceneDataLayer.h" />
-    <ClInclude Include="DataLayers\ViewportDataLayer.h" />
-    <ClInclude Include="Visitors\AbstractVisitor.h" />
-    <ClInclude Include="Visitors\Selection\ObjectSelectVisitor.h" />
-    <ClInclude Include="Visitors\Selection\ObjectUnselectVisitor.h" />
-    <ClInclude Include="Visitors\Serialization\SerializationVisitor.h" />
-    <ClInclude Include="Visitors\Transform\AfterUpdateTransformVisitor.h" />
-    <ClInclude Include="Visitors\Transform\ApplyGroupTransformVisitor.h" />
-    <ClInclude Include="Visitors\Transform\UpdateTransformVisitor.h" />
-    <ClInclude Include="Visitors\Validation\BaseValidationVisitor.h" />
-    <ClInclude Include="Visitors\Validation\CanAddControlPointValidationVisitor.h" />
-    <ClInclude Include="Visitors\Validation\ControlPointValidationVisitor.h" />
-    <ClInclude Include="Visitors\Validation\FilterValidationVisitor.h" />
-    <ClInclude Include="Visitors\Validation\IntersectionEligibilityValidationVisitor.h" />
+    <ClInclude Include="Applications\CAD\Actions\TransformAction.h" />
+    <ClInclude Include="Applications\CAD\Actions\TransformActionList.h" />
+    <ClInclude Include="Applications\CAD\ApplicationCAD.h" />
+    <ClInclude Include="Applications\CAD\Behaviors\Keyboard\BaseKeyboardBehaviorLayerCAD.h" />
+    <ClInclude Include="Applications\CAD\Behaviors\Mouse\BaseMouseBehaviorLayerCAD.h" />
+    <ClInclude Include="Applications\CAD\GUI\BaseGuiLayerCAD.h" />
+    <ClInclude Include="Applications\CAD\AppState.h" />
+    <ClInclude Include="Applications\CAD\Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.h" />
+    <ClInclude Include="Applications\CAD\Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Applications\CNC\ApplicationCNC.h" />
+    <ClInclude Include="Applications\CNC\Behaviors\Mouse\BaseMouseBehaviorLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\Behaviors\Mouse\Camera\CameraMouseBehaviorLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\Behaviors\Mouse\MainMouseBehaviorLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\DataLayers\CameraDataLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\DataLayers\MainDataLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\DataLayers\PathList\PathListDataLayer.h" />
+    <ClInclude Include="Applications\CNC\DataLayers\Simulation\SimulationDataLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\Factories\MillingTool\FlatMillingToolFactory.h" />
+    <ClInclude Include="Applications\CNC\Factories\MillingTool\MainMillingToolFactory.h" />
+    <ClInclude Include="Applications\CNC\Factories\MillingTool\MillingToolFactory.h" />
+    <ClInclude Include="Applications\CNC\Factories\MillingTool\SphericalMillingToolFactory.h" />
+    <ClInclude Include="Applications\CNC\GUI\BaseGuiLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\GUI\MainGuiLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\GUI\MenuBar\MenuBarGuiLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\GUI\MillingTool\MillingToolGuiLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\GUI\PathList\PathListGuiLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\GUI\SimulationParameters\SimulationParametersGuiLayer.h" />
+    <ClInclude Include="Applications\CNC\GUI\StartingParameters\StartingParametersGuiLayer.h" />
+    <ClInclude Include="Applications\CNC\GUI\Viewport\ViewportGuiLayerCNC.h" />
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlock.h" />
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockParameters.h" />
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\Mesh\MaterialBlockSidesMesh.h" />
+    <ClInclude Include="Applications\CNC\Objects\MaterialBlock\Mesh\MaterialBlockTopMesh.h" />
+    <ClInclude Include="Applications\CNC\Objects\Tools\FlatMillingTool.h" />
+    <ClInclude Include="Applications\CNC\Objects\Tools\MillingTool.h" />
+    <ClInclude Include="Applications\CNC\Objects\Tools\MillingToolParameters.h" />
+    <ClInclude Include="Applications\CNC\Objects\Tools\SphericalMillingTool.h" />
+    <ClInclude Include="Applications\CNC\Objects\Tools\Visitors\MillingToolVisitor.h" />
+    <ClInclude Include="Applications\CNC\Objects\Tools\Visitors\ValidationAggregatorFactoryMillingToolVisitor.h" />
+    <ClInclude Include="Applications\CNC\Simulator\Algorithms\BresenhamAlgorithm.h" />
+    <ClInclude Include="Applications\CNC\Simulator\Algorithms\CyrusBeckClippingAlgorithm.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MaterialBlockCutter.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MillingSimulator.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MillingSimulatorWorkerThread.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MillingValidation.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\NonMillingPartToolMoveValidationLayer.h" />
+    <ClInclude Include="Applications\CNC\Simulator\ToolCut.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\AbstractToolMoveValidationLayer.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ToolMoveValidationAggregator.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ToolMoveValidationError.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\AnyContactToolMoveValidationLayer.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\ToolImmersionToolMoveValidationLayer.h" />
+    <ClInclude Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\VerticalMovementToolMoveValidationLayer.h" />
+    <ClInclude Include="Applications\Shared\DataLayers\ViewportDataLayer.h" />
+    <ClInclude Include="Applications\Switcher\ApplicationSwitcher.h" />
+    <ClInclude Include="Applications\Switcher\DataLayers\MainDataLayerSwitcher.h" />
+    <ClInclude Include="Applications\Switcher\GUI\BaseGuiLayerSwitcher.h" />
+    <ClInclude Include="Applications\Switcher\GUI\MainGuiLayerSwitcher.h" />
+    <ClInclude Include="Applications\Switcher\GUI\TabSwitch\TabSwitchGuiLayer.h" />
+    <ClInclude Include="Applications\Shared\Behaviors\Keyboard\BaseKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Applications\CAD\Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Applications\CAD\Behaviors\Keyboard\MainKeyboardBehaviorLayerCAD.h" />
+    <ClInclude Include="Applications\CAD\Behaviors\Keyboard\Multiselect\MultiselectKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Applications\CAD\Behaviors\Keyboard\Shortcuts\ShortcutsKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Applications\CAD\Behaviors\Mouse\Action\ActionMouseBehaviorLayer.h" />
+    <ClInclude Include="Applications\Shared\Behaviors\Mouse\BaseMouseBehaviorLayer.h" />
+    <ClInclude Include="Applications\CAD\Behaviors\Mouse\Camera\CameraMouseBehaviorLayerCAD.h" />
+    <ClInclude Include="Applications\CAD\Behaviors\Mouse\MainMouseBehaviorLayerCAD.h" />
+    <ClInclude Include="Applications\CAD\Filters\FilterInfo.h" />
+    <ClInclude Include="Applications\CAD\GUI\Intersection\IntersectionGuiLayer.h" />
+    <ClInclude Include="Applications\CAD\Intersection\CommonPointMarching\AbstractCommonPointMarching.h" />
+    <ClInclude Include="Applications\CAD\Intersection\CommonPointMarching\MarchingDirection.h" />
+    <ClInclude Include="Applications\CAD\Intersection\CommonPointMarching\NewtonCommonPointMarching.h" />
+    <ClInclude Include="Applications\CAD\Intersection\InitialCommonPoint\AbstractInitialCommonPointFinder.h" />
+    <ClInclude Include="Applications\CAD\Intersection\InitialCommonPoint\LinearApproximationCommonPointFinder.h" />
+    <ClInclude Include="Applications\CAD\GUI\MenuBar\MenuBarGuiLayerCAD.h" />
+    <ClInclude Include="Applications\CAD\Intersection\BaseIntersectionAlgorithm.h" />
+    <ClInclude Include="Applications\CAD\Intersection\IntersectionAlgorithmParameters.h" />
+    <ClInclude Include="Applications\CAD\Intersection\LoopDetectors\AbstractLoopDetector.h" />
+    <ClInclude Include="Applications\CAD\Intersection\LoopDetectors\DotProductLoopDetector.h" />
+    <ClInclude Include="Applications\CAD\Intersection\LoopDetectors\ShortestDistanceLoopDetector.h" />
+    <ClInclude Include="Applications\CAD\Intersection\Sampler\VisitorSampler.h" />
+    <ClInclude Include="Applications\CAD\Intersection\Structures\CommonPointSequenceResult.h" />
+    <ClInclude Include="Applications\CAD\Intersection\Structures\IntersectionResult.h" />
+    <ClInclude Include="Applications\CAD\Intersection\Structures\IntersectionStructures.h" />
+    <ClInclude Include="Applications\CAD\Intersection\MultiIntersectionAlgorithm.h" />
+    <ClInclude Include="Applications\CAD\Intersection\InitialCommonPoint\SteepestDescentCommonPointFinder.h" />
+    <ClInclude Include="Applications\CAD\Intersection\Sampler\ISampler.h" />
+    <ClInclude Include="Applications\CAD\Intersection\SelfIntersectionAlgorithm.h" />
+    <ClInclude Include="Applications\CAD\Intersection\Structures\LoopResult.h" />
+    <ClInclude Include="Applications\CAD\Intersection\Structures\NextCommonPointResult.h" />
+    <ClInclude Include="Applications\CAD\Intersection\Structures\ParameterWrapResult.h" />
+    <ClInclude Include="Applications\CAD\Intersection\Structures\PointMappingResult.h" />
+    <ClInclude Include="Applications\CAD\Intersection\Structures\StartingCommonPointResult.h" />
+    <ClInclude Include="Applications\CAD\Objects\Intersection\IntersectionCurve.h" />
+    <ClInclude Include="Applications\CAD\Objects\Intersection\IntersectionPoint.h" />
+    <ClInclude Include="Applications\CAD\Objects\ParameterizedObject2D.h" />
+    <ClInclude Include="Applications\CAD\Objects\PointBased\Curve\BaseCurve.h" />
+    <ClInclude Include="Applications\CAD\Objects\PointBased\Curve\BezierCurveC0.h" />
+    <ClInclude Include="Applications\CAD\Objects\PointBased\Curve\BezierCurveC2.h" />
+    <ClInclude Include="Applications\CAD\Objects\PointBased\Curve\YukselInterpolatingCurveC2.h" />
+    <ClInclude Include="Applications\CAD\Objects\PointBased\Surfaces\BaseBezierPatch.h" />
+    <ClInclude Include="Applications\CAD\Objects\PointBased\Surfaces\BaseBezierSurface.h" />
+    <ClInclude Include="Applications\CAD\Objects\PointBased\Surfaces\BezierPatchC0.h" />
+    <ClInclude Include="Applications\CAD\Objects\PointBased\Surfaces\BezierPatchC2.h" />
+    <ClInclude Include="Applications\CAD\Objects\PointBased\Surfaces\BezierSurfaceC0.h" />
+    <ClInclude Include="Applications\CAD\Objects\PointBased\Surfaces\BezierSurfaceC2.h" />
+    <ClInclude Include="Applications\CAD\Selection\BaseSelectionSystem.h" />
+    <ClInclude Include="Applications\CAD\Selection\ManualSelectionSystem.h" />
+    <ClInclude Include="Applications\CAD\Selection\TransformSelectionSystem.h" />
+    <ClInclude Include="Applications\CAD\Serializing\SceneSerializer.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Intersection\CalculatorParameterized.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Intersection\CalculatorNormalVector.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Intersection\CalculatorParameterShortestDistance.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Intersection\CalculatorPartialDerivativeU.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Intersection\CalculatorPartialDerivativeV.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Intersection\CalculatorPointOnSurface.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Intersection\ParameterWrapperVisitor.h" />
+    <ClInclude Include="Applications\CAD\Visitors\PointBased\PointAddedVisitor.h" />
+    <ClInclude Include="Applications\CAD\Visitors\PointBased\BasePointActionVisitor.h" />
+    <ClInclude Include="Applications\CAD\Visitors\PointBased\PointRemovedVisitor.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Selection\BaseObjectSelectionVisitor.h" />
+    <ClInclude Include="Applications\CAD\Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.h" />
+    <ClInclude Include="Applications\CAD\GUI\Cursor\CursorGuiLayer.h" />
+    <ClInclude Include="Applications\CAD\GUI\ObjectList\ObjectCreationGuiLayer.h" />
+    <ClInclude Include="Applications\Shared\Objects\Cursor.h" />
+    <ClInclude Include="Applications\CAD\Objects\Point.h" />
+    <ClInclude Include="Applications\CAD\Objects\PointBased\PointBasedObjectCAD.h" />
+    <ClInclude Include="Applications\CAD\Raycasting\RayFactory.h" />
+    <ClInclude Include="Applications\CAD\Components\TransformComponent.h" />
+    <ClInclude Include="Applications\CAD\GUI\AppState\AppStateGuiLayer.h" />
+    <ClInclude Include="Applications\Shared\GUI\BaseGuiLayer.h" />
+    <ClInclude Include="Applications\Shared\GUI\Console\ConsoleGuiLayer.h" />
+    <ClInclude Include="Applications\CAD\GUI\MainGuiLayerCAD.h" />
+    <ClInclude Include="Applications\CAD\GUI\ObjectList\ObjectListGuiLayer.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Deletion\ObjectDeletionVisitor.h" />
+    <ClInclude Include="Applications\CAD\Visitors\ObjectGui\ObjectGuiDrawerVisitor.h" />
+    <ClInclude Include="Applications\Shared\GUI\Performance\PerformanceGuiLayer.h" />
+    <ClInclude Include="Applications\CAD\GUI\Properties\PropertiesGuiLayer.h" />
+    <ClInclude Include="Applications\CAD\Visitors\RayIntersection\RayIntersectionVisitor.h" />
+    <ClInclude Include="Applications\CAD\GUI\Viewport\ViewportGuiLayerCAD.h" />
+    <ClInclude Include="Applications\Shared\Objects\Grid.h" />
+    <ClInclude Include="Applications\CAD\Raycasting\Ray.h" />
+    <ClInclude Include="Applications\CAD\Objects\Torus.h" />
+    <ClInclude Include="Applications\CAD\Scene\SceneCAD.h" />
+    <ClInclude Include="Applications\CAD\Scene\SceneObjectCAD.h" />
+    <ClInclude Include="Applications\CAD\DataLayers\AppStateDataLayerCAD.h" />
+    <ClInclude Include="Applications\CAD\AxisLock.h" />
+    <ClInclude Include="Applications\CAD\DataLayers\MainDataLayerCAD.h" />
+    <ClInclude Include="Applications\CAD\DataLayers\SceneDataLayerCAD.h" />
+    <ClInclude Include="Applications\CAD\Visitors\AbstractVisitor.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Selection\ObjectSelectVisitor.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Selection\ObjectUnselectVisitor.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Serialization\SerializationVisitor.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Transform\AfterUpdateTransformVisitor.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Transform\ApplyGroupTransformVisitor.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Transform\UpdateTransformVisitor.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Validation\BaseValidationVisitor.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Validation\CanAddControlPointValidationVisitor.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Validation\ControlPointValidationVisitor.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Validation\FilterValidationVisitor.h" />
+    <ClInclude Include="Applications\CAD\Visitors\Validation\IntersectionEligibilityValidationVisitor.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Actions\TransformActionList.cpp" />
-    <ClCompile Include="ApplicationCAD.cpp" />
-    <ClCompile Include="Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.cpp" />
-    <ClCompile Include="Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.cpp" />
-    <ClCompile Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.cpp" />
-    <ClCompile Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.cpp" />
-    <ClCompile Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.cpp" />
-    <ClCompile Include="Behaviors\Keyboard\Multiselect\MultiselectKeyboardBehaviorLayer.cpp" />
-    <ClCompile Include="Behaviors\Keyboard\Shortcuts\ShortcutsKeyboardBehaviorLayer.cpp" />
-    <ClCompile Include="Behaviors\Mouse\Action\ActionMouseBehaviorLayer.cpp" />
-    <ClCompile Include="Behaviors\Mouse\BaseMouseBehaviorLayer.cpp" />
-    <ClCompile Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.cpp" />
-    <ClCompile Include="Behaviors\Mouse\MainMouseBehaviorLayer.cpp" />
-    <ClCompile Include="Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.cpp" />
-    <ClCompile Include="Components\TransformComponent.cpp" />
-    <ClCompile Include="DataLayers\ViewportDataLayer.cpp" />
-    <ClCompile Include="Filters\FilterInfo.cpp" />
-    <ClCompile Include="GUI\BaseGuiLayer.cpp" />
-    <ClCompile Include="GUI\Cursor\CursorGuiLayer.cpp" />
-    <ClCompile Include="GUI\Intersection\IntersectionGuiLayer.cpp" />
-    <ClCompile Include="Intersection\CommonPointMarching\AbstractCommonPointMarching.cpp" />
-    <ClCompile Include="Intersection\CommonPointMarching\NewtonCommonPointMarching.cpp" />
-    <ClCompile Include="Intersection\InitialCommonPoint\AbstractInitialCommonPointFinder.cpp" />
-    <ClCompile Include="GUI\MenuBar\MenuBarGuiLayer.cpp" />
-    <ClCompile Include="GUI\ObjectList\ObjectCreationGuiLayer.cpp" />
-    <ClCompile Include="Intersection\BaseIntersectionAlgorithm.cpp" />
-    <ClCompile Include="Intersection\LoopDetectors\DotProductLoopDetector.cpp" />
-    <ClCompile Include="Intersection\LoopDetectors\ShortestDistanceLoopDetector.cpp" />
-    <ClCompile Include="Intersection\MultiIntersectionAlgorithm.cpp" />
-    <ClCompile Include="Intersection\InitialCommonPoint\LinearApproximationCommonPointFinder.cpp" />
-    <ClCompile Include="Intersection\InitialCommonPoint\SteepestDescentCommonPointFinder.cpp" />
-    <ClCompile Include="Intersection\Sampler\VisitorSampler.cpp" />
-    <ClCompile Include="Intersection\SelfIntersectionAlgorithm.cpp" />
-    <ClCompile Include="Objects\Additional\Cursor.cpp" />
-    <ClCompile Include="Objects\CAD\Intersection\IntersectionCurve.cpp" />
-    <ClCompile Include="Objects\CAD\ParameterizedObject2D.cpp" />
-    <ClCompile Include="Objects\CAD\Point.cpp" />
-    <ClCompile Include="Objects\CAD\PointBased\Curve\BaseCurve.cpp" />
-    <ClCompile Include="Objects\CAD\PointBased\Curve\BezierCurveC0.cpp" />
-    <ClCompile Include="Objects\CAD\PointBased\Curve\BezierCurveC2.cpp" />
-    <ClCompile Include="Objects\CAD\PointBased\Curve\YukselInterpolatingCurveC2.cpp" />
-    <ClCompile Include="Objects\CAD\PointBased\PointBasedObjectCAD.cpp" />
-    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BaseBezierPatch.cpp" />
-    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BaseBezierSurface.cpp" />
-    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BezierPatchC0.cpp" />
-    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BezierPatchC2.cpp" />
-    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BezierSurfaceC0.cpp" />
-    <ClCompile Include="Objects\CAD\PointBased\Surfaces\BezierSurfaceC2.cpp" />
-    <ClCompile Include="Raycasting\RayFactory.cpp" />
-    <ClCompile Include="GUI\AppState\AppStateGuiLayer.cpp" />
-    <ClCompile Include="GUI\Console\ConsoleGuiLayer.cpp" />
-    <ClCompile Include="GUI\MainGuiLayer.cpp" />
-    <ClCompile Include="GUI\ObjectList\ObjectListGuiLayer.cpp" />
-    <ClCompile Include="Selection\BaseSelectionSystem.cpp" />
-    <ClCompile Include="Selection\ManualSelectionSystem.cpp" />
-    <ClCompile Include="Selection\TransformSelectionSystem.cpp" />
-    <ClCompile Include="Serializing\SceneSerializer.cpp" />
-    <ClCompile Include="Visitors\Deletion\ObjectDeletionVisitor.cpp" />
-    <ClCompile Include="Visitors\Intersection\CalculatorParameterized.cpp" />
-    <ClCompile Include="Visitors\Intersection\CalculatorNormalVector.cpp" />
-    <ClCompile Include="Visitors\Intersection\CalculatorParameterShortestDistance.cpp" />
-    <ClCompile Include="Visitors\Intersection\CalculatorPartialDerivativeU.cpp" />
-    <ClCompile Include="Visitors\Intersection\CalculatorPartialDerivativeV.cpp" />
-    <ClCompile Include="Visitors\Intersection\CalculatorPointOnSurface.cpp" />
-    <ClCompile Include="Visitors\Intersection\ParameterWrapperVisitor.cpp" />
-    <ClCompile Include="Visitors\ObjectGui\ObjectGuiDrawerVisitor.cpp" />
-    <ClCompile Include="GUI\Performance\PerformanceGuiLayer.cpp" />
-    <ClCompile Include="GUI\Properties\PropertiesGuiLayer.cpp" />
-    <ClCompile Include="Visitors\PointBased\PointAddedVisitor.cpp" />
-    <ClCompile Include="Visitors\PointBased\BasePointActionVisitor.cpp" />
-    <ClCompile Include="Visitors\PointBased\PointRemovedVisitor.cpp" />
-    <ClCompile Include="Visitors\RayIntersection\RayIntersectionVisitor.cpp" />
-    <ClCompile Include="GUI\Viewport\ViewportGuiLayer.cpp" />
-    <ClCompile Include="Objects\Additional\Grid.cpp" />
-    <ClCompile Include="Objects\CAD\Torus.cpp" />
-    <ClCompile Include="Scene\SceneCAD.cpp" />
-    <ClCompile Include="Scene\SceneObjectCAD.cpp" />
-    <ClCompile Include="DataLayers\AppStateDataLayer.cpp" />
-    <ClCompile Include="Visitors\AbstractVisitor.cpp" />
-    <ClCompile Include="Visitors\Selection\BaseObjectSelectionVisitor.cpp" />
-    <ClCompile Include="Visitors\Selection\ObjectSelectVisitor.cpp" />
-    <ClCompile Include="Visitors\Selection\ObjectUnselectVisitor.cpp" />
-    <ClCompile Include="Visitors\Serialization\SerializationVisitor.cpp" />
-    <ClCompile Include="Visitors\Transform\AfterUpdateTransformVisitor.cpp" />
-    <ClCompile Include="Visitors\Transform\ApplyGroupTransformVisitor.cpp" />
-    <ClCompile Include="Visitors\Transform\UpdateTransformVisitor.cpp" />
-    <ClCompile Include="Visitors\Validation\BaseValidationVisitor.cpp" />
-    <ClCompile Include="Visitors\Validation\CanAddControlPointValidationVisitor.cpp" />
-    <ClCompile Include="Visitors\Validation\ControlPointValidationVisitor.cpp" />
-    <ClCompile Include="Visitors\Validation\FilterValidationVisitor.cpp" />
-    <ClCompile Include="Visitors\Validation\IntersectionEligibilityValidationVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Actions\TransformActionList.cpp" />
+    <ClCompile Include="Applications\CAD\ApplicationCAD.cpp" />
+    <ClCompile Include="Applications\CAD\Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Applications\CAD\Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Applications\CAD\Behaviors\Keyboard\BaseKeyboardBehaviorLayerCAD.cpp" />
+    <ClCompile Include="Applications\CAD\Behaviors\Mouse\BaseMouseBehaviorLayerCAD.cpp" />
+    <ClCompile Include="Applications\CNC\ApplicationCNC.cpp" />
+    <ClCompile Include="Applications\CNC\Behaviors\Mouse\BaseMouseBehaviorLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\Behaviors\Mouse\Camera\CameraMouseBehaviorLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\Behaviors\Mouse\MainMouseBehaviorLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\GUI\MillingTool\MillingToolGuiLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\MaterialBlock\Mesh\MaterialBlockSidesMesh.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\Tools\Visitors\MillingToolVisitor.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\Tools\Visitors\ValidationAggregatorFactoryMillingToolVisitor.cpp" />
+    <ClCompile Include="Applications\CNC\PathProgram.cpp" />
+    <ClCompile Include="Applications\CNC\PathProgram.h" />
+    <ClCompile Include="Applications\CNC\DataLayers\Simulation\SimulationDataLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\Factories\MillingTool\FlatMillingToolFactory.cpp" />
+    <ClCompile Include="Applications\CNC\Factories\MillingTool\MainMillingToolFactory.cpp" />
+    <ClCompile Include="Applications\CNC\Factories\MillingTool\SphericalMillingToolFactory.cpp" />
+    <ClCompile Include="Applications\CNC\GUI\BaseGuiLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\GUI\MainGuiLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\GUI\MenuBar\MenuBarGuiLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\GUI\PathList\PathListGuiLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\GUI\SimulationParameters\SimulationParametersGuiLayer.cpp" />
+    <ClCompile Include="Applications\CNC\GUI\StartingParameters\StartingParametersGuiLayer.cpp" />
+    <ClCompile Include="Applications\CNC\GUI\Viewport\ViewportGuiLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\MaterialBlock\MaterialBlock.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\MaterialBlock\MaterialBlockParameters.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\MaterialBlock\Mesh\MaterialBlockTopMesh.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\Tools\FlatMillingTool.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\Tools\MillingTool.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\Tools\MillingToolParameters.cpp" />
+    <ClCompile Include="Applications\CNC\Objects\Tools\SphericalMillingTool.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\Algorithms\BresenhamAlgorithm.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\Algorithms\CyrusBeckClippingAlgorithm.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\MaterialBlockCutter.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\MillingSimulator.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\MillingSimulatorWorkerThread.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ToolMoveValidationAggregator.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\AbstractToolMoveValidationLayer.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\AnyContactToolMoveValidationLayer.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\NonMillingPartToolMoveValidationLayer.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\ToolImmersionToolMoveValidationLayer.cpp" />
+    <ClCompile Include="Applications\CNC\Simulator\MoveValidation\ValidationLayers\VerticalMovementToolMoveValidationLayer.cpp" />
+    <ClCompile Include="Applications\Shared\DataLayers\ViewportDataLayer.cpp" />
+    <ClCompile Include="Applications\Switcher\ApplicationSwitcher.cpp" />
+    <ClCompile Include="Applications\Switcher\DataLayers\MainDataLayerSwitcher.cpp" />
+    <ClCompile Include="Applications\Switcher\GUI\BaseGuiLayerSwitcher.cpp" />
+    <ClCompile Include="Applications\Switcher\GUI\MainGuiLayerSwitcher.cpp" />
+    <ClCompile Include="Applications\Switcher\GUI\TabSwitch\TabSwitchGuiLayer.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Applications\CAD\GUI\BaseGuiLayerCAD.cpp" />
+    <ClCompile Include="Applications\Shared\Behaviors\Keyboard\BaseKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Applications\CAD\Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Applications\CAD\Behaviors\Keyboard\MainKeyboardBehaviorLayerCAD.cpp" />
+    <ClCompile Include="Applications\CAD\Behaviors\Keyboard\Multiselect\MultiselectKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Applications\CAD\Behaviors\Keyboard\Shortcuts\ShortcutsKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Applications\CAD\Behaviors\Mouse\Action\ActionMouseBehaviorLayer.cpp" />
+    <ClCompile Include="Applications\CAD\Behaviors\Mouse\Camera\CameraMouseBehaviorLayerCAD.cpp" />
+    <ClCompile Include="Applications\CAD\Behaviors\Mouse\MainMouseBehaviorLayerCAD.cpp" />
+    <ClCompile Include="Applications\CAD\Behaviors\Mouse\Selection\SelectionMouseBehaviorLayer.cpp" />
+    <ClCompile Include="Applications\CAD\Components\TransformComponent.cpp" />
+    <ClCompile Include="Applications\CAD\Filters\FilterInfo.cpp" />
+    <ClCompile Include="Applications\CAD\GUI\Cursor\CursorGuiLayer.cpp" />
+    <ClCompile Include="Applications\CAD\GUI\Intersection\IntersectionGuiLayer.cpp" />
+    <ClCompile Include="Applications\CAD\Intersection\CommonPointMarching\AbstractCommonPointMarching.cpp" />
+    <ClCompile Include="Applications\CAD\Intersection\CommonPointMarching\NewtonCommonPointMarching.cpp" />
+    <ClCompile Include="Applications\CAD\Intersection\InitialCommonPoint\AbstractInitialCommonPointFinder.cpp" />
+    <ClCompile Include="Applications\CAD\GUI\MenuBar\MenuBarGuiLayerCAD.cpp" />
+    <ClCompile Include="Applications\CAD\GUI\ObjectList\ObjectCreationGuiLayer.cpp" />
+    <ClCompile Include="Applications\CAD\Intersection\BaseIntersectionAlgorithm.cpp" />
+    <ClCompile Include="Applications\CAD\Intersection\LoopDetectors\DotProductLoopDetector.cpp" />
+    <ClCompile Include="Applications\CAD\Intersection\LoopDetectors\ShortestDistanceLoopDetector.cpp" />
+    <ClCompile Include="Applications\CAD\Intersection\MultiIntersectionAlgorithm.cpp" />
+    <ClCompile Include="Applications\CAD\Intersection\InitialCommonPoint\LinearApproximationCommonPointFinder.cpp" />
+    <ClCompile Include="Applications\CAD\Intersection\InitialCommonPoint\SteepestDescentCommonPointFinder.cpp" />
+    <ClCompile Include="Applications\CAD\Intersection\Sampler\VisitorSampler.cpp" />
+    <ClCompile Include="Applications\CAD\Intersection\SelfIntersectionAlgorithm.cpp" />
+    <ClCompile Include="Applications\Shared\Objects\Cursor.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\Intersection\IntersectionCurve.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\ParameterizedObject2D.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\Point.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\PointBased\Curve\BaseCurve.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\PointBased\Curve\BezierCurveC0.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\PointBased\Curve\BezierCurveC2.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\PointBased\Curve\YukselInterpolatingCurveC2.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\PointBased\PointBasedObjectCAD.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\PointBased\Surfaces\BaseBezierPatch.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\PointBased\Surfaces\BaseBezierSurface.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\PointBased\Surfaces\BezierPatchC0.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\PointBased\Surfaces\BezierPatchC2.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\PointBased\Surfaces\BezierSurfaceC0.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\PointBased\Surfaces\BezierSurfaceC2.cpp" />
+    <ClCompile Include="Applications\CAD\Raycasting\RayFactory.cpp" />
+    <ClCompile Include="Applications\CAD\GUI\AppState\AppStateGuiLayer.cpp" />
+    <ClCompile Include="Applications\Shared\GUI\Console\ConsoleGuiLayer.cpp" />
+    <ClCompile Include="Applications\CAD\GUI\MainGuiLayerCAD.cpp" />
+    <ClCompile Include="Applications\CAD\GUI\ObjectList\ObjectListGuiLayer.cpp" />
+    <ClCompile Include="Applications\CAD\Selection\BaseSelectionSystem.cpp" />
+    <ClCompile Include="Applications\CAD\Selection\ManualSelectionSystem.cpp" />
+    <ClCompile Include="Applications\CAD\Selection\TransformSelectionSystem.cpp" />
+    <ClCompile Include="Applications\CAD\Serializing\SceneSerializer.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Deletion\ObjectDeletionVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Intersection\CalculatorParameterized.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Intersection\CalculatorNormalVector.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Intersection\CalculatorParameterShortestDistance.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Intersection\CalculatorPartialDerivativeU.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Intersection\CalculatorPartialDerivativeV.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Intersection\CalculatorPointOnSurface.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Intersection\ParameterWrapperVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\ObjectGui\ObjectGuiDrawerVisitor.cpp" />
+    <ClCompile Include="Applications\Shared\GUI\Performance\PerformanceGuiLayer.cpp" />
+    <ClCompile Include="Applications\CAD\GUI\Properties\PropertiesGuiLayer.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\PointBased\PointAddedVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\PointBased\BasePointActionVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\PointBased\PointRemovedVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\RayIntersection\RayIntersectionVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\GUI\Viewport\ViewportGuiLayerCAD.cpp" />
+    <ClCompile Include="Applications\Shared\Objects\Grid.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\Torus.cpp" />
+    <ClCompile Include="Applications\CAD\Scene\SceneCAD.cpp" />
+    <ClCompile Include="Applications\CAD\Scene\SceneObjectCAD.cpp" />
+    <ClCompile Include="Applications\CAD\DataLayers\AppStateDataLayerCAD.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\AbstractVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Selection\BaseObjectSelectionVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Selection\ObjectSelectVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Selection\ObjectUnselectVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Serialization\SerializationVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Transform\AfterUpdateTransformVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Transform\ApplyGroupTransformVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Transform\UpdateTransformVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Validation\BaseValidationVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Validation\CanAddControlPointValidationVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Validation\ControlPointValidationVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Validation\FilterValidationVisitor.cpp" />
+    <ClCompile Include="Applications\CAD\Visitors\Validation\IntersectionEligibilityValidationVisitor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuD\BuD.vcxproj">
@@ -383,6 +481,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Dependencies\DirectXTK\DirectXTK_Desktop_2022.vcxproj">
       <Project>{e0b52ae7-e160-4d32-bf3f-910b785e5a8e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependencies\gcode-parser\gcode-parser\gcode-parser.vcxproj">
+      <Project>{a0024cf0-1c01-4b7c-85ac-4a8b375c6f95}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Dependencies\ImGuiFileDialog\ImGuiFileDialog.vcxproj">
       <Project>{0dfd9b16-6876-498f-8455-caea6fb81972}</Project>
@@ -450,6 +551,82 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_ds.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_hs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_ds.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_hs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\MillingTool\Flat\flatTool_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\MillingTool\Flat\flatTool_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_border_gs.hlsl">
@@ -776,6 +953,13 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="testfile.f14" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Textures\stone_heightmap.jpg" />
+    <Image Include="Resources\Textures\wood_light.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
