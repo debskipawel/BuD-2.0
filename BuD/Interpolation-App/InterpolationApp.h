@@ -2,6 +2,8 @@
 
 #include <BuD.h>
 
+#include <GUI/ViewportGuiLayer.h>
+
 class InterpolationApp : public BuD::AppLayer
 {
 public:
@@ -12,8 +14,7 @@ public:
 	virtual void OnGuiRender() override;
 
 protected:
-	dxm::Vector2 m_ViewportSize1, m_ViewportSize2;
-	BuD::Texture m_Viewport1, m_Viewport2;
+	ViewportGuiLayer m_EulerViewportGuiLayer, m_QuaternionViewportGuiLayer;
 
 	float m_Time;
 };
