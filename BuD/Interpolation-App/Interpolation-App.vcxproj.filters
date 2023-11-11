@@ -24,6 +24,9 @@
     <ClCompile Include="GUI\ViewportGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Frame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InterpolationApp.h">
@@ -32,5 +35,12 @@
     <ClInclude Include="GUI\ViewportGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Frame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Resources\Shaders\frame_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\frame_ps.hlsl" />
   </ItemGroup>
 </Project>
