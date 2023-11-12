@@ -14,4 +14,7 @@ protected:
 	virtual void DrawKeyframeList();
 
 	SimulationDataLayer& m_SimulationDataLayer;
+
+	int m_FrameSelectedForEditing;
+	bool m_FrameSelectedManually;
 };

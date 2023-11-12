@@ -4,7 +4,7 @@
 #include <imgui_internal.h>
 
 KeyframeListGuiLayer::KeyframeListGuiLayer(SimulationDataLayer& simulationDataLayer)
-	: m_SimulationDataLayer(simulationDataLayer)
+	: m_SimulationDataLayer(simulationDataLayer), m_FrameSelectedForEditing(-1), m_FrameSelectedManually(false)
 {
 }
 
@@ -53,8 +53,12 @@ void KeyframeListGuiLayer::DrawKeyframeList()
 	for (auto& keyFrame : keyFrames)
 	{
 		auto name = std::format("Frame {} ({} s)", keyFrame.Id(), keyFrame.m_TimePoint);
-		auto selected = false;
+		auto selected = keyFrame.Id() == m_FrameSelectedForEditing;
 
-		ImGui::Selectable(name.c_str(), &selected);
+		if (ImGui::Selectable(name.c_str(), &selected))
+		{
+			m_FrameSelectedForEditing = selected ? keyFrame.Id() : -1;
+			m_FrameSelectedManually = selected;
+		}
 	}
 }
