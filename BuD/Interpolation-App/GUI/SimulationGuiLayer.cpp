@@ -38,7 +38,7 @@ void SimulationGuiLayer::DrawSimulationTimelineGui()
 {
 	if (ImGui::Begin("Timeline"))
 	{
-		auto buttonSize = dxm::Vector2(20.0f, 20.0f);
+		auto buttonSize = dxm::Vector2(24.0f, 24.0f);
 
 		DrawImageButton(m_PlayIcon, [this]() { m_SimulationDataLayer.Run(); }, buttonSize, m_SimulationDataLayer.m_Running);
 
@@ -53,15 +53,14 @@ void SimulationGuiLayer::DrawSimulationTimelineGui()
 		auto min = ImGui::GetWindowContentRegionMin();
 
 		auto currentCursorPos = ImGui::GetCursorPos();
+		auto innerSpacing = ImGui::GetStyle().ItemInnerSpacing.x;
 
 		auto sliderFillWidth = max.x - currentCursorPos.x;
+		auto grabSize = ImVec2(12.0f, 15.0f);
 
 		auto imguiContext = ImGui::GetCurrentContext();
 		auto imguiCurrentWindow = imguiContext->CurrentWindow;
 		auto sliderHeight = imguiContext->FontSize;
-
-		auto grabSize = ImVec2(12.0f, 15.0f);
-		auto innerSpacing = ImGui::GetStyle().ItemInnerSpacing.x;
 
 		auto newCursorPosY = currentCursorPos.y + 0.5f * (buttonSize.y - sliderHeight);
 		ImGui::SetCursorPosY(newCursorPosY);
