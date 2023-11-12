@@ -3,7 +3,7 @@
 #include <BuD.h>
 
 #include <GUI/ViewportGuiLayer.h>
-#include <GUI/SimulationSettingsGuiLayer.h>
+#include <GUI/SimulationGuiLayer.h>
 
 #include <Objects/Frame.h>
 
@@ -20,9 +20,12 @@ protected:
 	BuD::Scene m_EulerScene, m_QuaternionScene;
 	Frame m_EulerFrame, m_QuaternionFrame;
 
-	// ---------- GUI LAYERS -----------
+	// ---------- DATA LAYERS ----------
+	SimulationDataLayer m_DataLayer;
+
+	// ---------- GUI LAYERS ----------
 	ViewportGuiLayer m_EulerViewportGuiLayer, m_QuaternionViewportGuiLayer;
-	SimulationSettingsGuiLayer m_SimulationGuiLayer;
+	SimulationGuiLayer m_SimulationGuiLayer;
 
 	float m_Time;
 };
