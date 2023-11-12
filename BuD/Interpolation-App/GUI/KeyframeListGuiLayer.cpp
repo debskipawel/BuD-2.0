@@ -52,7 +52,7 @@ void KeyframeListGuiLayer::DrawKeyframeList()
 
 	for (auto& keyFrame : keyFrames)
 	{
-		auto name = std::format("{} ({} s)", "Frame", keyFrame.m_TimePoint);
+		auto name = std::format("Frame {} ({} s)", keyFrame.Id(), keyFrame.m_TimePoint);
 		auto selected = false;
 
 		ImGui::Selectable(name.c_str(), &selected);

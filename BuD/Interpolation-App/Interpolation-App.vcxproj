@@ -140,6 +140,7 @@
     <ClCompile Include="GUI\SimulationGuiLayer.cpp" />
     <ClCompile Include="GUI\ViewportGuiLayer.cpp" />
     <ClCompile Include="InterpolationApp.cpp" />
+    <ClCompile Include="KeyFrame.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Objects\Frame.cpp" />
   </ItemGroup>
@@ -160,6 +161,7 @@
     <ClInclude Include="GUI\SimulationGuiLayer.h" />
     <ClInclude Include="GUI\ViewportGuiLayer.h" />
     <ClInclude Include="InterpolationApp.h" />
+    <ClInclude Include="KeyFrame.h" />
     <ClInclude Include="Objects\Frame.h" />
   </ItemGroup>
   <ItemGroup>
