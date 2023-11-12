@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GUI\SimulationSettingsGuiLayer.cpp" />
     <ClCompile Include="GUI\ViewportGuiLayer.cpp" />
     <ClCompile Include="InterpolationApp.cpp" />
     <ClCompile Include="main.cpp" />
@@ -152,6 +153,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GUI\SimulationSettingsGuiLayer.h" />
     <ClInclude Include="GUI\ViewportGuiLayer.h" />
     <ClInclude Include="InterpolationApp.h" />
     <ClInclude Include="Objects\Frame.h" />

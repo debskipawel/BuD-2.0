@@ -1,7 +1,7 @@
 #include "InterpolationApp.h"
 
 InterpolationApp::InterpolationApp()
-	: m_Time(0.0f), m_EulerViewportGuiLayer("Euler"), m_QuaternionViewportGuiLayer("Quaternion"),
+	: m_Time(0.0f), m_EulerViewportGuiLayer("Euler"), m_QuaternionViewportGuiLayer("Quaternion"), m_SimulationGuiLayer(),
 	m_EulerScene(), m_QuaternionScene(), m_EulerFrame(m_EulerScene), m_QuaternionFrame(m_QuaternionScene)
 {
 }
@@ -38,4 +38,6 @@ void InterpolationApp::OnGuiRender()
 {
 	m_EulerViewportGuiLayer.DrawGui();
 	m_QuaternionViewportGuiLayer.DrawGui();
+
+	m_SimulationGuiLayer.DrawGui();
 }
