@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DataLayers\SimulationDataLayer.cpp" />
+    <ClCompile Include="GUI\KeyframeListGuiLayer.cpp" />
     <ClCompile Include="GUI\SimulationGuiLayer.cpp" />
     <ClCompile Include="GUI\ViewportGuiLayer.cpp" />
     <ClCompile Include="InterpolationApp.cpp" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataLayers\SimulationDataLayer.h" />
+    <ClInclude Include="GUI\KeyframeListGuiLayer.h" />
     <ClInclude Include="GUI\SimulationGuiLayer.h" />
     <ClInclude Include="GUI\ViewportGuiLayer.h" />
     <ClInclude Include="InterpolationApp.h" />

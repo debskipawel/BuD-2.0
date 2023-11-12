@@ -2,7 +2,7 @@
 
 InterpolationApp::InterpolationApp()
 	: m_Time(0.0f), m_EulerViewportGuiLayer("Euler"), m_QuaternionViewportGuiLayer("Quaternion"), 
-	m_DataLayer(), m_SimulationGuiLayer(m_DataLayer),
+	m_DataLayer(), m_SimulationGuiLayer(m_DataLayer), m_KeyframeListGuiLayer(m_DataLayer),
 	m_EulerScene(), m_QuaternionScene(), m_EulerFrame(m_EulerScene), m_QuaternionFrame(m_QuaternionScene)
 {
 }
@@ -41,4 +41,5 @@ void InterpolationApp::OnGuiRender()
 	m_QuaternionViewportGuiLayer.DrawGui();
 
 	m_SimulationGuiLayer.DrawGui();
+	m_KeyframeListGuiLayer.DrawGui();
 }

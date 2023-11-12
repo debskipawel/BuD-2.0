@@ -4,6 +4,7 @@
 
 #include <GUI/ViewportGuiLayer.h>
 #include <GUI/SimulationGuiLayer.h>
+#include <GUI/KeyframeListGuiLayer.h>
 
 #include <Objects/Frame.h>
 
@@ -26,6 +27,7 @@ protected:
 	// ---------- GUI LAYERS ----------
 	ViewportGuiLayer m_EulerViewportGuiLayer, m_QuaternionViewportGuiLayer;
 	SimulationGuiLayer m_SimulationGuiLayer;
+	KeyframeListGuiLayer m_KeyframeListGuiLayer;
 
 	float m_Time;
 };

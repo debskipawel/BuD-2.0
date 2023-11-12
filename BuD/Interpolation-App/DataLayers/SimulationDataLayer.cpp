@@ -29,13 +29,6 @@ void SimulationDataLayer::Update(float deltaTime)
 		return;
 	}
 
-	std::sort(m_KeyFrames.begin(), m_KeyFrames.end(), 
-		[](const KeyFrame& frame1, const KeyFrame& frame2)
-		{
-			return frame1.m_TimePoint > frame2.m_TimePoint;
-		}
-	);
-
 	m_Time += deltaTime;
 
 	if (m_Looped)
