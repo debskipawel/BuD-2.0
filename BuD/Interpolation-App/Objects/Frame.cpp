@@ -56,3 +56,8 @@ Frame::Frame(BuD::Scene& scene)
 
 	m_FrameEntity.AddComponent<BuD::IRenderable>(renderingPasses);
 }
+
+void Frame::SetModelMatrix(const dxm::Matrix& matrix)
+{
+	m_Model = matrix;
+}

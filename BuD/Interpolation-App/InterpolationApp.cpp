@@ -10,6 +10,20 @@ InterpolationApp::InterpolationApp()
 void InterpolationApp::OnUpdate(float deltaTime)
 {
 	m_DataLayer.Update(deltaTime);
+
+	auto animationFrame = m_DataLayer.Interpolate();
+
+	auto eulerAngles = dxm::Vector3(
+		DirectX::XMConvertToRadians(animationFrame.m_EulerAngles.x),
+		DirectX::XMConvertToRadians(animationFrame.m_EulerAngles.y),
+		DirectX::XMConvertToRadians(animationFrame.m_EulerAngles.z)
+	);
+
+	auto modelMatrixEuler = dxm::Matrix::CreateFromYawPitchRoll(eulerAngles) * dxm::Matrix::CreateTranslation(animationFrame.m_Position);
+	auto modelMatrixQuaternion = dxm::Matrix::CreateFromQuaternion(animationFrame.m_Quaternion) * dxm::Matrix::CreateTranslation(animationFrame.m_Position);
+
+	m_EulerFrame.SetModelMatrix(modelMatrixEuler);
+	m_QuaternionFrame.SetModelMatrix(modelMatrixQuaternion);
 }
 
 void InterpolationApp::OnRender()
