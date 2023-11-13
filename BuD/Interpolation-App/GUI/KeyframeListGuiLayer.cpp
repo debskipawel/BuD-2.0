@@ -91,83 +91,82 @@ void KeyframeListGuiLayer::DrawGuiForSelectedKeyframe()
 		return;
 	}
 
-	if (ImGui::Begin("Keyframe details"))
+	ImGui::Begin("Keyframe details", nullptr, ImGuiWindowFlags_NoFocusOnAppearing);
+
+	ImGui::Text("Position");
+	ImGui::DragFloat3("###keyframe_position", reinterpret_cast<float*>(&selectedKeyFrame->m_Position), 0.1f, 0.0f, 0.0f, "%.1f");
+
+	ImGui::NewLine();
+
+	ImGui::Text("Euler angles");
+
+	if (ImGui::DragFloat3("###keyframe_euler_angles", reinterpret_cast<float*>(&selectedKeyFrame->m_EulerAngles), 1.0f, 0.0f, 0.0f, "%.1f"))
 	{
-		ImGui::Text("Position");
-		ImGui::DragFloat3("###keyframe_position", reinterpret_cast<float*>(&selectedKeyFrame->m_Position), 0.1f, 0.0f, 0.0f, "%.1f");
+		auto eulerInRadians = dxm::Vector3(
+			DirectX::XMConvertToRadians(selectedKeyFrame->m_EulerAngles.x),
+			DirectX::XMConvertToRadians(selectedKeyFrame->m_EulerAngles.y),
+			DirectX::XMConvertToRadians(selectedKeyFrame->m_EulerAngles.z)
+		);
 
-		ImGui::NewLine();
-
-		ImGui::Text("Euler angles");
-		
-		if (ImGui::DragFloat3("###keyframe_euler_angles", reinterpret_cast<float*>(&selectedKeyFrame->m_EulerAngles), 1.0f, 0.0f, 0.0f, "%.1f"))
-		{
-			auto eulerInRadians = dxm::Vector3(
-				DirectX::XMConvertToRadians(selectedKeyFrame->m_EulerAngles.x),
-				DirectX::XMConvertToRadians(selectedKeyFrame->m_EulerAngles.y),
-				DirectX::XMConvertToRadians(selectedKeyFrame->m_EulerAngles.z)
-			);
-
-			selectedKeyFrame->m_Quaternion = dxm::Quaternion::CreateFromYawPitchRoll(eulerInRadians);
-		}
-
-		ImGui::NewLine();
-
-		ImGui::Text("Quaternion");
-
-		if (ImGui::DragFloat4("###keyframe_quaternion", reinterpret_cast<float*>(&selectedKeyFrame->m_Quaternion), 0.1f, 0.0f, 0.0f, "%.1f"))
-		{
-			auto eulerAngles = selectedKeyFrame->m_Quaternion.ToEuler();
-
-			selectedKeyFrame->m_EulerAngles = dxm::Vector3(
-				DirectX::XMConvertToDegrees(eulerAngles.x),
-				DirectX::XMConvertToDegrees(eulerAngles.y),
-				DirectX::XMConvertToDegrees(eulerAngles.z)
-			);
-		}
-
-		ImGui::NewLine();
-
-		ImGui::Text("Keyframe time");
-		
-		if (ImGui::DragFloat("###keyframe_time", &selectedKeyFrame->m_TimePoint, 0.1f, 0.0f, m_SimulationDataLayer.m_Duration, "%.1f", ImGuiSliderFlags_ClampOnInput))
-		{
-			m_SimulationDataLayer.m_Time = selectedKeyFrame->m_TimePoint;
-
-			std::sort(keyFrames.begin(), keyFrames.end(),
-				[](const KeyFrame& frame1, const KeyFrame& frame2)
-				{
-					return frame1.m_TimePoint < frame2.m_TimePoint;
-				}
-			);
-		}
-
-		auto max = ImGui::GetWindowContentRegionMax();
-		auto min = ImGui::GetWindowContentRegionMin();
-
-		auto cursorPos = ImGui::GetCursorPos();
-		auto style = ImGui::GetStyle();
-
-		auto buttonHeight = 20;
-		auto buttonHeightWithSpacing = buttonHeight + style.ItemInnerSpacing.y;
-		auto fullHeight = buttonHeightWithSpacing;
-
-		if (max.y - fullHeight > cursorPos.y)
-		{
-			ImGui::SetCursorPos({ min.x, max.y - fullHeight });
-		}
-
-		ImGui::Separator();
-
-		if (ImGui::Button("Delete keyframe", ImVec2(max.x - min.x, buttonHeight)))
-		{
-			std::erase_if(keyFrames, [this](const KeyFrame& keyFrame) { return keyFrame.Id() == m_FrameSelectedForEditing; });
-			
-			m_FrameSelectedForEditing = NO_KEYFRAME_SELECTED;
-		}
-
-		ImGui::End();
+		selectedKeyFrame->m_Quaternion = dxm::Quaternion::CreateFromYawPitchRoll(eulerInRadians);
 	}
+
+	ImGui::NewLine();
+
+	ImGui::Text("Quaternion");
+
+	if (ImGui::DragFloat4("###keyframe_quaternion", reinterpret_cast<float*>(&selectedKeyFrame->m_Quaternion), 0.1f, 0.0f, 0.0f, "%.1f"))
+	{
+		auto eulerAngles = selectedKeyFrame->m_Quaternion.ToEuler();
+
+		selectedKeyFrame->m_EulerAngles = dxm::Vector3(
+			DirectX::XMConvertToDegrees(eulerAngles.x),
+			DirectX::XMConvertToDegrees(eulerAngles.y),
+			DirectX::XMConvertToDegrees(eulerAngles.z)
+		);
+	}
+
+	ImGui::NewLine();
+
+	ImGui::Text("Keyframe time");
+
+	if (ImGui::DragFloat("###keyframe_time", &selectedKeyFrame->m_TimePoint, 0.1f, 0.0f, m_SimulationDataLayer.m_Duration, "%.1f", ImGuiSliderFlags_ClampOnInput))
+	{
+		m_SimulationDataLayer.m_Time = selectedKeyFrame->m_TimePoint;
+
+		std::sort(keyFrames.begin(), keyFrames.end(),
+			[](const KeyFrame& frame1, const KeyFrame& frame2)
+			{
+				return frame1.m_TimePoint < frame2.m_TimePoint;
+			}
+		);
+	}
+
+	auto max = ImGui::GetWindowContentRegionMax();
+	auto min = ImGui::GetWindowContentRegionMin();
+
+	auto cursorPos = ImGui::GetCursorPos();
+	auto style = ImGui::GetStyle();
+
+	auto buttonHeight = 20;
+	auto buttonHeightWithSpacing = buttonHeight + style.ItemInnerSpacing.y;
+	auto fullHeight = buttonHeightWithSpacing;
+
+	if (max.y - fullHeight > cursorPos.y)
+	{
+		ImGui::SetCursorPos({ min.x, max.y - fullHeight });
+	}
+
+	ImGui::Separator();
+
+	if (ImGui::Button("Delete keyframe", ImVec2(max.x - min.x, buttonHeight)))
+	{
+		std::erase_if(keyFrames, [this](const KeyFrame& keyFrame) { return keyFrame.Id() == m_FrameSelectedForEditing; });
+
+		m_FrameSelectedForEditing = NO_KEYFRAME_SELECTED;
+	}
+
+	ImGui::End();
 }
 
 void KeyframeListGuiLayer::UpdateSelectedKeyframeBasedOnTime()
