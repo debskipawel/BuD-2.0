@@ -11,7 +11,7 @@ public:
 	virtual bool operator<(const KeyFrame& other);
 	virtual bool operator>(const KeyFrame& other);
 
-	virtual int Id() const { return m_Id; }
+	virtual unsigned int Id() const { return m_Id; }
 
 	std::string m_Name;
 
@@ -22,7 +22,7 @@ public:
 	dxm::Quaternion m_Quaternion;
 
 protected:
-	int m_Id;
+	unsigned int m_Id;
 
 	inline static int s_LastId = 0;
 };

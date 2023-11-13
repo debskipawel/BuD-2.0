@@ -2,8 +2,9 @@
 
 #include <imgui.h>
 #include <imgui_internal.h>
+#include <misc/cpp/imgui_stdlib.h>
 
-constexpr auto NO_KEYFRAME_SELECTED = -1;
+constexpr std::optional<int> NO_KEYFRAME_SELECTED = std::nullopt;
 
 KeyframeListGuiLayer::KeyframeListGuiLayer(SimulationDataLayer& simulationDataLayer)
 	: m_SimulationDataLayer(simulationDataLayer), m_FrameSelectedForEditing(-1)
@@ -59,16 +60,21 @@ void KeyframeListGuiLayer::DrawKeyframeList()
 
 	for (auto& keyFrame : keyFrames)
 	{
-		auto name = std::format("Frame {} ({} s)", keyFrame.Id(), keyFrame.m_TimePoint);
-		auto selected = keyFrame.Id() == m_FrameSelectedForEditing;
+		auto name = keyFrame.m_Name.empty() ? std::format("Frame {}", keyFrame.Id()) : keyFrame.m_Name;
+		auto label = std::format("{} ({} s)", name, keyFrame.m_TimePoint);
 
-		if (ImGui::Selectable(name.c_str(), &selected))
+		auto selected = (keyFrame.Id() == m_FrameSelectedForEditing);
+
+		if (ImGui::Selectable(label.c_str(), &selected) && !m_SimulationDataLayer.m_Running)
 		{
-			m_FrameSelectedForEditing = selected ? keyFrame.Id() : NO_KEYFRAME_SELECTED;
-
 			if (selected)
 			{
+				m_FrameSelectedForEditing = keyFrame.Id();
 				m_SimulationDataLayer.m_Time = keyFrame.m_TimePoint;
+			}
+			else
+			{
+				m_FrameSelectedForEditing = NO_KEYFRAME_SELECTED;
 			}
 		}
 	}
@@ -92,6 +98,11 @@ void KeyframeListGuiLayer::DrawGuiForSelectedKeyframe()
 	}
 
 	ImGui::Begin("Keyframe details", nullptr, ImGuiWindowFlags_NoFocusOnAppearing);
+
+	ImGui::Text("Name");
+	ImGui::InputText("###keframe_name", &selectedKeyFrame->m_Name);
+
+	ImGui::NewLine();
 
 	ImGui::Text("Position");
 	ImGui::DragFloat3("###keyframe_position", reinterpret_cast<float*>(&selectedKeyFrame->m_Position), 0.1f, 0.0f, 0.0f, "%.1f");

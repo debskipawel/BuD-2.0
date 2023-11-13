@@ -7,6 +7,11 @@ SimulationDataLayer::SimulationDataLayer()
 
 void SimulationDataLayer::Run()
 {
+	if (m_Time == m_Duration)
+	{
+		m_Time = 0.0f;
+	}
+
 	m_Running = true;
 }
 

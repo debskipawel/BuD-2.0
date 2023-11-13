@@ -26,7 +26,7 @@ VSOutput main(VSInput i)
 {
     VSOutput o = (VSOutput) 0;
     
-    float4x4 modelMtx = float4x4(i.insModelX, i.insModelY, i.insModelZ, i.insModelW);
+    float4x4 modelMtx = transpose(float4x4(i.insModelX, i.insModelY, i.insModelZ, i.insModelW));
     
     o.tex = 0.5 * (i.position + 1.0);
     o.worldPos = mul(modelMtx, float4(o.tex, 1.0));

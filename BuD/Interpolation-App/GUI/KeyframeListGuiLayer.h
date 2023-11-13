@@ -18,5 +18,5 @@ protected:
 
 	SimulationDataLayer& m_SimulationDataLayer;
 
-	int m_FrameSelectedForEditing;
+	std::optional<unsigned int> m_FrameSelectedForEditing;
 };
