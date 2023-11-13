@@ -4,10 +4,11 @@
 #include <imgui_internal.h>
 
 SimulationGuiLayer::SimulationGuiLayer(SimulationDataLayer& dataLayer)
-	: m_Running(false), m_SimulationDataLayer(dataLayer)
+	: m_SimulationDataLayer(dataLayer)
 {
 	m_PlayIcon = BuD::Texture::LoadFromFile("Resources/Sprites/play_icon.png");
 	m_PauseIcon = BuD::Texture::LoadFromFile("Resources/Sprites/pause_icon.png");
+	m_LoopIcon = BuD::Texture::LoadFromFile("Resources/Sprites/loop_icon.png");
 }
 
 void SimulationGuiLayer::DrawGui()
@@ -23,12 +24,6 @@ void SimulationGuiLayer::DrawSimulationSettingsGui()
 		ImGui::Text("Time duration");
 		
 		ImGui::DragFloat("###animation_duration", &m_SimulationDataLayer.m_Duration, 0.1f, 0.0f, 1000.0f, "%.1f s", ImGuiSliderFlags_AlwaysClamp);
-
-		ImGui::NewLine();
-
-		ImGui::Text("Simulation looped");
-		ImGui::SameLine();
-		ImGui::Checkbox("###looped_checkbox", &m_SimulationDataLayer.m_Looped);
 
 		ImGui::End();
 	}
@@ -55,7 +50,7 @@ void SimulationGuiLayer::DrawSimulationTimelineGui()
 		auto currentCursorPos = ImGui::GetCursorPos();
 		auto innerSpacing = ImGui::GetStyle().ItemInnerSpacing.x;
 
-		auto sliderFillWidth = max.x - currentCursorPos.x;
+		auto sliderFillWidth = max.x - currentCursorPos.x - (buttonSize.x + 4.0f * innerSpacing);
 		auto grabSize = ImVec2(12.0f, 15.0f);
 
 		auto imguiContext = ImGui::GetCurrentContext();
@@ -89,17 +84,30 @@ void SimulationGuiLayer::DrawSimulationTimelineGui()
 
 		imguiCurrentWindow->DC.ItemWidth = prevItemWidth;
 
+		ImGui::SameLine();
+
+		ImGui::SetCursorPosY(currentCursorPos.y);
+
+		auto color = m_SimulationDataLayer.m_Looped ? ImGui::GetStyleColorVec4(ImGuiCol_ButtonHovered) : ImGui::GetStyleColorVec4(ImGuiCol_Button);
+
+		ImGui::PushStyleColor(ImGuiCol_Button, color);
+
+		if (ImGui::ImageButton(m_LoopIcon.SRV(), { buttonSize.x, buttonSize.y }))
+		{
+			m_SimulationDataLayer.m_Looped = !m_SimulationDataLayer.m_Looped;
+		}
+
+		ImGui::PopStyleColor();
+
 		ImGui::End();
 	}
 }
 
 void SimulationGuiLayer::DrawImageButton(const BuD::Texture& image, std::function<void()> onClick, dxm::Vector2 buttonSize, bool disabled)
 {
-	auto color = disabled ? ImVec4(0.4f, 0.1f, 0.1f, 1.0f) : ImVec4(0.8f, 0.2f, 0.2f, 1.0f);
-
 	ImGui::PushItemFlag(ImGuiItemFlags_Disabled, disabled);
 
-	if (ImGui::ImageButton(image.SRV(), { buttonSize.x, buttonSize.y }, { 0, 0 }, { 1, 1 }, -1, color))
+	if (ImGui::ImageButton(image.SRV(), { buttonSize.x, buttonSize.y }))
 	{
 		onClick();
 	}

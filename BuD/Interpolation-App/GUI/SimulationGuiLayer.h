@@ -18,9 +18,6 @@ protected:
 
 	SimulationDataLayer& m_SimulationDataLayer;
 
-	bool m_Running;
-	bool m_Looped;
-
 private:
-	BuD::Texture m_PlayIcon, m_PauseIcon;
+	BuD::Texture m_PlayIcon, m_PauseIcon, m_LoopIcon;
 };
