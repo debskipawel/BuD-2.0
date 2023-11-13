@@ -12,6 +12,7 @@ public:
 protected:
 	virtual void DrawAddKeyframeButton();
 	virtual void DrawKeyframeList();
+	virtual void DrawGuiForSelectedKeyframe();
 
 	virtual void UpdateSelectedKeyframeBasedOnTime();
 

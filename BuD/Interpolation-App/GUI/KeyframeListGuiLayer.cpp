@@ -3,6 +3,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+constexpr auto NO_KEYFRAME_SELECTED = -1;
+
 KeyframeListGuiLayer::KeyframeListGuiLayer(SimulationDataLayer& simulationDataLayer)
 	: m_SimulationDataLayer(simulationDataLayer), m_FrameSelectedForEditing(-1)
 {
@@ -22,6 +24,7 @@ void KeyframeListGuiLayer::DrawGui()
 	}
 
 	UpdateSelectedKeyframeBasedOnTime();
+	DrawGuiForSelectedKeyframe();
 }
 
 void KeyframeListGuiLayer::DrawAddKeyframeButton()
@@ -61,13 +64,109 @@ void KeyframeListGuiLayer::DrawKeyframeList()
 
 		if (ImGui::Selectable(name.c_str(), &selected))
 		{
-			m_FrameSelectedForEditing = selected ? keyFrame.Id() : -1;
+			m_FrameSelectedForEditing = selected ? keyFrame.Id() : NO_KEYFRAME_SELECTED;
 
 			if (selected)
 			{
 				m_SimulationDataLayer.m_Time = keyFrame.m_TimePoint;
 			}
 		}
+	}
+}
+
+void KeyframeListGuiLayer::DrawGuiForSelectedKeyframe()
+{
+	if (m_FrameSelectedForEditing == NO_KEYFRAME_SELECTED)
+	{
+		return;
+	}
+
+	auto& keyFrames = m_SimulationDataLayer.m_KeyFrames;
+
+	auto selectedKeyFrame = std::find_if(keyFrames.begin(), keyFrames.end(), [this](const KeyFrame& keyFrame) { return keyFrame.Id() == m_FrameSelectedForEditing; });
+
+	if (selectedKeyFrame == keyFrames.end())
+	{
+		m_FrameSelectedForEditing = NO_KEYFRAME_SELECTED;
+		return;
+	}
+
+	if (ImGui::Begin("Keyframe details"))
+	{
+		ImGui::Text("Position");
+		ImGui::DragFloat3("###keyframe_position", reinterpret_cast<float*>(&selectedKeyFrame->m_Position), 0.1f, 0.0f, 0.0f, "%.1f");
+
+		ImGui::NewLine();
+
+		ImGui::Text("Euler angles");
+		
+		if (ImGui::DragFloat3("###keyframe_euler_angles", reinterpret_cast<float*>(&selectedKeyFrame->m_EulerAngles), 1.0f, 0.0f, 0.0f, "%.1f"))
+		{
+			auto eulerInRadians = dxm::Vector3(
+				DirectX::XMConvertToRadians(selectedKeyFrame->m_EulerAngles.x),
+				DirectX::XMConvertToRadians(selectedKeyFrame->m_EulerAngles.y),
+				DirectX::XMConvertToRadians(selectedKeyFrame->m_EulerAngles.z)
+			);
+
+			selectedKeyFrame->m_Quaternion = dxm::Quaternion::CreateFromYawPitchRoll(eulerInRadians);
+		}
+
+		ImGui::NewLine();
+
+		ImGui::Text("Quaternion");
+
+		if (ImGui::DragFloat4("###keyframe_quaternion", reinterpret_cast<float*>(&selectedKeyFrame->m_Quaternion), 0.1f, 0.0f, 0.0f, "%.1f"))
+		{
+			auto eulerAngles = selectedKeyFrame->m_Quaternion.ToEuler();
+
+			selectedKeyFrame->m_EulerAngles = dxm::Vector3(
+				DirectX::XMConvertToDegrees(eulerAngles.x),
+				DirectX::XMConvertToDegrees(eulerAngles.y),
+				DirectX::XMConvertToDegrees(eulerAngles.z)
+			);
+		}
+
+		ImGui::NewLine();
+
+		ImGui::Text("Keyframe time");
+		
+		if (ImGui::DragFloat("###keyframe_time", &selectedKeyFrame->m_TimePoint, 0.1f, 0.0f, m_SimulationDataLayer.m_Duration, "%.1f", ImGuiSliderFlags_ClampOnInput))
+		{
+			m_SimulationDataLayer.m_Time = selectedKeyFrame->m_TimePoint;
+
+			std::sort(keyFrames.begin(), keyFrames.end(),
+				[](const KeyFrame& frame1, const KeyFrame& frame2)
+				{
+					return frame1.m_TimePoint < frame2.m_TimePoint;
+				}
+			);
+		}
+
+		auto max = ImGui::GetWindowContentRegionMax();
+		auto min = ImGui::GetWindowContentRegionMin();
+
+		auto cursorPos = ImGui::GetCursorPos();
+		auto style = ImGui::GetStyle();
+
+		auto buttonHeight = 20;
+		auto buttonHeightWithSpacing = buttonHeight + style.ItemInnerSpacing.y;
+		auto fullHeight = buttonHeightWithSpacing;
+
+		if (max.y - fullHeight > cursorPos.y)
+		{
+			ImGui::SetCursorPos({ min.x, max.y - fullHeight });
+		}
+
+		ImGui::Separator();
+
+		if (ImGui::Button("Delete keyframe", ImVec2(max.x - min.x, buttonHeight)))
+		{
+			std::erase_if(keyFrames, [this](const KeyFrame& keyFrame) { return keyFrame.Id() == m_FrameSelectedForEditing; });
+			
+			m_FrameSelectedForEditing = NO_KEYFRAME_SELECTED;
+		}
+
+		ImGui::End();
 	}
 }
 
@@ -78,9 +177,24 @@ void KeyframeListGuiLayer::UpdateSelectedKeyframeBasedOnTime()
 	auto& keyFrames = m_SimulationDataLayer.m_KeyFrames;
 	auto currentTime = m_SimulationDataLayer.m_Time;
 	
+	if (m_FrameSelectedForEditing != NO_KEYFRAME_SELECTED)
+	{
+		auto selectedKeyFrame = std::find_if(keyFrames.begin(), keyFrames.end(), [this](const KeyFrame& keyFrame) { return keyFrame.Id() == m_FrameSelectedForEditing; });
+
+		if (selectedKeyFrame != keyFrames.end())
+		{
+			auto timeDifference = fabsf(selectedKeyFrame->m_TimePoint - currentTime);
+
+			if (timeDifference < MAX_TIME_DIFFERENCE)
+			{
+				return;
+			}
+		}
+	}
+
 	if (m_SimulationDataLayer.m_Running || keyFrames.empty())
 	{
-		m_FrameSelectedForEditing = -1;
+		m_FrameSelectedForEditing = NO_KEYFRAME_SELECTED;
 
 		return;
 	}
@@ -98,7 +212,7 @@ void KeyframeListGuiLayer::UpdateSelectedKeyframeBasedOnTime()
 
 		auto timeDifference = currentTime - previous.m_TimePoint;
 
-		m_FrameSelectedForEditing = (timeDifference < MAX_TIME_DIFFERENCE) ? previous.Id() : -1;
+		m_FrameSelectedForEditing = (timeDifference < MAX_TIME_DIFFERENCE) ? previous.Id() : NO_KEYFRAME_SELECTED;
 	}
 	else
 	{
@@ -106,7 +220,7 @@ void KeyframeListGuiLayer::UpdateSelectedKeyframeBasedOnTime()
 		{
 			auto timeDifference = next->m_TimePoint - currentTime;
 
-			m_FrameSelectedForEditing = (timeDifference < MAX_TIME_DIFFERENCE) ? next->Id() : -1;
+			m_FrameSelectedForEditing = (timeDifference < MAX_TIME_DIFFERENCE) ? next->Id() : NO_KEYFRAME_SELECTED;
 		}
 		else
 		{
@@ -118,7 +232,7 @@ void KeyframeListGuiLayer::UpdateSelectedKeyframeBasedOnTime()
 			auto timeDifference = (prevTimeDifference < nextTimeDifference) ? prevTimeDifference : nextTimeDifference;
 			auto keyFrameCloser = (prevTimeDifference < nextTimeDifference) ? previous : next;
 
-			m_FrameSelectedForEditing = (timeDifference < MAX_TIME_DIFFERENCE) ? keyFrameCloser->Id() : -1;
+			m_FrameSelectedForEditing = (timeDifference < MAX_TIME_DIFFERENCE) ? keyFrameCloser->Id() : NO_KEYFRAME_SELECTED;
 		}
 	}
 }
