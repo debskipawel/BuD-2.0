@@ -35,7 +35,9 @@ void KeyframeListGuiLayer::DrawAddKeyframeButton()
 
 	if (ImGui::Button("Add new keyframe", ImVec2(width, 0.0)))
 	{
-		keyFrames.emplace_back(m_SimulationDataLayer.m_Time);
+		auto newKeyframe = m_SimulationDataLayer.Interpolate();
+
+		keyFrames.push_back(newKeyframe);
 
 		std::sort(keyFrames.begin(), keyFrames.end(),
 			[](const KeyFrame& frame1, const KeyFrame& frame2)
