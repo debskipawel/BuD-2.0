@@ -17,6 +17,9 @@ public:
 	virtual void OnRender() override;
 	virtual void OnGuiRender() override;
 
+	virtual void OnConcreteEvent(BuD::KeyDownEvent& e) override;
+	virtual void OnConcreteEvent(BuD::MouseScrolledEvent& e) override;
+
 protected:
 	BuD::Scene m_EulerScene, m_QuaternionScene;
 	Frame m_EulerFrame, m_QuaternionFrame;

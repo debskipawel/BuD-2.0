@@ -57,3 +57,17 @@ void InterpolationApp::OnGuiRender()
 	m_SimulationGuiLayer.DrawGui();
 	m_KeyframeListGuiLayer.DrawGui();
 }
+
+void InterpolationApp::OnConcreteEvent(BuD::KeyDownEvent& e)
+{
+	if (e.m_Key == BuD::KeyboardKeys::Space)
+	{
+		m_DataLayer.m_Running ? m_DataLayer.Stop() : m_DataLayer.Run();
+	}
+}
+
+void InterpolationApp::OnConcreteEvent(BuD::MouseScrolledEvent& e)
+{
+	m_EulerScene.ActiveCamera()->Zoom(-0.03f * e.m_WheelDelta);
+	m_QuaternionScene.ActiveCamera()->Zoom(-0.03f * e.m_WheelDelta);
+}
