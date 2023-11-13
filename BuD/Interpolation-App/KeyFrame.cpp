@@ -9,3 +9,13 @@ KeyFrame::KeyFrame(float timepoint, const dxm::Vector3& position, const dxm::Vec
 KeyFrame::~KeyFrame()
 {
 }
+
+bool KeyFrame::operator<(const KeyFrame& other)
+{
+	return m_TimePoint < other.m_TimePoint;
+}
+
+bool KeyFrame::operator>(const KeyFrame& other)
+{
+	return m_TimePoint > other.m_TimePoint;
+}

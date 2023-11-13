@@ -13,8 +13,9 @@ protected:
 	virtual void DrawAddKeyframeButton();
 	virtual void DrawKeyframeList();
 
+	virtual void UpdateSelectedKeyframeBasedOnTime();
+
 	SimulationDataLayer& m_SimulationDataLayer;
 
 	int m_FrameSelectedForEditing;
-	bool m_FrameSelectedManually;
 };

@@ -5,8 +5,11 @@
 struct KeyFrame
 {
 public:
-	KeyFrame(float timepoint = 0.0f, const dxm::Vector3& position = dxm::Vector3::Zero, const dxm::Vector3& eulerAngles = dxm::Vector3::Zero, const dxm::Quaternion& quaternion = dxm::Quaternion::Identity);
+	explicit KeyFrame(float timepoint = 0.0f, const dxm::Vector3& position = dxm::Vector3::Zero, const dxm::Vector3& eulerAngles = dxm::Vector3::Zero, const dxm::Quaternion& quaternion = dxm::Quaternion::Identity);
 	virtual ~KeyFrame();
+
+	virtual bool operator<(const KeyFrame& other);
+	virtual bool operator>(const KeyFrame& other);
 
 	virtual int Id() const { return m_Id; }
 

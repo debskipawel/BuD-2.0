@@ -4,7 +4,7 @@ SimulationDataLayer::SimulationDataLayer()
 	: m_Looped(false), m_Duration(5.0f), m_Running(false), m_Time(0.0f)
 {
 	// TODO: remove- just for benchmark
-	m_KeyFrames = { KeyFrame(0.0f), KeyFrame(1.0f), KeyFrame(3.0f), KeyFrame(4.0f), KeyFrame(5.0f) };
+	m_KeyFrames = { KeyFrame(3.0f), KeyFrame(4.0f) };
 }
 
 void SimulationDataLayer::Run()
