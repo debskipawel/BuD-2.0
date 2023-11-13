@@ -71,19 +71,15 @@ void KeyframeListGuiLayer::DrawKeyframeList()
 
 void KeyframeListGuiLayer::UpdateSelectedKeyframeBasedOnTime()
 {
-	if (m_SimulationDataLayer.m_Running)
-	{
-		return;
-	}
-
 	constexpr auto MAX_TIME_DIFFERENCE = 0.05f;
 
 	auto& keyFrames = m_SimulationDataLayer.m_KeyFrames;
 	auto currentTime = m_SimulationDataLayer.m_Time;
-
-	if (keyFrames.empty())
+	
+	if (m_SimulationDataLayer.m_Running || keyFrames.empty())
 	{
 		m_FrameSelectedForEditing = -1;
+
 		return;
 	}
 
