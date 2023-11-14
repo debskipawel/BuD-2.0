@@ -2,6 +2,9 @@
 
 #include <BuD.h>
 
+#include <DataLayers/SceneDataLayer.h>
+#include <DataLayers/SimulationDataLayer.h>
+
 #include <GUI/ViewportGuiLayer.h>
 #include <GUI/SimulationGuiLayer.h>
 #include <GUI/KeyframeListGuiLayer.h>
@@ -19,13 +22,16 @@ public:
 
 	virtual void OnConcreteEvent(BuD::KeyDownEvent& e) override;
 	virtual void OnConcreteEvent(BuD::MouseScrolledEvent& e) override;
+	virtual void OnConcreteEvent(BuD::MouseButtonDownEvent& e) override;
+	virtual void OnConcreteEvent(BuD::MouseButtonReleasedEvent& e) override;
+	virtual void OnConcreteEvent(BuD::MouseMovedEvent& e) override;
 
 protected:
-	BuD::Scene m_EulerScene, m_QuaternionScene;
-	Frame m_EulerFrame, m_QuaternionFrame;
+	bool m_MouseMove;
 
 	// ---------- DATA LAYERS ----------
-	SimulationDataLayer m_DataLayer;
+	SceneDataLayer m_SceneDataLayer;
+	SimulationDataLayer m_SimulationDataLayer;
 
 	// ---------- GUI LAYERS ----------
 	ViewportGuiLayer m_EulerViewportGuiLayer, m_QuaternionViewportGuiLayer;
