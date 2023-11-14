@@ -144,6 +144,7 @@
     <ClCompile Include="KeyFrame.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Objects\Frame.cpp" />
+    <ClCompile Include="Objects\Grid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuD\BuD.vcxproj">
@@ -165,6 +166,7 @@
     <ClInclude Include="InterpolationApp.h" />
     <ClInclude Include="KeyFrame.h" />
     <ClInclude Include="Objects\Frame.h" />
+    <ClInclude Include="Objects\Grid.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\frame_ps.hlsl">
@@ -186,6 +188,18 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Grid\grid_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Grid\grid_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

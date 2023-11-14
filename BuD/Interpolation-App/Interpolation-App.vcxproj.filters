@@ -42,6 +42,9 @@
     <ClCompile Include="DataLayers\SceneDataLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Grid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InterpolationApp.h">
@@ -68,9 +71,14 @@
     <ClInclude Include="DataLayers\SceneDataLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Grid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\frame_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\frame_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\Grid\grid_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\Grid\grid_ps.hlsl" />
   </ItemGroup>
 </Project>

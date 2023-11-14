@@ -67,8 +67,8 @@ void InterpolationApp::OnConcreteEvent(BuD::KeyDownEvent& e)
 
 void InterpolationApp::OnConcreteEvent(BuD::MouseScrolledEvent& e)
 {
-	m_SceneDataLayer.m_EulerScene.ActiveCamera()->Zoom(-0.03f * e.m_WheelDelta);
-	m_SceneDataLayer.m_QuaternionScene.ActiveCamera()->Zoom(-0.03f * e.m_WheelDelta);
+	m_SceneDataLayer.m_EulerScene.ActiveCamera()->Zoom(-0.01f * e.m_WheelDelta);
+	m_SceneDataLayer.m_QuaternionScene.ActiveCamera()->Zoom(-0.01f * e.m_WheelDelta);
 }
 
 void InterpolationApp::OnConcreteEvent(BuD::MouseButtonDownEvent& e)
