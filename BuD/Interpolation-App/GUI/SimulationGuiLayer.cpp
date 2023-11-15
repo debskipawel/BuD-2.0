@@ -23,7 +23,13 @@ void SimulationGuiLayer::DrawSimulationSettingsGui()
 	{
 		ImGui::Text("Time duration");
 		
-		ImGui::DragFloat("###animation_duration", &m_SimulationDataLayer.m_Duration, 0.1f, 0.0f, 1000.0f, "%.1f s", ImGuiSliderFlags_AlwaysClamp);
+		auto& animationClip = m_SimulationDataLayer.m_AnimationClip;
+		auto duration = animationClip.GetDuration();
+
+		if (ImGui::DragFloat("###animation_duration", &duration, 0.1f, 0.0f, 1000.0f, "%.1f s", ImGuiSliderFlags_AlwaysClamp))
+		{
+			animationClip.SetDuration(duration);
+		}
 
 		ImGui::End();
 	}
@@ -63,12 +69,13 @@ void SimulationGuiLayer::DrawSimulationTimelineGui()
 		auto prevItemWidth = imguiCurrentWindow->DC.ItemWidth;
 		imguiCurrentWindow->DC.ItemWidth = sliderFillWidth;
 
-		const auto& keyFrames = m_SimulationDataLayer.m_KeyFrames;
+		auto& animationClip = m_SimulationDataLayer.m_AnimationClip;
+		const auto& keyFrames = animationClip.GetKeyFrames();
 
 		for (const auto& keyFrame : keyFrames)
 		{
 			auto timePoint = keyFrame.m_TimePoint;
-			auto progress = timePoint / m_SimulationDataLayer.m_Duration;
+			auto progress = timePoint / animationClip.GetDuration();
 
 			auto margin = 5.0f;
 			auto x = currentCursorPos.x + windowPos.x + 0.5f * innerSpacing + 0.5f * grabSize.x + progress * (sliderFillWidth - grabSize.x - innerSpacing);
@@ -80,7 +87,7 @@ void SimulationGuiLayer::DrawSimulationTimelineGui()
 			imguiCurrentWindow->DrawList->AddLine({ x, yUp }, { x, yDown }, ImGui::GetColorU32({ 0.7f, 0.7f, 0.7f, 1.0f }), 2.0f);
 		}
 
-		ImGui::SliderFloat("###time_duration_slider", &m_SimulationDataLayer.m_Time, 0.0f, m_SimulationDataLayer.m_Duration, "%.1f s", ImGuiSliderFlags_AlwaysClamp);
+		ImGui::SliderFloat("###time_duration_slider", &m_SimulationDataLayer.m_Time, 0.0f, animationClip.GetDuration(), "%.1f s", ImGuiSliderFlags_AlwaysClamp);
 
 		imguiCurrentWindow->DC.ItemWidth = prevItemWidth;
 

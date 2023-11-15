@@ -2,7 +2,7 @@
 
 #include <BuD.h>
 
-#include <KeyFrame.h>
+#include <AnimationClip.h>
 
 struct SimulationDataLayer
 {
@@ -17,8 +17,7 @@ struct SimulationDataLayer
 	bool m_Running;
 	bool m_Looped;
 
-	float m_Duration;
 	float m_Time;
 
-	std::vector<KeyFrame> m_KeyFrames;
+	AnimationClip m_AnimationClip;
 };

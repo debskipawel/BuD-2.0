@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationClip.cpp" />
     <ClCompile Include="DataLayers\SceneDataLayer.cpp" />
     <ClCompile Include="DataLayers\SimulationDataLayer.cpp" />
     <ClCompile Include="GUI\KeyframeListGuiLayer.cpp" />
@@ -158,6 +159,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationClip.h" />
     <ClInclude Include="DataLayers\SceneDataLayer.h" />
     <ClInclude Include="DataLayers\SimulationDataLayer.h" />
     <ClInclude Include="GUI\KeyframeListGuiLayer.h" />
