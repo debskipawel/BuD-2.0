@@ -10,6 +10,7 @@ namespace BuD
 	{
 	public:
 		MultiEyeRendererImpl(std::shared_ptr<GraphicsDevice> device);
+		virtual ~MultiEyeRendererImpl() = default;
 
 		virtual dxm::Matrix ProjectionMatrix() override;
 
