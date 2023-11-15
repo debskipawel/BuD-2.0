@@ -3,8 +3,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-SimulationGuiLayer::SimulationGuiLayer(SceneDataLayer& sceneDataLayer, SimulationDataLayer& dataLayer)
-	: m_SceneDataLayer(sceneDataLayer), m_SimulationDataLayer(dataLayer), m_ShowGhost(false), m_IntermediateFramesCount(0)
+SimulationGuiLayer::SimulationGuiLayer(MainDataLayer& mainDataLayer)
+	: m_MainDataLayer(mainDataLayer)
 {
 	m_PlayIcon = BuD::Texture::LoadFromFile("Resources/Sprites/play_icon.png");
 	m_PauseIcon = BuD::Texture::LoadFromFile("Resources/Sprites/pause_icon.png");
@@ -23,7 +23,7 @@ void SimulationGuiLayer::DrawSimulationSettingsGui()
 	{
 		ImGui::Text("Time duration");
 		
-		auto& animationClip = m_SimulationDataLayer.m_AnimationClip;
+		auto& animationClip = m_MainDataLayer.m_SimulationDataLayer.m_AnimationClip;
 		auto duration = animationClip.GetDuration();
 
 		if (ImGui::DragFloat("###animation_duration", &duration, 0.1f, 0.0f, 1000.0f, "%.1f s", ImGuiSliderFlags_AlwaysClamp))
@@ -36,20 +36,20 @@ void SimulationGuiLayer::DrawSimulationSettingsGui()
 		ImGui::Text("Show the ghost:");
 		ImGui::SameLine();
 		
-		if (ImGui::Checkbox("###ghost_toggle", &m_ShowGhost))
+		if (ImGui::Checkbox("###ghost_toggle", &m_MainDataLayer.m_ShowGhost))
 		{
-			UpdateGhostMesh();
+			m_MainDataLayer.UpdateGhostMesh();
 		}
 
-		if (m_ShowGhost)
+		if (m_MainDataLayer.m_ShowGhost)
 		{
 			ImGui::NewLine();
 
 			ImGui::Text("Intermediate frames count");
 
-			if (ImGui::DragInt("###intermediate_frames_count", reinterpret_cast<int*>(&m_IntermediateFramesCount), 1.0f, 0, 100, "%d", ImGuiSliderFlags_AlwaysClamp))
+			if (ImGui::DragInt("###intermediate_frames_count", reinterpret_cast<int*>(&m_MainDataLayer.m_IntermediateFramesCount), 1.0f, 0, 100, "%d", ImGuiSliderFlags_AlwaysClamp))
 			{
-				UpdateGhostMesh();
+				m_MainDataLayer.UpdateGhostMesh();
 			}
 		}
 
@@ -63,11 +63,11 @@ void SimulationGuiLayer::DrawSimulationTimelineGui()
 	{
 		auto buttonSize = dxm::Vector2(24.0f, 24.0f);
 
-		DrawImageButton(m_PlayIcon, [this]() { m_SimulationDataLayer.Run(); }, buttonSize, m_SimulationDataLayer.m_Running);
+		DrawImageButton(m_PlayIcon, [this]() { m_MainDataLayer.m_SimulationDataLayer.Run(); }, buttonSize, m_MainDataLayer.m_SimulationDataLayer.m_Running);
 
 		ImGui::SameLine();
 
-		DrawImageButton(m_PauseIcon, [this]() { m_SimulationDataLayer.Stop(); }, buttonSize, !m_SimulationDataLayer.m_Running);
+		DrawImageButton(m_PauseIcon, [this]() { m_MainDataLayer.m_SimulationDataLayer.Stop(); }, buttonSize, !m_MainDataLayer.m_SimulationDataLayer.m_Running);
 
 		ImGui::SameLine();
 
@@ -91,7 +91,7 @@ void SimulationGuiLayer::DrawSimulationTimelineGui()
 		auto prevItemWidth = imguiCurrentWindow->DC.ItemWidth;
 		imguiCurrentWindow->DC.ItemWidth = sliderFillWidth;
 
-		auto& animationClip = m_SimulationDataLayer.m_AnimationClip;
+		auto& animationClip = m_MainDataLayer.m_SimulationDataLayer.m_AnimationClip;
 		const auto& keyFrames = animationClip.GetKeyFrames();
 
 		for (const auto& keyFrame : keyFrames)
@@ -109,7 +109,7 @@ void SimulationGuiLayer::DrawSimulationTimelineGui()
 			imguiCurrentWindow->DrawList->AddLine({ x, yUp }, { x, yDown }, ImGui::GetColorU32({ 0.7f, 0.7f, 0.7f, 1.0f }), 2.0f);
 		}
 
-		ImGui::SliderFloat("###time_duration_slider", &m_SimulationDataLayer.m_Time, 0.0f, animationClip.GetDuration(), "%.1f s", ImGuiSliderFlags_AlwaysClamp);
+		ImGui::SliderFloat("###time_duration_slider", &m_MainDataLayer.m_SimulationDataLayer.m_Time, 0.0f, animationClip.GetDuration(), "%.1f s", ImGuiSliderFlags_AlwaysClamp);
 
 		imguiCurrentWindow->DC.ItemWidth = prevItemWidth;
 
@@ -117,13 +117,13 @@ void SimulationGuiLayer::DrawSimulationTimelineGui()
 
 		ImGui::SetCursorPosY(currentCursorPos.y);
 
-		auto color = m_SimulationDataLayer.m_Looped ? ImGui::GetStyleColorVec4(ImGuiCol_ButtonHovered) : ImGui::GetStyleColorVec4(ImGuiCol_Button);
+		auto color = m_MainDataLayer.m_SimulationDataLayer.m_Looped ? ImGui::GetStyleColorVec4(ImGuiCol_ButtonHovered) : ImGui::GetStyleColorVec4(ImGuiCol_Button);
 
 		ImGui::PushStyleColor(ImGuiCol_Button, color);
 
 		if (ImGui::ImageButton(m_LoopIcon.SRV(), { buttonSize.x, buttonSize.y }))
 		{
-			m_SimulationDataLayer.m_Looped = !m_SimulationDataLayer.m_Looped;
+			m_MainDataLayer.m_SimulationDataLayer.m_Looped = !m_MainDataLayer.m_SimulationDataLayer.m_Looped;
 		}
 
 		ImGui::PopStyleColor();
@@ -142,48 +142,4 @@ void SimulationGuiLayer::DrawImageButton(const BuD::Texture& image, std::functio
 	}
 
 	ImGui::PopItemFlag();
-}
-
-void SimulationGuiLayer::UpdateGhostMesh()
-{
-	if (!m_ShowGhost || m_IntermediateFramesCount == 0)
-	{
-		m_SceneDataLayer.m_EulerGhost.DisableRendering();
-		m_SceneDataLayer.m_QuaternionGhost.DisableRendering();
-
-		return;
-	}
-
-	m_SceneDataLayer.m_EulerGhost.EnableRendering();
-	m_SceneDataLayer.m_QuaternionGhost.EnableRendering();
-
-	auto& animationClip = m_SimulationDataLayer.m_AnimationClip;
-
-	auto intermediateFrames = animationClip.GetIntermediateFrames(m_IntermediateFramesCount);
-
-	auto eulerFrames = std::vector<dxm::Matrix>(intermediateFrames.size());
-	auto quaternionFrames = std::vector<dxm::Matrix>(intermediateFrames.size());
-
-	std::transform(intermediateFrames.begin(), intermediateFrames.end(), eulerFrames.begin(),
-		[](const KeyFrame& frame)
-		{
-			auto rotation = dxm::Vector3(
-				DirectX::XMConvertToRadians(frame.m_EulerAngles.x),
-				DirectX::XMConvertToRadians(frame.m_EulerAngles.y),
-				DirectX::XMConvertToRadians(frame.m_EulerAngles.z)
-			);
-
-			return dxm::Matrix::CreateFromYawPitchRoll(rotation) * dxm::Matrix::CreateTranslation(frame.m_Position);
-		}
-	);
-
-	std::transform(intermediateFrames.begin(), intermediateFrames.end(), quaternionFrames.begin(),
-		[](const KeyFrame& frame)
-		{
-			return dxm::Matrix::CreateFromQuaternion(frame.m_Quaternion) * dxm::Matrix::CreateTranslation(frame.m_Position);
-		}
-	);
-
-	m_SceneDataLayer.m_EulerGhost.UpdateModelMatrices(eulerFrames);
-	m_SceneDataLayer.m_QuaternionGhost.UpdateModelMatrices(quaternionFrames);
 }

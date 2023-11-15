@@ -2,13 +2,13 @@
 
 #include <BuD.h>
 
-#include <DataLayers/SceneDataLayer.h>
+#include <DataLayers/MainDataLayer.h>
 #include <DataLayers/SimulationDataLayer.h>
 
 class SimulationGuiLayer
 {
 public:
-	SimulationGuiLayer(SceneDataLayer& sceneDataLayer, SimulationDataLayer& dataLayer);
+	SimulationGuiLayer(MainDataLayer& dataLayer);
 	virtual void DrawGui();
 	
 protected:
@@ -17,13 +17,7 @@ protected:
 
 	virtual void DrawImageButton(const BuD::Texture& image, std::function<void()> onClick, dxm::Vector2 buttonSize, bool disabled = false);
 
-	virtual void UpdateGhostMesh();
-
-	bool m_ShowGhost;
-	unsigned int m_IntermediateFramesCount;
-
-	SceneDataLayer& m_SceneDataLayer;
-	SimulationDataLayer& m_SimulationDataLayer;
+	MainDataLayer& m_MainDataLayer;
 
 private:
 	BuD::Texture m_PlayIcon, m_PauseIcon, m_LoopIcon;

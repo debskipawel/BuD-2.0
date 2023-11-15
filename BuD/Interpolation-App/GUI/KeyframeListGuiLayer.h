@@ -1,11 +1,11 @@
 #pragma once
 
-#include <DataLayers/SimulationDataLayer.h>
+#include <DataLayers/MainDataLayer.h>
 
 class KeyframeListGuiLayer
 {
 public:
-	KeyframeListGuiLayer(SimulationDataLayer& simulationDataLayer);
+	KeyframeListGuiLayer(MainDataLayer& mainDataLayer);
 
 	virtual void DrawGui();
 
@@ -16,7 +16,7 @@ protected:
 
 	virtual void UpdateSelectedKeyframeBasedOnTime();
 
-	SimulationDataLayer& m_SimulationDataLayer;
+	MainDataLayer& m_MainDataLayer;
 
 	std::optional<unsigned int> m_FrameSelectedForEditing;
 };

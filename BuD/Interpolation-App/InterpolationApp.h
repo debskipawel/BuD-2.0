@@ -2,8 +2,7 @@
 
 #include <BuD.h>
 
-#include <DataLayers/SceneDataLayer.h>
-#include <DataLayers/SimulationDataLayer.h>
+#include <DataLayers/MainDataLayer.h>
 
 #include <GUI/ViewportGuiLayer.h>
 #include <GUI/SimulationGuiLayer.h>
@@ -30,8 +29,7 @@ protected:
 	bool m_MouseMove;
 
 	// ---------- DATA LAYERS ----------
-	SceneDataLayer m_SceneDataLayer;
-	SimulationDataLayer m_SimulationDataLayer;
+	MainDataLayer m_MainDataLayer;
 
 	// ---------- GUI LAYERS ----------
 	ViewportGuiLayer m_EulerViewportGuiLayer, m_QuaternionViewportGuiLayer;

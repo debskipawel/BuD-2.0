@@ -6,8 +6,8 @@
 
 constexpr std::optional<int> NO_KEYFRAME_SELECTED = std::nullopt;
 
-KeyframeListGuiLayer::KeyframeListGuiLayer(SimulationDataLayer& simulationDataLayer)
-	: m_SimulationDataLayer(simulationDataLayer), m_FrameSelectedForEditing(NO_KEYFRAME_SELECTED)
+KeyframeListGuiLayer::KeyframeListGuiLayer(MainDataLayer& mainnDataLayer)
+	: m_MainDataLayer(mainnDataLayer), m_FrameSelectedForEditing(NO_KEYFRAME_SELECTED)
 {
 }
 
@@ -30,7 +30,9 @@ void KeyframeListGuiLayer::DrawGui()
 
 void KeyframeListGuiLayer::DrawAddKeyframeButton()
 {
-	auto isDisabled = m_SimulationDataLayer.m_Running;
+	auto& simulation = m_MainDataLayer.m_SimulationDataLayer;
+	
+	auto isDisabled = simulation.m_Running;
 
 	auto width = ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x;
 
@@ -38,7 +40,7 @@ void KeyframeListGuiLayer::DrawAddKeyframeButton()
 
 	if (ImGui::Button("Add new keyframe", ImVec2(width, 0.0)))
 	{
-		m_SimulationDataLayer.m_AnimationClip.AddKeyFrame(m_SimulationDataLayer.m_Time);
+		simulation.m_AnimationClip.AddKeyFrame(simulation.m_Time);
 	}
 
 	ImGui::PopItemFlag();
@@ -46,7 +48,9 @@ void KeyframeListGuiLayer::DrawAddKeyframeButton()
 
 void KeyframeListGuiLayer::DrawKeyframeList()
 {
-	auto& animationClip = m_SimulationDataLayer.m_AnimationClip;
+	auto& simulation = m_MainDataLayer.m_SimulationDataLayer;
+	auto& animationClip = simulation.m_AnimationClip;
+
 	const auto& keyFrames = animationClip.GetKeyFrames();
 
 	for (auto& keyFrame : keyFrames)
@@ -56,12 +60,12 @@ void KeyframeListGuiLayer::DrawKeyframeList()
 
 		auto selected = (keyFrame.Id() == m_FrameSelectedForEditing);
 
-		if (ImGui::Selectable(label.c_str(), &selected) && !m_SimulationDataLayer.m_Running)
+		if (ImGui::Selectable(label.c_str(), &selected) && !simulation.m_Running)
 		{
 			if (selected)
 			{
 				m_FrameSelectedForEditing = keyFrame.Id();
-				m_SimulationDataLayer.m_Time = keyFrame.m_TimePoint;
+				simulation.m_Time = keyFrame.m_TimePoint;
 			}
 			else
 			{
@@ -78,7 +82,8 @@ void KeyframeListGuiLayer::DrawGuiForSelectedKeyframe()
 		return;
 	}
 
-	auto& animationClip = m_SimulationDataLayer.m_AnimationClip;
+	auto& simulation = m_MainDataLayer.m_SimulationDataLayer;
+	auto& animationClip = simulation.m_AnimationClip;
 
 	auto& selectedKeyFrame = animationClip.GetKeyFrame(m_FrameSelectedForEditing.value());
 
@@ -90,7 +95,11 @@ void KeyframeListGuiLayer::DrawGuiForSelectedKeyframe()
 	ImGui::NewLine();
 
 	ImGui::Text("Position");
-	ImGui::DragFloat3("###keyframe_position", reinterpret_cast<float*>(&selectedKeyFrame.m_Position), 0.1f, 0.0f, 0.0f, "%.1f");
+	
+	if (ImGui::DragFloat3("###keyframe_position", reinterpret_cast<float*>(&selectedKeyFrame.m_Position), 0.1f, 0.0f, 0.0f, "%.1f"))
+	{
+		m_MainDataLayer.UpdateGhostMesh();
+	}
 
 	ImGui::NewLine();
 
@@ -105,6 +114,8 @@ void KeyframeListGuiLayer::DrawGuiForSelectedKeyframe()
 		);
 
 		selectedKeyFrame.m_Quaternion = dxm::Quaternion::CreateFromYawPitchRoll(eulerInRadians);
+
+		m_MainDataLayer.UpdateGhostMesh();
 	}
 
 	ImGui::NewLine();
@@ -120,6 +131,8 @@ void KeyframeListGuiLayer::DrawGuiForSelectedKeyframe()
 			DirectX::XMConvertToDegrees(eulerAngles.y),
 			DirectX::XMConvertToDegrees(eulerAngles.z)
 		);
+
+		m_MainDataLayer.UpdateGhostMesh();
 	}
 
 	ImGui::NewLine();
@@ -128,9 +141,10 @@ void KeyframeListGuiLayer::DrawGuiForSelectedKeyframe()
 
 	if (ImGui::DragFloat("###keyframe_time", &selectedKeyFrame.m_TimePoint, 0.1f, 0.0f, animationClip.GetDuration(), "%.1f", ImGuiSliderFlags_ClampOnInput))
 	{
-		m_SimulationDataLayer.m_Time = selectedKeyFrame.m_TimePoint;
+		simulation.m_Time = selectedKeyFrame.m_TimePoint;
 
 		animationClip.SortKeyFrames();
+		m_MainDataLayer.UpdateGhostMesh();
 	}
 
 	auto max = ImGui::GetWindowContentRegionMax();
@@ -152,7 +166,7 @@ void KeyframeListGuiLayer::DrawGuiForSelectedKeyframe()
 
 	if (ImGui::Button("Delete keyframe", ImVec2(max.x - min.x, buttonHeight)))
 	{
-		m_SimulationDataLayer.m_AnimationClip.RemoveKeyFrame(m_FrameSelectedForEditing.value());
+		simulation.m_AnimationClip.RemoveKeyFrame(m_FrameSelectedForEditing.value());
 	}
 
 	ImGui::End();
@@ -162,9 +176,12 @@ void KeyframeListGuiLayer::UpdateSelectedKeyframeBasedOnTime()
 {
 	constexpr auto MAX_TIME_DIFFERENCE = 0.05f;
 
-	auto& animationClip = m_SimulationDataLayer.m_AnimationClip;
+	auto& simulation = m_MainDataLayer.m_SimulationDataLayer;
+	auto& animationClip = simulation.m_AnimationClip;
+	
 	const auto& keyFrames = animationClip.GetKeyFrames();
-	auto currentTime = m_SimulationDataLayer.m_Time;
+	
+	auto currentTime = simulation.m_Time;
 	
 	if (m_FrameSelectedForEditing != NO_KEYFRAME_SELECTED)
 	{
@@ -178,7 +195,7 @@ void KeyframeListGuiLayer::UpdateSelectedKeyframeBasedOnTime()
 		}
 	}
 
-	if (m_SimulationDataLayer.m_Running || keyFrames.empty())
+	if (simulation.m_Running || keyFrames.empty())
 	{
 		m_FrameSelectedForEditing = NO_KEYFRAME_SELECTED;
 

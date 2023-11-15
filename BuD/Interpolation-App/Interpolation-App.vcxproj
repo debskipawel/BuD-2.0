@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimationClip.cpp" />
+    <ClCompile Include="DataLayers\MainDataLayer.cpp" />
     <ClCompile Include="DataLayers\SceneDataLayer.cpp" />
     <ClCompile Include="DataLayers\SimulationDataLayer.cpp" />
     <ClCompile Include="GUI\KeyframeListGuiLayer.cpp" />
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationClip.h" />
+    <ClInclude Include="DataLayers\MainDataLayer.h" />
     <ClInclude Include="DataLayers\SceneDataLayer.h" />
     <ClInclude Include="DataLayers\SimulationDataLayer.h" />
     <ClInclude Include="GUI\KeyframeListGuiLayer.h" />
