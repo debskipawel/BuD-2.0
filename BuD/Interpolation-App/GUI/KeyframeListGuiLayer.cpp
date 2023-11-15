@@ -167,6 +167,10 @@ void KeyframeListGuiLayer::DrawGuiForSelectedKeyframe()
 	if (ImGui::Button("Delete keyframe", ImVec2(max.x - min.x, buttonHeight)))
 	{
 		simulation.m_AnimationClip.RemoveKeyFrame(m_FrameSelectedForEditing.value());
+		
+		m_FrameSelectedForEditing = NO_KEYFRAME_SELECTED;
+
+		m_MainDataLayer.UpdateGhostMesh();
 	}
 
 	ImGui::End();

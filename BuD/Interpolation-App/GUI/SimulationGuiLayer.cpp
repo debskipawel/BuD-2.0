@@ -33,7 +33,7 @@ void SimulationGuiLayer::DrawSimulationSettingsGui()
 
 		ImGui::NewLine();
 
-		ImGui::Text("Show the ghost:");
+		ImGui::Text("Show ghost frames:");
 		ImGui::SameLine();
 		
 		if (ImGui::Checkbox("###ghost_toggle", &m_MainDataLayer.m_ShowGhost))
@@ -51,6 +51,16 @@ void SimulationGuiLayer::DrawSimulationSettingsGui()
 			{
 				m_MainDataLayer.UpdateGhostMesh();
 			}
+		}
+
+		ImGui::NewLine();
+
+		ImGui::Text("Use SLERP:");
+		ImGui::SameLine();
+
+		if (ImGui::Checkbox("###use_slerp", &animationClip.m_SlerpQuaternionInterpolation))
+		{
+			m_MainDataLayer.UpdateGhostMesh();
 		}
 
 		ImGui::End();
