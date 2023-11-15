@@ -104,10 +104,9 @@ KeyFrame AnimationClip::Interpolate(float time)
 	auto t = (time - prev->m_TimePoint) / (next->m_TimePoint - prev->m_TimePoint);
 
 	auto position = dxm::Vector3::Lerp(prev->m_Position, next->m_Position, t);
-	auto eulerAngles = dxm::Vector3::Lerp(prev->m_EulerAngles, next->m_EulerAngles, t);
-	auto quaternion = m_SlerpQuaternionInterpolation
-		? dxm::Quaternion::Slerp(prev->m_Quaternion, next->m_Quaternion, t)
-		: dxm::Quaternion::Lerp(prev->m_Quaternion, next->m_Quaternion, t);
+
+	auto eulerAngles = InterpolateEuler(prev->m_EulerAngles, next->m_EulerAngles, t);
+	auto quaternion = InsterpolateQuaternion(prev->m_Quaternion, next->m_Quaternion, t);
 
 	return KeyFrame(time, position, eulerAngles, quaternion);
 }
@@ -123,4 +122,53 @@ void AnimationClip::SetDuration(float duration)
 	{
 		m_Duration = duration;
 	}
+}
+
+dxm::Vector3 AnimationClip::InterpolateEuler(const dxm::Vector3& prev, const dxm::Vector3& next, float t)
+{
+	auto prevEuler = dxm::Vector3(prev.x - floorf(prev.x / 360.0f) * 360.0f, prev.y - floorf(prev.y / 360.0f) * 360.0f, prev.z - floorf(prev.z / 360.0f) * 360.0f);
+	auto nextEuler = dxm::Vector3(next.x - floorf(next.x / 360.0f) * 360.0f, next.y - floorf(next.y / 360.0f) * 360.0f, next.z - floorf(next.z / 360.0f) * 360.0f);
+
+	auto diff = nextEuler - prevEuler;
+
+	auto result = dxm::Vector3::Zero;
+
+	// wrapping X angle
+	if (fabsf(diff.x) > 180.0f)
+	{
+		result.x = diff.x < 0.0f ? prevEuler.x + t * (360.0f - fabsf(diff.x)) : prevEuler.x - t * (360.0f - fabsf(diff.x));
+	}
+	else
+	{
+		result.x = prevEuler.x + t * diff.x;
+	}
+
+	// wrapping Y angle
+	if (fabsf(diff.y) > 180.0f)
+	{
+		result.y = diff.y < 0.0f ? prevEuler.y + t * (360.0f - fabsf(diff.y)) : prevEuler.y - t * (360.0f - fabsf(diff.y));
+	}
+	else
+	{
+		result.y = prevEuler.y + t * diff.y;
+	}
+
+	// wrapping Z angle
+	if (fabsf(diff.z) > 180.0f)
+	{
+		result.z = diff.z < 0.0f ? prevEuler.z + t * (360.0f - fabsf(diff.z)) : prevEuler.z - t * (360.0f - fabsf(diff.z));
+	}
+	else
+	{
+		result.z = prevEuler.z + t * diff.z;
+	}
+
+	return result;
+}
+
+auto AnimationClip::InsterpolateQuaternion(const dxm::Quaternion& prev, const dxm::Quaternion& next, float t) -> dxm::Quaternion
+{
+	return m_SlerpQuaternionInterpolation
+		? dxm::Quaternion::Slerp(prev, next, t)
+		: dxm::Quaternion::Lerp(prev, next, t);
 }
