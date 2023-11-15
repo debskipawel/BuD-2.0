@@ -47,7 +47,7 @@ void SimulationGuiLayer::DrawSimulationSettingsGui()
 
 			ImGui::Text("Intermediate frames count");
 
-			if (ImGui::DragInt("###intermediate_frames_count", reinterpret_cast<int*>(&m_MainDataLayer.m_IntermediateFramesCount), 1.0f, 0, 100, "%d", ImGuiSliderFlags_AlwaysClamp))
+			if (ImGui::DragInt("###intermediate_frames_count", reinterpret_cast<int*>(&m_MainDataLayer.m_IntermediateFramesCount), 1.0f, 0, 400, "%d", ImGuiSliderFlags_AlwaysClamp))
 			{
 				m_MainDataLayer.UpdateGhostMesh();
 			}

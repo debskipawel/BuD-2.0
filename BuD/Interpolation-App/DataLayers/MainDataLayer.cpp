@@ -1,7 +1,7 @@
 #include "MainDataLayer.h"
 
 MainDataLayer::MainDataLayer()
-	: m_SceneDataLayer(), m_SimulationDataLayer(), m_IntermediateFramesCount(0), m_ShowGhost(false)
+	: m_SceneDataLayer(), m_SimulationDataLayer(), m_IntermediateFramesCount(20), m_ShowGhost(false)
 {
 }
 
