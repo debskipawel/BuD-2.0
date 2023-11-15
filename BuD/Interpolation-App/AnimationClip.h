@@ -24,9 +24,12 @@ public:
 	constexpr virtual auto GetDuration() const -> float;
 	virtual auto SetDuration(float duration) -> void;
 
+	bool m_SlerpQuaternionInterpolation;
+
 protected:
+	virtual auto InterpolateEuler(const dxm::Vector3& prev, const dxm::Vector3& next, float t) -> dxm::Vector3;
+	virtual auto InsterpolateQuaternion(const dxm::Quaternion& prev, const dxm::Quaternion& next, float t) -> dxm::Quaternion;
+
 	std::vector<KeyFrame> m_KeyFrames;
 	float m_Duration;
-
-	bool m_SlerpQuaternionInterpolation;
 };
