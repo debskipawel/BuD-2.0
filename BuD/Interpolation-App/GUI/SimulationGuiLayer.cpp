@@ -3,8 +3,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-SimulationGuiLayer::SimulationGuiLayer(SimulationDataLayer& dataLayer)
-	: m_SimulationDataLayer(dataLayer)
+SimulationGuiLayer::SimulationGuiLayer(SceneDataLayer& sceneDataLayer, SimulationDataLayer& dataLayer)
+	: m_SceneDataLayer(sceneDataLayer), m_SimulationDataLayer(dataLayer), m_ShowGhost(false), m_IntermediateFramesCount(0)
 {
 	m_PlayIcon = BuD::Texture::LoadFromFile("Resources/Sprites/play_icon.png");
 	m_PauseIcon = BuD::Texture::LoadFromFile("Resources/Sprites/pause_icon.png");
@@ -29,6 +29,28 @@ void SimulationGuiLayer::DrawSimulationSettingsGui()
 		if (ImGui::DragFloat("###animation_duration", &duration, 0.1f, 0.0f, 1000.0f, "%.1f s", ImGuiSliderFlags_AlwaysClamp))
 		{
 			animationClip.SetDuration(duration);
+		}
+
+		ImGui::NewLine();
+
+		ImGui::Text("Show the ghost:");
+		ImGui::SameLine();
+		
+		if (ImGui::Checkbox("###ghost_toggle", &m_ShowGhost))
+		{
+			UpdateGhostMesh();
+		}
+
+		if (m_ShowGhost)
+		{
+			ImGui::NewLine();
+
+			ImGui::Text("Intermediate frames count");
+
+			if (ImGui::DragInt("###intermediate_frames_count", reinterpret_cast<int*>(&m_IntermediateFramesCount), 1.0f, 0, 100, "%d", ImGuiSliderFlags_AlwaysClamp))
+			{
+				UpdateGhostMesh();
+			}
 		}
 
 		ImGui::End();
@@ -120,4 +142,48 @@ void SimulationGuiLayer::DrawImageButton(const BuD::Texture& image, std::functio
 	}
 
 	ImGui::PopItemFlag();
+}
+
+void SimulationGuiLayer::UpdateGhostMesh()
+{
+	if (!m_ShowGhost || m_IntermediateFramesCount == 0)
+	{
+		m_SceneDataLayer.m_EulerGhost.DisableRendering();
+		m_SceneDataLayer.m_QuaternionGhost.DisableRendering();
+
+		return;
+	}
+
+	m_SceneDataLayer.m_EulerGhost.EnableRendering();
+	m_SceneDataLayer.m_QuaternionGhost.EnableRendering();
+
+	auto& animationClip = m_SimulationDataLayer.m_AnimationClip;
+
+	auto intermediateFrames = animationClip.GetIntermediateFrames(m_IntermediateFramesCount);
+
+	auto eulerFrames = std::vector<dxm::Matrix>(intermediateFrames.size());
+	auto quaternionFrames = std::vector<dxm::Matrix>(intermediateFrames.size());
+
+	std::transform(intermediateFrames.begin(), intermediateFrames.end(), eulerFrames.begin(),
+		[](const KeyFrame& frame)
+		{
+			auto rotation = dxm::Vector3(
+				DirectX::XMConvertToRadians(frame.m_EulerAngles.x),
+				DirectX::XMConvertToRadians(frame.m_EulerAngles.y),
+				DirectX::XMConvertToRadians(frame.m_EulerAngles.z)
+			);
+
+			return dxm::Matrix::CreateFromYawPitchRoll(rotation) * dxm::Matrix::CreateTranslation(frame.m_Position);
+		}
+	);
+
+	std::transform(intermediateFrames.begin(), intermediateFrames.end(), quaternionFrames.begin(),
+		[](const KeyFrame& frame)
+		{
+			return dxm::Matrix::CreateFromQuaternion(frame.m_Quaternion) * dxm::Matrix::CreateTranslation(frame.m_Position);
+		}
+	);
+
+	m_SceneDataLayer.m_EulerGhost.UpdateModelMatrices(eulerFrames);
+	m_SceneDataLayer.m_QuaternionGhost.UpdateModelMatrices(quaternionFrames);
 }

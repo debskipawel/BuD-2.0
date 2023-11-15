@@ -1,5 +1,7 @@
 #include "AnimationClip.h"
 
+#include <execution>
+
 AnimationClip::AnimationClip(const std::vector<KeyFrame>& keyFrames, float duration)
 	: m_KeyFrames(keyFrames), m_Duration(duration), m_SlerpQuaternionInterpolation(false)
 {
@@ -34,6 +36,24 @@ bool AnimationClip::RemoveKeyFrame(const KeyFrame& keyFrame)
 const std::vector<KeyFrame>& AnimationClip::GetKeyFrames() const
 {
 	return m_KeyFrames;
+}
+
+std::vector<KeyFrame> AnimationClip::GetIntermediateFrames(unsigned int frameCount)
+{
+	auto intermediateFrames = std::vector<KeyFrame>(frameCount);
+
+	std::for_each(std::execution::par, intermediateFrames.begin(), intermediateFrames.end(),
+		[this, frameCount, &intermediateFrames](KeyFrame& keyFrame)
+		{
+			auto id = &keyFrame - intermediateFrames.data();
+
+			auto time = id * (frameCount == 1 ? 0.0f : m_Duration / (frameCount - 1));
+			
+			keyFrame = Interpolate(time);
+		}
+	);
+
+	return intermediateFrames;
 }
 
 KeyFrame& AnimationClip::GetKeyFrame(unsigned int id)

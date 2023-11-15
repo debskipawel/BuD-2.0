@@ -48,6 +48,9 @@
     <ClCompile Include="AnimationClip.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\GhostFrames.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InterpolationApp.h">
@@ -80,11 +83,16 @@
     <ClInclude Include="AnimationClip.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\GhostFrames.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\frame_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\frame_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\Grid\grid_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\Grid\grid_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\ghost_frames_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\ghost_frames_ps.hlsl" />
   </ItemGroup>
 </Project>

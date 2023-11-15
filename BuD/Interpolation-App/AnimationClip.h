@@ -14,6 +14,7 @@ public:
 	virtual auto RemoveKeyFrame(const KeyFrame& keyFrame) -> bool;
 
 	virtual auto GetKeyFrames() const -> const std::vector<KeyFrame>&;
+	virtual auto GetIntermediateFrames(unsigned int frameCount) -> std::vector<KeyFrame>;
 
 	virtual auto GetKeyFrame(unsigned int id) -> KeyFrame&;
 	virtual auto SortKeyFrames() -> void;

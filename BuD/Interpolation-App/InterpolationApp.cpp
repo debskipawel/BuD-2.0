@@ -2,7 +2,7 @@
 
 InterpolationApp::InterpolationApp()
 	: m_Time(0.0f), m_EulerViewportGuiLayer("Euler"), m_QuaternionViewportGuiLayer("Quaternion"), m_MouseMove(false),
-	m_SimulationDataLayer(), m_SimulationGuiLayer(m_SimulationDataLayer), m_KeyframeListGuiLayer(m_SimulationDataLayer)
+	m_SimulationDataLayer(), m_SceneDataLayer(), m_SimulationGuiLayer(m_SceneDataLayer, m_SimulationDataLayer), m_KeyframeListGuiLayer(m_SimulationDataLayer)
 {
 }
 
