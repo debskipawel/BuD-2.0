@@ -11,6 +11,14 @@ void AnimationClip::AddKeyFrame(float time)
 {
 	auto keyFrame = Interpolate(time);
 
+	auto eulerRot = keyFrame.m_Quaternion.ToEuler();
+	
+	keyFrame.m_EulerAngles = dxm::Vector3(
+		DirectX::XMConvertToDegrees(eulerRot.x),
+		DirectX::XMConvertToDegrees(eulerRot.y),
+		DirectX::XMConvertToDegrees(eulerRot.z)
+	);
+
 	AddKeyFrame(keyFrame);
 }
 

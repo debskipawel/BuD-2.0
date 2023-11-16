@@ -41,6 +41,8 @@ void KeyframeListGuiLayer::DrawAddKeyframeButton()
 	if (ImGui::Button("Add new keyframe", ImVec2(width, 0.0)))
 	{
 		simulation.m_AnimationClip.AddKeyFrame(simulation.m_Time);
+
+		m_MainDataLayer.UpdateGhostMesh();
 	}
 
 	ImGui::PopItemFlag();
