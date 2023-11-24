@@ -10,6 +10,7 @@ namespace BuD
 	{
 		m_UseRightHandCoordinateSystem = false;
 	}
+
 	void BaseRendererImpl::UseRightHandCoordinateSystem()
 	{
 		m_UseRightHandCoordinateSystem = true;

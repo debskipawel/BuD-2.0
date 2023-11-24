@@ -16,6 +16,7 @@ namespace BuD
 	{
 	public:
 		AnaglyphRendererImpl(std::shared_ptr<GraphicsDevice> device);
+		virtual ~AnaglyphRendererImpl() = default;
 
 		virtual RendererFrameStats Render(Scene& scene, const RenderTargetInfo& renderTarget) override;
 
