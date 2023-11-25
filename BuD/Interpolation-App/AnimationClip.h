@@ -16,7 +16,7 @@ public:
 	virtual auto GetKeyFrames() const -> const std::vector<KeyFrame>&;
 	virtual auto GetIntermediateFrames(unsigned int frameCount) -> std::vector<KeyFrame>;
 
-	virtual auto GetKeyFrame(unsigned int id) -> KeyFrame&;
+	virtual auto GetKeyFrame(unsigned int id) -> std::optional<KeyFrame*>;
 	virtual auto SortKeyFrames() -> void;
 
 	virtual auto Interpolate(float time) -> KeyFrame;
@@ -28,7 +28,7 @@ public:
 
 protected:
 	virtual auto InterpolateEuler(const dxm::Vector3& prev, const dxm::Vector3& next, float t) -> dxm::Vector3;
-	virtual auto InsterpolateQuaternion(const dxm::Quaternion& prev, const dxm::Quaternion& next, float t) -> dxm::Quaternion;
+	virtual auto InterpolateQuaternion(const dxm::Quaternion& prev, const dxm::Quaternion& next, float t) -> dxm::Quaternion;
 
 	std::vector<KeyFrame> m_KeyFrames;
 	float m_Duration;

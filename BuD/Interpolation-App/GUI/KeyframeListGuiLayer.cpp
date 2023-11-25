@@ -87,18 +87,26 @@ void KeyframeListGuiLayer::DrawGuiForSelectedKeyframe()
 	auto& simulation = m_MainDataLayer.m_SimulationDataLayer;
 	auto& animationClip = simulation.m_AnimationClip;
 
-	auto& selectedKeyFrame = animationClip.GetKeyFrame(m_FrameSelectedForEditing.value());
+	auto selectedKeyFrameOpt = animationClip.GetKeyFrame(m_FrameSelectedForEditing.value());
+
+	if (!selectedKeyFrameOpt.has_value())
+	{
+		m_FrameSelectedForEditing = NO_KEYFRAME_SELECTED;
+		return;
+	}
+
+	auto& selectedKeyFrame = selectedKeyFrameOpt.value();
 
 	ImGui::Begin("Keyframe details", nullptr, ImGuiWindowFlags_NoFocusOnAppearing);
 
 	ImGui::Text("Name");
-	ImGui::InputText("###keframe_name", &selectedKeyFrame.m_Name);
+	ImGui::InputText("###keframe_name", &selectedKeyFrame->m_Name);
 
 	ImGui::NewLine();
 
 	ImGui::Text("Position");
 	
-	if (ImGui::DragFloat3("###keyframe_position", reinterpret_cast<float*>(&selectedKeyFrame.m_Position), 0.1f, 0.0f, 0.0f, "%.1f"))
+	if (ImGui::DragFloat3("###keyframe_position", reinterpret_cast<float*>(&selectedKeyFrame->m_Position), 0.1f, 0.0f, 0.0f, "%.1f"))
 	{
 		m_MainDataLayer.UpdateGhostMesh();
 	}
@@ -107,15 +115,15 @@ void KeyframeListGuiLayer::DrawGuiForSelectedKeyframe()
 
 	ImGui::Text("Euler angles");
 
-	if (ImGui::DragFloat3("###keyframe_euler_angles", reinterpret_cast<float*>(&selectedKeyFrame.m_EulerAngles), 1.0f, 0.0f, 0.0f, "%.1f"))
+	if (ImGui::DragFloat3("###keyframe_euler_angles", reinterpret_cast<float*>(&selectedKeyFrame->m_EulerAngles), 1.0f, 0.0f, 0.0f, "%.1f"))
 	{
 		auto eulerInRadians = dxm::Vector3(
-			DirectX::XMConvertToRadians(selectedKeyFrame.m_EulerAngles.x),
-			DirectX::XMConvertToRadians(selectedKeyFrame.m_EulerAngles.y),
-			DirectX::XMConvertToRadians(selectedKeyFrame.m_EulerAngles.z)
+			DirectX::XMConvertToRadians(selectedKeyFrame->m_EulerAngles.x),
+			DirectX::XMConvertToRadians(selectedKeyFrame->m_EulerAngles.y),
+			DirectX::XMConvertToRadians(selectedKeyFrame->m_EulerAngles.z)
 		);
 
-		selectedKeyFrame.m_Quaternion = dxm::Quaternion::CreateFromYawPitchRoll(eulerInRadians);
+		selectedKeyFrame->m_Quaternion = dxm::Quaternion::CreateFromYawPitchRoll(eulerInRadians);
 
 		m_MainDataLayer.UpdateGhostMesh();
 	}
@@ -124,11 +132,11 @@ void KeyframeListGuiLayer::DrawGuiForSelectedKeyframe()
 
 	ImGui::Text("Quaternion");
 
-	if (ImGui::DragFloat4("###keyframe_quaternion", reinterpret_cast<float*>(&selectedKeyFrame.m_Quaternion), 0.1f, 0.0f, 0.0f, "%.1f"))
+	if (ImGui::DragFloat4("###keyframe_quaternion", reinterpret_cast<float*>(&selectedKeyFrame->m_Quaternion), 0.1f, 0.0f, 0.0f, "%.1f"))
 	{
-		auto eulerAngles = selectedKeyFrame.m_Quaternion.ToEuler();
+		auto eulerAngles = selectedKeyFrame->m_Quaternion.ToEuler();
 
-		selectedKeyFrame.m_EulerAngles = dxm::Vector3(
+		selectedKeyFrame->m_EulerAngles = dxm::Vector3(
 			DirectX::XMConvertToDegrees(eulerAngles.x),
 			DirectX::XMConvertToDegrees(eulerAngles.y),
 			DirectX::XMConvertToDegrees(eulerAngles.z)
@@ -141,9 +149,9 @@ void KeyframeListGuiLayer::DrawGuiForSelectedKeyframe()
 
 	ImGui::Text("Keyframe time");
 
-	if (ImGui::DragFloat("###keyframe_time", &selectedKeyFrame.m_TimePoint, 0.1f, 0.0f, animationClip.GetDuration(), "%.1f", ImGuiSliderFlags_ClampOnInput))
+	if (ImGui::DragFloat("###keyframe_time", &selectedKeyFrame->m_TimePoint, 0.1f, 0.0f, animationClip.GetDuration(), "%.1f", ImGuiSliderFlags_ClampOnInput))
 	{
-		simulation.m_Time = selectedKeyFrame.m_TimePoint;
+		simulation.m_Time = selectedKeyFrame->m_TimePoint;
 
 		animationClip.SortKeyFrames();
 		m_MainDataLayer.UpdateGhostMesh();
@@ -185,21 +193,29 @@ void KeyframeListGuiLayer::UpdateSelectedKeyframeBasedOnTime()
 	auto& simulation = m_MainDataLayer.m_SimulationDataLayer;
 	auto& animationClip = simulation.m_AnimationClip;
 	
-	const auto& keyFrames = animationClip.GetKeyFrames();
-	
 	auto currentTime = simulation.m_Time;
 	
 	if (m_FrameSelectedForEditing != NO_KEYFRAME_SELECTED)
 	{
-		auto& selectedKeyFrame = animationClip.GetKeyFrame(m_FrameSelectedForEditing.value());
+		auto selectedKeyFrameOpt = animationClip.GetKeyFrame(m_FrameSelectedForEditing.value());
 
-		auto timeDifference = fabsf(selectedKeyFrame.m_TimePoint - currentTime);
-
-		if (timeDifference < MAX_TIME_DIFFERENCE)
+		if (selectedKeyFrameOpt.has_value())
 		{
-			return;
+			auto& selectedKeyFrame = selectedKeyFrameOpt.value();
+			auto timeDifference = fabsf(selectedKeyFrame->m_TimePoint - currentTime);
+
+			if (timeDifference < MAX_TIME_DIFFERENCE)
+			{
+				return;
+			}
+		}
+		else
+		{
+			m_FrameSelectedForEditing = NO_KEYFRAME_SELECTED;
 		}
 	}
+
+	const auto& keyFrames = animationClip.GetKeyFrames();
 
 	if (simulation.m_Running || keyFrames.empty())
 	{

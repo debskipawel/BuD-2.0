@@ -64,11 +64,16 @@ std::vector<KeyFrame> AnimationClip::GetIntermediateFrames(unsigned int frameCou
 	return intermediateFrames;
 }
 
-KeyFrame& AnimationClip::GetKeyFrame(unsigned int id)
+std::optional<KeyFrame*> AnimationClip::GetKeyFrame(unsigned int id)
 {
 	auto selectedKeyFrame = std::find_if(m_KeyFrames.begin(), m_KeyFrames.end(), [id](const KeyFrame& keyFrame) { return keyFrame.Id() == id; });
 
-	return *selectedKeyFrame;
+	if (selectedKeyFrame == m_KeyFrames.end())
+	{
+		return std::nullopt;
+	}
+
+	return &(*selectedKeyFrame);
 }
 
 void AnimationClip::SortKeyFrames()
@@ -113,10 +118,10 @@ KeyFrame AnimationClip::Interpolate(float time)
 
 	auto position = dxm::Vector3::Lerp(prev->m_Position, next->m_Position, t);
 
-	auto eulerAngles = InterpolateEuler(prev->m_EulerAngles, next->m_EulerAngles, t);
-	auto quaternion = InsterpolateQuaternion(prev->m_Quaternion, next->m_Quaternion, t);
+	auto euler = InterpolateEuler(prev->m_EulerAngles, next->m_EulerAngles, t);
+	auto quaternion = InterpolateQuaternion(prev->m_Quaternion, next->m_Quaternion, t);
 
-	return KeyFrame(time, position, eulerAngles, quaternion);
+	return KeyFrame(time, position, euler, quaternion);
 }
 
 constexpr float AnimationClip::GetDuration() const
@@ -174,7 +179,7 @@ dxm::Vector3 AnimationClip::InterpolateEuler(const dxm::Vector3& prev, const dxm
 	return result;
 }
 
-auto AnimationClip::InsterpolateQuaternion(const dxm::Quaternion& prev, const dxm::Quaternion& next, float t) -> dxm::Quaternion
+auto AnimationClip::InterpolateQuaternion(const dxm::Quaternion& prev, const dxm::Quaternion& next, float t) -> dxm::Quaternion
 {
 	return m_SlerpQuaternionInterpolation
 		? dxm::Quaternion::Slerp(prev, next, t)
