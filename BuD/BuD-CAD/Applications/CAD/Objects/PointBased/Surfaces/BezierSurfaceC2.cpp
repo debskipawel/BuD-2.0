@@ -4,20 +4,20 @@
 
 #include <Applications/CAD/Visitors/AbstractVisitor.h>
 
-BezierSurfaceC2::BezierSurfaceC2(SceneCAD& scene, std::vector<std::shared_ptr<BaseBezierPatch>> patches, uint32_t sizeU, uint32_t sizeV, bool cylinder)
+BezierSurfaceC2::BezierSurfaceC2(SceneCAD& scene, std::vector<std::shared_ptr<BaseBezierPatch>> patches, uint32_t sizeU, uint32_t sizeV, float patchSizeU, float patchSizeV, bool cylinder)
 	: BaseBezierSurface(scene, sizeU, sizeV, cylinder)
 {
 	m_BezierPatches = patches;
 }
 
-BezierSurfaceC2::BezierSurfaceC2(SceneCAD& scene, dxm::Vector3 position, uint32_t sizeU, uint32_t sizeV, bool cylinder)
+BezierSurfaceC2::BezierSurfaceC2(SceneCAD& scene, dxm::Vector3 position, uint32_t sizeU, uint32_t sizeV, float patchSizeU, float patchSizeV, bool cylinder)
 	: BaseBezierSurface(scene, sizeU, sizeV, cylinder)
 {
 	m_Tag = std::format("C2 Bezier surface {}", Id());
 
 	if (cylinder)
 	{
-		auto controlPoints = CreateControlPointsForCylinder(scene, position, sizeU, sizeV);
+		auto controlPoints = CreateControlPointsForCylinder(scene, position, sizeU, sizeV, patchSizeU, patchSizeV);
 
 		auto pointsCountU = m_SizeU;
 
@@ -57,7 +57,7 @@ BezierSurfaceC2::BezierSurfaceC2(SceneCAD& scene, dxm::Vector3 position, uint32_
 	}
 	else
 	{
-		auto controlPoints = CreateControlPointsForFlatSurface(scene, position, sizeU, sizeV);
+		auto controlPoints = CreateControlPointsForFlatSurface(scene, position, sizeU, sizeV, patchSizeU, patchSizeV);
 
 		auto pointsCountU = m_SizeU + 3;
 
@@ -128,19 +128,16 @@ void BezierSurfaceC2::RemoveIntersectionCurve(std::weak_ptr<IntersectionCurve> i
 	}
 }
 
-std::vector<std::weak_ptr<Point>> BezierSurfaceC2::CreateControlPointsForFlatSurface(SceneCAD& scene, dxm::Vector3 position, uint32_t sizeU, uint32_t sizeV)
+std::vector<std::weak_ptr<Point>> BezierSurfaceC2::CreateControlPointsForFlatSurface(SceneCAD& scene, dxm::Vector3 position, uint32_t sizeU, uint32_t sizeV, float patchSizeU, float patchSizeV)
 {
 	auto controlPoints = std::vector<std::weak_ptr<Point>>();
 
 	auto uAxis = dxm::Vector3::UnitX;
 	auto vAxis = dxm::Vector3::UnitZ;
 
-	auto patchWidthU = 1.0f;
-	auto patchWidthV = 1.0f;
-
-	auto startPosition = position - (m_SizeU + 2) * patchWidthU / 2 * uAxis - (m_SizeV + 2) * patchWidthV / 2 * vAxis;
-	auto pointStepU = patchWidthU * uAxis;
-	auto pointStepV = patchWidthV * vAxis;
+	auto startPosition = position - (m_SizeU + 2) * patchSizeU / 2 * uAxis - (m_SizeV + 2) * patchSizeV / 2 * vAxis;
+	auto pointStepU = patchSizeU * uAxis;
+	auto pointStepV = patchSizeV * vAxis;
 
 	auto pointsCountU = m_SizeU + 3;
 	auto pointsCountV = m_SizeV + 3;
@@ -159,17 +156,15 @@ std::vector<std::weak_ptr<Point>> BezierSurfaceC2::CreateControlPointsForFlatSur
 	return controlPoints;
 }
 
-std::vector<std::weak_ptr<Point>> BezierSurfaceC2::CreateControlPointsForCylinder(SceneCAD& scene, dxm::Vector3 position, uint32_t sizeU, uint32_t sizeV)
+std::vector<std::weak_ptr<Point>> BezierSurfaceC2::CreateControlPointsForCylinder(SceneCAD& scene, dxm::Vector3 position, uint32_t sizeU, uint32_t sizeV, float patchSizeU, float patchSizeV)
 {
 	auto controlPoints = std::vector<std::weak_ptr<Point>>();
 
-	auto patchWidthU = 1.0f;
-	auto patchWidthV = 1.0f;
-	auto cylinderRadius = (m_SizeU * patchWidthU) / (2.0f * std::numbers::pi);
+	auto cylinderRadius = (m_SizeU * patchSizeU) / (2.0f * std::numbers::pi);
 
 	auto cylinderMainAxis = dxm::Vector3::UnitZ;
 
-	auto pointStepV = patchWidthV * cylinderMainAxis;
+	auto pointStepV = patchSizeV * cylinderMainAxis;
 
 	auto patchPivotAngle = 2.0f * std::numbers::pi_v<float> / m_SizeU;
 

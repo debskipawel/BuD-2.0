@@ -176,6 +176,7 @@
     <ClInclude Include="Applications\CAD\AppState.h" />
     <ClInclude Include="Applications\CAD\Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.h" />
     <ClInclude Include="Applications\CAD\Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Applications\CAD\MillingToolGenerator\MillingToolGenerator.h" />
     <ClInclude Include="Applications\CNC\ApplicationCNC.h" />
     <ClInclude Include="Applications\CNC\Behaviors\Mouse\BaseMouseBehaviorLayerCNC.h" />
     <ClInclude Include="Applications\CNC\Behaviors\Mouse\Camera\CameraMouseBehaviorLayerCNC.h" />
@@ -337,6 +338,7 @@
     <ClCompile Include="Applications\CAD\Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.cpp" />
     <ClCompile Include="Applications\CAD\Behaviors\Keyboard\BaseKeyboardBehaviorLayerCAD.cpp" />
     <ClCompile Include="Applications\CAD\Behaviors\Mouse\BaseMouseBehaviorLayerCAD.cpp" />
+    <ClCompile Include="Applications\CAD\MillingToolGenerator\MillingToolGenerator.cpp" />
     <ClCompile Include="Applications\CNC\ApplicationCNC.cpp" />
     <ClCompile Include="Applications\CNC\Behaviors\Mouse\BaseMouseBehaviorLayerCNC.cpp" />
     <ClCompile Include="Applications\CNC\Behaviors\Mouse\Camera\CameraMouseBehaviorLayerCNC.cpp" />

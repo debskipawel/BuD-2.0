@@ -8,6 +8,8 @@
 #include <Applications/CAD/Visitors/Transform/UpdateTransformVisitor.h>
 #include <Applications/CAD/Visitors/Serialization/SerializationVisitor.h>
 
+#include <Applications/CAD/MillingToolGenerator/MillingToolGenerator.h>
+
 MenuBarGuiLayerCAD::MenuBarGuiLayerCAD(MainDataLayerCAD& dataLayer)
 	: BaseGuiLayerCAD(dataLayer), m_MultiEyeSettingsPopupOpen(false), m_GenerateMillingPathsPopupOpen(false)
 {
@@ -196,7 +198,6 @@ void MenuBarGuiLayerCAD::DrawGenerateMillingToolPathsPopup()
 
     if (ImGui::BeginPopupModal("Generate milling paths ###generate_milling_paths", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoResize))
     {
-        // TODO: parameters
         ImGui::Text("Material size");
         ImGui::DragFloat3("###milling_material_size", reinterpret_cast<float*>(&m_MilledMaterialSize.x), 0.1f, 0.0f, 50.0f, "%.1f", ImGuiSliderFlags_AlwaysClamp);
 
@@ -217,6 +218,8 @@ void MenuBarGuiLayerCAD::DrawGenerateMillingToolPathsPopup()
 
         if (ImGui::Button("OK", { buttonWidth, 20 }))
         {
+            auto millingPathGenerator = MillingToolGenerator(m_MainDataLayer.m_SceneDataLayer.m_SceneCAD, m_MilledMaterialSize, m_MilledModelPlaneHeight);
+
             m_GenerateMillingPathsPopupOpen = false;
             ImGui::CloseCurrentPopup();
 

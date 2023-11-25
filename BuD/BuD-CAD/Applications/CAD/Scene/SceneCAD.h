@@ -28,11 +28,11 @@ public:
 	std::weak_ptr<SceneObjectCAD> CreateBezierCurveC2(std::vector<std::weak_ptr<Point>> controlPoints);
 	std::weak_ptr<SceneObjectCAD> CreateYukselInterpolatingCurveC2(std::vector<std::weak_ptr<Point>> controlPoints);
 
-	std::weak_ptr<SceneObjectCAD> CreateFlatBezierSurfaceC0(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV);
-	std::weak_ptr<SceneObjectCAD> CreateCylinderBezierSurfaceC0(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV);
+	std::weak_ptr<SceneObjectCAD> CreateFlatBezierSurfaceC0(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV, float patchSizeU = 1.0f, float patchSizeV = 1.0f);
+	std::weak_ptr<SceneObjectCAD> CreateCylinderBezierSurfaceC0(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV, float patchSizeU = 1.0f, float patchSizeV = 1.0f);
 
-	std::weak_ptr<SceneObjectCAD> CreateFlatBezierSurfaceC2(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV);
-	std::weak_ptr<SceneObjectCAD> CreateCylinderBezierSurfaceC2(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV);
+	std::weak_ptr<SceneObjectCAD> CreateFlatBezierSurfaceC2(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV, float patchSizeU = 1.0f, float patchSizeV = 1.0f);
+	std::weak_ptr<SceneObjectCAD> CreateCylinderBezierSurfaceC2(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV, float patchSizeU = 1.0f, float patchSizeV = 1.0f);
 
 	std::weak_ptr<SceneObjectCAD> CreateIntersectionCurve(std::weak_ptr<SceneObjectCAD> surface, std::vector<IntersectionPoint> intersectionPoints);
 

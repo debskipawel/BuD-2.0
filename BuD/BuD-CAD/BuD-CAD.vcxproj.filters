@@ -501,6 +501,9 @@
     <ClInclude Include="Applications\CNC\GUI\MillingTool\MillingToolGuiLayerCNC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Applications\CAD\MillingToolGenerator\MillingToolGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Applications\CAD\ApplicationCAD.cpp">
@@ -912,6 +915,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CNC\GUI\MillingTool\MillingToolGuiLayerCNC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\MillingToolGenerator\MillingToolGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

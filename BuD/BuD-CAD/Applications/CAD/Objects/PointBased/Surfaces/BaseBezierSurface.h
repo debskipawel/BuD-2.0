@@ -24,6 +24,6 @@ public:
 	static dxm::Vector3 UNSELECTED_COLOR;
 
 protected:
-	virtual std::vector<std::weak_ptr<Point>> CreateControlPointsForFlatSurface(SceneCAD& scene, dxm::Vector3 position, uint32_t sizeU, uint32_t sizeV) = 0;
-	virtual std::vector<std::weak_ptr<Point>> CreateControlPointsForCylinder(SceneCAD& scene, dxm::Vector3 position, uint32_t sizeU, uint32_t sizeV) = 0;
+	virtual std::vector<std::weak_ptr<Point>> CreateControlPointsForFlatSurface(SceneCAD& scene, dxm::Vector3 position, uint32_t sizeU, uint32_t sizeV, float patchSizeU, float patchSizeV) = 0;
+	virtual std::vector<std::weak_ptr<Point>> CreateControlPointsForCylinder(SceneCAD& scene, dxm::Vector3 position, uint32_t sizeU, uint32_t sizeV, float patchSizeU, float patchSizeV) = 0;
 };
