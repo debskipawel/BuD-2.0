@@ -25,8 +25,12 @@ protected:
 	virtual void DrawFileSettings();
 	virtual void DrawEditSettings();
 	virtual void DrawRendererSettings();
+	virtual void DrawMillingPathsMenu();
+
+	virtual void ResetMillingParametersToDefault();
 
 	virtual void DrawMultiEyeSettingsPopup();
+	virtual void DrawGenerateMillingToolPathsPopup();
 
 	virtual void OpenSaveSceneDialog();
 	virtual void DrawSaveSceneDialog();
@@ -38,4 +42,8 @@ protected:
 	std::vector<RendererModeMenuItem> m_RendererModeMenuItems;
 
 	bool m_MultiEyeSettingsPopupOpen;
+	bool m_GenerateMillingPathsPopupOpen;
+
+	dxm::Vector3 m_MilledMaterialSize;
+	float m_MilledModelPlaneHeight;
 };

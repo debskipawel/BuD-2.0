@@ -9,11 +9,14 @@
 #include <Applications/CAD/Visitors/Serialization/SerializationVisitor.h>
 
 MenuBarGuiLayerCAD::MenuBarGuiLayerCAD(MainDataLayerCAD& dataLayer)
-	: BaseGuiLayerCAD(dataLayer), m_MultiEyeSettingsPopupOpen(false)
+	: BaseGuiLayerCAD(dataLayer), m_MultiEyeSettingsPopupOpen(false), m_GenerateMillingPathsPopupOpen(false)
 {
+    ResetMillingParametersToDefault();
+
     m_MenuItems.emplace_back("File", [this]() { DrawFileSettings(); });
     m_MenuItems.emplace_back("Edit", [this]() { DrawEditSettings(); });
     m_MenuItems.emplace_back("Renderer", [this]() { DrawRendererSettings(); });
+    m_MenuItems.emplace_back("Milling paths", [this]() { DrawMillingPathsMenu(); });
 
     m_RendererModeMenuItems.emplace_back("Standard mode", BuD::RenderingMode::STANDARD);
     m_RendererModeMenuItems.emplace_back("Anaglyph mode", BuD::RenderingMode::ANAGLYPH);
@@ -37,6 +40,7 @@ void MenuBarGuiLayerCAD::DrawGui()
 	}
 
     DrawMultiEyeSettingsPopup();
+    DrawGenerateMillingToolPathsPopup();
     
     DrawSaveSceneDialog();
     DrawLoadSceneDialog();
@@ -126,6 +130,20 @@ void MenuBarGuiLayerCAD::DrawRendererSettings()
     }
 }
 
+void MenuBarGuiLayerCAD::DrawMillingPathsMenu()
+{
+    if (ImGui::MenuItem("Generate milling paths", nullptr, nullptr))
+    {
+        m_GenerateMillingPathsPopupOpen = true;
+    }
+}
+
+void MenuBarGuiLayerCAD::ResetMillingParametersToDefault()
+{
+    m_MilledMaterialSize = dxm::Vector3(15.0f, 5.0f, 15.0f);
+    m_MilledModelPlaneHeight = 1.6f;
+}
+
 void MenuBarGuiLayerCAD::DrawMultiEyeSettingsPopup()
 {
     if (m_MultiEyeSettingsPopupOpen)
@@ -153,9 +171,63 @@ void MenuBarGuiLayerCAD::DrawMultiEyeSettingsPopup()
         auto max = ImGui::GetWindowContentRegionMax();
         auto min = ImGui::GetWindowContentRegionMin();
 
-        if (ImGui::Button("OK", { max.x - min.x, 20 }))
+        auto width = max.x - min.x;
+
+        if (ImGui::Button("OK", { width, 20 }))
         {
             m_MultiEyeSettingsPopupOpen = false;
+            ImGui::CloseCurrentPopup();
+
+            m_MainDataLayer.m_AppStateDataLayer.Unfreeze();
+        }
+
+        ImGui::EndPopup();
+    }
+}
+
+void MenuBarGuiLayerCAD::DrawGenerateMillingToolPathsPopup()
+{
+    if (m_GenerateMillingPathsPopupOpen)
+    {
+        m_MainDataLayer.m_AppStateDataLayer.Freeze();
+
+        ImGui::OpenPopup("###generate_milling_paths");
+    }
+
+    if (ImGui::BeginPopupModal("Generate milling paths ###generate_milling_paths", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoResize))
+    {
+        // TODO: parameters
+        ImGui::Text("Material size");
+        ImGui::DragFloat3("###milling_material_size", reinterpret_cast<float*>(&m_MilledMaterialSize.x), 0.1f, 0.0f, 50.0f, "%.1f", ImGuiSliderFlags_AlwaysClamp);
+
+        ImGui::NewLine();
+
+        ImGui::Text("Material model plane height");
+        ImGui::DragFloat("###milling_model_plane_height", &m_MilledModelPlaneHeight, 0.1f, 0.0f, 10.0f, "%.1f", ImGuiSliderFlags_AlwaysClamp);
+
+        ImGui::Separator();
+
+        auto max = ImGui::GetWindowContentRegionMax();
+        auto min = ImGui::GetWindowContentRegionMin();
+
+        auto width = max.x - min.x;
+        auto innerSpacing = ImGui::GetStyle().ItemInnerSpacing.x;
+
+        auto buttonWidth = (width - 2 * innerSpacing) / 2;
+
+        if (ImGui::Button("OK", { buttonWidth, 20 }))
+        {
+            m_GenerateMillingPathsPopupOpen = false;
+            ImGui::CloseCurrentPopup();
+
+            m_MainDataLayer.m_AppStateDataLayer.Unfreeze();
+        }
+
+        ImGui::SameLine();
+
+        if (ImGui::Button("Cancel", { buttonWidth, 20 }))
+        {
+            m_GenerateMillingPathsPopupOpen = false;
             ImGui::CloseCurrentPopup();
 
             m_MainDataLayer.m_AppStateDataLayer.Unfreeze();
