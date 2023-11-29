@@ -135,6 +135,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GUI\AppStateGuiLayer.cpp" />
+    <ClCompile Include="GUI\RobotParametersGuiLayer.cpp" />
+    <ClCompile Include="GUI\ViewportGuiLayer.cpp" />
     <ClCompile Include="KinematicPathFinderApp.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -150,6 +153,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GUI\AppStateGuiLayer.h" />
+    <ClInclude Include="GUI\RobotParametersGuiLayer.h" />
+    <ClInclude Include="GUI\ViewportGuiLayer.h" />
     <ClInclude Include="KinematicPathFinderApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
