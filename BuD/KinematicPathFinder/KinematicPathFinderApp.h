@@ -2,11 +2,9 @@
 
 #include <BuD.h>
 
-#include <GUI/AppStateGuiLayer.h>
-#include <GUI/RobotParametersGuiLayer.h>
-#include <GUI/ViewportGuiLayer.h>
+#include <GUI/MainGuiLayer.h>
 
-#include <Scene/KinematicPathScene.h>
+#include <DataLayers/MainDataLayer.h>
 
 class KinematicPathFinderApp : public BuD::AppLayer
 {
@@ -18,9 +16,7 @@ public:
 	virtual auto OnRender() -> void override;
 
 protected:
-	KinematicPathScene m_KinematicPathScene;
+	MainDataLayer m_MainDataLayer;
 
-	AppStateGuiLayer m_AppStateGui;
-	RobotParametersGuiLayer m_RobotParametersGui;
-	ViewportGuiLayer m_ViewportGui;
+	MainGuiLayer m_MainGuiLayer;
 };

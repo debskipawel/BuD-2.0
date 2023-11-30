@@ -135,12 +135,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Behaviors\Mouse\MouseBehaviorLayer.cpp" />
+    <ClCompile Include="DataLayers\MainDataLayer.cpp" />
+    <ClCompile Include="DataLayers\SceneDataLayer.cpp" />
+    <ClCompile Include="DataLayers\ViewportDataLayer.cpp" />
     <ClCompile Include="GUI\AppStateGuiLayer.cpp" />
+    <ClCompile Include="GUI\BaseGuiLayer.cpp" />
+    <ClCompile Include="GUI\MainGuiLayer.cpp" />
     <ClCompile Include="GUI\RobotParametersGuiLayer.cpp" />
     <ClCompile Include="GUI\ViewportGuiLayer.cpp" />
     <ClCompile Include="KinematicPathFinderApp.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Scene\KinematicPathScene.cpp" />
     <ClCompile Include="Scene\Obstacle.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,11 +160,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Behaviors\Mouse\MouseBehaviorLayer.h" />
+    <ClInclude Include="DataLayers\MainDataLayer.h" />
+    <ClInclude Include="DataLayers\SceneDataLayer.h" />
+    <ClInclude Include="DataLayers\ViewportDataLayer.h" />
     <ClInclude Include="GUI\AppStateGuiLayer.h" />
+    <ClInclude Include="GUI\BaseGuiLayer.h" />
+    <ClInclude Include="GUI\MainGuiLayer.h" />
     <ClInclude Include="GUI\RobotParametersGuiLayer.h" />
     <ClInclude Include="GUI\ViewportGuiLayer.h" />
     <ClInclude Include="KinematicPathFinderApp.h" />
-    <ClInclude Include="Scene\KinematicPathScene.h" />
     <ClInclude Include="Scene\Obstacle.h" />
   </ItemGroup>
   <ItemGroup>

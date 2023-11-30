@@ -1,9 +1,11 @@
 #pragma once
 
-class AppStateGuiLayer
+#include <GUI/BaseGuiLayer.h>
+
+class AppStateGuiLayer: public BaseGuiLayer
 {
 public:
-	AppStateGuiLayer();
+	AppStateGuiLayer(MainDataLayer& mainDataLayer);
 
-	virtual auto DrawGui() -> void;
+	virtual auto DrawGui() -> void override;
 };

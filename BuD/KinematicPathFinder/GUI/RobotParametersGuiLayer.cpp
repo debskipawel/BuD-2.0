@@ -2,7 +2,8 @@
 
 #include <imgui.h>
 
-RobotParametersGuiLayer::RobotParametersGuiLayer()
+RobotParametersGuiLayer::RobotParametersGuiLayer(MainDataLayer& mainDataLayer)
+	: BaseGuiLayer(mainDataLayer)
 {
 	m_Texture = BuD::Texture::LoadFromFile("Resources/Textures/malysz.jpg");
 }

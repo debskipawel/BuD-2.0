@@ -1,13 +1,12 @@
 #pragma once
 
 #include <BuD.h>
-
 #include <Scene/Obstacle.h>
 
-class KinematicPathScene
+struct SceneDataLayer
 {
 public:
-	KinematicPathScene();
+	SceneDataLayer();
 
 	BuD::Scene m_Scene;
 

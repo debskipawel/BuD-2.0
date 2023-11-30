@@ -1,7 +1,7 @@
 #include "KinematicPathFinderApp.h"
 
 KinematicPathFinderApp::KinematicPathFinderApp()
-	: m_KinematicPathScene(), m_ViewportGui("Viewport"), m_AppStateGui(), m_RobotParametersGui()
+	: m_MainDataLayer(), m_MainGuiLayer(m_MainDataLayer)
 {
 }
 
@@ -12,21 +12,18 @@ auto KinematicPathFinderApp::OnUpdate(float deltaTime) -> void
 
 auto KinematicPathFinderApp::OnGuiRender() -> void
 {
-	m_ViewportGui.DrawGui();
-	m_RobotParametersGui.DrawGui();
-	m_AppStateGui.DrawGui();
+	m_MainGuiLayer.DrawGui();
 }
 
 auto KinematicPathFinderApp::OnRender() -> void
 {
-	auto viewportInfo = m_ViewportGui.GetViewportInfo();
+	auto& viewportDataLayer = m_MainDataLayer.m_ViewportDataLayer;
+	auto& sceneDataLayer = m_MainDataLayer.m_SceneDataLayer;
 
-	BuD::Renderer::BeginTarget(viewportInfo.m_Width, viewportInfo.m_Height);
+	BuD::Renderer::BeginTarget(viewportDataLayer.m_Width, viewportDataLayer.m_Height);
 	BuD::Renderer::Clear(0.2f, 0.5f, 0.6f, 1.0f);
 
-	BuD::Renderer::Render(m_KinematicPathScene.m_Scene);
+	BuD::Renderer::Render(sceneDataLayer.m_Scene);
 
-	auto texture = BuD::Renderer::EndTarget();
-
-	m_ViewportGui.UpdateImage(texture);
+	viewportDataLayer.m_ViewportImage = BuD::Renderer::EndTarget();
 }

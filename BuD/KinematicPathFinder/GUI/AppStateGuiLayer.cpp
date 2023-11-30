@@ -2,7 +2,8 @@
 
 #include <imgui.h>
 
-AppStateGuiLayer::AppStateGuiLayer()
+AppStateGuiLayer::AppStateGuiLayer(MainDataLayer& mainDataLayer)
+	: BaseGuiLayer(mainDataLayer)
 {
 
 }

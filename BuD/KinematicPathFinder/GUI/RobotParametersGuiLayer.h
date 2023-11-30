@@ -1,13 +1,13 @@
 #pragma once
 
-#include <BuD.h>
+#include <GUI/BaseGuiLayer.h>
 
-class RobotParametersGuiLayer
+class RobotParametersGuiLayer : public BaseGuiLayer
 {
 public:
-	RobotParametersGuiLayer();
+	RobotParametersGuiLayer(MainDataLayer& mainDataLayer);
 
-	virtual auto DrawGui() -> void;
+	virtual auto DrawGui() -> void override;
 
 protected:
 	virtual auto DrawParameterSpaceTexture() -> void;

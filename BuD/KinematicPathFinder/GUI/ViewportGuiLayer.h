@@ -1,29 +1,16 @@
 #pragma once
 
-#include <string>
-
-#include <imgui.h>
 #include <BuD.h>
 
-struct ViewportInfo
-{
-	int m_Width;
-	int m_Height;
-};
+#include <GUI/BaseGuiLayer.h>
 
-class ViewportGuiLayer
+class ViewportGuiLayer : public BaseGuiLayer
 {
 public:
-	ViewportGuiLayer(const std::string& viewportTitle);
+	ViewportGuiLayer(const std::string& viewportTitle, MainDataLayer& mainDataLayer);
 
-	virtual void DrawGui();
-	virtual void UpdateImage(const BuD::Texture& texture);
-
-	virtual ViewportInfo GetViewportInfo() const { return m_ViewportInfo; }
+	virtual auto DrawGui() -> void override;
 
 protected:
 	std::string m_ViewportTitle;
-
-	ViewportInfo m_ViewportInfo;
-	BuD::Texture m_ViewportImage;
 };
