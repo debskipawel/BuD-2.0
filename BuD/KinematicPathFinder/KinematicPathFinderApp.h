@@ -6,6 +6,8 @@
 #include <GUI/RobotParametersGuiLayer.h>
 #include <GUI/ViewportGuiLayer.h>
 
+#include <Scene/KinematicPathScene.h>
+
 class KinematicPathFinderApp : public BuD::AppLayer
 {
 public:
@@ -16,6 +18,8 @@ public:
 	virtual auto OnRender() -> void override;
 
 protected:
+	KinematicPathScene m_KinematicPathScene;
+
 	AppStateGuiLayer m_AppStateGui;
 	RobotParametersGuiLayer m_RobotParametersGui;
 	ViewportGuiLayer m_ViewportGui;

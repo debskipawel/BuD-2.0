@@ -30,6 +30,12 @@
     <ClCompile Include="GUI\RobotParametersGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\Obstacle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\KinematicPathScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI\ViewportGuiLayer.h">
@@ -44,5 +50,15 @@
     <ClInclude Include="GUI\RobotParametersGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\Obstacle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\KinematicPathScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Resources\Shaders\Obstacle\obstacle_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\Obstacle\obstacle_ps.hlsl" />
   </ItemGroup>
 </Project>
