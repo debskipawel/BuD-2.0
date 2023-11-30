@@ -1,11 +1,11 @@
 #include "Obstacle.h"
 
-Obstacle::Obstacle(BuD::Scene& scene, const dxm::Vector2& min, const dxm::Vector2& max, const dxm::Vector3& color)
-	: m_RectEntity(scene), m_InstanceData()
+Obstacle::Obstacle(BuD::Scene& scene, const dxm::Vector2& v1, const dxm::Vector2& v2, const dxm::Vector3& color)
+	: m_RectEntity(scene), m_InstanceData(), m_Vertex1(v1), m_Vertex2(v2)
 {
 	m_InstanceData.m_Color = color;
-	m_InstanceData.m_Position = { 0.5f * (max.x + min.x), 0.5f * (max.y + min.y), -0.5f };
-	m_InstanceData.m_Size = max - min;
+
+	UpdateInstanceData();
 
 	auto meshLoader = BuD::MeshLoader();
 	auto quadMesh = meshLoader.LoadPrimitiveMesh(
@@ -49,4 +49,24 @@ Obstacle::Obstacle(BuD::Scene& scene, const dxm::Vector2& min, const dxm::Vector
 	auto renderingPasses = std::vector<BuD::RenderingPass>{ renderingPass };
 
 	m_RectEntity.AddComponent<BuD::IRenderable>(renderingPasses);
+}
+
+auto Obstacle::UpdateFirstVertex(const dxm::Vector2& v) -> void
+{
+	m_Vertex1 = v;
+
+	UpdateInstanceData();
+}
+
+auto Obstacle::UpdateSecondVertex(const dxm::Vector2& v) -> void
+{
+	m_Vertex2 = v;
+
+	UpdateInstanceData();;
+}
+
+auto Obstacle::UpdateInstanceData() -> void
+{
+	m_InstanceData.m_Position = { 0.5f * (m_Vertex1.x + m_Vertex2.x), 0.5f * (m_Vertex1.y + m_Vertex2.y), -0.5f };
+	m_InstanceData.m_Size = { fabsf(m_Vertex1.x - m_Vertex2.x), fabsf(m_Vertex1.y - m_Vertex2.y) };
 }

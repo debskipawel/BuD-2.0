@@ -5,9 +5,14 @@
 class Obstacle
 {
 public:
-	Obstacle(BuD::Scene& scene, const dxm::Vector2& min, const dxm::Vector2& max, const dxm::Vector3& color);
+	Obstacle(BuD::Scene& scene, const dxm::Vector2& v1, const dxm::Vector2& v2, const dxm::Vector3& color);
+
+	virtual auto UpdateFirstVertex(const dxm::Vector2& v) -> void;
+	virtual auto UpdateSecondVertex(const dxm::Vector2& v) -> void;
 
 protected:
+	virtual auto UpdateInstanceData() -> void;
+
 	struct ObstacleInstance
 	{
 		dxm::Vector3 m_Position;
@@ -16,6 +21,8 @@ protected:
 	};
 
 	ObstacleInstance m_InstanceData;
+
+	dxm::Vector2 m_Vertex1, m_Vertex2;
 
 	BuD::SceneEntity m_RectEntity;
 };
