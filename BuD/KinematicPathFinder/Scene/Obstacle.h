@@ -6,6 +6,7 @@ class Obstacle
 {
 public:
 	Obstacle(BuD::Scene& scene, const dxm::Vector2& v1, const dxm::Vector2& v2, const dxm::Vector3& color);
+	virtual ~Obstacle();
 
 	virtual auto UpdateFirstVertex(const dxm::Vector2& v) -> void;
 	virtual auto UpdateSecondVertex(const dxm::Vector2& v) -> void;

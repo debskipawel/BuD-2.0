@@ -52,6 +52,11 @@ Obstacle::Obstacle(BuD::Scene& scene, const dxm::Vector2& v1, const dxm::Vector2
 	m_RectEntity.AddComponent<BuD::IRenderable>(renderingPasses);
 }
 
+Obstacle::~Obstacle()
+{
+	m_RectEntity->DestroyEntity(m_RectEntity);
+}
+
 auto Obstacle::UpdateFirstVertex(const dxm::Vector2& v) -> void
 {
 	m_Vertex1 = v;
