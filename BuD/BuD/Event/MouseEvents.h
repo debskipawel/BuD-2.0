@@ -30,10 +30,11 @@ namespace BuD
 	class MouseMovedEvent : public Event
 	{
 	public:
-		MouseMovedEvent(int xOffset, int yOffset) : m_OffsetX(xOffset), m_OffsetY(yOffset) {}
+		MouseMovedEvent(int x, int y, int xOffset, int yOffset) : m_PosX(x), m_PosY(y), m_OffsetX(xOffset), m_OffsetY(yOffset) {}
 
 		virtual void Visit(IEventDispatchable&) override;
 
+		const int m_PosX, m_PosY;
 		const int m_OffsetX, m_OffsetY;
 	};
 

@@ -13,8 +13,18 @@ void ViewportGuiLayer::DrawGui()
 	{
 		auto& viewportDataLayer = m_MainDataLayer.m_ViewportDataLayer;
 
-		ImVec2 vMin = ImGui::GetWindowContentRegionMin();
-		ImVec2 vMax = ImGui::GetWindowContentRegionMax();
+		auto windowPos = ImGui::GetWindowPos();
+		auto vMin = ImGui::GetWindowContentRegionMin();
+		auto vMax = ImGui::GetWindowContentRegionMax();
+
+		viewportDataLayer.m_ViewportMin = { windowPos.x + vMin.x, windowPos.y + vMin.y };
+		viewportDataLayer.m_ViewportMax = { windowPos.x + vMax.x, windowPos.y + vMax.y };
+
+		viewportDataLayer.m_ViewportMin -= viewportDataLayer.m_WindowPos;
+		viewportDataLayer.m_ViewportMax -= viewportDataLayer.m_WindowPos;
+
+		// DEBUG: draw rect around viewport
+		ImGui::GetForegroundDrawList()->AddRect({ windowPos.x + vMin.x, windowPos.y + vMin.y }, { windowPos.x + vMax.x, windowPos.y + vMax.y }, ImColor(1.0f, 0.0f, 0.0f, 1.0f));
 
 		auto size = ImVec2(vMax.x - vMin.x, vMax.y - vMin.y);
 

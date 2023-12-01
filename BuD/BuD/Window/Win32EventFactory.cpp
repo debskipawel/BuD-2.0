@@ -62,7 +62,7 @@ namespace BuD
 				xPrev = GET_X_LPARAM(lParam);
 				yPrev = GET_Y_LPARAM(lParam);
 
-				return std::make_unique<MouseMovedEvent>(dx, dy);
+				return std::make_unique<MouseMovedEvent>(xPrev, yPrev, dx, dy);
 			}
 			case WM_LBUTTONDOWN:
 			case WM_MBUTTONDOWN:

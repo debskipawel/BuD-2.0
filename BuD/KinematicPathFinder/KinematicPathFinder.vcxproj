@@ -135,7 +135,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Behaviors\Mouse\MouseBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Mouse\BaseMouseBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Mouse\EditingObstacleMouseBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Mouse\MainMouseBehaviorLayer.cpp" />
     <ClCompile Include="DataLayers\MainDataLayer.cpp" />
     <ClCompile Include="DataLayers\SceneDataLayer.cpp" />
     <ClCompile Include="DataLayers\ViewportDataLayer.cpp" />
@@ -160,7 +162,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Behaviors\Mouse\MouseBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Mouse\BaseMouseBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Mouse\EditingObstacleMouseBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h" />
     <ClInclude Include="DataLayers\MainDataLayer.h" />
     <ClInclude Include="DataLayers\SceneDataLayer.h" />
     <ClInclude Include="DataLayers\ViewportDataLayer.h" />

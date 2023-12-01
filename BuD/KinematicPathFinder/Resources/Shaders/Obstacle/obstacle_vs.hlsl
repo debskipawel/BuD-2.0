@@ -1,6 +1,6 @@
 cbuffer mvp : register(b0)
 {
-    matrix projMtx;
+    float aspectRatio;
 }
 
 struct VSInput
@@ -22,9 +22,13 @@ VSOutput main(VSInput i)
 {
     VSOutput o = (VSOutput) 0;
     
-    float3 worldPosition = float3(i.insPosition.xy + 0.5f * i.position.xy * i.insSize, i.insPosition.z);
+    float3 worldPosition = float3(
+        (i.insPosition.x + 0.5f * i.position.x * i.insSize.x) / aspectRatio,
+        (i.insPosition.y + 0.5f * i.position.y * i.insSize.y),
+        0.0f
+    );
     
-    o.position = mul(projMtx, float4(worldPosition, 1.0f));
+    o.position = float4(worldPosition, 1.0f);
     o.color = i.insColor;
     
 	return o;

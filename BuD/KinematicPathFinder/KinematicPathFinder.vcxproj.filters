@@ -33,7 +33,7 @@
     <ClCompile Include="Scene\Obstacle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Behaviors\Mouse\MouseBehaviorLayer.cpp">
+    <ClCompile Include="Behaviors\Mouse\BaseMouseBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DataLayers\SceneDataLayer.cpp">
@@ -49,6 +49,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GUI\MainGuiLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Mouse\EditingObstacleMouseBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Mouse\MainMouseBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,7 +74,7 @@
     <ClInclude Include="Scene\Obstacle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Behaviors\Mouse\MouseBehaviorLayer.h">
+    <ClInclude Include="Behaviors\Mouse\BaseMouseBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DataLayers\MainDataLayer.h">
@@ -84,6 +90,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI\MainGuiLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Mouse\EditingObstacleMouseBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

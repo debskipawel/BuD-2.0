@@ -40,10 +40,11 @@ Obstacle::Obstacle(BuD::Scene& scene, const dxm::Vector2& v1, const dxm::Vector2
 
 	renderingPass.m_PreRenderCallback = [](const BuD::RenderingPass& renderingPass, const BuD::Scene& scene)
 	{
+		auto aspectRatio = BuD::Renderer::AspectRatio();
 		auto projMtx = BuD::Renderer::ProjectionMatrix();
 
 		auto& vs = renderingPass.m_Pipeline.m_VertexShader;
-		vs->UpdateConstantBuffer(0, &projMtx, sizeof(projMtx));
+		vs->UpdateConstantBuffer(0, &aspectRatio, sizeof(float));
 	};
 
 	auto renderingPasses = std::vector<BuD::RenderingPass>{ renderingPass };
