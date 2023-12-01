@@ -135,9 +135,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Mouse\BaseMouseBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Mouse\EditingObstacleMouseBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Mouse\MainMouseBehaviorLayer.cpp" />
+    <ClCompile Include="DataLayers\AppStateDataLayer.cpp" />
     <ClCompile Include="DataLayers\MainDataLayer.cpp" />
     <ClCompile Include="DataLayers\SceneDataLayer.cpp" />
     <ClCompile Include="DataLayers\ViewportDataLayer.cpp" />
@@ -163,9 +166,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\BaseMouseBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\EditingObstacleMouseBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h" />
+    <ClInclude Include="DataLayers\AppStateDataLayer.h" />
     <ClInclude Include="DataLayers\MainDataLayer.h" />
     <ClInclude Include="DataLayers\SceneDataLayer.h" />
     <ClInclude Include="DataLayers\ViewportDataLayer.h" />

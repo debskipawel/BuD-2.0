@@ -60,6 +60,15 @@
     <ClCompile Include="GUI\ObstacleListGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataLayers\AppStateDataLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI\ViewportGuiLayer.h">
@@ -102,6 +111,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI\ObstacleListGuiLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLayers\AppStateDataLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,5 +3,9 @@
 SceneDataLayer::SceneDataLayer()
 	: m_Scene(), m_Obstacles()
 {
-	m_Obstacles.emplace_back(std::make_shared<Obstacle>(m_Scene, dxm::Vector2(-0.5f, -0.2f), dxm::Vector2(0.2f, 0.5f), dxm::Vector3::One));
+}
+
+auto SceneDataLayer::AddNewObstacle(std::shared_ptr<Obstacle> obstacle) -> void
+{
+	m_Obstacles.push_back(obstacle);
 }

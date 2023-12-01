@@ -50,7 +50,6 @@ auto ObstacleListGuiLayer::DrawGui() -> void
 
         if (obstacleToRemove.has_value())
         {
-            // TODO: suspicious flickering - investigate
             obstacleList.erase(obstacleList.begin() + obstacleToRemove.value());
         }
 
