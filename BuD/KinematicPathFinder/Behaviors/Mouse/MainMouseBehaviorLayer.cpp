@@ -1,11 +1,13 @@
 #include "MainMouseBehaviorLayer.h"
 
 #include <Behaviors/Mouse/EditingObstacleMouseBehaviorLayer.h>
+#include <Behaviors/Mouse/RobotConfigurationMouseBehaviorLayer.h>
 
 MainMouseBehaviorLayer::MainMouseBehaviorLayer(MainDataLayer& mainDataLayer)
 	: BaseMouseBehaviorLayer(mainDataLayer)
 {
 	m_BehaviorLayers.emplace_back(std::make_unique<EditingObstacleMouseBehaviorLayer>(m_MainDataLayer));
+	m_BehaviorLayers.emplace_back(std::make_unique<RobotConfigurationMouseBehaviorLayer>(m_MainDataLayer));
 }
 
 auto MainMouseBehaviorLayer::OnLeftButtonDown(int x, int y) -> void
