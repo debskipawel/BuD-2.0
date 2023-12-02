@@ -69,6 +69,9 @@
     <ClCompile Include="DataLayers\AppStateDataLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\RobotArm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI\ViewportGuiLayer.h">
@@ -122,9 +125,14 @@
     <ClInclude Include="DataLayers\AppStateDataLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\RobotArm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Obstacle\obstacle_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\Obstacle\obstacle_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\Robot\robot_arm_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\Robot\robot_arm_ps.hlsl" />
   </ItemGroup>
 </Project>

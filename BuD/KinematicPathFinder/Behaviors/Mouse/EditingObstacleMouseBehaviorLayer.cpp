@@ -70,7 +70,7 @@ auto EditingObstacleMouseBehaviorLayer::HandleAddingObstacle(int x, int y) -> vo
 	auto [xSS, ySS] = viewportDataLayer.MousePositionToScreenSpace(x, y);
 
 	auto rand = BuD::Random();
-	auto randomColor = dxm::Vector3(rand.Next(), rand.Next(), rand.Next());
+	auto randomColor = dxm::Vector3(0.25f + 0.75f * rand.Next(), 0.25f + 0.75f * rand.Next(), 0.25f + 0.75f * rand.Next());
 
 	m_EditedObstacle = std::make_shared<Obstacle>(m_MainDataLayer.m_SceneDataLayer.m_Scene, dxm::Vector2(xSS, ySS), dxm::Vector2(xSS, ySS), randomColor);
 }
