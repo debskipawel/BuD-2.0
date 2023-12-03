@@ -65,80 +65,67 @@ auto SceneDataLayer::UpdateMeshes() -> void
 	auto end2 = m_EndConfiguration.m_P2;
 }
 
+auto SceneDataLayer::IsCollision(const dxm::Vector2& p1, const dxm::Vector2& p2, const Obstacle& obstacle) -> bool
+{
+	auto o = p1;
+	auto d = p2 - p1;
+
+	auto position = obstacle.Position();
+	auto size = obstacle.Size();
+
+	std::array<dxm::Vector2, 4> positions = {};
+	std::array<dxm::Vector2, 4> normals = {};
+	std::array<float, 4> wallLengths = {};
+
+	positions[0] = position + dxm::Vector2(0.0f, size.y * 0.5f);
+	normals[0] = positions[0] - position;
+	wallLengths[0] = size.x;
+
+	positions[1] = position - dxm::Vector2(size.x * 0.5f, 0.0f);
+	normals[1] = positions[1] - position;
+	wallLengths[1] = size.y;
+
+	positions[2] = position - dxm::Vector2(0.0f, size.y * 0.5f);
+	normals[2] = positions[2] - position;
+	wallLengths[2] = size.x;
+
+	positions[3] = position + dxm::Vector2(size.x * 0.5f, 0.0f);
+	normals[3] = positions[3] - position;
+	wallLengths[3] = size.y;
+
+	for (auto i = 0; i < positions.size(); ++i)
+	{
+		auto denominator1 = d.Dot(normals[i]);
+
+		if (fabsf(denominator1) > 1e-4f)
+		{
+			auto numerator1 = normals[i].Dot(positions[i] - o);
+			auto t = numerator1 / denominator1;
+
+			if (t >= 0.0f && t <= 1.0f)
+			{
+				auto p = o + t * d;
+				auto diff = positions[i] - p;
+				auto maxDist = wallLengths[i] * 0.5f;
+
+				if (diff.LengthSquared() < maxDist * maxDist)
+				{
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
 auto SceneDataLayer::IsCollision(const dxm::Vector2& p0, const dxm::Vector2& p1, const dxm::Vector2& p2) -> bool
 {
-	auto o1 = p0;
-	auto d1 = p1 - p0;
-
-	auto o2 = p1;
-	auto d2 = p2 - p1;
-
 	for (auto& obstacle : m_Obstacles)
 	{
-		auto position = obstacle->Position();
-		auto size = obstacle->Size();
-
-		std::array<dxm::Vector2, 4> positions = {};
-		std::array<dxm::Vector2, 4> normals = {};
-		std::array<float, 4> wallLengths = {};
-
-		positions[0] = position + dxm::Vector2(0.0f, size.y * 0.5f);
-		normals[0] = positions[0] - position;
-		wallLengths[0] = size.x;
-
-		positions[1] = position - dxm::Vector2(size.x * 0.5f, 0.0f);
-		normals[1] = positions[1] - position;
-		wallLengths[1] = size.y;
-
-		positions[2] = position - dxm::Vector2(0.0f, size.y * 0.5f);
-		normals[2] = positions[2] - position;
-		wallLengths[2] = size.x;
-
-		positions[3] = position + dxm::Vector2(size.x * 0.5f, 0.0f);
-		normals[3] = positions[3] - position;
-		wallLengths[3] = size.y;
-
-		for (auto i = 0; i < positions.size(); ++i)
+		if (IsCollision(p0, p1, *obstacle) || IsCollision(p1, p2, *obstacle))
 		{
-			auto denominator1 = d1.Dot(normals[i]);
-
-			if (fabsf(denominator1) > 1e-4f)
-			{
-				auto numerator1 = normals[i].Dot(positions[i] - o1);
-				auto t = numerator1 / denominator1;
-
-				if (t >= 0.0f && t <= 1.0f)
-				{
-					auto p = o1 + t * d1;
-					auto diff = positions[i] - p;
-					auto maxDist = wallLengths[i] * 0.5f;
-
-					if (diff.LengthSquared() < maxDist * maxDist)
-					{
-						return true;
-					}
-				}
-			}
-
-			auto denominator2 = d2.Dot(normals[i]);
-
-			if (fabsf(denominator2) > 1e-4f)
-			{
-				auto numerator2 = normals[i].Dot(positions[i] - o2);
-				auto t = numerator2 / denominator2;
-
-				if (t >= 0.0f && t <= 1.0f)
-				{
-					auto p = o2 + t * d2;
-					auto diff = positions[i] - p;
-					auto maxDist = wallLengths[i] * 0.5f;
-
-					if (diff.LengthSquared() < maxDist * maxDist)
-					{
-						return true;
-					}
-				}
-			}
+			return true;
 		}
 	}
 

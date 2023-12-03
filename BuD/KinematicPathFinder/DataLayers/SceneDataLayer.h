@@ -29,5 +29,6 @@ public:
 	std::vector<std::shared_ptr<Obstacle>> m_Obstacles;
 
 protected:
+	virtual auto IsCollision(const dxm::Vector2& p1, const dxm::Vector2& p2, const Obstacle& obstacle) -> bool;
 	virtual auto IsCollision(const dxm::Vector2& p0, const dxm::Vector2& p1, const dxm::Vector2& p2) -> bool;
 };
