@@ -16,6 +16,4 @@ protected:
 	virtual auto DrawEndPointOptionsComboBox() -> void;
 	
 	virtual auto DrawParameterSpaceTexture() -> void;
-
-	BuD::Texture m_Texture;
 };

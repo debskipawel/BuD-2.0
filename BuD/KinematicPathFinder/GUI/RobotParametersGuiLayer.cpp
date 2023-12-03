@@ -7,7 +7,6 @@
 RobotParametersGuiLayer::RobotParametersGuiLayer(MainDataLayer& mainDataLayer)
 	: BaseGuiLayer(mainDataLayer)
 {
-	m_Texture = BuD::Texture::LoadFromFile("Resources/Textures/malysz.jpg");
 }
 
 auto RobotParametersGuiLayer::DrawGui() -> void
@@ -125,5 +124,8 @@ auto RobotParametersGuiLayer::DrawParameterSpaceTexture() -> void
 	}
 
 	ImGui::Separator();
-	ImGui::Image(m_Texture.SRV(), imageSize);
+	
+	const auto& angleParameterImage = m_MainDataLayer.m_SceneDataLayer.m_AngleParameterMap;
+	
+	ImGui::Image(angleParameterImage.SRV(), imageSize);
 }

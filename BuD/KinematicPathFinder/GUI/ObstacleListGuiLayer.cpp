@@ -50,7 +50,7 @@ auto ObstacleListGuiLayer::DrawGui() -> void
 
         if (obstacleToRemove.has_value())
         {
-            obstacleList.erase(obstacleList.begin() + obstacleToRemove.value());
+            m_MainDataLayer.m_SceneDataLayer.RemoveObstacle(obstacleToRemove.value());
         }
 
         ImGui::End();
