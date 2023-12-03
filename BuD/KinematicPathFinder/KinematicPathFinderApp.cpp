@@ -21,7 +21,7 @@ auto KinematicPathFinderApp::OnRender() -> void
 	auto& sceneDataLayer = m_MainDataLayer.m_SceneDataLayer;
 
 	BuD::Renderer::BeginTarget(viewportDataLayer.m_Width, viewportDataLayer.m_Height);
-	BuD::Renderer::Clear(0.2f, 0.5f, 0.6f, 1.0f);
+	BuD::Renderer::Clear(0.0f, 0.0f, 0.0f, 1.0f);
 
 	BuD::Renderer::Render(sceneDataLayer.m_Scene);
 
