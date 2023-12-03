@@ -14,6 +14,8 @@ auto RobotParametersGuiLayer::DrawGui() -> void
 {
 	if (ImGui::Begin("Parameters"))
 	{
+		DrawGuiForLengthSliders();
+
 		DrawStartPointOptionsComboBox();
 		DrawEndPointOptionsComboBox();
 
@@ -21,6 +23,20 @@ auto RobotParametersGuiLayer::DrawGui() -> void
 
 		ImGui::End();
 	}
+}
+
+auto RobotParametersGuiLayer::DrawGuiForLengthSliders() -> void
+{
+	auto L1 = m_MainDataLayer.m_SceneDataLayer.m_StartConfiguration.GetLength1();
+	auto L2 = m_MainDataLayer.m_SceneDataLayer.m_StartConfiguration.GetLength2();
+
+	if (ImGui::DragFloat("L1###l1_edit", &L1, 0.05f, 1.0f, 0.01f, "%.1f", ImGuiSliderFlags_AlwaysClamp) ||
+		ImGui::DragFloat("L2###l2_edit", &L2, 0.05f, 1.0f, 0.01f, "%.1f", ImGuiSliderFlags_AlwaysClamp))
+	{
+		m_MainDataLayer.m_SceneDataLayer.UpdateConfigurationLength(L1, L2);
+	}
+
+	ImGui::Separator();
 }
 
 auto RobotParametersGuiLayer::DrawStartPointOptionsComboBox() -> void

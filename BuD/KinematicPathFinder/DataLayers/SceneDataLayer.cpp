@@ -18,6 +18,9 @@ SceneDataLayer::SceneDataLayer()
 auto SceneDataLayer::AddNewObstacle(std::shared_ptr<Obstacle> obstacle) -> void
 {
 	m_Obstacles.push_back(obstacle);
+
+	UpdateStartConfigurationPoints(m_StartConfiguration.m_P0, m_StartConfiguration.m_P2);
+	UpdateEndConfigurationPoints(m_EndConfiguration.m_P0, m_EndConfiguration.m_P2);
 }
 
 auto SceneDataLayer::UpdateStartConfigurationPoints(const dxm::Vector2& p0, const dxm::Vector2& p2) -> void
@@ -52,6 +55,17 @@ auto SceneDataLayer::UpdateEndConfigurationPoints(const dxm::Vector2& p0, const 
 
 auto SceneDataLayer::UpdateConfigurationLength(float L1, float L2) -> void
 {
+	m_StartConfiguration.m_L1 = L1;
+	m_StartConfiguration.m_L2 = L2;
+	
+	m_StartConfiguration.UpdateConfiguration(m_StartConfiguration.m_P0, m_StartConfiguration.m_P2);
+
+	m_EndConfiguration.m_L1 = L1;
+	m_EndConfiguration.m_L2 = L2;
+
+	m_EndConfiguration.UpdateConfiguration(m_EndConfiguration.m_P0, m_EndConfiguration.m_P2);
+
+	UpdateMeshes();
 }
 
 auto SceneDataLayer::UpdateMeshes() -> void

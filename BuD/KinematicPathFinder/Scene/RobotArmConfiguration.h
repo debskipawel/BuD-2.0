@@ -9,8 +9,8 @@ public:
 
 	virtual auto UpdateConfiguration(const dxm::Vector2& p0, const dxm::Vector2& p2) -> void;
 
-	constexpr inline virtual auto GetLength1() const -> size_t { return m_L1; }
-	constexpr inline virtual auto GetLength2() const -> size_t { return m_L2; }
+	constexpr inline virtual auto GetLength1() const -> float { return m_L1; }
+	constexpr inline virtual auto GetLength2() const -> float { return m_L2; }
 
 	std::vector<dxm::Vector2> m_PointOptions;
 	size_t m_PointOptionIndex;

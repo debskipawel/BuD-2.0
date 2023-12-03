@@ -48,6 +48,7 @@ auto RobotArmConfiguration::SolveInverseKinematic() -> void
 	auto x2 = (p2.x * (m_L1 * m_L1 - m_L2 * m_L2 + p2.x * p2.x + p2.y * p2.y) + sqrtDelta) / (2.0f * (p2.x * p2.x + p2.y * p2.y));
 	auto y2 = (m_L1 * m_L1 * p2.y * p2.y + p2.y * p2.y * (p2.x * p2.x + p2.y * p2.y - m_L2 * m_L2) - p2.x * sqrtDelta) / (2.0f * p2.y * (p2.x * p2.x + p2.y * p2.y));
 
+	m_PointOptionIndex = m_PointOptions.size() > 1 ? m_PointOptionIndex : 0;
+
 	m_PointOptions = { { x1 + m_P0.x, y1 + m_P0.y }, { x2 + m_P0.x, y2 + m_P0.y } };
-	m_PointOptionIndex = 0;
 }

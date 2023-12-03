@@ -10,6 +10,8 @@ public:
 	virtual auto DrawGui() -> void override;
 
 protected:
+	virtual auto DrawGuiForLengthSliders() -> void;
+
 	virtual auto DrawStartPointOptionsComboBox() -> void;
 	virtual auto DrawEndPointOptionsComboBox() -> void;
 	
