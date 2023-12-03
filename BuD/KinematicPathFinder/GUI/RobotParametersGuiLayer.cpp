@@ -1,5 +1,7 @@
 #include "RobotParametersGuiLayer.h"
 
+#include <ranges>
+
 #include <imgui.h>
 
 RobotParametersGuiLayer::RobotParametersGuiLayer(MainDataLayer& mainDataLayer)
@@ -12,10 +14,81 @@ auto RobotParametersGuiLayer::DrawGui() -> void
 {
 	if (ImGui::Begin("Parameters"))
 	{
+		DrawStartPointOptionsComboBox();
+		DrawEndPointOptionsComboBox();
+
 		DrawParameterSpaceTexture();
 
 		ImGui::End();
 	}
+}
+
+auto RobotParametersGuiLayer::DrawStartPointOptionsComboBox() -> void
+{
+	auto& sceneDataLayer = m_MainDataLayer.m_SceneDataLayer;
+	auto& startPointOptions = sceneDataLayer.m_StartConfiguration.m_PointOptions;
+
+	if (startPointOptions.size() <= 1)
+	{
+		return;
+	}
+
+	auto previewValue = std::format("{}", sceneDataLayer.m_StartConfiguration.m_PointOptionIndex + 1);
+
+	ImGui::Text("Start option");
+
+	if (ImGui::BeginCombo("###start_combo_box", previewValue.c_str()))
+	{
+		for (int i = 0; i < startPointOptions.size(); ++i)
+		{
+			auto label = std::format("{}", i + 1);
+			auto selected = (sceneDataLayer.m_StartConfiguration.m_PointOptionIndex == i);
+
+			if (ImGui::Selectable(label.c_str(), &selected))
+			{
+				sceneDataLayer.m_StartConfiguration.m_PointOptionIndex = i;
+				sceneDataLayer.UpdateMeshes();
+			}
+		}
+
+		ImGui::EndCombo();
+	}
+
+	ImGui::Separator();
+}
+
+auto RobotParametersGuiLayer::DrawEndPointOptionsComboBox() -> void
+{
+	auto& sceneDataLayer = m_MainDataLayer.m_SceneDataLayer;
+	auto& endPointOptions = sceneDataLayer.m_EndConfiguration.m_PointOptions;
+
+	if (endPointOptions.size() <= 1)
+	{
+		return;
+	}
+
+	auto previewValue = std::format("{}", sceneDataLayer.m_EndConfiguration.m_PointOptionIndex + 1);
+
+	ImGui::Text("End option");
+
+	if (ImGui::BeginCombo("###end_combo_box", previewValue.c_str()))
+	{
+		for (int i = 0; i < endPointOptions.size(); ++i)
+		{
+			auto label = std::format("{}", i + 1);
+			auto selected = (sceneDataLayer.m_EndConfiguration.m_PointOptionIndex == i);
+
+			if (ImGui::Selectable(label.c_str(), &selected))
+			{
+				sceneDataLayer.m_EndConfiguration.m_PointOptionIndex = i;
+				sceneDataLayer.UpdateMeshes();
+			}
+		}
+
+		ImGui::EndCombo();
+	}
+
+	ImGui::Separator();
 }
 
 auto RobotParametersGuiLayer::DrawParameterSpaceTexture() -> void

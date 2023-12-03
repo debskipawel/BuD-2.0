@@ -10,6 +10,9 @@ public:
 	virtual auto DrawGui() -> void override;
 
 protected:
+	virtual auto DrawStartPointOptionsComboBox() -> void;
+	virtual auto DrawEndPointOptionsComboBox() -> void;
+	
 	virtual auto DrawParameterSpaceTexture() -> void;
 
 	BuD::Texture m_Texture;
