@@ -26,6 +26,9 @@ public:
 	RobotArmConfiguration m_EndConfiguration;
 
 	std::unique_ptr<RobotArm> m_RobotArm;
+	std::unique_ptr<RobotArm> m_StartRobotArm;
+	std::unique_ptr<RobotArm> m_EndRobotArm;
+
 	std::vector<std::shared_ptr<Obstacle>> m_Obstacles;
 
 protected:

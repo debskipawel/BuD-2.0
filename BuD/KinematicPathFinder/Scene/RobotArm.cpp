@@ -1,17 +1,21 @@
 #include "RobotArm.h"
 
-RobotArm::RobotArm(BuD::Scene& scene, const dxm::Vector2& p0, const dxm::Vector2& p1, const dxm::Vector2& p2)
-	: m_RobotArmEntity(scene)
+RobotArm::RobotArm(BuD::Scene& scene, const dxm::Vector2& p0, const dxm::Vector2& p1, const dxm::Vector2& p2, float depth, const dxm::Vector3& color)
+	: m_Depth(depth), m_RobotArmEntity(scene)
 {
+	m_InstanceData[0].m_Color = color;
+	m_InstanceData[1].m_Color = color;
+
 	UpdateRobotPoints(p0, p1, p2);
 
 	auto meshLoader = BuD::MeshLoader();
 	auto quadMesh = meshLoader.LoadPrimitiveMesh(
 		BuD::MeshPrimitiveType::QUAD,
 		{
-			{ "INS_POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 1, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 			{ "INS_ORIENTATION", 0, DXGI_FORMAT_R32G32_FLOAT, 1, sizeof(InstanceData::m_Position), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 			{ "INS_LENGTH", 0, DXGI_FORMAT_R32_FLOAT, 1, sizeof(InstanceData::m_Position) + sizeof(InstanceData::m_Orientation), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, sizeof(InstanceData::m_Position) + sizeof(InstanceData::m_Orientation) + sizeof(InstanceData::m_Length), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 		}
 	);
 
@@ -50,8 +54,11 @@ RobotArm::RobotArm(BuD::Scene& scene, const dxm::Vector2& p0, const dxm::Vector2
 
 auto RobotArm::UpdateRobotPoints(const dxm::Vector2& p0, const dxm::Vector2& p1, const dxm::Vector2& p2) -> void
 {
-	m_InstanceData[0].m_Position = 0.5f * (p0 + p1);
-	m_InstanceData[1].m_Position = 0.5f * (p1 + p2);
+	auto midPoint1 = 0.5f * (p0 + p1);
+	auto midPoint2 = 0.5f * (p1 + p2);
+
+	m_InstanceData[0].m_Position = { midPoint1.x, midPoint1.y, m_Depth };
+	m_InstanceData[1].m_Position = { midPoint2.x, midPoint2.y, m_Depth };
 	
 	auto orientation1 = p1 - p0;
 	auto orientation2 = p2 - p1;

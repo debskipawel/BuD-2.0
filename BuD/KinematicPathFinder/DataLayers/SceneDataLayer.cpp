@@ -10,7 +10,9 @@ SceneDataLayer::SceneDataLayer()
 	auto P1 = P0 + START_L1 * dxm::Vector2::UnitX;
 	auto P2 = P1 + START_L2 * dxm::Vector2::UnitY;
 
-	m_RobotArm = std::make_unique<RobotArm>(m_Scene, P0, P1, P2);
+	m_RobotArm = std::make_unique<RobotArm>(m_Scene, P0, P1, P2, 0.0f, dxm::Vector3::One);
+	m_StartRobotArm = std::make_unique<RobotArm>(m_Scene, P0, P1, P2, 0.1f, 0.4f * dxm::Vector3::One);
+	m_EndRobotArm = std::make_unique<RobotArm>(m_Scene, P0, P1, P2, 0.1f, 0.4f * dxm::Vector3::One);
 }
 
 auto SceneDataLayer::AddNewObstacle(std::shared_ptr<Obstacle> obstacle) -> void
@@ -58,11 +60,13 @@ auto SceneDataLayer::UpdateMeshes() -> void
 	auto start1 = m_StartConfiguration.m_PointOptions.empty() ? dxm::Vector2(NAN) : m_StartConfiguration.m_PointOptions[m_StartConfiguration.m_PointOptionIndex];
 	auto start2 = m_StartConfiguration.m_P2;
 
-	m_RobotArm->UpdateRobotPoints(start0, start1, start2);
+	m_StartRobotArm->UpdateRobotPoints(start0, start1, start2);
 
 	auto end0 = m_EndConfiguration.m_P0;
 	auto end1 = m_EndConfiguration.m_PointOptions.empty() ? dxm::Vector2(NAN) : m_EndConfiguration.m_PointOptions[m_EndConfiguration.m_PointOptionIndex];
 	auto end2 = m_EndConfiguration.m_P2;
+
+	m_EndRobotArm->UpdateRobotPoints(end0, end1, end2);
 }
 
 auto SceneDataLayer::IsCollision(const dxm::Vector2& p1, const dxm::Vector2& p2, const Obstacle& obstacle) -> bool
