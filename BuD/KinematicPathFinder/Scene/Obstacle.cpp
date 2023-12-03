@@ -71,6 +71,16 @@ auto Obstacle::UpdateSecondVertex(const dxm::Vector2& v) -> void
 	UpdateInstanceData();;
 }
 
+auto Obstacle::Position() const -> dxm::Vector2
+{
+	return { m_InstanceData.m_Position.x, m_InstanceData.m_Position.y };
+}
+
+auto Obstacle::Size() const -> dxm::Vector2
+{
+	return m_InstanceData.m_Size;
+}
+
 auto Obstacle::Color() -> dxm::Vector3&
 {
 	return m_InstanceData.m_Color;

@@ -75,6 +75,9 @@
     <ClCompile Include="Behaviors\Mouse\RobotConfigurationMouseBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\RobotArmConfiguration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI\ViewportGuiLayer.h">
@@ -132,6 +135,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Behaviors\Mouse\RobotConfigurationMouseBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\RobotArmConfiguration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

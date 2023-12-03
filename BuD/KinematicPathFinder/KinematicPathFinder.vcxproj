@@ -155,6 +155,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene\Obstacle.cpp" />
     <ClCompile Include="Scene\RobotArm.cpp" />
+    <ClCompile Include="Scene\RobotArmConfiguration.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuD\BuD.vcxproj">
@@ -187,6 +188,7 @@
     <ClInclude Include="KinematicPathFinderApp.h" />
     <ClInclude Include="Scene\RobotArm.h" />
     <ClInclude Include="Scene\Obstacle.h" />
+    <ClInclude Include="Scene\RobotArmConfiguration.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Obstacle\obstacle_ps.hlsl">

@@ -11,6 +11,9 @@ public:
 	virtual auto UpdateFirstVertex(const dxm::Vector2& v) -> void;
 	virtual auto UpdateSecondVertex(const dxm::Vector2& v) -> void;
 
+	virtual auto Position() const -> dxm::Vector2;
+	virtual auto Size() const -> dxm::Vector2;
+
 	virtual auto Color() -> dxm::Vector3&;
 
 protected:
