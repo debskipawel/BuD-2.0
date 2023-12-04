@@ -9,7 +9,6 @@ AppStateGuiLayer::AppStateGuiLayer(MainDataLayer& mainDataLayer)
 	m_ButtonMap.emplace(AppState::EDIT_START, AppStateButton{ BuD::Texture::LoadFromFile("Resources/Sprites/start-edit.png"), "Edit Start Configuration" });
 	m_ButtonMap.emplace(AppState::EDIT_END, AppStateButton{ BuD::Texture::LoadFromFile("Resources/Sprites/end-edit.png"), "Edit End Configuration" });
 	m_ButtonMap.emplace(AppState::ADD_OBSTACLE, AppStateButton{ BuD::Texture::LoadFromFile("Resources/Sprites/obstacle-edit.png"), "Add Obstacles" });
-	m_ButtonMap.emplace(AppState::ANIMATION_RUNNING, AppStateButton{ BuD::Texture::LoadFromFile("Resources/Sprites/play_icon.png"), "Run Animation", [this]() { StartAnimation(); } });
 }
 
 auto AppStateGuiLayer::DrawGui() -> void
@@ -48,9 +47,4 @@ auto AppStateGuiLayer::DrawGui() -> void
 
 		ImGui::End();
 	}
-}
-
-auto AppStateGuiLayer::StartAnimation() -> void
-{
-	auto path = m_MainDataLayer.m_SceneDataLayer.FindPathFromStartingConfiguration();
 }

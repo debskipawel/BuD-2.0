@@ -10,8 +10,6 @@ public:
 	virtual auto DrawGui() -> void override;
 
 protected:
-	virtual auto StartAnimation() -> void;
-
 	struct AppStateButton
 	{
 		BuD::Texture m_ButtonIcon;
