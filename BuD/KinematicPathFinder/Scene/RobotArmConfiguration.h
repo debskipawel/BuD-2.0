@@ -7,7 +7,7 @@ struct RobotArmConfiguration
 public:
 	RobotArmConfiguration(float L1, float L2);
 
-	virtual auto UpdateConfiguration(const dxm::Vector2& p0, const dxm::Vector2& p2) -> void;
+	virtual auto UpdateConfiguration(const dxm::Vector2& p0, const dxm::Vector2& p2, float L1, float L2) -> void;
 
 	virtual auto Valid() const -> bool;
 
@@ -15,16 +15,11 @@ public:
 	virtual auto GetP1() const -> dxm::Vector2;
 	virtual auto GetP2() const -> dxm::Vector2;
 
-	constexpr inline virtual auto GetLength1() const -> float { return m_L1; }
-	constexpr inline virtual auto GetLength2() const -> float { return m_L2; }
-
-	float m_L1, m_L2;
-
 	std::vector<dxm::Vector2> m_PointOptions;
 	size_t m_PointOptionIndex;
 
 protected:
-	virtual auto SolveInverseKinematic() -> void;
+	virtual auto SolveInverseKinematic(float L1, float L2) -> void;
 
 	dxm::Vector2 m_P0, m_P2;
 };

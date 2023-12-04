@@ -26,11 +26,11 @@ auto RobotParametersGuiLayer::DrawGui() -> void
 
 auto RobotParametersGuiLayer::DrawGuiForLengthSliders() -> void
 {
-	auto L1 = m_MainDataLayer.m_SceneDataLayer.m_StartConfiguration.GetLength1();
-	auto L2 = m_MainDataLayer.m_SceneDataLayer.m_StartConfiguration.GetLength2();
+	auto L1 = m_MainDataLayer.m_SceneDataLayer.GetLength1();
+	auto L2 = m_MainDataLayer.m_SceneDataLayer.GetLength2();
 
-	if (ImGui::DragFloat("L1###l1_edit", &L1, 0.05f, 1.0f, 0.01f, "%.1f", ImGuiSliderFlags_AlwaysClamp) ||
-		ImGui::DragFloat("L2###l2_edit", &L2, 0.05f, 1.0f, 0.01f, "%.1f", ImGuiSliderFlags_AlwaysClamp))
+	if (ImGui::DragFloat("L1###l1_edit", &L1, 0.05f, 1.0f, 0.01f, "%.2f", ImGuiSliderFlags_AlwaysClamp) ||
+		ImGui::DragFloat("L2###l2_edit", &L2, 0.05f, 1.0f, 0.01f, "%.2f", ImGuiSliderFlags_AlwaysClamp))
 	{
 		m_MainDataLayer.m_SceneDataLayer.UpdateConfigurationLength(L1, L2);
 	}
@@ -62,6 +62,7 @@ auto RobotParametersGuiLayer::DrawStartPointOptionsComboBox() -> void
 			if (ImGui::Selectable(label.c_str(), &selected))
 			{
 				sceneDataLayer.m_StartConfiguration.m_PointOptionIndex = i;
+
 				sceneDataLayer.UpdateMeshes();
 			}
 		}
@@ -96,6 +97,9 @@ auto RobotParametersGuiLayer::DrawEndPointOptionsComboBox() -> void
 			if (ImGui::Selectable(label.c_str(), &selected))
 			{
 				sceneDataLayer.m_EndConfiguration.m_PointOptionIndex = i;
+				
+				sceneDataLayer.RecalculateRobotAngleParameterSpace();
+				sceneDataLayer.RecalculateRobotPathsInParameterSpace();
 				sceneDataLayer.UpdateMeshes();
 			}
 		}

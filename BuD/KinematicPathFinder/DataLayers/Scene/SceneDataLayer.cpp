@@ -10,15 +10,15 @@ constexpr auto START_L1 = 0.4f;
 constexpr auto START_L2 = 0.25f;
 
 SceneDataLayer::SceneDataLayer()
-	: m_Scene(), m_ObstacleCollection(m_Scene), m_StartConfiguration(START_L1, START_L2), m_EndConfiguration(START_L1, START_L2), m_AngleParameterMap(360, 360)
+	: m_Scene(), m_Length1(START_L1), m_Length2(START_L2), m_ObstacleCollection(m_Scene), m_StartConfiguration(START_L1, START_L2), m_EndConfiguration(START_L1, START_L2), m_AngleParameterMap(360, 360)
 {
 	auto P0 = dxm::Vector2::Zero;
 	auto P1 = P0 + START_L1 * dxm::Vector2::UnitX;
 	auto P2 = P1 + START_L2 * dxm::Vector2::UnitY;
 
 	m_RobotArm = std::make_unique<RobotArm>(m_Scene, P0, P1, P2, 0.0f, dxm::Vector3::One);
-	m_StartRobotArm = std::make_unique<RobotArm>(m_Scene, P0, P1, P2, 0.1f, 0.4f * dxm::Vector3::One);
-	m_EndRobotArm = std::make_unique<RobotArm>(m_Scene, P0, P1, P2, 0.1f, 0.4f * dxm::Vector3::One);
+	m_StartRobotArm = std::make_unique<RobotArm>(m_Scene, P0, P1, P2, 0.1f, 0.25f * dxm::Vector3::One);
+	m_EndRobotArm = std::make_unique<RobotArm>(m_Scene, P0, P1, P2, 0.1f, 0.25f * dxm::Vector3::One);
 
 	UpdateMeshes();
 	RecalculateRobotAngleParameterSpace();
@@ -38,7 +38,7 @@ auto SceneDataLayer::AddNewObstacle() -> void
 
 auto SceneDataLayer::UpdateStartConfigurationPoints(const dxm::Vector2& p0, const dxm::Vector2& p2) -> void
 {
-	m_StartConfiguration.UpdateConfiguration(p0, p2);
+	m_StartConfiguration.UpdateConfiguration(p0, p2, m_Length1, m_Length2);
 
 	auto& pointOptions = m_StartConfiguration.m_PointOptions;
 
@@ -58,7 +58,7 @@ auto SceneDataLayer::UpdateStartConfigurationPoints(const dxm::Vector2& p0, cons
 
 auto SceneDataLayer::UpdateEndConfigurationPoints(const dxm::Vector2& p0, const dxm::Vector2& p2) -> void
 {
-	m_EndConfiguration.UpdateConfiguration(p0, p2);
+	m_EndConfiguration.UpdateConfiguration(p0, p2, m_Length1, m_Length2);
 
 	auto& pointOptions = m_EndConfiguration.m_PointOptions;
 
@@ -78,13 +78,7 @@ auto SceneDataLayer::UpdateEndConfigurationPoints(const dxm::Vector2& p0, const 
 
 auto SceneDataLayer::UpdateConfigurationLength(float L1, float L2) -> void
 {
-	m_StartConfiguration.m_L1 = L1;
-	m_StartConfiguration.m_L2 = L2;
-	
 	UpdateStartConfigurationPoints(m_StartConfiguration.GetP0(), m_StartConfiguration.GetP2());
-
-	m_EndConfiguration.m_L1 = L1;
-	m_EndConfiguration.m_L2 = L2;
 
 	UpdateEndConfigurationPoints(m_EndConfiguration.GetP0(), m_EndConfiguration.GetP2());
 
@@ -151,8 +145,8 @@ auto SceneDataLayer::RecalculateRobotAngleParameterSpace() -> void
 
 	parameterSpaceDrawer.DrawRobotParameterSpace(
 		m_StartConfiguration.GetP0(), 
-		m_StartConfiguration.GetLength1(), 
-		m_StartConfiguration.GetLength2(), 
+		m_Length1, 
+		m_Length2,
 		m_AngleParameterMap
 	);
 }

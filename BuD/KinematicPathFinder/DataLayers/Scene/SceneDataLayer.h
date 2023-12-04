@@ -36,14 +36,21 @@ public:
 	RobotArmConfiguration m_StartConfiguration;
 	RobotArmConfiguration m_EndConfiguration;
 
-	std::unique_ptr<RobotArm> m_RobotArm;
-	std::unique_ptr<RobotArm> m_StartRobotArm;
-	std::unique_ptr<RobotArm> m_EndRobotArm;
-
 protected:
 	virtual auto PointInParameterSpace(const RobotArmConfiguration& configuration) -> std::pair<int, int>;
 
 	virtual auto IsCollision(const dxm::Vector2& p0, const dxm::Vector2& p1, const dxm::Vector2& p2) -> bool;
 
+	float m_Length1;
+	float m_Length2;
+
+	std::unique_ptr<RobotArm> m_RobotArm;
+	std::unique_ptr<RobotArm> m_StartRobotArm;
+	std::unique_ptr<RobotArm> m_EndRobotArm;
+
 	std::map<std::pair<int, int>, VectorFieldPoint> m_ParameterSpacePathMap;
+
+public:
+	constexpr inline virtual auto GetLength1() const noexcept -> decltype(m_Length1) { return m_Length1; }
+	constexpr inline virtual auto GetLength2() const noexcept -> decltype(m_Length2) { return m_Length2; }
 };
