@@ -21,6 +21,9 @@ public:
 
 	virtual auto UpdateMeshes() -> void;
 
+	virtual auto RecalculateRobotPathsInParameterSpace() -> void;
+	virtual auto FindPathFromStartingConfiguration() -> std::vector<std::pair<int, int>>;
+
 	BuD::Scene m_Scene;
 
 	BuD::EditableTexture m_AngleParameterMap;
@@ -35,10 +38,14 @@ public:
 	std::vector<std::shared_ptr<Obstacle>> m_Obstacles;
 
 protected:
+	virtual auto PointInParameterSpace(const RobotArmConfiguration& configuration) -> std::pair<int, int>;
+
 	virtual auto GetCollidingObstacle(const dxm::Vector2& p1, const dxm::Vector2& p2) -> std::shared_ptr<Obstacle>;
 	
 	virtual auto IsCollision(const dxm::Vector2& p1, const dxm::Vector2& p2, const Obstacle& obstacle) -> bool;
 	virtual auto IsCollision(const dxm::Vector2& p0, const dxm::Vector2& p1, const dxm::Vector2& p2) -> bool;
 
 	virtual auto UpdateAngleParameterMap() -> void;
+
+	std::unordered_map<int, std::pair<size_t, std::pair<int, int>>> m_ParameterSpacePathMap;
 };

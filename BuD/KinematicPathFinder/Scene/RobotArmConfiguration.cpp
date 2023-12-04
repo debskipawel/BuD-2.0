@@ -14,6 +14,11 @@ auto RobotArmConfiguration::UpdateConfiguration(const dxm::Vector2& p0, const dx
 	SolveInverseKinematic();
 }
 
+auto RobotArmConfiguration::Valid() const -> bool
+{
+	return !m_PointOptions.empty();
+}
+
 auto RobotArmConfiguration::SolveInverseKinematic() -> void
 {
 	auto p0 = dxm::Vector2(0.0f, 0.0f);

@@ -9,6 +9,8 @@ public:
 
 	virtual auto UpdateConfiguration(const dxm::Vector2& p0, const dxm::Vector2& p2) -> void;
 
+	virtual auto Valid() const -> bool;
+
 	constexpr inline virtual auto GetLength1() const -> float { return m_L1; }
 	constexpr inline virtual auto GetLength2() const -> float { return m_L2; }
 

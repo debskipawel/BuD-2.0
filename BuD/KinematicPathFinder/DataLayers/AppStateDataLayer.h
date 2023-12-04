@@ -5,7 +5,7 @@ enum class AppState : unsigned int
 	EDIT_START,
 	EDIT_END,
 	ADD_OBSTACLE, 
-	SIMULATION_RUNNING
+	ANIMATION_RUNNING
 };
 
 struct AppStateDataLayer
