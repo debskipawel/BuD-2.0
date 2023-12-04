@@ -14,6 +14,4 @@ public:
 
 protected:
 	virtual auto HandleAddingObstacle(int x, int y) -> void;
-
-	std::shared_ptr<Obstacle> m_EditedObstacle;
 };

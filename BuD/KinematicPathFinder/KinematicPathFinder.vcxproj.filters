@@ -36,7 +36,7 @@
     <ClCompile Include="Behaviors\Mouse\BaseMouseBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataLayers\SceneDataLayer.cpp">
+    <ClCompile Include="DataLayers\Scene\SceneDataLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DataLayers\MainDataLayer.cpp">
@@ -78,6 +78,18 @@
     <ClCompile Include="Scene\RobotArmConfiguration.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DataLayers\Scene\ObstacleCollection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataLayers\Scene\RobotParameterSpaceDrawer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataLayers\Scene\CollisionDetector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataLayers\Scene\RobotParameterSpaceVectorFieldCalculator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI\ViewportGuiLayer.h">
@@ -101,7 +113,7 @@
     <ClInclude Include="DataLayers\MainDataLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataLayers\SceneDataLayer.h">
+    <ClInclude Include="DataLayers\Scene\SceneDataLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DataLayers\ViewportDataLayer.h">
@@ -138,6 +150,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene\RobotArmConfiguration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLayers\Scene\ObstacleCollection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLayers\Scene\RobotParameterSpaceDrawer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLayers\Scene\CollisionDetector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLayers\Scene\RobotParameterSpaceVectorFieldCalculator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

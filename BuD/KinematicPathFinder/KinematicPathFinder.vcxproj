@@ -143,7 +143,11 @@
     <ClCompile Include="Behaviors\Mouse\RobotConfigurationMouseBehaviorLayer.cpp" />
     <ClCompile Include="DataLayers\AppStateDataLayer.cpp" />
     <ClCompile Include="DataLayers\MainDataLayer.cpp" />
-    <ClCompile Include="DataLayers\SceneDataLayer.cpp" />
+    <ClCompile Include="DataLayers\Scene\CollisionDetector.cpp" />
+    <ClCompile Include="DataLayers\Scene\ObstacleCollection.cpp" />
+    <ClCompile Include="DataLayers\Scene\RobotParameterSpaceDrawer.cpp" />
+    <ClCompile Include="DataLayers\Scene\RobotParameterSpaceVectorFieldCalculator.cpp" />
+    <ClCompile Include="DataLayers\Scene\SceneDataLayer.cpp" />
     <ClCompile Include="DataLayers\ViewportDataLayer.cpp" />
     <ClCompile Include="GUI\AppStateGuiLayer.cpp" />
     <ClCompile Include="GUI\BaseGuiLayer.cpp" />
@@ -177,7 +181,11 @@
     <ClInclude Include="Behaviors\Mouse\RobotConfigurationMouseBehaviorLayer.h" />
     <ClInclude Include="DataLayers\AppStateDataLayer.h" />
     <ClInclude Include="DataLayers\MainDataLayer.h" />
-    <ClInclude Include="DataLayers\SceneDataLayer.h" />
+    <ClInclude Include="DataLayers\Scene\CollisionDetector.h" />
+    <ClInclude Include="DataLayers\Scene\ObstacleCollection.h" />
+    <ClInclude Include="DataLayers\Scene\RobotParameterSpaceDrawer.h" />
+    <ClInclude Include="DataLayers\Scene\RobotParameterSpaceVectorFieldCalculator.h" />
+    <ClInclude Include="DataLayers\Scene\SceneDataLayer.h" />
     <ClInclude Include="DataLayers\ViewportDataLayer.h" />
     <ClInclude Include="GUI\AppStateGuiLayer.h" />
     <ClInclude Include="GUI\BaseGuiLayer.h" />

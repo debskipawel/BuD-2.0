@@ -41,7 +41,7 @@ auto RobotConfigurationMouseBehaviorLayer::EditStartRobotConfiguration(int x, in
 
 	auto& sceneDataLayer = m_MainDataLayer.m_SceneDataLayer;
 
-	sceneDataLayer.UpdateStartConfigurationPoints(m_MainDataLayer.m_SceneDataLayer.m_EndConfiguration.m_P0, { xSS, ySS });
+	sceneDataLayer.UpdateStartConfigurationPoints(m_MainDataLayer.m_SceneDataLayer.m_StartConfiguration.GetP0(), {xSS, ySS});
 }
 
 auto RobotConfigurationMouseBehaviorLayer::EditEndRobotConfiguration(int x, int y) -> void
@@ -50,5 +50,5 @@ auto RobotConfigurationMouseBehaviorLayer::EditEndRobotConfiguration(int x, int 
 
 	auto& sceneDataLayer = m_MainDataLayer.m_SceneDataLayer;
 
-	sceneDataLayer.UpdateEndConfigurationPoints(m_MainDataLayer.m_SceneDataLayer.m_EndConfiguration.m_P0, { xSS, ySS });
+	sceneDataLayer.UpdateEndConfigurationPoints(m_MainDataLayer.m_SceneDataLayer.m_EndConfiguration.GetP0(), {xSS, ySS});
 }

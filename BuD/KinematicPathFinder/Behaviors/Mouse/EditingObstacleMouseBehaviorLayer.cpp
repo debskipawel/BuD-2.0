@@ -29,38 +29,32 @@ auto EditingObstacleMouseBehaviorLayer::OnLeftButtonUp(int x, int y) -> void
 		return;
 	}
 
-	if (m_EditedObstacle)
+	if (appStateDataLayer.m_AppState == AppState::ADD_OBSTACLE)
 	{
-		if (appStateDataLayer.m_AppState == AppState::ADD_OBSTACLE)
-		{
-			m_MainDataLayer.m_SceneDataLayer.AddNewObstacle(m_EditedObstacle);
-		}
-
-		m_EditedObstacle = std::shared_ptr<Obstacle>();
+		m_MainDataLayer.m_SceneDataLayer.AddNewObstacle();
 	}
 }
 
 auto EditingObstacleMouseBehaviorLayer::OnMouseMove(int x, int y) -> void
 {
-	auto& appStateDataLayer = m_MainDataLayer.m_AppStateDataLayer;
 	auto& viewportDataLayer = m_MainDataLayer.m_ViewportDataLayer;
+	auto& sceneDataLayer = m_MainDataLayer.m_SceneDataLayer;
 
 	if (!viewportDataLayer.IsMouseOnViewport(x, y))
 	{
 		return;
 	}
 
-	if (m_EditedObstacle)
-	{
-		auto [xSS, ySS] = viewportDataLayer.MousePositionToScreenSpace(x, y);
+	auto& obstacles = sceneDataLayer.m_ObstacleCollection;
 
-		m_EditedObstacle->UpdateSecondVertex({ xSS, ySS });
-	}
+	auto [xSS, ySS] = viewportDataLayer.MousePositionToScreenSpace(x, y);
+	obstacles.ModifyNewObstacle({ xSS, ySS });
 }
 
 auto EditingObstacleMouseBehaviorLayer::HandleAddingObstacle(int x, int y) -> void
 {
 	auto& viewportDataLayer = m_MainDataLayer.m_ViewportDataLayer;
+	auto& sceneDataLayer = m_MainDataLayer.m_SceneDataLayer;
 
 	if (!viewportDataLayer.IsMouseOnViewport(x, y))
 	{
@@ -69,8 +63,6 @@ auto EditingObstacleMouseBehaviorLayer::HandleAddingObstacle(int x, int y) -> vo
 
 	auto [xSS, ySS] = viewportDataLayer.MousePositionToScreenSpace(x, y);
 
-	auto rand = BuD::Random();
-	auto randomColor = dxm::Vector3(0.25f + 0.75f * rand.Next(), 0.25f + 0.75f * rand.Next(), 0.25f + 0.75f * rand.Next());
-
-	m_EditedObstacle = std::make_shared<Obstacle>(m_MainDataLayer.m_SceneDataLayer.m_Scene, dxm::Vector2(xSS, ySS), dxm::Vector2(xSS, ySS), randomColor);
+	auto& obstacles = sceneDataLayer.m_ObstacleCollection;
+	obstacles.CreateNewObstacle({ xSS, ySS }, { xSS, ySS });
 }

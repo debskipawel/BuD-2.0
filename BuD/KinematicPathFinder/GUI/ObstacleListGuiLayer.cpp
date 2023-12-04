@@ -12,7 +12,8 @@ auto ObstacleListGuiLayer::DrawGui() -> void
 {
     if (ImGui::Begin("Obstacle list"))
     {
-        auto& obstacleList = m_MainDataLayer.m_SceneDataLayer.m_Obstacles;
+        auto& obstacles = m_MainDataLayer.m_SceneDataLayer.m_ObstacleCollection;
+        const auto& obstacleList = obstacles.GetAll();
 
         auto idx = 0;
         std::optional<int> obstacleToRemove = std::nullopt;
@@ -50,7 +51,7 @@ auto ObstacleListGuiLayer::DrawGui() -> void
 
         if (obstacleToRemove.has_value())
         {
-            m_MainDataLayer.m_SceneDataLayer.RemoveObstacle(obstacleToRemove.value());
+            obstacles.RemoveObstacle(obstacleToRemove.value());
         }
 
         ImGui::End();

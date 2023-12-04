@@ -19,6 +19,21 @@ auto RobotArmConfiguration::Valid() const -> bool
 	return !m_PointOptions.empty();
 }
 
+auto RobotArmConfiguration::GetP0() const -> dxm::Vector2
+{
+	return m_P0;
+}
+
+auto RobotArmConfiguration::GetP1() const -> dxm::Vector2
+{
+	return m_PointOptions.empty() ? dxm::Vector2(NAN) : m_PointOptions[m_PointOptionIndex];
+}
+
+auto RobotArmConfiguration::GetP2() const -> dxm::Vector2
+{
+	return m_P2;
+}
+
 auto RobotArmConfiguration::SolveInverseKinematic() -> void
 {
 	auto p0 = dxm::Vector2(0.0f, 0.0f);
