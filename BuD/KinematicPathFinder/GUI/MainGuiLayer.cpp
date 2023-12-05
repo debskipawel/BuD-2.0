@@ -6,6 +6,7 @@
 #include <GUI/RobotParametersGuiLayer.h>
 #include <GUI/ViewportGuiLayer.h>
 #include <GUI/ObstacleListGuiLayer.h>
+#include <GUI/SimulationParametersGuiLayer.h>
 
 MainGuiLayer::MainGuiLayer(MainDataLayer& mainDataLayer)
 	: BaseGuiLayer(mainDataLayer), m_GuiLayers()
@@ -13,6 +14,7 @@ MainGuiLayer::MainGuiLayer(MainDataLayer& mainDataLayer)
 	m_GuiLayers.emplace_back(std::make_unique<AppStateGuiLayer>(m_MainDataLayer));
 	m_GuiLayers.emplace_back(std::make_unique<RobotParametersGuiLayer>(m_MainDataLayer));
 	m_GuiLayers.emplace_back(std::make_unique<ObstacleListGuiLayer>(m_MainDataLayer));
+	m_GuiLayers.emplace_back(std::make_unique<SimulationParametersGuiLayer>(m_MainDataLayer));
 	m_GuiLayers.emplace_back(std::make_unique<ViewportGuiLayer>("Viewport", m_MainDataLayer));
 }
 

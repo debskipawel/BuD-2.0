@@ -10,12 +10,14 @@ public:
 	virtual auto DrawGui() -> void override;
 
 protected:
+	virtual auto RunSimulation() -> bool;
+
 	struct AppStateButton
 	{
 		BuD::Texture m_ButtonIcon;
 		std::string m_TooltipLabel;
 
-		std::function<void()> m_OnClick = []() {};
+		std::function<bool()> m_OnClick = []() { return true; };
 	};
 
 	std::map<AppState, AppStateButton> m_ButtonMap;

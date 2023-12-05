@@ -92,6 +92,7 @@ auto SceneDataLayer::UpdateMeshes() -> void
 	auto start1 = m_StartConfiguration.GetP1();
 	auto start2 = m_StartConfiguration.GetP2();
 
+	m_RobotArm->UpdateRobotPoints(start0, start1, start2);
 	m_StartRobotArm->UpdateRobotPoints(start0, start1, start2);
 
 	auto end0 = m_EndConfiguration.GetP0();
@@ -99,6 +100,21 @@ auto SceneDataLayer::UpdateMeshes() -> void
 	auto end2 = m_EndConfiguration.GetP2();
 
 	m_EndRobotArm->UpdateRobotPoints(end0, end1, end2);
+}
+
+auto SceneDataLayer::UpdateMeshes(std::pair<float, float> currentConfiguration) -> void
+{
+	UpdateMeshes();
+
+	auto gamma = currentConfiguration.first * std::numbers::pi_v<float> / 180.0f;
+	auto alpha = currentConfiguration.second * std::numbers::pi_v<float> / 180.0f;
+	auto beta = gamma + alpha - std::numbers::pi_v<float>;
+
+	auto p0 = m_StartConfiguration.GetP0();
+	auto p1 = p0 + dxm::Vector2(m_Length1 * cosf(alpha), m_Length1 * sinf(alpha));
+	auto p2 = p1 + dxm::Vector2(m_Length2 * cosf(beta), m_Length2 * sinf(beta));
+
+	m_RobotArm->UpdateRobotPoints(p0, p1, p2);
 }
 
 auto SceneDataLayer::FindPathFromStartingConfiguration() -> std::vector<std::pair<int, int>>
@@ -174,10 +190,10 @@ auto SceneDataLayer::PointInParameterSpace(const RobotArmConfiguration& configur
 	auto d2 = p2 - p1;
 
 	auto alpha = atan2f(d1.y, d1.x);
-	alpha = (alpha < 0.0f) ? alpha + 2.0f * std::numbers::inv_pi_v<float> : alpha;
+	alpha = (alpha < 0.0f) ? alpha + 2.0f * std::numbers::pi_v<float> : alpha;
 	
 	auto beta = atan2f(d2.y, d2.x);
-	beta = (beta < 0.0f) ? beta + + 2.0f * std::numbers::inv_pi_v<float> : beta;
+	beta = (beta < 0.0f) ? beta + + 2.0f * std::numbers::pi_v<float> : beta;
 
 	auto gamma = beta - alpha + std::numbers::pi_v<float>;
 

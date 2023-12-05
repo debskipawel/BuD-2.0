@@ -22,6 +22,7 @@ public:
 	virtual auto UpdateConfigurationLength(float L1, float L2) -> void;
 
 	virtual auto UpdateMeshes() -> void;
+	virtual auto UpdateMeshes(std::pair<float, float> currentConfiguration) -> void;
 
 	virtual auto RecalculateRobotAngleParameterSpace() -> void;
 	virtual auto RecalculateRobotPathsInParameterSpace() -> void;

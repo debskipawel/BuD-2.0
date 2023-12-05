@@ -9,6 +9,15 @@ AppStateGuiLayer::AppStateGuiLayer(MainDataLayer& mainDataLayer)
 	m_ButtonMap.emplace(AppState::EDIT_START, AppStateButton{ BuD::Texture::LoadFromFile("Resources/Sprites/start-edit.png"), "Edit Start Configuration" });
 	m_ButtonMap.emplace(AppState::EDIT_END, AppStateButton{ BuD::Texture::LoadFromFile("Resources/Sprites/end-edit.png"), "Edit End Configuration" });
 	m_ButtonMap.emplace(AppState::ADD_OBSTACLE, AppStateButton{ BuD::Texture::LoadFromFile("Resources/Sprites/obstacle-edit.png"), "Add Obstacles" });
+	m_ButtonMap.emplace(
+		AppState::ANIMATION_RUNNING, 
+		AppStateButton
+		{ 
+			BuD::Texture::LoadFromFile("Resources/Sprites/play_icon.png"), 
+			"Play Animation", 
+			[this]() { return RunSimulation(); } 
+		}
+	);
 }
 
 auto AppStateGuiLayer::DrawGui() -> void
@@ -23,15 +32,17 @@ auto AppStateGuiLayer::DrawGui() -> void
 		for (auto& [state, buttonDesc] : m_ButtonMap)
 		{
 			auto selected = appState == state;
+			auto disabled = selected || (appState == AppState::ANIMATION_RUNNING);
 
 			ImGui::PushStyleColor(ImGuiCol_Button, selected ? selectedColor : normalColor);
-			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, selected);
+			ImGui::PushItemFlag(ImGuiItemFlags_Disabled, disabled);
 
 			if (ImGui::ImageButton(buttonDesc.m_ButtonIcon.SRV(), { 32, 32 }, { 0, 0 }, { 1, 1 }, -1))
 			{
-				m_MainDataLayer.m_AppStateDataLayer.m_AppState = state;
-
-				buttonDesc.m_OnClick();
+				if (buttonDesc.m_OnClick())
+				{
+					m_MainDataLayer.m_AppStateDataLayer.m_AppState = state;
+				}
 			}
 
 			ImGui::PopStyleColor();
@@ -47,4 +58,20 @@ auto AppStateGuiLayer::DrawGui() -> void
 
 		ImGui::End();
 	}
+}
+
+auto AppStateGuiLayer::RunSimulation() -> bool
+{
+	auto& sceneDataLayer = m_MainDataLayer.m_SceneDataLayer;
+
+	if (!sceneDataLayer.m_StartConfiguration.Valid() || !sceneDataLayer.m_EndConfiguration.Valid())
+	{
+		return false;
+	}
+
+	auto path = sceneDataLayer.FindPathFromStartingConfiguration();
+
+	m_MainDataLayer.m_SimulationDataLayer.StartSimulation(path);
+
+	return true;
 }

@@ -7,7 +7,7 @@ KinematicPathFinderApp::KinematicPathFinderApp()
 
 auto KinematicPathFinderApp::OnUpdate(float deltaTime) -> void
 {
-	return;
+	m_MainDataLayer.Update(deltaTime);
 }
 
 auto KinematicPathFinderApp::OnGuiRender() -> void
