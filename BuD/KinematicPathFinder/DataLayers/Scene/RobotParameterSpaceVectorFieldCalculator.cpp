@@ -1,6 +1,6 @@
 #include "RobotParameterSpaceVectorFieldCalculator.h"
 
-auto RobotParameterSpaceVectorFieldCalculator::CalculateVectorField(BuD::EditableTexture& parameterSpaceMap, std::pair<int, int> targetConfiguration) -> std::map<std::pair<int, int>, VectorFieldPoint>
+auto RobotParameterSpaceVectorFieldCalculator::CalculateVectorField(BuD::EditableTexture& parameterSpaceMap, std::pair<int, int> targetConfiguration) -> RobotParameterVectorField
 {
 	parameterSpaceMap.BeginEdit();
 
@@ -12,7 +12,7 @@ auto RobotParameterSpaceVectorFieldCalculator::CalculateVectorField(BuD::Editabl
 	auto [xEnd, yEnd] = targetConfiguration;
 
 	auto pointsQueue = std::queue<std::pair<int, int>>();
-	auto distanceMap = std::map<std::pair<int, int>, VectorFieldPoint>();
+	auto distanceMap = RobotParameterVectorField(width);
 
 	distanceMap[{ xEnd, yEnd }] = { 0U, { 0, 0 } };
 	pointsQueue.emplace(xEnd, yEnd);
@@ -22,7 +22,7 @@ auto RobotParameterSpaceVectorFieldCalculator::CalculateVectorField(BuD::Editabl
 		auto [x, y] = pointsQueue.front();
 		pointsQueue.pop();
 
-		const auto& [distance, _] = distanceMap.at({ x, y });
+		const auto& [distance, _] = distanceMap.Get({ x, y });
 
 		auto neighbours = std::array<std::pair<int, int>, 8> 
 		{ 
@@ -52,14 +52,14 @@ auto RobotParameterSpaceVectorFieldCalculator::CalculateVectorField(BuD::Editabl
 
 			auto color = parameterSpaceMap.Sample(xn, yn);
 
-			if (color != dxm::Vector4(0.0f, 0.0f, 0.0f, 1.0f) || distanceMap.contains({ xn, yn }))
+			if (color != dxm::Vector4(0.0f, 0.0f, 0.0f, 1.0f) || distanceMap.Contains({ xn, yn }))
 			{
 				continue;
 			}
 
-			if (distanceMap.contains({ xn, yn }))
+			if (distanceMap.Contains({ xn, yn }))
 			{
-				auto& [prevDistance, _] = distanceMap.at({ xn, yn });
+				auto& [prevDistance, _] = distanceMap.Get({ xn, yn });
 
 				if (prevDistance > distance + 1)
 				{

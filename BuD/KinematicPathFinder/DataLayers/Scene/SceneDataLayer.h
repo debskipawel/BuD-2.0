@@ -49,7 +49,7 @@ protected:
 	std::unique_ptr<RobotArm> m_StartRobotArm;
 	std::unique_ptr<RobotArm> m_EndRobotArm;
 
-	std::map<std::pair<int, int>, VectorFieldPoint> m_ParameterSpacePathMap;
+	RobotParameterVectorField m_ParameterSpacePathMap;
 
 public:
 	constexpr inline virtual auto GetLength1() const noexcept -> decltype(m_Length1) { return m_Length1; }

@@ -147,6 +147,7 @@
     <ClCompile Include="DataLayers\Scene\ObstacleCollection.cpp" />
     <ClCompile Include="DataLayers\Scene\RobotParameterSpaceDrawer.cpp" />
     <ClCompile Include="DataLayers\Scene\RobotParameterSpaceVectorFieldCalculator.cpp" />
+    <ClCompile Include="DataLayers\Scene\RobotParameterVectorField.cpp" />
     <ClCompile Include="DataLayers\Scene\SceneDataLayer.cpp" />
     <ClCompile Include="DataLayers\SimulationDataLayer.cpp" />
     <ClCompile Include="DataLayers\ViewportDataLayer.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="DataLayers\Scene\RobotParameterSpaceDrawer.h" />
     <ClInclude Include="DataLayers\Scene\RobotParameterSpaceVectorFieldCalculator.h" />
     <ClInclude Include="DataLayers\Scene\SceneDataLayer.h" />
+    <ClInclude Include="DataLayers\Scene\RobotParameterVectorField.h" />
     <ClInclude Include="DataLayers\SimulationDataLayer.h" />
     <ClInclude Include="DataLayers\ViewportDataLayer.h" />
     <ClInclude Include="GUI\AppStateGuiLayer.h" />

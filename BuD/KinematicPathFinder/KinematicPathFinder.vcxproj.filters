@@ -96,6 +96,9 @@
     <ClCompile Include="GUI\SimulationParametersGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DataLayers\Scene\RobotParameterVectorField.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI\ViewportGuiLayer.h">
@@ -174,6 +177,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI\SimulationParametersGuiLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLayers\Scene\RobotParameterVectorField.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

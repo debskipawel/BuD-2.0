@@ -10,7 +10,10 @@ constexpr auto START_L1 = 0.4f;
 constexpr auto START_L2 = 0.25f;
 
 SceneDataLayer::SceneDataLayer()
-	: m_Scene(), m_Length1(START_L1), m_Length2(START_L2), m_ObstacleCollection(m_Scene), m_StartConfiguration(START_L1, START_L2), m_EndConfiguration(START_L1, START_L2), m_AngleParameterMap(360, 360)
+	: m_Scene(), m_ObstacleCollection(m_Scene),
+	  m_Length1(START_L1), m_Length2(START_L2),
+	  m_StartConfiguration(START_L1, START_L2), m_EndConfiguration(START_L1, START_L2),
+	  m_AngleParameterMap(360, 360), m_ParameterSpacePathMap(360)
 {
 	auto P0 = dxm::Vector2::Zero;
 	auto P1 = P0 + START_L1 * dxm::Vector2::UnitX;
@@ -128,7 +131,7 @@ auto SceneDataLayer::FindPathFromStartingConfiguration() -> std::vector<std::pai
 
 	auto startingPoint = PointInParameterSpace(m_StartConfiguration);
 
-	if (!m_ParameterSpacePathMap.contains(startingPoint))
+	if (!m_ParameterSpacePathMap.Contains(startingPoint))
 	{
 		return path;
 	}
@@ -137,7 +140,7 @@ auto SceneDataLayer::FindPathFromStartingConfiguration() -> std::vector<std::pai
 
 	while (true)
 	{
-		auto pathResult = m_ParameterSpacePathMap.at(point);
+		auto pathResult = m_ParameterSpacePathMap.Get(point);
 
 		auto distance = pathResult.m_Distance;
 		auto direction = pathResult.m_Direction;
