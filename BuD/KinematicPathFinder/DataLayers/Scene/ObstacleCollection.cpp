@@ -8,7 +8,7 @@ ObstacleCollection::ObstacleCollection(BuD::Scene& scene)
 auto ObstacleCollection::CreateNewObstacle(const dxm::Vector2& v1, const dxm::Vector2& v2) -> std::shared_ptr<Obstacle>
 {
     auto rand = BuD::Random();
-    auto randomColor = dxm::Vector3(0.25f + 0.75f * rand.Next(), 0.25f + 0.75f * rand.Next(), 0.25f + 0.75f * rand.Next());
+    auto randomColor = dxm::Vector3(0.25f * rand.Next(), 0.25f + 0.75f * rand.Next(), 0.25f + 0.75f * rand.Next());
 
     m_NewObstacle = std::make_shared<Obstacle>(m_Scene, v1, v2, randomColor);
 

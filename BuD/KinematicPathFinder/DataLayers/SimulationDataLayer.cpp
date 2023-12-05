@@ -28,8 +28,8 @@ auto SimulationDataLayer::Update(float deltaTime) -> void
 		auto& current = m_Path[m_CurrentIndex];
 		auto& next = m_Path[m_CurrentIndex + 1];
 
-		auto currentProgress = std::make_pair(m_CurrentConfiguration.first - current.first, m_CurrentConfiguration.second - current.second);
-		auto difference = std::make_pair(next.first - current.first, next.second - current.second);
+		auto difference = GetShortestAngleDifference(current, next);
+		auto currentProgress = GetShortestAngleDifference(current, m_CurrentConfiguration);
 
 		auto t = max(fabsf(currentProgress.first), fabsf(currentProgress.second)) / max(fabsf(difference.first), fabsf(difference.second));
 
