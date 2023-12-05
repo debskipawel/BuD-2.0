@@ -190,15 +190,25 @@ auto SceneDataLayer::PointInParameterSpace(const RobotArmConfiguration& configur
 	auto d2 = p2 - p1;
 
 	auto alpha = atan2f(d1.y, d1.x);
+	
+	// mapping from [-pi, pi] to [0, 2pi]
 	alpha = (alpha < 0.0f) ? alpha + 2.0f * std::numbers::pi_v<float> : alpha;
 	
 	auto beta = atan2f(d2.y, d2.x);
-	beta = (beta < 0.0f) ? beta + + 2.0f * std::numbers::pi_v<float> : beta;
 
+	// mapping from [-pi, pi] to [0, 2pi]
+	beta = (beta < 0.0f) ? beta + 2.0f * std::numbers::pi_v<float> : beta;
+
+	// in this case would be [-pi, 3pi], needs to be wrapped
 	auto gamma = beta - alpha + std::numbers::pi_v<float>;
 
-	auto y = static_cast<int>(roundf(0.5f * static_cast<float>(m_AngleParameterMap.Height()) * alpha * std::numbers::inv_pi_v<float>));
-	auto x = static_cast<int>(roundf(0.5f * static_cast<float>(m_AngleParameterMap.Width())  * gamma * std::numbers::inv_pi_v<float>));
+	// [0, 3pi]
+	gamma = (gamma < 0.0f) ? gamma + 2.0f * std::numbers::pi_v<float> : gamma;
+	// [0, 2pi]
+	gamma = (gamma < 2.0f * std::numbers::pi_v<float>) ? gamma : gamma - 2.0f * std::numbers::pi_v<float>;
+
+	auto y = static_cast<int>(roundf(0.5f * alpha * std::numbers::inv_pi_v<float> * static_cast<float>(m_AngleParameterMap.Height())));
+	auto x = static_cast<int>(roundf(0.5f * gamma * std::numbers::inv_pi_v<float> * static_cast<float>(m_AngleParameterMap.Width())));
 
 	return { x, y };
 }
