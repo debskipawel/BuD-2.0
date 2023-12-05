@@ -26,6 +26,11 @@ auto RobotParametersGuiLayer::DrawGui() -> void
 
 auto RobotParametersGuiLayer::DrawGuiForLengthSliders() -> void
 {
+	if (m_MainDataLayer.m_AppStateDataLayer.m_AppState == AppState::ANIMATION_RUNNING)
+	{
+		return;
+	}
+
 	auto L1 = m_MainDataLayer.m_SceneDataLayer.GetLength1();
 	auto L2 = m_MainDataLayer.m_SceneDataLayer.GetLength2();
 
@@ -40,6 +45,11 @@ auto RobotParametersGuiLayer::DrawGuiForLengthSliders() -> void
 
 auto RobotParametersGuiLayer::DrawStartPointOptionsComboBox() -> void
 {
+	if (m_MainDataLayer.m_AppStateDataLayer.m_AppState == AppState::ANIMATION_RUNNING)
+	{
+		return;
+	}
+
 	auto& sceneDataLayer = m_MainDataLayer.m_SceneDataLayer;
 	auto& startPointOptions = sceneDataLayer.m_StartConfiguration.m_PointOptions;
 
@@ -75,6 +85,11 @@ auto RobotParametersGuiLayer::DrawStartPointOptionsComboBox() -> void
 
 auto RobotParametersGuiLayer::DrawEndPointOptionsComboBox() -> void
 {
+	if (m_MainDataLayer.m_AppStateDataLayer.m_AppState == AppState::ANIMATION_RUNNING)
+	{
+		return;
+	}
+
 	auto& sceneDataLayer = m_MainDataLayer.m_SceneDataLayer;
 	auto& endPointOptions = sceneDataLayer.m_EndConfiguration.m_PointOptions;
 

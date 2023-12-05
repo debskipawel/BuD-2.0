@@ -24,7 +24,11 @@ auto RobotParameterSpaceVectorFieldCalculator::CalculateVectorField(BuD::Editabl
 
 		const auto& [distance, _] = distanceMap.at({ x, y });
 
-		auto neighbours = std::array<std::pair<int, int>, 4> { std::make_pair(x, y + 1), std::make_pair(x - 1, y), std::make_pair(x, y - 1), std::make_pair(x + 1, y) };
+		auto neighbours = std::array<std::pair<int, int>, 8> 
+		{ 
+			std::make_pair(x, y + 1), std::make_pair(x - 1, y), std::make_pair(x, y - 1), std::make_pair(x + 1, y),
+			std::make_pair(x - 1, y + 1), std::make_pair(x - 1, y + 1), std::make_pair(x + 1, y - 1), std::make_pair(x + 1, y + 1),
+		};
 
 		for (auto& [xn, yn] : neighbours)
 		{
