@@ -2,22 +2,30 @@
 
 #include <Applications/CAD/Visitors/Validation/IntersectionEligibilityValidationVisitor.h>
 
+#include <Applications/CAD/Path/Generator/RoughSphericalPathGenerator.h>
+#include <Applications/CAD/Path/Generator/StandFlatToolPathGenerator.h>
+#include <Applications/CAD/Path/Generator/DetailSphericalPathGenerator.h>
+
 MillingToolGenerator::MillingToolGenerator(SceneCAD& scene, const MaterialBlockDetails& materialBlockDetails)
 	: m_Scene(scene), m_MaterialBlockDetails(materialBlockDetails)
 {
 }
 
-auto MillingToolGenerator::GeneratePaths() -> void
+auto MillingToolGenerator::GeneratePaths() -> std::vector<std::pair<std::string, MillingToolPath>>
 {
 	auto modelSurfaces = GetSurfacesOnScene();
 
-	auto planePosition = dxm::Vector3::Zero + m_MaterialBlockDetails.m_StandHeight * dxm::Vector3::UnitY;
-	auto planeWidth = m_MaterialBlockDetails.m_Size.x;
-	auto planeLength = m_MaterialBlockDetails.m_Size.z;
+	std::unique_ptr<AbstractPathGenerator> roughToolGenerator = std::make_unique<RoughSphericalPathGenerator>(m_Scene, modelSurfaces);
+	std::unique_ptr<AbstractPathGenerator> standToolGenerator = std::make_unique<StandFlatToolPathGenerator>(m_Scene, modelSurfaces);
+	std::unique_ptr<AbstractPathGenerator> detailToolGenerator = std::make_unique<DetailSphericalPathGenerator>(m_Scene, modelSurfaces);
 
-	auto materialPlane = m_Scene.CreateFlatBezierSurfaceC0(planePosition, 1, 1, planeWidth, planeLength).lock();
+	auto paths = std::vector<std::pair<std::string, MillingToolPath>>();
 
-	m_Scene.DeleteObject(*materialPlane);
+	paths.emplace_back(std::make_pair("Rough", roughToolGenerator->GeneratePaths(m_MaterialBlockDetails)));
+	paths.emplace_back(std::make_pair("Stand", standToolGenerator->GeneratePaths(m_MaterialBlockDetails)));
+	paths.emplace_back(std::make_pair("Detail", detailToolGenerator->GeneratePaths(m_MaterialBlockDetails)));
+
+	return paths;
 }
 
 auto MillingToolGenerator::GetSurfacesOnScene() -> std::vector<std::weak_ptr<SceneObjectCAD>>
