@@ -9,4 +9,6 @@ public:
 
 	virtual void Visit(BezierSurfaceC0& surface) override;
 	virtual void Visit(BezierSurfaceC2& surface) override;
+
+	virtual void Visit(OffsetSurface& surface) override;
 };

@@ -89,3 +89,8 @@ void CalculatorPartialDerivativeU::Visit(BezierSurfaceC2& surface)
 
 	m_Result = DeCastiljeau2(uDerPointsInBernstein, u) * surface.m_SizeU;
 }
+
+void CalculatorPartialDerivativeU::Visit(OffsetSurface& surface)
+{
+	CalculatorParameterized::Visit(surface.InternalSurface());
+}

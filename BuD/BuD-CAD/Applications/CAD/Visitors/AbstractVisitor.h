@@ -16,6 +16,8 @@
 #include <Applications/CAD/Objects/PointBased/Surfaces/BezierPatchC0.h>
 #include <Applications/CAD/Objects/PointBased/Surfaces/BezierPatchC2.h>
 
+#include <Applications/CAD/Objects/PointBased/Surfaces/OffsetSurface.h>
+
 class AbstractVisitor
 {
 public:
@@ -37,6 +39,8 @@ public:
 	
 	virtual void Visit(BezierSurfaceC0& surface) {}
 	virtual void Visit(BezierSurfaceC2& surface) {}
+
+	virtual void Visit(OffsetSurface& surface) {}
 
 protected:
 	std::weak_ptr<SceneObjectCAD> m_Caller;

@@ -504,6 +504,12 @@
     <ClInclude Include="Applications\CAD\MillingToolGenerator\MillingToolGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Applications\CAD\Intersection\Sampler\OffsetSampler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Objects\PointBased\Surfaces\OffsetSurface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Applications\CAD\ApplicationCAD.cpp">
@@ -918,6 +924,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CAD\MillingToolGenerator\MillingToolGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Intersection\Sampler\OffsetSampler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Objects\PointBased\Surfaces\OffsetSurface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

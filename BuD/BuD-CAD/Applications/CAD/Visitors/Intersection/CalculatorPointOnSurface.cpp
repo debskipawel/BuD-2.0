@@ -2,6 +2,8 @@
 
 #include <numbers>
 
+#include <Applications/CAD/Visitors/Intersection/CalculatorNormalVector.h>
+
 void CalculatorPointOnSurface::Visit(Torus& torus)
 {
 	WrapParameter(true, true);
@@ -81,4 +83,14 @@ void CalculatorPointOnSurface::Visit(BezierSurfaceC2& surface)
 	auto vPointsInBernstein = BSplineToBernstein(vControlPoints);
 
 	m_Result = DeCastiljeau3(vPointsInBernstein, v);
+}
+
+void CalculatorPointOnSurface::Visit(OffsetSurface& surface)
+{
+	CalculatorParameterized::Visit(surface.InternalSurface());
+
+	auto normalCalculator = std::make_unique<CalculatorNormalVector>();
+	normalCalculator->Visit(surface.InternalSurface());
+
+	m_Result += surface.Offset() * normalCalculator->Result();
 }

@@ -49,3 +49,8 @@ void ControlPointValidationVisitor::Visit(BezierSurfaceC2& surface)
 {
 	m_Valid = false;
 }
+
+void ControlPointValidationVisitor::Visit(OffsetSurface& surface)
+{
+	m_Valid = false;
+}
