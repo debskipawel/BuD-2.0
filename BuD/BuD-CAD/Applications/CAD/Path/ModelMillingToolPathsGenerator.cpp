@@ -1,4 +1,4 @@
-#include "MillingToolGenerator.h"
+#include "ModelMillingToolPathsGenerator.h"
 
 #include <Applications/CAD/Visitors/Validation/IntersectionEligibilityValidationVisitor.h>
 
@@ -6,12 +6,12 @@
 #include <Applications/CAD/Path/Generator/StandFlatToolPathGenerator.h>
 #include <Applications/CAD/Path/Generator/DetailSphericalPathGenerator.h>
 
-MillingToolGenerator::MillingToolGenerator(SceneCAD& scene, const MaterialBlockDetails& materialBlockDetails)
-	: m_Scene(scene), m_MaterialBlockDetails(materialBlockDetails)
+ModelMillingToolPathsGenerator::ModelMillingToolPathsGenerator(SceneCAD& scene)
+	: m_Scene(scene)
 {
 }
 
-auto MillingToolGenerator::GeneratePaths() -> std::vector<std::pair<std::string, MillingToolPath>>
+auto ModelMillingToolPathsGenerator::GeneratePaths(const MaterialBlockDetails& materialBlockDetails) -> std::vector<std::pair<std::string, MillingToolPath>>
 {
 	auto modelSurfaces = GetSurfacesOnScene();
 
@@ -21,14 +21,14 @@ auto MillingToolGenerator::GeneratePaths() -> std::vector<std::pair<std::string,
 
 	auto paths = std::vector<std::pair<std::string, MillingToolPath>>();
 
-	paths.emplace_back(std::make_pair("Rough", roughToolGenerator->GeneratePaths(m_MaterialBlockDetails)));
-	paths.emplace_back(std::make_pair("Stand", standToolGenerator->GeneratePaths(m_MaterialBlockDetails)));
-	paths.emplace_back(std::make_pair("Detail", detailToolGenerator->GeneratePaths(m_MaterialBlockDetails)));
+	paths.emplace_back(std::make_pair("Rough", roughToolGenerator->GeneratePaths(materialBlockDetails)));
+	paths.emplace_back(std::make_pair("Stand", standToolGenerator->GeneratePaths(materialBlockDetails)));
+	paths.emplace_back(std::make_pair("Detail", detailToolGenerator->GeneratePaths(materialBlockDetails)));
 
 	return paths;
 }
 
-auto MillingToolGenerator::GetSurfacesOnScene() -> std::vector<std::weak_ptr<SceneObjectCAD>>
+auto ModelMillingToolPathsGenerator::GetSurfacesOnScene() -> std::vector<std::weak_ptr<SceneObjectCAD>>
 {
 	auto intersectableObjects = std::vector<std::weak_ptr<SceneObjectCAD>>();
 

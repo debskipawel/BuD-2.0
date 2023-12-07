@@ -501,7 +501,7 @@
     <ClInclude Include="Applications\CNC\GUI\MillingTool\MillingToolGuiLayerCNC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CAD\Path\MillingToolGenerator.h">
+    <ClInclude Include="Applications\CAD\Path\ModelMillingToolPathsGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CAD\Intersection\Sampler\OffsetSampler.h">
@@ -947,7 +947,7 @@
     <ClCompile Include="Applications\CNC\GUI\MillingTool\MillingToolGuiLayerCNC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Applications\CAD\Path\MillingToolGenerator.cpp">
+    <ClCompile Include="Applications\CAD\Path\ModelMillingToolPathsGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CAD\Intersection\Sampler\OffsetSampler.cpp">

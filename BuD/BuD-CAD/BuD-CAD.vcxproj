@@ -178,7 +178,7 @@
     <ClInclude Include="Applications\CAD\Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.h" />
     <ClInclude Include="Applications\CAD\Intersection\Sampler\OffsetSampler.h" />
     <ClInclude Include="Applications\CAD\Path\MaterialBlockDetails.h" />
-    <ClInclude Include="Applications\CAD\Path\MillingToolGenerator.h" />
+    <ClInclude Include="Applications\CAD\Path\ModelMillingToolPathsGenerator.h" />
     <ClInclude Include="Applications\CAD\Path\MillingToolPath.h" />
     <ClInclude Include="Applications\CAD\Path\Generator\AbstractPathGenerator.h" />
     <ClInclude Include="Applications\CAD\Path\Generator\DetailSphericalPathGenerator.h" />
@@ -353,7 +353,7 @@
     <ClCompile Include="Applications\CAD\Path\Generator\RoughSphericalPathGenerator.cpp" />
     <ClCompile Include="Applications\CAD\Path\Generator\StandFlatToolPathGenerator.cpp" />
     <ClCompile Include="Applications\CAD\Path\MaterialBlockDetails.cpp" />
-    <ClCompile Include="Applications\CAD\Path\MillingToolGenerator.cpp" />
+    <ClCompile Include="Applications\CAD\Path\ModelMillingToolPathsGenerator.cpp" />
     <ClCompile Include="Applications\CAD\Path\MillingToolPath.cpp" />
     <ClCompile Include="Applications\CAD\Path\Generator\AbstractPathGenerator.cpp" />
     <ClCompile Include="Applications\CAD\Path\Optimizer\ColinearPathOptimizer.cpp" />
