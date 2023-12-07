@@ -8,7 +8,7 @@ class AbstractPathGenerator
 public:
 	AbstractPathGenerator(BuD::Scene& scene, const std::vector<std::weak_ptr<SceneObjectCAD>>& surfaces, float millingToolRadius);
 
-	virtual auto GeneratePaths() -> MillingToolPath;
+	virtual auto GeneratePaths() -> MillingToolPath = 0;
 
 protected:
 	float m_OffsetValue;
