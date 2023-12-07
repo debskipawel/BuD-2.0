@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Applications/CAD/MillingToolGenerator/PathOptimizer/AbstractPathOptimizer.h>
+#include <Applications/CAD/Path/Optimizer/AbstractPathOptimizer.h>
 
 class ColinearPathOptimizer : public AbstractPathOptimizer
 {

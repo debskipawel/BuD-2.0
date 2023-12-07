@@ -1,15 +1,13 @@
 #pragma once
 
-#include <SimpleMath.h>
-
 #include <Applications/CAD/Scene/SceneCAD.h>
 
-namespace dxm = DirectX::SimpleMath;
+#include <Applications/CAD/Path/MaterialBlockDetails.h>
 
 class MillingToolGenerator
 {
 public:
-	MillingToolGenerator(SceneCAD& scene, const dxm::Vector3& materialSize, float modelPlaneHeight);
+	MillingToolGenerator(SceneCAD& scene, const MaterialBlockDetails& materialBlockDetails);
 
 	virtual auto GeneratePaths() -> void;
 
@@ -18,6 +16,5 @@ protected:
 
 	SceneCAD& m_Scene;
 
-	dxm::Vector3 m_MaterialSize;
-	float m_ModelPlaneHeight;
+	MaterialBlockDetails m_MaterialBlockDetails;
 };

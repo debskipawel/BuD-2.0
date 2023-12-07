@@ -2,8 +2,8 @@
 
 #include <Applications/CAD/Visitors/Validation/IntersectionEligibilityValidationVisitor.h>
 
-MillingToolGenerator::MillingToolGenerator(SceneCAD& scene, const dxm::Vector3& materialSize, float modelPlaneHeight)
-	: m_Scene(scene), m_MaterialSize(materialSize), m_ModelPlaneHeight(modelPlaneHeight)
+MillingToolGenerator::MillingToolGenerator(SceneCAD& scene, const MaterialBlockDetails& materialBlockDetails)
+	: m_Scene(scene), m_MaterialBlockDetails(materialBlockDetails)
 {
 }
 
@@ -11,9 +11,9 @@ auto MillingToolGenerator::GeneratePaths() -> void
 {
 	auto modelSurfaces = GetSurfacesOnScene();
 
-	auto planePosition = dxm::Vector3::Zero + m_ModelPlaneHeight * dxm::Vector3::UnitY;
-	auto planeWidth = m_MaterialSize.x;
-	auto planeLength = m_MaterialSize.z;
+	auto planePosition = dxm::Vector3::Zero + m_MaterialBlockDetails.m_StandHeight * dxm::Vector3::UnitY;
+	auto planeWidth = m_MaterialBlockDetails.m_Size.x;
+	auto planeLength = m_MaterialBlockDetails.m_Size.z;
 
 	auto materialPlane = m_Scene.CreateFlatBezierSurfaceC0(planePosition, 1, 1, planeWidth, planeLength).lock();
 

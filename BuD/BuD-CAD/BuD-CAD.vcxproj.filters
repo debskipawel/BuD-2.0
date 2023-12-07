@@ -501,13 +501,37 @@
     <ClInclude Include="Applications\CNC\GUI\MillingTool\MillingToolGuiLayerCNC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CAD\MillingToolGenerator\MillingToolGenerator.h">
+    <ClInclude Include="Applications\CAD\Path\MillingToolGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CAD\Intersection\Sampler\OffsetSampler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CAD\Objects\PointBased\Surfaces\OffsetSurface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Generator\AbstractPathGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\MillingToolPath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Optimizer\AbstractPathOptimizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Optimizer\ColinearPathOptimizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Generator\RoughSphericalPathGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Generator\StandFlatToolPathGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Generator\DetailSphericalPathGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\MaterialBlockDetails.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -923,13 +947,34 @@
     <ClCompile Include="Applications\CNC\GUI\MillingTool\MillingToolGuiLayerCNC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Applications\CAD\MillingToolGenerator\MillingToolGenerator.cpp">
+    <ClCompile Include="Applications\CAD\Path\MillingToolGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CAD\Intersection\Sampler\OffsetSampler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CAD\Objects\PointBased\Surfaces\OffsetSurface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Generator\AbstractPathGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\MillingToolPath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Optimizer\ColinearPathOptimizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\MaterialBlockDetails.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Generator\RoughSphericalPathGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Generator\StandFlatToolPathGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Generator\DetailSphericalPathGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Applications/CAD/MillingToolGenerator/MillingToolPath.h>
+#include <Applications/CAD/Path/MillingToolPath.h>
 
 class AbstractPathOptimizer
 {
