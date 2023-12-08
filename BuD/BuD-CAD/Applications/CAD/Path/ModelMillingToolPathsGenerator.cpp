@@ -6,9 +6,12 @@
 #include <Applications/CAD/Path/Generator/StandFlatToolPathGenerator.h>
 #include <Applications/CAD/Path/Generator/DetailSphericalPathGenerator.h>
 
+#include <Applications/CAD/Path/Optimizer/ColinearPathOptimizer.h>
+
 ModelMillingToolPathsGenerator::ModelMillingToolPathsGenerator(SceneCAD& scene)
 	: m_Scene(scene)
 {
+	m_PathOptimizer = std::make_unique<ColinearPathOptimizer>();
 }
 
 auto ModelMillingToolPathsGenerator::GeneratePaths(const MaterialBlockDetails& materialBlockDetails) -> std::vector<std::pair<std::string, MillingToolPath>>
@@ -19,11 +22,18 @@ auto ModelMillingToolPathsGenerator::GeneratePaths(const MaterialBlockDetails& m
 	std::unique_ptr<AbstractPathGenerator> standToolGenerator = std::make_unique<StandFlatToolPathGenerator>(m_Scene, modelSurfaces);
 	std::unique_ptr<AbstractPathGenerator> detailToolGenerator = std::make_unique<DetailSphericalPathGenerator>(m_Scene, modelSurfaces);
 
-	auto paths = std::vector<std::pair<std::string, MillingToolPath>>();
+	auto roughPath = roughToolGenerator->GeneratePaths(materialBlockDetails);
+	auto standPath = standToolGenerator->GeneratePaths(materialBlockDetails);
+	auto detailPath = detailToolGenerator->GeneratePaths(materialBlockDetails);
 
-	paths.emplace_back(std::make_pair("Rough", roughToolGenerator->GeneratePaths(materialBlockDetails)));
-	paths.emplace_back(std::make_pair("Stand", standToolGenerator->GeneratePaths(materialBlockDetails)));
-	paths.emplace_back(std::make_pair("Detail", detailToolGenerator->GeneratePaths(materialBlockDetails)));
+	auto optimizedroughPath = m_PathOptimizer->Optimize(roughPath);
+	auto optimizedStandPath = m_PathOptimizer->Optimize(standPath);
+	auto optimizedDetailPath = m_PathOptimizer->Optimize(detailPath);
+
+	auto paths = std::vector<std::pair<std::string, MillingToolPath>>
+	{
+		{ "Rough", optimizedroughPath }, { "Stand", optimizedStandPath }, { "Detail", optimizedDetailPath },
+	};
 
 	return paths;
 }

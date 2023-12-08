@@ -2,6 +2,8 @@
 
 #include <Applications/CAD/Scene/SceneCAD.h>
 
+#include <Applications/CAD/Path/Optimizer/AbstractPathOptimizer.h>
+
 #include <Applications/CAD/Path/MaterialBlockDetails.h>
 #include <Applications/CAD/Path/MillingToolPath.h>
 
@@ -16,4 +18,6 @@ protected:
 	virtual auto GetSurfacesOnScene() -> std::vector<std::weak_ptr<SceneObjectCAD>>;
 
 	SceneCAD& m_Scene;
+
+	std::unique_ptr<AbstractPathOptimizer> m_PathOptimizer;
 };
