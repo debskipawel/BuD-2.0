@@ -2,6 +2,7 @@
 
 #include <Applications/CAD/Objects/Torus.h>
 #include <Applications/CAD/Objects/Point.h>
+#include <Applications/CAD/Objects/InfinitePlane.h>
 #include <Applications/CAD/Objects/ParameterizedObject2D.h>
 
 #include <Applications/CAD/Objects/Intersection/IntersectionCurve.h>
@@ -21,7 +22,7 @@ SceneCAD::SceneCAD()
 {
 	m_Grid = std::make_unique<Grid>(m_Scene);
 	m_MainCursor = std::make_shared<Cursor>(m_Scene);
-	
+
 	m_CentroidCursor = std::make_shared<Cursor>(m_Scene);
 	m_CentroidCursor->SetPosition({ NAN, NAN, NAN });
 }
@@ -68,6 +69,16 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreatePoint(dxm::Vector3 position)
 	BuD::Log::WriteInfo("Successfully created a point.");
 
 	return point;
+}
+
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateInfinitePlane(dxm::Vector3 position, dxm::Vector3 normal)
+{
+	auto plane = std::make_shared<InfinitePlane>(m_Scene, position, normal);
+	m_ObjectList.emplace(plane->Id(), plane);
+
+	BuD::Log::WriteInfo("Successfully created an infinite plane.");
+
+	return plane;
 }
 
 std::weak_ptr<SceneObjectCAD> SceneCAD::CreateBezierCurveC0(std::vector<std::weak_ptr<Point>> controlPoints)

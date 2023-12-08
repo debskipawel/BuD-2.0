@@ -21,6 +21,11 @@ void CalculatorPartialDerivativeU::Visit(Torus& torus)
 	m_Result = { worldVector.x, worldVector.y, worldVector.z };
 }
 
+void CalculatorPartialDerivativeU::Visit(InfinitePlane& plane)
+{
+	m_Result = plane.GetU();
+}
+
 void CalculatorPartialDerivativeU::Visit(BezierSurfaceC0& surface)
 {
 	auto parameter = GetPatchParameter(surface);

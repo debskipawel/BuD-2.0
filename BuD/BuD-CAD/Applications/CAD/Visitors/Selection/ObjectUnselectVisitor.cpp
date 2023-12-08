@@ -23,6 +23,11 @@ void ObjectUnselectVisitor::Visit(Point& point)
 	point.m_InstanceData.m_Color = Point::UNSELECTED_COLOR;
 }
 
+void ObjectUnselectVisitor::Visit(InfinitePlane& plane)
+{
+	UnselectManually(m_Caller);
+}
+
 void ObjectUnselectVisitor::Visit(IntersectionCurve& curve)
 {
 	UnselectManually(m_Caller);

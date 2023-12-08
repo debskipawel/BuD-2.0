@@ -26,6 +26,11 @@ void CalculatorPointOnSurface::Visit(Torus& torus)
 	m_Result = { worldPosition.x, worldPosition.y, worldPosition.z };
 }
 
+void CalculatorPointOnSurface::Visit(InfinitePlane& plane)
+{
+	m_Result = plane.GetPoint(m_Parameter.x, m_Parameter.y);
+}
+
 void CalculatorPointOnSurface::Visit(BezierSurfaceC0& surface)
 {
 	WrapParameter(surface.m_Cylinder, false);

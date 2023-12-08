@@ -177,6 +177,7 @@
     <ClInclude Include="Applications\CAD\Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.h" />
     <ClInclude Include="Applications\CAD\Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.h" />
     <ClInclude Include="Applications\CAD\Intersection\Sampler\OffsetSampler.h" />
+    <ClInclude Include="Applications\CAD\Objects\InfinitePlane.h" />
     <ClInclude Include="Applications\CAD\Path\MaterialBlockDetails.h" />
     <ClInclude Include="Applications\CAD\Path\ModelMillingToolPathsGenerator.h" />
     <ClInclude Include="Applications\CAD\Path\MillingToolPath.h" />
@@ -349,6 +350,7 @@
     <ClCompile Include="Applications\CAD\Behaviors\Keyboard\BaseKeyboardBehaviorLayerCAD.cpp" />
     <ClCompile Include="Applications\CAD\Behaviors\Mouse\BaseMouseBehaviorLayerCAD.cpp" />
     <ClCompile Include="Applications\CAD\Intersection\Sampler\OffsetSampler.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\InfinitePlane.cpp" />
     <ClCompile Include="Applications\CAD\Path\Generator\DetailSphericalPathGenerator.cpp" />
     <ClCompile Include="Applications\CAD\Path\Generator\RoughSphericalPathGenerator.cpp" />
     <ClCompile Include="Applications\CAD\Path\Generator\StandFlatToolPathGenerator.cpp" />

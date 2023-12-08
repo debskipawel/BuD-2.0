@@ -34,6 +34,11 @@ void CalculatorParameterShortestDistance::Visit(Torus& torus)
 	}
 }
 
+void CalculatorParameterShortestDistance::Visit(InfinitePlane& plane)
+{
+	m_Result = m_Point2 - m_Point1;
+}
+
 void CalculatorParameterShortestDistance::Visit(BezierSurfaceC0& surface)
 {
 	auto diff = dxm::Vector2{ m_Point2.x - m_Point1.x, m_Point2.y - m_Point1.y };

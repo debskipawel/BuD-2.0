@@ -4,6 +4,7 @@
 
 #include <Applications/CAD/Objects/Point.h>
 #include <Applications/CAD/Objects/Torus.h>
+#include <Applications/CAD/Objects/InfinitePlane.h>
 
 #include <Applications/CAD/Objects/Intersection/IntersectionCurve.h>
 
@@ -27,6 +28,8 @@ public:
 
 	virtual void Visit(Point& point) {}
 	virtual void Visit(Torus& torus) {}
+
+	virtual void Visit(InfinitePlane& plane) {}
 
 	virtual void Visit(IntersectionCurve& curve) {}
 
