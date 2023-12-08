@@ -3,9 +3,11 @@
 #include <Applications/CAD/Visitors/AbstractVisitor.h>
 
 InfinitePlane::InfinitePlane(BuD::Scene& scene, const dxm::Vector3& point, const dxm::Vector3& normal)
-    : SceneObjectCAD(scene), m_PointOnPlane(point), m_Normal(normal)
+    : SceneObjectCAD(scene), m_Normal(normal)
 {
     m_Tag = "Infinite plane";
+
+    m_Transform.m_Position = point;
 
     if (normal.LengthSquared() < 1e-6f)
     {
@@ -35,5 +37,5 @@ auto InfinitePlane::Accept(AbstractVisitor& visitor) -> void
 
 auto InfinitePlane::GetPoint(float u, float v) const -> dxm::Vector3
 {
-    return m_PointOnPlane + u * m_VectorU + v * m_VectorV;
+    return m_Transform.m_Position + u * m_VectorU + v * m_VectorV;
 }

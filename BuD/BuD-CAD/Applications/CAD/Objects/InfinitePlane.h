@@ -16,7 +16,6 @@ public:
 	virtual auto GetPoint(float u, float v) const -> dxm::Vector3;
 
 protected:
-	dxm::Vector3 m_PointOnPlane;
 	dxm::Vector3 m_Normal;
 	dxm::Vector3 m_VectorU, m_VectorV;
 };
