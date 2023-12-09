@@ -2,7 +2,10 @@
 
 #include <Applications/CAD/Objects/Torus.h>
 #include <Applications/CAD/Objects/Point.h>
+
+#include <Applications/CAD/Objects/FinitePlane.h>
 #include <Applications/CAD/Objects/InfinitePlane.h>
+
 #include <Applications/CAD/Objects/ParameterizedObject2D.h>
 
 #include <Applications/CAD/Objects/Intersection/IntersectionCurve.h>
@@ -69,6 +72,16 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreatePoint(dxm::Vector3 position)
 	BuD::Log::WriteInfo("Successfully created a point.");
 
 	return point;
+}
+
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFinitePlane(dxm::Vector3 position, dxm::Vector3 normal, float widthU, float widthV)
+{
+	auto plane = std::make_shared<FinitePlane>(m_Scene, position, normal, widthU, widthV);
+	m_ObjectList.emplace(plane->Id(), plane);
+
+	BuD::Log::WriteInfo("Successfully created a finite plane.");
+
+	return plane;
 }
 
 std::weak_ptr<SceneObjectCAD> SceneCAD::CreateInfinitePlane(dxm::Vector3 position, dxm::Vector3 normal)

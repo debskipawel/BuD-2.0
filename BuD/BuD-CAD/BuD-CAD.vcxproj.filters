@@ -537,6 +537,12 @@
     <ClInclude Include="Applications\CAD\Objects\InfinitePlane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Applications\CAD\Objects\FinitePlane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Objects\Plane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Applications\CAD\ApplicationCAD.cpp">
@@ -983,6 +989,12 @@
     <ClCompile Include="Applications\CAD\Objects\InfinitePlane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Applications\CAD\Objects\Plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Objects\FinitePlane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Torus\torus_instanced_vs.hlsl" />
@@ -1053,6 +1065,10 @@
     <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_hs.hlsl" />
     <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_ds.hlsl" />
     <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\FinitePlane\finite_plane_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\FinitePlane\finite_plane_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\InfinitePlane\infinite_plane_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\InfinitePlane\infinite_plane_ps.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="testfile.f14" />

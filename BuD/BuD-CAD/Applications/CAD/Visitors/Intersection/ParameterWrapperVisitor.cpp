@@ -20,6 +20,13 @@ void ParameterWrapperVisitor::Visit(Torus& torus)
 	m_Parameter.y -= floor(m_Parameter.y);
 }
 
+void ParameterWrapperVisitor::Visit(FinitePlane& plane)
+{
+	m_WrappedU = m_WrappedV = 0;
+
+	m_ParameterOutOfRange = (fabsf(m_Parameter.x) > 0.5f * plane.m_WidthU || fabsf(m_Parameter.y) > 0.5f * plane.m_WidthV);
+}
+
 void ParameterWrapperVisitor::Visit(BezierSurfaceC0& surface)
 {
 	m_WrappedU = m_WrappedV = 0;

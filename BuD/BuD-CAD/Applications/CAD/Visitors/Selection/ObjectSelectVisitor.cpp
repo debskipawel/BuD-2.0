@@ -28,6 +28,11 @@ void ObjectSelectVisitor::Visit(InfinitePlane& plane)
 	SelectManually(m_Caller);
 }
 
+void ObjectSelectVisitor::Visit(FinitePlane& plane)
+{
+	SelectManually(m_Caller);
+}
+
 void ObjectSelectVisitor::Visit(IntersectionCurve& curve)
 {
 	SelectManually(m_Caller);

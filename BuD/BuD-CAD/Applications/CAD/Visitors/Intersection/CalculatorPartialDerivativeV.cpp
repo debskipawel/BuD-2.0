@@ -26,6 +26,11 @@ void CalculatorPartialDerivativeV::Visit(InfinitePlane& plane)
 	m_Result = plane.GetV();
 }
 
+void CalculatorPartialDerivativeV::Visit(FinitePlane& plane)
+{
+	m_Result = plane.GetV();
+}
+
 void CalculatorPartialDerivativeV::Visit(BezierSurfaceC0& surface)
 {
 	auto parameter = GetPatchParameter(surface);

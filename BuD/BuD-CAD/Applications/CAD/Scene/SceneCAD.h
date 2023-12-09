@@ -24,6 +24,7 @@ public:
 	std::weak_ptr<SceneObjectCAD> CreateTorus(dxm::Vector3 position);
 	std::weak_ptr<SceneObjectCAD> CreatePoint(dxm::Vector3 position);
 	
+	std::weak_ptr<SceneObjectCAD> CreateFinitePlane(dxm::Vector3 position, dxm::Vector3 normal, float widthU = 1.0f, float widthV = 1.0f);
 	std::weak_ptr<SceneObjectCAD> CreateInfinitePlane(dxm::Vector3 position, dxm::Vector3 normal);
 
 	std::weak_ptr<SceneObjectCAD> CreateBezierCurveC0(std::vector<std::weak_ptr<Point>> controlPoints);

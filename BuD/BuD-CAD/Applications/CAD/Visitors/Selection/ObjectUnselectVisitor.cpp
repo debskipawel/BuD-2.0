@@ -28,6 +28,11 @@ void ObjectUnselectVisitor::Visit(InfinitePlane& plane)
 	UnselectManually(m_Caller);
 }
 
+void ObjectUnselectVisitor::Visit(FinitePlane& plane)
+{
+	UnselectManually(m_Caller);
+}
+
 void ObjectUnselectVisitor::Visit(IntersectionCurve& curve)
 {
 	UnselectManually(m_Caller);

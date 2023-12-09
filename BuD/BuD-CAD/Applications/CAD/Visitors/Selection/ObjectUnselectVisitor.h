@@ -11,6 +11,7 @@ public:
 	virtual void Visit(Point& point) override;
 
 	virtual void Visit(InfinitePlane& plane) override;
+	virtual void Visit(FinitePlane& plane) override;
 
 	virtual void Visit(IntersectionCurve& curve) override;
 
