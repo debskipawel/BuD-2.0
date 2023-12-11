@@ -4,7 +4,7 @@
 #include <Applications/CAD/Intersection/Sampler/VisitorSampler.h>
 
 AbstractPathGenerator::AbstractPathGenerator(SceneCAD& scene, const std::vector<std::weak_ptr<SceneObjectCAD>>& surfaces, float millingToolRadius)
-	: m_OffsetValue(millingToolRadius), m_Sampler(std::make_unique<VisitorSampler>())
+	: m_SceneCAD(scene), m_OffsetValue(millingToolRadius), m_Sampler(std::make_unique<VisitorSampler>())
 {
 	m_OffsetSurfaces.resize(surfaces.size());
 

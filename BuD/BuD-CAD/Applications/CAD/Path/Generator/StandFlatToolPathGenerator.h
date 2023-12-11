@@ -7,5 +7,5 @@ class StandFlatToolPathGenerator : public AbstractPathGenerator
 public:
 	StandFlatToolPathGenerator(SceneCAD& scene, const std::vector<std::weak_ptr<SceneObjectCAD>>& surfaces);
 
-	virtual auto GeneratePaths(const MaterialBlockDetails& materialBlockDetails) const->MillingToolPath override;
+	virtual auto GeneratePaths(const MaterialBlockDetails& materialBlockDetails) -> MillingToolPath override;
 };

@@ -66,6 +66,8 @@ auto FinitePlane::InitializeRenderComponent() -> void
 	auto renderingPass = BuD::RenderingPass();
 	renderingPass.m_Mesh = quadMesh;
 	renderingPass.m_Pipeline = shaderPipeline;
+	renderingPass.m_RasterizerDescription.m_CullType = BuD::CullType::NONE;
+	renderingPass.m_RasterizerDescription.m_FillMode = BuD::FillMode::SOLID;
 	renderingPass.m_Instancing = instanceComponent;
 	renderingPass.m_PreRenderCallback = [](const BuD::RenderingPass& renderingPass, const BuD::Scene& scene)
 	{

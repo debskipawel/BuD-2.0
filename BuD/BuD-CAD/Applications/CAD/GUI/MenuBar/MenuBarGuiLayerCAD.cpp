@@ -221,6 +221,8 @@ void MenuBarGuiLayerCAD::DrawGenerateMillingToolPathsPopup()
             auto materialBlockDetails = MaterialBlockDetails(m_MilledMaterialSize, dxm::Vector3::Zero, 1.6f);
             auto millingPathGenerator = ModelMillingToolPathsGenerator(m_MainDataLayer.m_SceneDataLayer.m_SceneCAD);
 
+            auto paths = millingPathGenerator.GeneratePaths(materialBlockDetails);
+
             m_GenerateMillingPathsPopupOpen = false;
             ImGui::CloseCurrentPopup();
 

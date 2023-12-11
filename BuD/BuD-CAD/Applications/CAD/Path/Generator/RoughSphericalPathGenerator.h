@@ -7,5 +7,9 @@ class RoughSphericalPathGenerator : public AbstractPathGenerator
 public:
 	RoughSphericalPathGenerator(SceneCAD& scene, const std::vector<std::weak_ptr<SceneObjectCAD>>& surfaces);
 
-	virtual auto GeneratePaths(const MaterialBlockDetails& materialBlockDetails) const -> MillingToolPath override;
+	virtual auto GeneratePaths(const MaterialBlockDetails& materialBlockDetails) -> MillingToolPath override;
+
+protected:
+	virtual auto CreateHorizontalPlane(const MaterialBlockDetails& materialBlockDetails, float height) -> std::weak_ptr<SceneObjectCAD>;
+	virtual auto GenerateCrossSection(const dxm::Vector3& startPosition, const dxm::Vector3& endPosition) -> std::vector<dxm::Vector3>;
 };

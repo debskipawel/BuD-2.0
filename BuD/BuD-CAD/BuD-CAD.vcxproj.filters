@@ -312,7 +312,7 @@
     <ClInclude Include="Applications\CAD\Objects\Intersection\IntersectionCurve.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CAD\Objects\Intersection\IntersectionPoint.h">
+    <ClInclude Include="Applications\CAD\Intersection\ResultConverter\IntersectionPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CAD\Objects\ParameterizedObject2D.h">
@@ -541,6 +541,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CAD\Objects\Plane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Intersection\ResultConverter\IntersectionResultConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -993,6 +996,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CAD\Objects\FinitePlane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Intersection\ResultConverter\IntersectionResultConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

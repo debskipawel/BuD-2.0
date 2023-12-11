@@ -67,6 +67,8 @@ auto InfinitePlane::InitializeRenderComponent() -> void
 	renderingPass.m_Mesh = mesh;
 	renderingPass.m_Pipeline = shaderPipeline;
 	renderingPass.m_Instancing = instanceComponent;
+	renderingPass.m_RasterizerDescription.m_CullType = BuD::CullType::NONE;
+	renderingPass.m_RasterizerDescription.m_FillMode = BuD::FillMode::SOLID;
 	renderingPass.m_PreRenderCallback = [](const BuD::RenderingPass& renderingPass, const BuD::Scene& scene)
 	{
 		auto camera = scene.ActiveCamera();

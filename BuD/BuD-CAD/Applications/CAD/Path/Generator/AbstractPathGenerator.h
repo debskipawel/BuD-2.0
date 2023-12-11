@@ -11,10 +11,12 @@ class AbstractPathGenerator
 public:
 	AbstractPathGenerator(SceneCAD& scene, const std::vector<std::weak_ptr<SceneObjectCAD>>& surfaces, float millingToolRadius);
 
-	virtual auto GeneratePaths(const MaterialBlockDetails& materialBlockDetails) const -> MillingToolPath = 0;
+	virtual auto GeneratePaths(const MaterialBlockDetails& materialBlockDetails) -> MillingToolPath = 0;
 
 protected:
 	float m_OffsetValue;
+
+	SceneCAD& m_SceneCAD;
 
 	std::vector<std::shared_ptr<SceneObjectCAD>> m_OffsetSurfaces;
 	std::unique_ptr<ISampler> m_Sampler;

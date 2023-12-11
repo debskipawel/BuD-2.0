@@ -176,6 +176,7 @@
     <ClInclude Include="Applications\CAD\AppState.h" />
     <ClInclude Include="Applications\CAD\Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.h" />
     <ClInclude Include="Applications\CAD\Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Applications\CAD\Intersection\ResultConverter\IntersectionResultConverter.h" />
     <ClInclude Include="Applications\CAD\Intersection\Sampler\OffsetSampler.h" />
     <ClInclude Include="Applications\CAD\Objects\FinitePlane.h" />
     <ClInclude Include="Applications\CAD\Objects\InfinitePlane.h" />
@@ -276,7 +277,7 @@
     <ClInclude Include="Applications\CAD\Intersection\Structures\PointMappingResult.h" />
     <ClInclude Include="Applications\CAD\Intersection\Structures\StartingCommonPointResult.h" />
     <ClInclude Include="Applications\CAD\Objects\Intersection\IntersectionCurve.h" />
-    <ClInclude Include="Applications\CAD\Objects\Intersection\IntersectionPoint.h" />
+    <ClInclude Include="Applications\CAD\Intersection\ResultConverter\IntersectionPoint.h" />
     <ClInclude Include="Applications\CAD\Objects\ParameterizedObject2D.h" />
     <ClInclude Include="Applications\CAD\Objects\PointBased\Curve\BaseCurve.h" />
     <ClInclude Include="Applications\CAD\Objects\PointBased\Curve\BezierCurveC0.h" />
@@ -351,6 +352,7 @@
     <ClCompile Include="Applications\CAD\Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.cpp" />
     <ClCompile Include="Applications\CAD\Behaviors\Keyboard\BaseKeyboardBehaviorLayerCAD.cpp" />
     <ClCompile Include="Applications\CAD\Behaviors\Mouse\BaseMouseBehaviorLayerCAD.cpp" />
+    <ClCompile Include="Applications\CAD\Intersection\ResultConverter\IntersectionResultConverter.cpp" />
     <ClCompile Include="Applications\CAD\Intersection\Sampler\OffsetSampler.cpp" />
     <ClCompile Include="Applications\CAD\Objects\FinitePlane.cpp" />
     <ClCompile Include="Applications\CAD\Objects\InfinitePlane.cpp" />

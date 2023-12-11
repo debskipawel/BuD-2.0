@@ -74,12 +74,32 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreatePoint(dxm::Vector3 position)
 	return point;
 }
 
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFinitePlane(dxm::Vector3 position, dxm::Vector3 dU, dxm::Vector3 dV, float widthU, float widthV)
+{
+	auto plane = std::make_shared<FinitePlane>(m_Scene, position, dU, dV, widthU, widthV);
+	m_ObjectList.emplace(plane->Id(), plane);
+
+	BuD::Log::WriteInfo("Successfully created a finite plane.");
+
+	return plane;
+}
+
 std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFinitePlane(dxm::Vector3 position, dxm::Vector3 normal, float widthU, float widthV)
 {
 	auto plane = std::make_shared<FinitePlane>(m_Scene, position, normal, widthU, widthV);
 	m_ObjectList.emplace(plane->Id(), plane);
 
 	BuD::Log::WriteInfo("Successfully created a finite plane.");
+
+	return plane;
+}
+
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateInfinitePlane(dxm::Vector3 position, dxm::Vector3 dU, dxm::Vector3 dV)
+{
+	auto plane = std::make_shared<InfinitePlane>(m_Scene, position, dU, dV);
+	m_ObjectList.emplace(plane->Id(), plane);
+
+	BuD::Log::WriteInfo("Successfully created an infinite plane.");
 
 	return plane;
 }

@@ -29,6 +29,8 @@ Plane::Plane(BuD::Scene& scene, const dxm::Vector3& point, const dxm::Vector3& n
 Plane::Plane(BuD::Scene& scene, const dxm::Vector3& point, const dxm::Vector3& derivativeU, const dxm::Vector3& derivativeV)
     : SceneObjectCAD(scene), m_VectorU(derivativeU), m_VectorV(derivativeV)
 {
+    m_Transform.m_Position = point;
+
     if (m_VectorU.LengthSquared() < 1e-6f || m_VectorV.LengthSquared() < 1e-8f)
     {
         BuD::Log::WriteError("Derivative vectors passed to a plane constructor were invalid.");

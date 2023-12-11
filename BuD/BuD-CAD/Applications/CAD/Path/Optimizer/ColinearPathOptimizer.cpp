@@ -13,7 +13,7 @@ auto ColinearPathOptimizer::Optimize(const MillingToolPath& toolPath) const -> M
 
     const auto accuracySquared = m_Accuracy * m_Accuracy;
 
-    for (size_t i = 1; i < compressedPathPoints.size() - 1; ++i)
+    for (size_t i = 1; i + 1 < compressedPathPoints.size(); ++i)
     {
         auto d1 = compressedPathPoints[i] - compressedPathPoints[i - 1];
         auto d2 = compressedPathPoints[i + 1] - compressedPathPoints[i];
