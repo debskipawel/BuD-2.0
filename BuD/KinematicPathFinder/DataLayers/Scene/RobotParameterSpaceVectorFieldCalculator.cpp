@@ -23,6 +23,7 @@ auto RobotParameterSpaceVectorFieldCalculator::CalculateVectorField(BuD::Editabl
 
 	auto pointsQueue = std::queue<std::pair<int, int>>();
 	auto distanceMap = RobotParameterVectorField(width);
+	auto discardedValues = RobotParameterVectorField(width);
 
 	distanceMap[{ xEnd, yEnd }] = { 0U, { 0, 0 } };
 	pointsQueue.emplace(xEnd, yEnd);
@@ -39,6 +40,11 @@ auto RobotParameterSpaceVectorFieldCalculator::CalculateVectorField(BuD::Editabl
 
 		for (auto& [xn, yn] : neighbours)
 		{
+			if (discardedValues.Contains({ xn, yn }))
+			{
+				continue;
+			}
+			
 			auto beta = 2.0f * std::numbers::pi_v<float> * static_cast<float>(xn) / static_cast<float>(width);
 			auto alpha = 2.0f * std::numbers::pi_v<float> * static_cast<float>(yn) / static_cast<float>(height);
 			
@@ -48,6 +54,7 @@ auto RobotParameterSpaceVectorFieldCalculator::CalculateVectorField(BuD::Editabl
 
 			if (collision)
 			{
+				discardedValues.Insert({ xn, yn }, {});
 				continue;
 			}
 
