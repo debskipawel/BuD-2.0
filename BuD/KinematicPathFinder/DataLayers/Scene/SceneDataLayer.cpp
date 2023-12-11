@@ -24,8 +24,8 @@ SceneDataLayer::SceneDataLayer()
 	m_EndRobotArm = std::make_unique<RobotArm>(m_Scene, P0, P1, P2, 0.1f, 0.25f * dxm::Vector3::One);
 
 	UpdateMeshes();
-	RecalculateRobotAngleParameterSpace();
 	RecalculateRobotPathsInParameterSpace();
+	RecalculateRobotAngleParameterSpace();
 }
 
 auto SceneDataLayer::AddNewObstacle() -> void
@@ -35,8 +35,8 @@ auto SceneDataLayer::AddNewObstacle() -> void
 	UpdateStartConfigurationPoints(m_StartConfiguration.GetP0(), m_StartConfiguration.GetP2());
 	UpdateEndConfigurationPoints(m_EndConfiguration.GetP0(), m_EndConfiguration.GetP2());
 
-	RecalculateRobotAngleParameterSpace();
 	RecalculateRobotPathsInParameterSpace();
+	RecalculateRobotAngleParameterSpace();
 }
 
 auto SceneDataLayer::UpdateStartConfigurationPoints(const dxm::Vector2& p0, const dxm::Vector2& p2) -> void
@@ -81,12 +81,15 @@ auto SceneDataLayer::UpdateEndConfigurationPoints(const dxm::Vector2& p0, const 
 
 auto SceneDataLayer::UpdateConfigurationLength(float L1, float L2) -> void
 {
+	m_Length1 = L1;
+	m_Length2 = L2;
+
 	UpdateStartConfigurationPoints(m_StartConfiguration.GetP0(), m_StartConfiguration.GetP2());
 
 	UpdateEndConfigurationPoints(m_EndConfiguration.GetP0(), m_EndConfiguration.GetP2());
 
-	RecalculateRobotAngleParameterSpace();
 	RecalculateRobotPathsInParameterSpace();
+	RecalculateRobotAngleParameterSpace();
 }
 
 auto SceneDataLayer::UpdateMeshes() -> void
@@ -129,7 +132,7 @@ auto SceneDataLayer::FindPathFromStartingConfiguration() -> std::vector<std::pai
 		return path;
 	}
 
-	auto startingPoint = PointInParameterSpace(m_StartConfiguration);
+	auto startingPoint = m_StartConfiguration.ToAngleParameters(m_AngleParameterMap.Width(), m_AngleParameterMap.Height());
 
 	if (!m_ParameterSpacePathMap.Contains(startingPoint))
 	{
@@ -166,7 +169,8 @@ auto SceneDataLayer::RecalculateRobotAngleParameterSpace() -> void
 		m_StartConfiguration.GetP0(), 
 		m_Length1, 
 		m_Length2,
-		m_AngleParameterMap
+		m_AngleParameterMap,
+		m_ParameterSpacePathMap
 	);
 }
 
@@ -177,43 +181,10 @@ auto SceneDataLayer::RecalculateRobotPathsInParameterSpace() -> void
 		return;
 	}
 
-	auto targetConfiguration = PointInParameterSpace(m_EndConfiguration);
+	auto targetConfiguration = m_EndConfiguration.ToAngleParameters(m_AngleParameterMap.Width(), m_AngleParameterMap.Height());
 
-	auto vectorFieldCalculator = RobotParameterSpaceVectorFieldCalculator();
-	m_ParameterSpacePathMap = vectorFieldCalculator.CalculateVectorField(m_AngleParameterMap, targetConfiguration);
-}
-
-auto SceneDataLayer::PointInParameterSpace(const RobotArmConfiguration& configuration) -> std::pair<int, int>
-{
-	auto p0 = configuration.GetP0();
-	auto p1 = configuration.GetP1();
-	auto p2 = configuration.GetP2();
-
-	auto d1 = p1 - p0;
-	auto d2 = p2 - p1;
-
-	auto alpha = atan2f(d1.y, d1.x);
-	
-	// mapping from [-pi, pi] to [0, 2pi]
-	alpha = (alpha < 0.0f) ? alpha + 2.0f * std::numbers::pi_v<float> : alpha;
-	
-	auto beta = atan2f(d2.y, d2.x);
-
-	// mapping from [-pi, pi] to [0, 2pi]
-	beta = (beta < 0.0f) ? beta + 2.0f * std::numbers::pi_v<float> : beta;
-
-	// in this case would be [-pi, 3pi], needs to be wrapped
-	auto gamma = beta - alpha + std::numbers::pi_v<float>;
-
-	// [0, 3pi]
-	gamma = (gamma < 0.0f) ? gamma + 2.0f * std::numbers::pi_v<float> : gamma;
-	// [0, 2pi]
-	gamma = (gamma < 2.0f * std::numbers::pi_v<float>) ? gamma : gamma - 2.0f * std::numbers::pi_v<float>;
-
-	auto y = static_cast<int>(roundf(0.5f * alpha * std::numbers::inv_pi_v<float> * static_cast<float>(m_AngleParameterMap.Height())));
-	auto x = static_cast<int>(roundf(0.5f * gamma * std::numbers::inv_pi_v<float> * static_cast<float>(m_AngleParameterMap.Width())));
-
-	return { x, y };
+	auto vectorFieldCalculator = RobotParameterSpaceVectorFieldCalculator(m_ObstacleCollection);
+	m_ParameterSpacePathMap = vectorFieldCalculator.CalculateVectorField(m_AngleParameterMap, m_EndConfiguration);
 }
 
 auto SceneDataLayer::IsCollision(const dxm::Vector2& p0, const dxm::Vector2& p1, const dxm::Vector2& p2) -> bool

@@ -1,15 +1,25 @@
 #include "RobotParameterSpaceVectorFieldCalculator.h"
 
-auto RobotParameterSpaceVectorFieldCalculator::CalculateVectorField(BuD::EditableTexture& parameterSpaceMap, std::pair<int, int> targetConfiguration) -> RobotParameterVectorField
+#include <numbers>
+
+#include <DataLayers/Scene/CollisionDetector.h>
+
+RobotParameterSpaceVectorFieldCalculator::RobotParameterSpaceVectorFieldCalculator(ObstacleCollection& obstacleCollection)
+	: m_ObstacleCollection(obstacleCollection)
+{
+}
+
+auto RobotParameterSpaceVectorFieldCalculator::CalculateVectorField(BuD::EditableTexture& parameterSpaceMap, const RobotArmConfiguration& targetConfiguration) -> RobotParameterVectorField
 {
 	parameterSpaceMap.BeginEdit();
 
 	auto width = static_cast<int>(parameterSpaceMap.Width());
 	auto height = static_cast<int>(parameterSpaceMap.Height());
 
-	auto hash = [width](int x, int y) { return width * y + x; };
+	auto [xEnd, yEnd] = targetConfiguration.ToAngleParameters(width, height);
 
-	auto [xEnd, yEnd] = targetConfiguration;
+	auto L1 = targetConfiguration.GetL1();
+	auto L2 = targetConfiguration.GetL2();
 
 	auto pointsQueue = std::queue<std::pair<int, int>>();
 	auto distanceMap = RobotParameterVectorField(width);
@@ -20,39 +30,23 @@ auto RobotParameterSpaceVectorFieldCalculator::CalculateVectorField(BuD::Editabl
 	while (!pointsQueue.empty())
 	{
 		auto [x, y] = pointsQueue.front();
+
 		pointsQueue.pop();
 
 		const auto& [distance, _] = distanceMap.Get({ x, y });
 
-		auto neighbours = std::array<std::pair<int, int>, 8> 
-		{ 
-			std::make_pair(x, y + 1), std::make_pair(x - 1, y), std::make_pair(x, y - 1), std::make_pair(x + 1, y),
-			std::make_pair(x - 1, y + 1), std::make_pair(x - 1, y + 1), std::make_pair(x + 1, y - 1), std::make_pair(x + 1, y + 1),
-		};
+		auto neighbours = GetNeighboursFloodFill8({ x, y }, width, height);
 
 		for (auto& [xn, yn] : neighbours)
 		{
-			if (xn < 0)
-			{
-				xn += fabsf(floorf(static_cast<float>(xn) / width) * width);
-			}
-			else if (xn >= width)
-			{
-				xn -= (static_cast<float>(xn) / width) * width;
-			}
+			auto beta = 2.0f * std::numbers::pi_v<float> * static_cast<float>(xn) / static_cast<float>(width);
+			auto alpha = 2.0f * std::numbers::pi_v<float> * static_cast<float>(yn) / static_cast<float>(height);
+			
+			auto configuration = RobotArmConfiguration(L1, L2, alpha, beta);
 
-			if (yn < 0)
-			{
-				yn += fabsf(floorf(static_cast<float>(yn) / height) * height);
-			}
-			else if (yn >= width)
-			{
-				yn -= (static_cast<float>(yn) / height) * height;
-			}
+			auto collision = GetCollidingObject(configuration);
 
-			auto color = parameterSpaceMap.Sample(xn, yn);
-
-			if (color != dxm::Vector4(0.0f, 0.0f, 0.0f, 1.0f) || distanceMap.Contains({ xn, yn }))
+			if (collision)
 			{
 				continue;
 			}
@@ -81,4 +75,73 @@ auto RobotParameterSpaceVectorFieldCalculator::CalculateVectorField(BuD::Editabl
 	parameterSpaceMap.EndEdit();
 
 	return distanceMap;
+}
+
+auto RobotParameterSpaceVectorFieldCalculator::WrapPixelParameters(std::pair<int, int> pixel, int width, int height) -> std::pair<int, int>
+{
+	auto& [xn, yn] = pixel;
+
+	if (xn < 0)
+	{
+		xn += fabsf(floorf(static_cast<float>(xn) / width) * width);
+	}
+	else if (xn >= width)
+	{
+		xn -= (static_cast<float>(xn) / width) * width;
+	}
+
+	if (yn < 0)
+	{
+		yn += fabsf(floorf(static_cast<float>(yn) / height) * height);
+	}
+	else if (yn >= width)
+	{
+		yn -= (static_cast<float>(yn) / height) * height;
+	}
+
+	return pixel;
+}
+
+auto RobotParameterSpaceVectorFieldCalculator::GetNeighboursFloodFill4(std::pair<int, int> pixel, int width, int height)->std::array<std::pair<int, int>, 4>
+{
+	auto& [x, y] = pixel;
+
+	return std::array<std::pair<int, int>, 4>
+	{
+		WrapPixelParameters(std::make_pair(x, y + 1), width, height),
+		WrapPixelParameters(std::make_pair(x - 1, y), width, height),
+		WrapPixelParameters(std::make_pair(x, y - 1), width, height),
+		WrapPixelParameters(std::make_pair(x + 1, y), width, height),
+	};
+}
+
+auto RobotParameterSpaceVectorFieldCalculator::GetNeighboursFloodFill8(std::pair<int, int> pixel, int width, int height) -> std::array<std::pair<int, int>, 8>
+{
+	auto& [x, y] = pixel;
+
+	return std::array<std::pair<int, int>, 8>
+	{
+		WrapPixelParameters(std::make_pair(x, y + 1), width, height),
+		WrapPixelParameters(std::make_pair(x - 1, y), width, height),
+		WrapPixelParameters(std::make_pair(x, y - 1), width, height),
+		WrapPixelParameters(std::make_pair(x + 1, y), width, height),
+		WrapPixelParameters(std::make_pair(x - 1, y + 1), width, height),
+		WrapPixelParameters(std::make_pair(x - 1, y + 1), width, height),
+		WrapPixelParameters(std::make_pair(x + 1, y - 1), width, height),
+		WrapPixelParameters(std::make_pair(x + 1, y + 1), width, height),
+	};
+}
+
+auto RobotParameterSpaceVectorFieldCalculator::GetCollidingObject(const RobotArmConfiguration& configuration) -> std::shared_ptr<Obstacle>
+{
+	auto collisionDetector = CollisionDetector();
+
+	for (const auto& obstacle : m_ObstacleCollection.GetAll())
+	{
+		if (collisionDetector.IsColliding(*obstacle, configuration.GetP0(), configuration.GetP1()) ||
+			collisionDetector.IsColliding(*obstacle, configuration.GetP1(), configuration.GetP2()))
+		{
+			return obstacle;
+		}
+	}
 }

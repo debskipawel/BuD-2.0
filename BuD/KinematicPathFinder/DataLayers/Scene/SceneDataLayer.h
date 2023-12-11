@@ -38,8 +38,6 @@ public:
 	RobotArmConfiguration m_EndConfiguration;
 
 protected:
-	virtual auto PointInParameterSpace(const RobotArmConfiguration& configuration) -> std::pair<int, int>;
-
 	virtual auto IsCollision(const dxm::Vector2& p0, const dxm::Vector2& p1, const dxm::Vector2& p2) -> bool;
 
 	float m_Length1;

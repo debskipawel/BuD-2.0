@@ -18,10 +18,13 @@ public:
 
 	virtual auto Insert(std::pair<int, int> point, const VectorFieldPoint& vectorFieldPoint) -> void;
 
+	virtual auto ForEach(std::function<void(std::pair<int, int>, VectorFieldPoint)> handler) const -> void;
+
 	virtual auto operator[](std::pair<int, int> point) -> VectorFieldPoint&;
 
 protected:
 	std::function<int(std::pair<int, int>)> m_HashFunction;
+	std::function<std::pair<int, int>(int)> m_ReverseHashFunction;
 
 	std::unordered_map<int, VectorFieldPoint> m_ParameterSpacePathMap;
 };

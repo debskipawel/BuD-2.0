@@ -113,8 +113,8 @@ auto RobotParametersGuiLayer::DrawEndPointOptionsComboBox() -> void
 			{
 				sceneDataLayer.m_EndConfiguration.m_PointOptionIndex = i;
 				
-				sceneDataLayer.RecalculateRobotAngleParameterSpace();
 				sceneDataLayer.RecalculateRobotPathsInParameterSpace();
+				sceneDataLayer.RecalculateRobotAngleParameterSpace();
 				sceneDataLayer.UpdateMeshes();
 			}
 		}

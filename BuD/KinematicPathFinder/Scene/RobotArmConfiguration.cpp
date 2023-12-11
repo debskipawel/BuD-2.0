@@ -1,8 +1,24 @@
 #include "RobotArmConfiguration.h"
 
+#include <numbers>
+
 RobotArmConfiguration::RobotArmConfiguration(float L1, float L2)
 {
 	UpdateConfiguration({ 0.0f, 0.0f }, { L1, L2 }, L1, L2);
+}
+
+RobotArmConfiguration::RobotArmConfiguration(float L1, float L2, float alpha, float gamma)
+{
+	m_P0 = { 0.0f, 0.0f };
+	
+	auto p1 = dxm::Vector2(L1 * cosf(alpha), L1 * sinf(alpha));
+
+	m_PointOptions.push_back(p1);
+	m_PointOptionIndex = 0;
+
+	auto beta = gamma + alpha - std::numbers::pi_v<float>;
+
+	m_P2 = p1 + L2 * dxm::Vector2(cosf(beta), sinf(beta));
 }
 
 auto RobotArmConfiguration::UpdateConfiguration(const dxm::Vector2& p0, const dxm::Vector2& p2, float L1, float L2) -> void
@@ -31,6 +47,53 @@ auto RobotArmConfiguration::GetP1() const -> dxm::Vector2
 auto RobotArmConfiguration::GetP2() const -> dxm::Vector2
 {
 	return m_P2;
+}
+
+auto RobotArmConfiguration::GetL1() const -> float
+{
+	auto d1 = GetP1() - GetP0();
+	
+	return d1.Length();
+}
+
+auto RobotArmConfiguration::GetL2() const -> float
+{
+	auto d2 = GetP2() - GetP1();
+
+	return d2.Length();
+}
+
+auto RobotArmConfiguration::ToAngleParameters(int width, int height) const -> std::pair<int, int>
+{
+	auto p0 = GetP0();
+	auto p1 = GetP1();
+	auto p2 = GetP2();
+
+	auto d1 = p1 - p0;
+	auto d2 = p2 - p1;
+
+	auto alpha = atan2f(d1.y, d1.x);
+
+	// mapping from [-pi, pi] to [0, 2pi]
+	alpha = (alpha < 0.0f) ? alpha + 2.0f * std::numbers::pi_v<float> : alpha;
+
+	auto beta = atan2f(d2.y, d2.x);
+
+	// mapping from [-pi, pi] to [0, 2pi]
+	beta = (beta < 0.0f) ? beta + 2.0f * std::numbers::pi_v<float> : beta;
+
+	// in this case would be [-pi, 3pi], needs to be wrapped
+	auto gamma = beta - alpha + std::numbers::pi_v<float>;
+
+	// [0, 3pi]
+	gamma = (gamma < 0.0f) ? gamma + 2.0f * std::numbers::pi_v<float> : gamma;
+	// [0, 2pi]
+	gamma = (gamma < 2.0f * std::numbers::pi_v<float>) ? gamma : gamma - 2.0f * std::numbers::pi_v<float>;
+
+	auto y = static_cast<int>(roundf(0.5f * alpha * std::numbers::inv_pi_v<float> * static_cast<float>(height)));
+	auto x = static_cast<int>(roundf(0.5f * gamma * std::numbers::inv_pi_v<float> * static_cast<float>(width)));
+
+	return { x, y };
 }
 
 auto RobotArmConfiguration::SolveInverseKinematic(float L1, float L2) -> void

@@ -8,6 +8,14 @@ RobotParameterVectorField::RobotParameterVectorField(size_t width)
 
 		return y * width + x;
 	};
+
+	m_ReverseHashFunction = [width](int value)
+	{
+		auto y = value / width;
+		auto x = value % width;
+
+		return std::make_pair(x, y);
+	};
 }
 
 auto RobotParameterVectorField::Contains(std::pair<int, int> point) const noexcept -> bool
@@ -29,6 +37,16 @@ auto RobotParameterVectorField::Insert(std::pair<int, int> point, const VectorFi
 	auto hash = m_HashFunction(point);
 
 	m_ParameterSpacePathMap[hash] = vectorFieldPoint;
+}
+
+auto RobotParameterVectorField::ForEach(std::function<void(std::pair<int, int>, VectorFieldPoint)> handler) const -> void
+{
+	for (const auto& [hash, vectorFieldPoint] : m_ParameterSpacePathMap)
+	{
+		auto pair = m_ReverseHashFunction(hash);
+
+		handler(pair, vectorFieldPoint);
+	}
 }
 
 auto RobotParameterVectorField::operator[](std::pair<int, int> point) -> VectorFieldPoint&
