@@ -52,7 +52,8 @@ auto ObstacleListGuiLayer::DrawGui() -> void
         if (obstacleToRemove.has_value() && obstacles.RemoveObstacle(obstacleToRemove.value()))
         {
             m_MainDataLayer.m_SceneDataLayer.RecalculateRobotPathsInParameterSpace();
-            m_MainDataLayer.m_SceneDataLayer.RecalculateRobotAngleParameterSpace();
+            m_MainDataLayer.m_SceneDataLayer.RedrawRobotAngleParameterSpace();
+            m_MainDataLayer.m_SceneDataLayer.RedrawPathInRobotAngleParameterSpace();
         }
 
         ImGui::End();

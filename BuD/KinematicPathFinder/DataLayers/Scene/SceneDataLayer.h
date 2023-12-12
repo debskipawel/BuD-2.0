@@ -24,7 +24,8 @@ public:
 	virtual auto UpdateMeshes() -> void;
 	virtual auto UpdateMeshes(std::pair<float, float> currentConfiguration) -> void;
 
-	virtual auto RecalculateRobotAngleParameterSpace() -> void;
+	virtual auto RedrawRobotAngleParameterSpace() -> void;
+	virtual auto RedrawPathInRobotAngleParameterSpace() -> void;
 	virtual auto RecalculateRobotPathsInParameterSpace() -> void;
 	virtual auto FindPathFromStartingConfiguration() -> std::vector<std::pair<int, int>>;
 
@@ -33,6 +34,7 @@ public:
 	ObstacleCollection m_ObstacleCollection;
 
 	BuD::EditableTexture m_AngleParameterMap;
+	BuD::EditableTexture m_AngleParameterMapWithPath;
 
 	RobotArmConfiguration m_StartConfiguration;
 	RobotArmConfiguration m_EndConfiguration;

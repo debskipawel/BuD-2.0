@@ -16,6 +16,7 @@ namespace BuD
 		void EndEdit();
 
 		void CopyFromBuffer(const std::vector<float>& buffer);
+		const std::vector<float>& GetRawBuffer();
 
 		dxm::Vector4 Sample(float x, float y);
 

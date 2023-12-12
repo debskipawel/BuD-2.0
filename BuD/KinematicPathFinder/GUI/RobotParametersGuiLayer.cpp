@@ -73,6 +73,8 @@ auto RobotParametersGuiLayer::DrawStartPointOptionsComboBox() -> void
 			{
 				sceneDataLayer.m_StartConfiguration.m_PointOptionIndex = i;
 
+				sceneDataLayer.RedrawPathInRobotAngleParameterSpace();
+
 				sceneDataLayer.UpdateMeshes();
 			}
 		}
@@ -114,7 +116,8 @@ auto RobotParametersGuiLayer::DrawEndPointOptionsComboBox() -> void
 				sceneDataLayer.m_EndConfiguration.m_PointOptionIndex = i;
 				
 				sceneDataLayer.RecalculateRobotPathsInParameterSpace();
-				sceneDataLayer.RecalculateRobotAngleParameterSpace();
+				sceneDataLayer.RedrawRobotAngleParameterSpace();
+				sceneDataLayer.RedrawPathInRobotAngleParameterSpace();
 				sceneDataLayer.UpdateMeshes();
 			}
 		}
@@ -144,7 +147,7 @@ auto RobotParametersGuiLayer::DrawParameterSpaceTexture() -> void
 
 	ImGui::Separator();
 	
-	const auto& angleParameterImage = m_MainDataLayer.m_SceneDataLayer.m_AngleParameterMap;
+	const auto& angleParameterImage = m_MainDataLayer.m_SceneDataLayer.m_AngleParameterMapWithPath;
 	
 	ImGui::Image(angleParameterImage.SRV(), imageSize);
 }

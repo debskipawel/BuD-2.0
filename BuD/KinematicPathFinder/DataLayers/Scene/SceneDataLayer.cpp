@@ -13,7 +13,7 @@ SceneDataLayer::SceneDataLayer()
 	: m_Scene(), m_ObstacleCollection(m_Scene),
 	  m_Length1(START_L1), m_Length2(START_L2),
 	  m_StartConfiguration(START_L1, START_L2), m_EndConfiguration(START_L1, START_L2),
-	  m_AngleParameterMap(360, 360), m_ParameterSpacePathMap(360)
+	  m_AngleParameterMap(360, 360), m_AngleParameterMapWithPath(360, 360), m_ParameterSpacePathMap(360)
 {
 	auto P0 = dxm::Vector2::Zero;
 	auto P1 = P0 + START_L1 * dxm::Vector2::UnitX;
@@ -25,7 +25,8 @@ SceneDataLayer::SceneDataLayer()
 
 	UpdateMeshes();
 	RecalculateRobotPathsInParameterSpace();
-	RecalculateRobotAngleParameterSpace();
+	RedrawRobotAngleParameterSpace();
+	RedrawPathInRobotAngleParameterSpace();
 }
 
 auto SceneDataLayer::AddNewObstacle() -> void
@@ -36,7 +37,8 @@ auto SceneDataLayer::AddNewObstacle() -> void
 	UpdateEndConfigurationPoints(m_EndConfiguration.GetP0(), m_EndConfiguration.GetP2());
 
 	RecalculateRobotPathsInParameterSpace();
-	RecalculateRobotAngleParameterSpace();
+	RedrawRobotAngleParameterSpace();
+	RedrawPathInRobotAngleParameterSpace();
 }
 
 auto SceneDataLayer::UpdateStartConfigurationPoints(const dxm::Vector2& p0, const dxm::Vector2& p2) -> void
@@ -89,7 +91,8 @@ auto SceneDataLayer::UpdateConfigurationLength(float L1, float L2) -> void
 	UpdateEndConfigurationPoints(m_EndConfiguration.GetP0(), m_EndConfiguration.GetP2());
 
 	RecalculateRobotPathsInParameterSpace();
-	RecalculateRobotAngleParameterSpace();
+	RedrawRobotAngleParameterSpace();
+	RedrawPathInRobotAngleParameterSpace();
 }
 
 auto SceneDataLayer::UpdateMeshes() -> void
@@ -161,7 +164,7 @@ auto SceneDataLayer::FindPathFromStartingConfiguration() -> std::vector<std::pai
 	return path;
 }
 
-auto SceneDataLayer::RecalculateRobotAngleParameterSpace() -> void
+auto SceneDataLayer::RedrawRobotAngleParameterSpace() -> void
 {
 	auto parameterSpaceDrawer = RobotParameterSpaceDrawer(m_ObstacleCollection);
 
@@ -172,6 +175,22 @@ auto SceneDataLayer::RecalculateRobotAngleParameterSpace() -> void
 		m_AngleParameterMap,
 		m_ParameterSpacePathMap
 	);
+}
+
+auto SceneDataLayer::RedrawPathInRobotAngleParameterSpace() -> void
+{
+	m_AngleParameterMap.BeginEdit();
+	m_AngleParameterMapWithPath.BeginEdit();
+
+	m_AngleParameterMapWithPath.CopyFromBuffer(m_AngleParameterMap.GetRawBuffer());
+
+	for (const auto& [x, y] : FindPathFromStartingConfiguration())
+	{
+		m_AngleParameterMapWithPath.PutPixel(x, y, dxm::Vector4(0.0f, 0.0f, 1.0f, 1.0f));
+	}
+
+	m_AngleParameterMap.EndEdit();
+	m_AngleParameterMapWithPath.EndEdit();
 }
 
 auto SceneDataLayer::RecalculateRobotPathsInParameterSpace() -> void

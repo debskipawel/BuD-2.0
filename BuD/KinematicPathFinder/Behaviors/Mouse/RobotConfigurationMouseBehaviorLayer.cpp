@@ -42,6 +42,8 @@ auto RobotConfigurationMouseBehaviorLayer::EditStartRobotConfiguration(int x, in
 	auto& sceneDataLayer = m_MainDataLayer.m_SceneDataLayer;
 
 	sceneDataLayer.UpdateStartConfigurationPoints(m_MainDataLayer.m_SceneDataLayer.m_StartConfiguration.GetP0(), {xSS, ySS});
+	
+	sceneDataLayer.RedrawPathInRobotAngleParameterSpace();
 }
 
 auto RobotConfigurationMouseBehaviorLayer::EditEndRobotConfiguration(int x, int y) -> void
@@ -53,5 +55,6 @@ auto RobotConfigurationMouseBehaviorLayer::EditEndRobotConfiguration(int x, int 
 	sceneDataLayer.UpdateEndConfigurationPoints(m_MainDataLayer.m_SceneDataLayer.m_EndConfiguration.GetP0(), {xSS, ySS});
 
 	sceneDataLayer.RecalculateRobotPathsInParameterSpace();
-	sceneDataLayer.RecalculateRobotAngleParameterSpace();
+	sceneDataLayer.RedrawRobotAngleParameterSpace();
+	sceneDataLayer.RedrawPathInRobotAngleParameterSpace();
 }
