@@ -88,6 +88,18 @@ namespace BuD
 		return result;
 	}
 
+	float Renderer::AspectRatio()
+	{
+		if (s_RenderingToSwapchain)
+		{
+			return static_cast<float>(s_Device->BufferWidth()) / static_cast<float>(s_Device->BufferHeight());
+		}
+
+		auto& target = s_ActiveRenderTargets.top();
+
+		return static_cast<float>(target->Width) / static_cast<float>(target->Height);
+	}
+
 	void Renderer::UseLeftHandCoordinateSystem()
 	{
 		for (auto& [renderingMode, implementation] : s_RenderingImplementations)

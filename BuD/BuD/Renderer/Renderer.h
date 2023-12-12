@@ -25,6 +25,8 @@ namespace BuD
 		static void BeginTarget(int width, int height);
 		static Texture EndTarget();
 
+		static float AspectRatio();
+
 		static void UseLeftHandCoordinateSystem();
 		static void UseRightHandCoordinateSystem();
 
