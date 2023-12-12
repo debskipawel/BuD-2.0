@@ -119,6 +119,16 @@ namespace BuD
 			std::memcpy(m_Buffer.data(), buffer.data(), buffer.size() * sizeof(float));
 		}
 	}
+
+	const std::vector<float>& EditableTexture::GetRawBuffer()
+	{
+		if (!m_EditingMode)
+		{
+			return {};
+		}
+
+		return m_Buffer;
+	}
 	
 	dxm::Vector4 EditableTexture::Sample(float x, float y)
 	{
