@@ -11,7 +11,6 @@ struct VSInput
     float3 insPosition : INS_POSITION;
     float3 insVectorU : INS_DERIVATIVE_U;
     float3 insVectorV : INS_DERIVATIVE_V;
-    float2 insSize : INS_SIZE;
 };
 
 struct VSOutput
@@ -26,7 +25,9 @@ VSOutput main(VSInput i)
 {
     VSOutput o = (VSOutput) 0;
     
-    float3 worldPosition = i.insPosition + 0.5f * (i.position.x * i.insSize.x * i.insVectorU + i.position.y * i.insSize.y * i.insVectorV);
+    float2 uv = 0.5f * i.position.xy + float2(0.5f, 0.5f);
+    
+    float3 worldPosition = i.insPosition + uv.x * i.insVectorU + uv.y * i.insVectorV;
     
     o.position = mul(projMtx, mul(viewMtx, float4(worldPosition, 1.0f)));
     o.dU = i.insVectorU;

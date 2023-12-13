@@ -3,7 +3,7 @@
 #include <Applications/CAD/Visitors/AbstractVisitor.h>
 
 FinitePlane::FinitePlane(BuD::Scene& scene, const dxm::Vector3& point, const dxm::Vector3& normal, float widthU, float widthV)
-	: Plane(scene, point, normal), m_WidthU(widthU), m_WidthV(widthV)
+	: Plane(scene, point, normal)
 {
 	m_Tag = "Finite plane";
 
@@ -11,7 +11,7 @@ FinitePlane::FinitePlane(BuD::Scene& scene, const dxm::Vector3& point, const dxm
 }
 
 FinitePlane::FinitePlane(BuD::Scene& scene, const dxm::Vector3& point, const dxm::Vector3& dU, const dxm::Vector3& dV, float widthU, float widthV)
-	: Plane(scene, point, dU, dV), m_WidthU(widthU), m_WidthV(widthV)
+	: Plane(scene, point, widthU * dU, widthV * dV)
 {
 	m_Tag = "Finite plane";
 
@@ -25,7 +25,7 @@ auto FinitePlane::Accept(AbstractVisitor& visitor) -> void
 
 auto FinitePlane::GetPoint(float u, float v) const -> dxm::Vector3
 {
-	if (fabsf(u) > 0.5f * m_WidthU || fabsf(v) > 0.5f * m_WidthV)
+	if (u < 0.0f || u > 1.0f || v < 0.0f || v > 1.0f)
 	{
 		return dxm::Vector3(NAN);
 	}
@@ -43,7 +43,6 @@ auto FinitePlane::InitializeRenderComponent() -> void
 			{ "INS_POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 			{ "INS_DERIVATIVE_U", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, sizeof(dxm::Vector3), D3D11_INPUT_PER_INSTANCE_DATA, 1},
 			{ "INS_DERIVATIVE_V", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 2 * sizeof(dxm::Vector3), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
-			{ "INS_SIZE", 0, DXGI_FORMAT_R32G32_FLOAT, 1, 3 * sizeof(dxm::Vector3), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 		}
 	);
 
@@ -90,6 +89,4 @@ auto FinitePlane::UpdateInstanceData() -> void
 	
 	m_InstanceData.m_VectorU = m_VectorU;
 	m_InstanceData.m_VectorV = m_VectorV;
-
-	m_InstanceData.m_Size = dxm::Vector2(m_WidthU, m_WidthV);
 }

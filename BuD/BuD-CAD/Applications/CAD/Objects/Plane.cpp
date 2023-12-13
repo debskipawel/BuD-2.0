@@ -1,7 +1,7 @@
 #include "Plane.h"
 
 Plane::Plane(BuD::Scene& scene, const dxm::Vector3& point, const dxm::Vector3& normal)
-	: SceneObjectCAD(scene), m_Normal(normal)
+	: ParameterizedObject2D(scene), m_Normal(normal)
 {
     m_Transform.m_Position = point;
 
@@ -27,7 +27,7 @@ Plane::Plane(BuD::Scene& scene, const dxm::Vector3& point, const dxm::Vector3& n
 }
 
 Plane::Plane(BuD::Scene& scene, const dxm::Vector3& point, const dxm::Vector3& derivativeU, const dxm::Vector3& derivativeV)
-    : SceneObjectCAD(scene), m_VectorU(derivativeU), m_VectorV(derivativeV)
+    : ParameterizedObject2D(scene), m_VectorU(derivativeU), m_VectorV(derivativeV)
 {
     m_Transform.m_Position = point;
 
@@ -37,8 +37,7 @@ Plane::Plane(BuD::Scene& scene, const dxm::Vector3& point, const dxm::Vector3& d
         return;
     }
 
-    m_VectorU.Normalize();
-    m_VectorV.Normalize();
-
     m_Normal = m_VectorU.Cross(m_VectorV);
+
+    m_Normal.Normalize();
 }

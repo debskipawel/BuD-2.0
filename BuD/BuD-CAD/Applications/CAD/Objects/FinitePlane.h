@@ -12,15 +12,11 @@ public:
 
 	virtual auto GetPoint(float u, float v) const->dxm::Vector3;
 
-	float m_WidthU;
-	float m_WidthV;
-
 	struct FinitePlaneInstanceData
 	{
 		dxm::Vector3 m_Position;
 		dxm::Vector3 m_VectorU;
 		dxm::Vector3 m_VectorV;
-		dxm::Vector2 m_Size;
 	};
 
 	FinitePlaneInstanceData m_InstanceData;

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Applications/CAD/Scene/SceneObjectCAD.h>
+#include <Applications/CAD/Objects/ParameterizedObject2D.h>
 
-class Plane : public SceneObjectCAD
+class Plane : public ParameterizedObject2D
 {
 public:
 	Plane(BuD::Scene& scene, const dxm::Vector3& point, const dxm::Vector3& normal);

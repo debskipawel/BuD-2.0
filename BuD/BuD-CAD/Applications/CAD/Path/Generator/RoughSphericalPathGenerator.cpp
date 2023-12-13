@@ -73,7 +73,8 @@ auto RoughSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& mate
 
 auto RoughSphericalPathGenerator::CreateHorizontalPlane(const MaterialBlockDetails& materialBlockDetails, float height) -> std::weak_ptr<SceneObjectCAD>
 {
-	auto point = materialBlockDetails.m_Position + height * dxm::Vector3::UnitY;
+	auto& size = materialBlockDetails.m_Size;
+	auto point = materialBlockDetails.m_Position - 0.5f * dxm::Vector3(size.x, 0.0f, size.z) + height * dxm::Vector3::UnitY;
 	
 	return m_SceneCAD.CreateFinitePlane(point, dxm::Vector3::UnitX, dxm::Vector3::UnitZ, materialBlockDetails.m_Size.x, materialBlockDetails.m_Size.z);
 }
