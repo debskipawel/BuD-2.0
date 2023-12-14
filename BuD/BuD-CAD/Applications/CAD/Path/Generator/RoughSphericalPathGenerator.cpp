@@ -92,7 +92,7 @@ auto RoughSphericalPathGenerator::CreateHorizontalPlane(const MaterialBlockDetai
 
 auto RoughSphericalPathGenerator::GenerateCrossSection(const MaterialBlockDetails& materialBlockDetails, const dxm::Vector3& startPosition, const dxm::Vector3& endPosition, std::weak_ptr<SceneObjectCAD> horizontalPlane) -> std::vector<dxm::Vector3>
 {
-	auto result = std::vector<dxm::Vector3>{ startPosition };
+	auto result = std::vector<dxm::Vector3>();
 
 	auto dU = endPosition - startPosition;
 	auto dV = dxm::Vector3::UnitY;
@@ -111,6 +111,8 @@ auto RoughSphericalPathGenerator::GenerateCrossSection(const MaterialBlockDetail
 	for (auto& polygonPoint : polygon)
 	{
 		auto point = m_Sampler->GetPoint(verticalPlane, polygonPoint.x, polygonPoint.y);
+
+		point.y = max(point.y, startPosition.y);
 
 		result.push_back(point);
 	}

@@ -96,7 +96,6 @@ auto CrossSection::UpperBound() -> std::vector<dxm::Vector2>
 
 		if (!currentMaxEdgeOpt.has_value())
 		{
-			// ----------- TODO -----------
 			result.emplace_back(u, 0.0f);
 
 			if (idx >= m_IntersectionEdges.size())
@@ -107,7 +106,6 @@ auto CrossSection::UpperBound() -> std::vector<dxm::Vector2>
 			}
 
 			result.emplace_back(m_IntersectionEdges[idx].StartU(), 0.0f);
-			// ----------------------------
 
 			u = m_IntersectionEdges[idx].StartU();
 
