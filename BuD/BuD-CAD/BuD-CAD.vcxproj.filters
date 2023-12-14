@@ -546,6 +546,15 @@
     <ClInclude Include="Applications\CAD\Intersection\ResultConverter\IntersectionResultConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Generator\CrossSection\CrossSection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Generator\CrossSection\ActiveEdgeTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Generator\CrossSection\Edge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Applications\CAD\ApplicationCAD.cpp">
@@ -999,6 +1008,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Applications\CAD\Intersection\ResultConverter\IntersectionResultConverter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Generator\CrossSection\CrossSection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Generator\CrossSection\ActiveEdgeTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Generator\CrossSection\Edge.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

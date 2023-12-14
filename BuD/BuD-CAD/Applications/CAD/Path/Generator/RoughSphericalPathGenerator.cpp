@@ -1,8 +1,11 @@
 #include "RoughSphericalPathGenerator.h"
 
 #include <Applications/CAD/Intersection/MultiIntersectionAlgorithm.h>
+#include <Applications/CAD/Intersection/ResultConverter/IntersectionResultConverter.h>
 
-constexpr auto ROUGH_SPHERICAL_TOOL_RADIUS = 0.5f;
+#include <Applications/CAD/Path/Generator/CrossSection/CrossSection.h>
+
+constexpr auto ROUGH_SPHERICAL_TOOL_RADIUS = 0.8f;
 
 RoughSphericalPathGenerator::RoughSphericalPathGenerator(SceneCAD& scene, const std::vector<std::weak_ptr<SceneObjectCAD>>& surfaces)
 	: AbstractPathGenerator(scene, surfaces, ROUGH_SPHERICAL_TOOL_RADIUS)
@@ -11,11 +14,13 @@ RoughSphericalPathGenerator::RoughSphericalPathGenerator(SceneCAD& scene, const 
 
 auto RoughSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& materialBlockDetails) -> MillingToolPath
 {
+	auto path = std::vector<dxm::Vector3>{ dxm::Vector3(0.0f, materialBlockDetails.m_Size.y + 2.0f, 0.0f)};
+
 	auto eps = 0.1f;
 	
 	auto R = ROUGH_SPHERICAL_TOOL_RADIUS;
 	auto T = 0.25f * R;
-	auto D = R * sinf(acosf(1.0f - T / R));
+	auto D = 2.0f * R * sinf(acosf(1.0f - T / R));
 	auto H = 3.0f * R;
 	
 	auto minX = materialBlockDetails.m_Position.x - (0.5f * materialBlockDetails.m_Size.x + R + eps);
@@ -23,6 +28,8 @@ auto RoughSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& mate
 
 	auto minZ = materialBlockDetails.m_Position.z - (0.5f * materialBlockDetails.m_Size.z + R);
 	auto maxZ = materialBlockDetails.m_Position.z + (0.5f * materialBlockDetails.m_Size.z + R);
+
+	path.push_back(dxm::Vector3(minX, materialBlockDetails.m_Size.y + 2.0f, minZ));
 
 	auto moveVectorX = dxm::Vector3(1.0f, 0.0f, 0.0f);
 	auto moveVectorZ = dxm::Vector3(0.0f, 0.0f, 1.0f);
@@ -34,7 +41,7 @@ auto RoughSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& mate
 	auto endY = materialBlockDetails.m_StandHeight;
 
 	auto yPassesCount = static_cast<int>(ceilf(fabsf(endY - startY) / H));
-	auto zPassesCount = static_cast<int>(ceil(fabsf(maxZ - minZ) / D));
+	auto zPassesCount = static_cast<int>(ceilf(fabsf(maxZ - minZ) / D));
 
 	D = fabsf(maxZ - minZ) / zPassesCount;
 	H = fabsf(endY - startY) / yPassesCount;
@@ -62,13 +69,17 @@ auto RoughSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& mate
 			auto startPosition = dxm::Vector3(startX, y, z);
 			auto endPosition = dxm::Vector3(endX, y, z);
 
+			auto passResult = GenerateCrossSection(materialBlockDetails, startPosition, endPosition, horizontalPlane);
+
+			std::copy(passResult.begin(), passResult.end(), std::back_inserter(path));
+
 			moveForwardX = !moveForwardX;
 		}
 
 		moveForwardZ = !moveForwardZ;
 	}
 
-	return MillingToolPath(m_OffsetValue, {});
+	return MillingToolPath(m_OffsetValue, path);
 }
 
 auto RoughSphericalPathGenerator::CreateHorizontalPlane(const MaterialBlockDetails& materialBlockDetails, float height) -> std::weak_ptr<SceneObjectCAD>
@@ -79,15 +90,30 @@ auto RoughSphericalPathGenerator::CreateHorizontalPlane(const MaterialBlockDetai
 	return m_SceneCAD.CreateFinitePlane(point, dxm::Vector3::UnitX, dxm::Vector3::UnitZ, materialBlockDetails.m_Size.x, materialBlockDetails.m_Size.z);
 }
 
-auto RoughSphericalPathGenerator::GenerateCrossSection(const dxm::Vector3& startPosition, const dxm::Vector3& endPosition) -> std::vector<dxm::Vector3>
+auto RoughSphericalPathGenerator::GenerateCrossSection(const MaterialBlockDetails& materialBlockDetails, const dxm::Vector3& startPosition, const dxm::Vector3& endPosition, std::weak_ptr<SceneObjectCAD> horizontalPlane) -> std::vector<dxm::Vector3>
 {
-	auto direction = endPosition - startPosition;
-	direction.Normalize();
+	auto result = std::vector<dxm::Vector3>{ startPosition };
 
-	auto verticalPlane = m_SceneCAD.CreateInfinitePlane(startPosition, direction, dxm::Vector3::UnitY);
+	auto dU = endPosition - startPosition;
+	auto dV = dxm::Vector3::UnitY;
 
-	auto intersectionParameters = IntersectionAlgorithmParameters();
-	intersectionParameters.m_UseCursorAsStartingPoint = true;
+	auto widthU = dU.Length();
+	auto widthV = materialBlockDetails.m_Size.y;
 
-	return std::vector<dxm::Vector3>();
+	dU.Normalize();
+	dV.Normalize();
+
+	auto verticalPlane = m_SceneCAD.CreateFinitePlane(dxm::Vector3(startPosition.x, 0.0f, startPosition.z), dU, dV, widthU, widthV);
+
+	auto crossSection = CrossSection(verticalPlane, m_OffsetSurfaces);
+	auto polygon = crossSection.UpperBound();
+
+	for (auto& polygonPoint : polygon)
+	{
+		auto point = m_Sampler->GetPoint(verticalPlane, polygonPoint.x, polygonPoint.y);
+
+		result.push_back(point);
+	}
+
+	return result;
 }
