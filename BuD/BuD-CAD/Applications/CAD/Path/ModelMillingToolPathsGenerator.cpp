@@ -26,13 +26,13 @@ auto ModelMillingToolPathsGenerator::GeneratePaths(const MaterialBlockDetails& m
 	auto standPath = standToolGenerator->GeneratePaths(materialBlockDetails);
 	auto detailPath = detailToolGenerator->GeneratePaths(materialBlockDetails);
 
-	auto optimizedroughPath = m_PathOptimizer->Optimize(roughPath);
+	auto optimizedRoughPath = m_PathOptimizer->Optimize(roughPath);
 	auto optimizedStandPath = m_PathOptimizer->Optimize(standPath);
 	auto optimizedDetailPath = m_PathOptimizer->Optimize(detailPath);
 
 	auto paths = std::vector<std::pair<std::string, MillingToolPath>>
 	{
-		{ "Rough", optimizedroughPath }, { "Stand", optimizedStandPath }, { "Detail", optimizedDetailPath },
+		{ "Rough", optimizedRoughPath }, { "Stand", optimizedStandPath }, { "Detail", optimizedDetailPath },
 	};
 
 	return paths;
