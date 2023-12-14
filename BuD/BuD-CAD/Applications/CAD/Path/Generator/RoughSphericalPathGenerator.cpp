@@ -76,6 +76,8 @@ auto RoughSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& mate
 			moveForwardX = !moveForwardX;
 		}
 
+		m_SceneCAD.DeleteObject(*horizontalPlane.lock());
+
 		moveForwardZ = !moveForwardZ;
 	}
 
@@ -116,6 +118,8 @@ auto RoughSphericalPathGenerator::GenerateCrossSection(const MaterialBlockDetail
 
 		result.push_back(point);
 	}
+
+	m_SceneCAD.DeleteObject(*verticalPlane.lock());
 
 	return result;
 }

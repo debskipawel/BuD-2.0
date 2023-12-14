@@ -30,6 +30,13 @@ auto ModelMillingToolPathsGenerator::GeneratePaths(const MaterialBlockDetails& m
 	auto optimizedStandPath = m_PathOptimizer->Optimize(standPath);
 	auto optimizedDetailPath = m_PathOptimizer->Optimize(detailPath);
 
+	//auto points = std::vector<std::weak_ptr<SceneObjectCAD>>();
+
+	//for (const auto& pos : optimizedRoughPath.GetPath())
+	//{
+	//	points.emplace_back(m_Scene.CreatePoint(pos));
+	//}
+
 	auto paths = std::vector<std::pair<std::string, MillingToolPath>>
 	{
 		{ "Rough", optimizedRoughPath }, { "Stand", optimizedStandPath }, { "Detail", optimizedDetailPath },
