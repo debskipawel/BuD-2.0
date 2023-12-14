@@ -126,22 +126,22 @@ auto CrossSection::UpperBound() -> std::vector<dxm::Vector2>
 
 		result.emplace_back(u, currentMaxEdge.InterpolateV(u));
 
+		auto intersectionLowerBound = u;
+		auto intersectionUpperBound = idx < m_IntersectionEdges.size() ? min(currentMaxEdge.EndU(), m_IntersectionEdges[idx].StartU()) : currentMaxEdge.EndU();
+
+		auto [intersectingEdge, t] = AET.GetFirstIntersecting(currentMaxEdge, intersectionLowerBound, intersectionUpperBound);
+
+		if (intersectingEdge.has_value())
+		{
+			u = (1.0f - t) * currentMaxEdge.StartU() + t * currentMaxEdge.EndU();;
+			AET.Update(u);
+
+			continue;
+		}
+
 		if (idx < m_IntersectionEdges.size())
 		{
 			const auto& nextEdge = m_IntersectionEdges[idx];
-
-			auto intersectionLowerBound = u;
-			auto intersectionUpperBound = min(currentMaxEdge.EndU(), nextEdge.StartU());
-
-			auto [intersectingEdge, t] = AET.GetFirstIntersecting(currentMaxEdge, intersectionLowerBound, intersectionUpperBound);
-
-			if (intersectingEdge.has_value())
-			{
-				u = (1.0f - t) * currentMaxEdge.StartU() + t * currentMaxEdge.EndU();;
-				AET.Update(u);
-
-				continue;
-			}
 
 			auto gapBetweenEdges = nextEdge.StartU() > currentMaxEdge.EndU();
 
@@ -165,19 +165,6 @@ auto CrossSection::UpperBound() -> std::vector<dxm::Vector2>
 		}
 		else
 		{
-			auto intersectionLowerBound = u;
-			auto intersectionUpperBound = currentMaxEdge.EndU();
-
-			auto [intersectingEdge, t] = AET.GetFirstIntersecting(currentMaxEdge, intersectionLowerBound, intersectionUpperBound);
-
-			if (intersectingEdge.has_value())
-			{
-				u = (1.0f - t) * currentMaxEdge.StartU() + t * currentMaxEdge.EndU();;
-				AET.Update(u);
-
-				continue;
-			}
-
 			result.emplace_back(currentMaxEdge.EndU(), currentMaxEdge.EndV());
 
 			u = currentMaxEdge.EndU();
