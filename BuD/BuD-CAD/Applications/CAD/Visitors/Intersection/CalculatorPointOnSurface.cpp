@@ -99,8 +99,14 @@ void CalculatorPointOnSurface::Visit(OffsetSurface& surface)
 {
 	CalculatorParameterized::Visit(surface.InternalSurface());
 
-	auto normalCalculator = std::make_unique<CalculatorNormalVector>();
+	auto point = m_Result;
+
+	std::unique_ptr<CalculatorParameterized> normalCalculator = std::make_unique<CalculatorNormalVector>();
+	normalCalculator->SetParameter(m_Parameter);
 	normalCalculator->Visit(surface.InternalSurface());
 
-	m_Result += surface.Offset() * normalCalculator->Result();
+	auto normal = normalCalculator->Result();
+	auto offset = surface.Offset();
+
+	m_Result = point + offset * normal;
 }

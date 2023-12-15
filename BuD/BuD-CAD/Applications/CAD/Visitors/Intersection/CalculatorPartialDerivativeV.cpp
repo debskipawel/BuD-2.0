@@ -2,6 +2,9 @@
 
 #include <numbers>
 
+#include <Applications/CAD/Visitors/Intersection/CalculatorPointOnSurface.h>
+#include <Applications/CAD/Visitors/Intersection/ParameterWrapperVisitor.h>
+
 void CalculatorPartialDerivativeV::Visit(Torus& torus)
 {
 	auto R = torus.m_InstanceData.m_OuterRadius;
@@ -28,7 +31,7 @@ void CalculatorPartialDerivativeV::Visit(InfinitePlane& plane)
 
 void CalculatorPartialDerivativeV::Visit(FinitePlane& plane)
 {
-	m_Result = plane.GetV();
+	m_Result = plane.GetTransformedV();
 }
 
 void CalculatorPartialDerivativeV::Visit(BezierSurfaceC0& surface)
@@ -102,5 +105,33 @@ void CalculatorPartialDerivativeV::Visit(BezierSurfaceC2& surface)
 
 void CalculatorPartialDerivativeV::Visit(OffsetSurface& surface)
 {
-	CalculatorParameterized::Visit(surface.InternalSurface());
+	auto inner = surface.InternalSurface();
+
+	auto pointCalculator = std::make_unique<CalculatorPointOnSurface>();
+	auto parameterWrapper = std::make_unique<ParameterWrapperVisitor>();
+
+	auto prevParameter = dxm::Vector2(m_Parameter.x, m_Parameter.y - 0.001f);
+	auto nextParameter = dxm::Vector2(m_Parameter.x, m_Parameter.y + 0.001f);
+
+	parameterWrapper->SetParameter(prevParameter);
+	parameterWrapper->Visit(inner);
+
+	prevParameter = parameterWrapper->Parameter();
+
+	parameterWrapper->SetParameter(nextParameter);
+	parameterWrapper->Visit(inner);
+
+	nextParameter = parameterWrapper->Parameter();
+
+	pointCalculator->SetParameter(prevParameter);
+	pointCalculator->Visit(surface);
+
+	auto prevPoint = pointCalculator->Result();
+
+	pointCalculator->SetParameter(nextParameter);
+	pointCalculator->Visit(surface);
+
+	auto nextPoint = pointCalculator->Result();
+
+	m_Result = (nextPoint - prevPoint) / (nextParameter.y - prevParameter.y);
 }

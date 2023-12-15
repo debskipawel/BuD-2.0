@@ -33,3 +33,20 @@ void AfterUpdateTransformVisitor::Visit(Point& point)
 		dependentObjectShared->OnPointModify();
 	}
 }
+
+void AfterUpdateTransformVisitor::Visit(FinitePlane& plane)
+{
+	for (auto& [id, intersectionCurve] : plane.m_IntersectionCurves)
+	{
+		auto curveShared = intersectionCurve.lock();
+
+		if (!curveShared || m_ModifiedObjects.contains(curveShared->Id()))
+		{
+			continue;
+		}
+
+		m_ModifiedObjects.insert(curveShared->Id());
+
+		curveShared->UpdateInstanceData();
+	}
+}

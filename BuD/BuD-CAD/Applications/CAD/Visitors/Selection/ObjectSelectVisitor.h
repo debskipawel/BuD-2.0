@@ -25,6 +25,8 @@ public:
 	virtual void Visit(BezierSurfaceC0& surface) override;
 	virtual void Visit(BezierSurfaceC2& surface) override;
 
+	virtual void Visit(OffsetSurface& surface) override;
+
 protected:
 	virtual void CommonSelectCurve(BaseCurve& curve);
 	virtual void CommonSelectPatch(BaseBezierPatch& patch);

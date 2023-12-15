@@ -14,6 +14,8 @@ public:
 	virtual void Visit(BezierSurfaceC0& surface) override;
 	virtual void Visit(BezierSurfaceC2& surface) override;
 
+	virtual void Visit(OffsetSurface& surface) override;
+
 	virtual void SetParameter(const dxm::Vector2& parameter);
 
 	virtual inline const dxm::Vector2& Parameter() const { return m_Parameter; }

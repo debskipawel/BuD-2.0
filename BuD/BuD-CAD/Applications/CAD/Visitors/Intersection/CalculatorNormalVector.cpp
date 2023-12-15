@@ -5,23 +5,109 @@
 
 CalculatorNormalVector::CalculatorNormalVector()
 {
-	m_DerivativeUVisitor = std::make_unique<CalculatorPartialDerivativeU>();
-	m_DerivativeVVisitor = std::make_unique<CalculatorPartialDerivativeV>();
 }
 
-void CalculatorNormalVector::Visit(std::weak_ptr<SceneObjectCAD> object)
+void CalculatorNormalVector::Visit(Torus& torus)
 {
-	m_DerivativeUVisitor->SetParameter(m_Parameter);
-	m_DerivativeVVisitor->SetParameter(m_Parameter);
+	auto derivativeUVisitor = std::make_unique<CalculatorPartialDerivativeU>();
+	auto derivativeVVisitor = std::make_unique<CalculatorPartialDerivativeV>();
 
-	m_DerivativeUVisitor->Visit(object);
-	m_DerivativeVVisitor->Visit(object);
+	derivativeUVisitor->SetParameter(m_Parameter);
+	derivativeVVisitor->SetParameter(m_Parameter);
 
-	auto uDerivative = m_DerivativeUVisitor->Result();
-	auto vDerivative = m_DerivativeVVisitor->Result();
+	derivativeUVisitor->Visit(torus);
+	derivativeVVisitor->Visit(torus);
+
+	auto uDerivative = derivativeUVisitor->Result();
+	auto vDerivative = derivativeVVisitor->Result();
 
 	auto normal = vDerivative.Cross(uDerivative);
 	normal.Normalize();
 
 	m_Result = normal;
+}
+
+void CalculatorNormalVector::Visit(InfinitePlane& plane)
+{
+	auto derivativeUVisitor = std::make_unique<CalculatorPartialDerivativeU>();
+	auto derivativeVVisitor = std::make_unique<CalculatorPartialDerivativeV>();
+
+	derivativeUVisitor->SetParameter(m_Parameter);
+	derivativeVVisitor->SetParameter(m_Parameter);
+
+	derivativeUVisitor->Visit(plane);
+	derivativeVVisitor->Visit(plane);
+
+	auto uDerivative = derivativeUVisitor->Result();
+	auto vDerivative = derivativeVVisitor->Result();
+
+	auto normal = vDerivative.Cross(uDerivative);
+	normal.Normalize();
+
+	m_Result = normal;
+}
+
+void CalculatorNormalVector::Visit(FinitePlane& plane)
+{
+	auto derivativeUVisitor = std::make_unique<CalculatorPartialDerivativeU>();
+	auto derivativeVVisitor = std::make_unique<CalculatorPartialDerivativeV>();
+
+	derivativeUVisitor->SetParameter(m_Parameter);
+	derivativeVVisitor->SetParameter(m_Parameter);
+
+	derivativeUVisitor->Visit(plane);
+	derivativeVVisitor->Visit(plane);
+
+	auto uDerivative = derivativeUVisitor->Result();
+	auto vDerivative = derivativeVVisitor->Result();
+
+	auto normal = vDerivative.Cross(uDerivative);
+	normal.Normalize();
+
+	m_Result = normal;
+}
+
+void CalculatorNormalVector::Visit(BezierSurfaceC0& surface)
+{
+	auto derivativeUVisitor = std::make_unique<CalculatorPartialDerivativeU>();
+	auto derivativeVVisitor = std::make_unique<CalculatorPartialDerivativeV>();
+
+	derivativeUVisitor->SetParameter(m_Parameter);
+	derivativeVVisitor->SetParameter(m_Parameter);
+
+	derivativeUVisitor->Visit(surface);
+	derivativeVVisitor->Visit(surface);
+
+	auto uDerivative = derivativeUVisitor->Result();
+	auto vDerivative = derivativeVVisitor->Result();
+
+	auto normal = vDerivative.Cross(uDerivative);
+	normal.Normalize();
+
+	m_Result = normal;
+}
+
+void CalculatorNormalVector::Visit(BezierSurfaceC2& surface)
+{
+	auto derivativeUVisitor = std::make_unique<CalculatorPartialDerivativeU>();
+	auto derivativeVVisitor = std::make_unique<CalculatorPartialDerivativeV>();
+
+	derivativeUVisitor->SetParameter(m_Parameter);
+	derivativeVVisitor->SetParameter(m_Parameter);
+
+	derivativeUVisitor->Visit(surface);
+	derivativeVVisitor->Visit(surface);
+
+	auto uDerivative = derivativeUVisitor->Result();
+	auto vDerivative = derivativeVVisitor->Result();
+
+	auto normal = vDerivative.Cross(uDerivative);
+	normal.Normalize();
+
+	m_Result = normal;
+}
+
+void CalculatorNormalVector::Visit(OffsetSurface& surface)
+{
+	CalculatorParameterized::Visit(surface.InternalSurface());
 }

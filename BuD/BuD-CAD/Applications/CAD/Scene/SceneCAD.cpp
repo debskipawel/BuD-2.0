@@ -8,6 +8,8 @@
 
 #include <Applications/CAD/Objects/ParameterizedObject2D.h>
 
+#include <Applications/CAD/Objects/PointBased/Surfaces/OffsetSurface.h>
+
 #include <Applications/CAD/Objects/Intersection/IntersectionCurve.h>
 
 #include <Applications/CAD/Objects/PointBased/Curve/BezierCurveC0.h>
@@ -52,6 +54,16 @@ void SceneCAD::DeleteObject(SceneObjectCAD& object)
 	auto& objectPtr = m_ObjectList.at(id);
 
 	m_ObjectList.erase(id);
+}
+
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateOffsetSurface(std::weak_ptr<SceneObjectCAD> object, float offset)
+{
+	auto offsetSurface = std::make_shared<OffsetSurface>(m_Scene, object, offset);
+	m_ObjectList.emplace(offsetSurface->Id(), offsetSurface);
+
+	BuD::Log::WriteInfo("Successfully created an offset surface.");
+
+	return offsetSurface;
 }
 
 std::weak_ptr<SceneObjectCAD> SceneCAD::CreateTorus(dxm::Vector3 position)

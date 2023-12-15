@@ -107,6 +107,11 @@ void ObjectSelectVisitor::Visit(BezierSurfaceC2& surface)
 	CommonSelectSurface(surface);
 }
 
+void ObjectSelectVisitor::Visit(OffsetSurface& surface)
+{
+	SelectManually(m_Caller);
+}
+
 void ObjectSelectVisitor::CommonSelectCurve(BaseCurve& curve)
 {
 	SelectManually(m_Caller);

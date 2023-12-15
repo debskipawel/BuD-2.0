@@ -61,6 +61,11 @@ void ParameterWrapperVisitor::Visit(BezierSurfaceC2& surface)
 	m_Parameter.y = std::clamp(m_Parameter.y, 0.0f, 1.0f);
 }
 
+void ParameterWrapperVisitor::Visit(OffsetSurface& surface)
+{
+	ParameterWrapperVisitor::Visit(surface.InternalSurface());
+}
+
 void ParameterWrapperVisitor::SetParameter(const dxm::Vector2& parameter)
 {
 	m_Parameter = parameter;

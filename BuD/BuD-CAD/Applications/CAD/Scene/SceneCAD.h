@@ -21,6 +21,8 @@ public:
 	void Clear();
 	void DeleteObject(SceneObjectCAD& object);
 
+	std::weak_ptr<SceneObjectCAD> CreateOffsetSurface(std::weak_ptr<SceneObjectCAD> object, float offset);
+
 	std::weak_ptr<SceneObjectCAD> CreateTorus(dxm::Vector3 position);
 	std::weak_ptr<SceneObjectCAD> CreatePoint(dxm::Vector3 position);
 	

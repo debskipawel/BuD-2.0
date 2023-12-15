@@ -12,6 +12,9 @@ public:
 
 	virtual auto GetPoint(float u, float v) const->dxm::Vector3;
 
+	virtual auto GetTransformedU() const -> dxm::Vector3 { return m_InstanceData.m_VectorU; }
+	virtual auto GetTransformedV() const -> dxm::Vector3 { return m_InstanceData.m_VectorV; }
+
 	struct FinitePlaneInstanceData
 	{
 		dxm::Vector3 m_Position;
