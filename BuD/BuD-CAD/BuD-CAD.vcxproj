@@ -181,6 +181,7 @@
     <ClInclude Include="Applications\CAD\Objects\FinitePlane.h" />
     <ClInclude Include="Applications\CAD\Objects\InfinitePlane.h" />
     <ClInclude Include="Applications\CAD\Objects\Plane.h" />
+    <ClInclude Include="Applications\CAD\Path\Converter\PathToGCodeConverter.h" />
     <ClInclude Include="Applications\CAD\Path\Generator\CrossSection\ActiveEdgeTable.h" />
     <ClInclude Include="Applications\CAD\Path\Generator\CrossSection\CrossSection.h" />
     <ClInclude Include="Applications\CAD\Path\Generator\CrossSection\Edge.h" />
@@ -360,6 +361,7 @@
     <ClCompile Include="Applications\CAD\Objects\FinitePlane.cpp" />
     <ClCompile Include="Applications\CAD\Objects\InfinitePlane.cpp" />
     <ClCompile Include="Applications\CAD\Objects\Plane.cpp" />
+    <ClCompile Include="Applications\CAD\Path\Converter\PathToGCodeConverter.cpp" />
     <ClCompile Include="Applications\CAD\Path\Generator\CrossSection\ActiveEdgeTable.cpp" />
     <ClCompile Include="Applications\CAD\Path\Generator\CrossSection\CrossSection.cpp" />
     <ClCompile Include="Applications\CAD\Path\Generator\CrossSection\Edge.cpp" />

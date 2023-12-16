@@ -6,6 +6,8 @@
 #include <Applications/CAD/Path/Generator/StandFlatToolPathGenerator.h>
 #include <Applications/CAD/Path/Generator/DetailSphericalPathGenerator.h>
 
+#include <Applications/CAD/Path/Converter/PathToGCodeConverter.h>
+
 #include <Applications/CAD/Path/Optimizer/ColinearPathOptimizer.h>
 
 ModelMillingToolPathsGenerator::ModelMillingToolPathsGenerator(SceneCAD& scene)
@@ -14,7 +16,7 @@ ModelMillingToolPathsGenerator::ModelMillingToolPathsGenerator(SceneCAD& scene)
 	m_PathOptimizer = std::make_unique<ColinearPathOptimizer>();
 }
 
-auto ModelMillingToolPathsGenerator::GeneratePaths(const MaterialBlockDetails& materialBlockDetails) -> std::vector<std::pair<std::string, MillingToolPath>>
+auto ModelMillingToolPathsGenerator::GeneratePaths(const MaterialBlockDetails& materialBlockDetails) -> std::vector<std::pair<std::string, GCP::GCodeProgram>>
 {
 	auto modelSurfaces = GetSurfacesOnScene();
 
@@ -30,6 +32,12 @@ auto ModelMillingToolPathsGenerator::GeneratePaths(const MaterialBlockDetails& m
 	auto optimizedStandPath = m_PathOptimizer->Optimize(standPath);
 	auto optimizedDetailPath = m_PathOptimizer->Optimize(detailPath);
 
+	auto converter = PathToGCodeConverter();
+
+	auto gCodeRoughPath = converter.Convert(optimizedRoughPath);
+	auto gCodeStandPath = converter.Convert(optimizedStandPath);
+	auto gCodeDetailPath = converter.Convert(optimizedDetailPath);
+
 	auto points = std::vector<std::weak_ptr<SceneObjectCAD>>();
 
 	for (const auto& pos : optimizedRoughPath.GetPath())
@@ -37,9 +45,9 @@ auto ModelMillingToolPathsGenerator::GeneratePaths(const MaterialBlockDetails& m
 		points.emplace_back(m_Scene.CreatePoint(pos));
 	}
 
-	auto paths = std::vector<std::pair<std::string, MillingToolPath>>
+	auto paths = std::vector<std::pair<std::string, GCP::GCodeProgram>>
 	{
-		{ "Rough", optimizedRoughPath }, { "Stand", optimizedStandPath }, { "Detail", optimizedDetailPath },
+		{ "rough_path.k16", gCodeRoughPath }, { "stand_path.f10", gCodeStandPath }, { "detail_path.k08", gCodeDetailPath },
 	};
 
 	return paths;
