@@ -30,7 +30,7 @@ auto FinitePlane::GetPoint(float u, float v) const -> dxm::Vector3
 		return dxm::Vector3(NAN);
 	}
 
-	return m_Transform.m_Position + u * m_VectorU + v * m_VectorV;
+	return m_Transform.m_Position + u * GetTransformedU() + v * GetTransformedV();
 }
 
 auto FinitePlane::InitializeRenderComponent() -> void

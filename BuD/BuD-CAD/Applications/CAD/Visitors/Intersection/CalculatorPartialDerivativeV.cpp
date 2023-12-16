@@ -110,18 +110,36 @@ void CalculatorPartialDerivativeV::Visit(OffsetSurface& surface)
 	auto pointCalculator = std::make_unique<CalculatorPointOnSurface>();
 	auto parameterWrapper = std::make_unique<ParameterWrapperVisitor>();
 
-	auto prevParameter = dxm::Vector2(m_Parameter.x, m_Parameter.y - 0.001f);
-	auto nextParameter = dxm::Vector2(m_Parameter.x, m_Parameter.y + 0.001f);
+	auto h = 0.0005f;
+	auto mul = 1.0f;
+
+	auto [u, v] = m_Parameter;
+
+	auto vph = v + h;
+	auto vmh = v - h;
+
+	auto prevParameter = dxm::Vector2(u, vmh);
+	auto nextParameter = dxm::Vector2(u, vph);
 
 	parameterWrapper->SetParameter(prevParameter);
 	parameterWrapper->Visit(inner);
 
 	prevParameter = parameterWrapper->Parameter();
 
+	if (vmh < 0.0f && !parameterWrapper->WrappedV())
+	{
+		mul = 2.0f;
+	}
+
 	parameterWrapper->SetParameter(nextParameter);
 	parameterWrapper->Visit(inner);
 
 	nextParameter = parameterWrapper->Parameter();
+
+	if (vph > 1.0f && !parameterWrapper->WrappedV())
+	{
+		mul = 2.0f;
+	}
 
 	pointCalculator->SetParameter(prevParameter);
 	pointCalculator->Visit(surface);
@@ -133,5 +151,5 @@ void CalculatorPartialDerivativeV::Visit(OffsetSurface& surface)
 
 	auto nextPoint = pointCalculator->Result();
 
-	m_Result = (nextPoint - prevPoint) / (nextParameter.y - prevParameter.y);
+	m_Result = (nextPoint - prevPoint) / (2.0f * h) * mul;
 }

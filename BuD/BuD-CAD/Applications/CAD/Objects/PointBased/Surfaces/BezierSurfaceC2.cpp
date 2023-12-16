@@ -184,7 +184,7 @@ std::vector<std::weak_ptr<Point>> BezierSurfaceC2::CreateControlPointsForCylinde
 			auto point = scene.CreatePoint(startPosition + radiusVector);
 			controlPoints.push_back(std::dynamic_pointer_cast<Point>(point.lock()));
 
-			auto tangent = cylinderMainAxis.Cross(radiusVector);
+			auto tangent = radiusVector.Cross(cylinderMainAxis);
 
 			radiusVector = ca * radiusVector + sa * tangent;
 		}

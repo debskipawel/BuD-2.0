@@ -7,7 +7,7 @@
 #include <Applications/CAD/Path/Generator/CrossSection/ActiveEdgeTable.h>
 
 CrossSection::CrossSection(std::weak_ptr<SceneObjectCAD> plane, std::vector<std::shared_ptr<SceneObjectCAD>> model)
-	: CrossSection(plane, model, { { 0.25f, 0.5f }, { 0.5f, 0.5f }, { 0.75f, 0.5f } })
+	: CrossSection(plane, model, { { 0.2f, 0.5f }, { 0.4f, 0.5f }, { 0.6f, 0.5f }, { 0.8f, 0.5f } })
 {
 }
 

@@ -20,8 +20,8 @@ SelfIntersectionAlgorithm::SelfIntersectionAlgorithm(IntersectionAlgorithmParame
 
 	m_MarchingCommonPointFinder = std::make_unique<NewtonCommonPointMarching>(m_ParameterizedObject, m_ParameterizedObject, m_Parameters.m_Precision);
 	
-	// m_LoopDetector = std::make_unique<DotProductLoopDetector>(m_Parameters.m_PointDistance);
-	m_LoopDetector = std::make_unique<ShortestDistanceLoopDetector>(m_ParameterizedObject, m_ParameterizedObject, m_Parameters.m_PointDistance);
+	// m_LoopDetectors.emplace_back(std::make_unique<DotProductLoopDetector>(m_Parameters.m_PointDistance));
+	m_LoopDetectors.emplace_back(std::make_unique<ShortestDistanceLoopDetector>(m_ParameterizedObject, m_ParameterizedObject, m_Parameters.m_PointDistance));
 
 	m_Sampler = std::make_unique<VisitorSampler>();
 }
