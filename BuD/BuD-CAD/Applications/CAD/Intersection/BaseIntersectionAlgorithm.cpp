@@ -112,11 +112,11 @@ CommonPointSequenceResult BaseIntersectionAlgorithm::FindAllCommonPointsInDirect
 		auto nextPoint = m_MarchingCommonPointFinder->NextPoint(previousPoint.m_Parameter, m_Parameters.m_PointDistance, marchingDirection);
 
 		// TODO: sometimes loop detection doesn't work because of this
-		//if (!nextPoint.m_ResultFound && previousDirection.has_value() && previousDirection->Length() > 1e-3f)
-		//{
-		//	previousDirection->Normalize();
-		//	nextPoint = m_MarchingCommonPointFinder->NextPoint(previousPoint.m_Parameter, previousDirection.value(), m_Parameters.m_PointDistance);
-		//}
+		if (!nextPoint.m_ResultFound && previousDirection.has_value() && previousDirection->Length() > 1e-3f)
+		{
+			previousDirection->Normalize();
+			nextPoint = m_MarchingCommonPointFinder->NextPoint(previousPoint.m_Parameter, previousDirection.value(), m_Parameters.m_PointDistance);
+		}
 
 		if (nextPoint.m_ResultFound)
 		{
