@@ -3,6 +3,8 @@
 #include <imgui.h>
 #include <ImGuiFileDialog.h>
 
+#include <GCodeSerializer.h>
+
 #include <Applications/CAD/Serializing/SceneSerializer.h>
 
 #include <Applications/CAD/Visitors/Transform/UpdateTransformVisitor.h>
@@ -222,6 +224,13 @@ void MenuBarGuiLayerCAD::DrawGenerateMillingToolPathsPopup()
             auto millingPathGenerator = ModelMillingToolPathsGenerator(m_MainDataLayer.m_SceneDataLayer.m_SceneCAD);
 
             auto paths = millingPathGenerator.GeneratePaths(materialBlockDetails);
+
+            auto serializer = GCP::GCodeSerializer();
+
+            for (const auto& [filename, millingPath] : paths)
+            {
+                serializer.Serialize(millingPath, filename);
+            }
 
             m_GenerateMillingPathsPopupOpen = false;
             ImGui::CloseCurrentPopup();
