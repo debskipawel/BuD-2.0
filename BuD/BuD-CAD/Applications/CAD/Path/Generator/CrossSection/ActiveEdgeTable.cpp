@@ -91,7 +91,7 @@ auto ActiveEdgeTable::GetFirstIntersecting(const Edge& edge, float lowerBound, f
 
 		auto u = (1.0f - t.value()) * edge.m_PlaneUV1.m_Parameter.x + t.value() * edge.m_PlaneUV2.m_Parameter.x;
 
-		if (u < lowerBound || u > upperBound)
+		if (u <= lowerBound || u >= upperBound)
 		{
 			continue;
 		}

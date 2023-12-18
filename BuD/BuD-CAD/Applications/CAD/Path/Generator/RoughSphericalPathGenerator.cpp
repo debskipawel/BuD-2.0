@@ -87,9 +87,9 @@ auto RoughSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& mate
 auto RoughSphericalPathGenerator::CreateHorizontalPlane(const MaterialBlockDetails& materialBlockDetails, float height) -> std::weak_ptr<SceneObjectCAD>
 {
 	auto& size = materialBlockDetails.m_Size;
-	auto point = materialBlockDetails.m_Position - 0.5f * dxm::Vector3(size.x, 0.0f, size.z) + height * dxm::Vector3::UnitY;
+	auto point = materialBlockDetails.m_Position + 0.5f * dxm::Vector3(-size.x, 0.0f, size.z) + height * dxm::Vector3::UnitY;
 	
-	return m_SceneCAD.CreateFinitePlane(point, dxm::Vector3::UnitX, dxm::Vector3::UnitZ, materialBlockDetails.m_Size.x, materialBlockDetails.m_Size.z);
+	return m_SceneCAD.CreateFinitePlane(point, dxm::Vector3::UnitX, -dxm::Vector3::UnitZ, materialBlockDetails.m_Size.x, materialBlockDetails.m_Size.z);
 }
 
 auto RoughSphericalPathGenerator::GenerateCrossSection(const MaterialBlockDetails& materialBlockDetails, const dxm::Vector3& startPosition, const dxm::Vector3& endPosition, std::weak_ptr<SceneObjectCAD> horizontalPlane) -> std::vector<dxm::Vector3>
@@ -107,14 +107,17 @@ auto RoughSphericalPathGenerator::GenerateCrossSection(const MaterialBlockDetail
 
 	auto verticalPlane = m_SceneCAD.CreateFinitePlane(dxm::Vector3(startPosition.x, 0.0f, startPosition.z), dU, dV, widthU, widthV);
 
-	auto crossSection = CrossSection(verticalPlane, m_OffsetSurfaces);
+	auto offsetSurfacesCopy = m_OffsetSurfaces;
+	offsetSurfacesCopy.emplace_back(m_SceneCAD.CreateOffsetSurface(horizontalPlane, ROUGH_SPHERICAL_TOOL_RADIUS));
+
+	auto crossSection = CrossSection(verticalPlane, offsetSurfacesCopy);
 	auto polygon = crossSection.UpperBound();
 
 	for (auto& polygonPoint : polygon)
 	{
 		auto point = m_Sampler->GetPoint(verticalPlane, polygonPoint.x, polygonPoint.y);
 
-		point.y = max(point.y, startPosition.y);
+		point.y = max(point.y - ROUGH_SPHERICAL_TOOL_RADIUS, startPosition.y);
 
 		result.push_back(point);
 	}

@@ -24,30 +24,32 @@ auto ModelMillingToolPathsGenerator::GeneratePaths(const MaterialBlockDetails& m
 	std::unique_ptr<AbstractPathGenerator> standToolGenerator = std::make_unique<StandFlatToolPathGenerator>(m_Scene, modelSurfaces);
 	std::unique_ptr<AbstractPathGenerator> detailToolGenerator = std::make_unique<DetailSphericalPathGenerator>(m_Scene, modelSurfaces);
 
-	auto roughPath = roughToolGenerator->GeneratePaths(materialBlockDetails);
+	//auto roughPath = roughToolGenerator->GeneratePaths(materialBlockDetails);
 	auto standPath = standToolGenerator->GeneratePaths(materialBlockDetails);
 	auto detailPath = detailToolGenerator->GeneratePaths(materialBlockDetails);
 
-	auto optimizedRoughPath = m_PathOptimizer->Optimize(roughPath);
+	//auto optimizedRoughPath = m_PathOptimizer->Optimize(roughPath);
 	auto optimizedStandPath = m_PathOptimizer->Optimize(standPath);
 	auto optimizedDetailPath = m_PathOptimizer->Optimize(detailPath);
 
 	auto converter = PathToGCodeConverter();
 
-	auto gCodeRoughPath = converter.Convert(optimizedRoughPath);
+	//auto gCodeRoughPath = converter.Convert(optimizedRoughPath);
 	auto gCodeStandPath = converter.Convert(optimizedStandPath);
 	auto gCodeDetailPath = converter.Convert(optimizedDetailPath);
 
 	auto points = std::vector<std::weak_ptr<SceneObjectCAD>>();
 
-	for (const auto& pos : optimizedRoughPath.GetPath())
+	for (const auto& pos : optimizedStandPath.GetPath())
 	{
 		points.emplace_back(m_Scene.CreatePoint(pos));
 	}
 
 	auto paths = std::vector<std::pair<std::string, GCP::GCodeProgram>>
 	{
-		{ "rough_path.k16", gCodeRoughPath }, { "stand_path.f10", gCodeStandPath }, { "detail_path.k08", gCodeDetailPath },
+		//{ "rough_path.k16", gCodeRoughPath }, 
+		{ "stand_path.f10", gCodeStandPath }, 
+		{ "detail_path.k08", gCodeDetailPath },
 	};
 
 	return paths;
