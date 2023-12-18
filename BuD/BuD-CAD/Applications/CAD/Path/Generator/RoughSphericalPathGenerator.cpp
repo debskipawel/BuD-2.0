@@ -113,7 +113,7 @@ auto RoughSphericalPathGenerator::GenerateCrossSection(const MaterialBlockDetail
 	auto crossSection = CrossSection(verticalPlane, offsetSurfacesCopy);
 	auto polygon = crossSection.UpperBound();
 
-	for (auto& polygonPoint : polygon)
+	for (auto& polygonPoint : polygon.Points())
 	{
 		auto point = m_Sampler->GetPoint(verticalPlane, polygonPoint.x, polygonPoint.y);
 

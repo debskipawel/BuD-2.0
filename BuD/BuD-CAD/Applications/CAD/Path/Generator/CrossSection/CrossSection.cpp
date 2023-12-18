@@ -49,7 +49,7 @@ CrossSection::CrossSection(std::weak_ptr<SceneObjectCAD> plane, const std::vecto
 	InitializeIntersectionEdgesCollection(plane, model, startingPoints);
 }
 
-auto CrossSection::UpperBound() -> std::vector<dxm::Vector2>
+auto CrossSection::UpperBound() -> BoundingPolygon
 {
 	auto result = std::vector<dxm::Vector2>{ };
 	
@@ -155,10 +155,10 @@ auto CrossSection::UpperBound() -> std::vector<dxm::Vector2>
 		AET.Update(u);
 	}
 	
-	return result;
+	return BoundingPolygon(result);
 }
 
-auto CrossSection::LowerBound() -> std::vector<dxm::Vector2>
+auto CrossSection::LowerBound() -> BoundingPolygon
 {
 	auto result = std::vector<dxm::Vector2>{ };
 
@@ -264,7 +264,7 @@ auto CrossSection::LowerBound() -> std::vector<dxm::Vector2>
 		AET.Update(u);
 	}
 
-	return result;
+	return BoundingPolygon(result);
 }
 
 auto CrossSection::InitializeIntersectionEdgesCollection(std::weak_ptr<SceneObjectCAD> plane, const std::vector<std::shared_ptr<SceneObjectCAD>>& model, const std::vector<dxm::Vector3>& intersectionStartingPoints) -> void

@@ -11,5 +11,6 @@ public:
 
 protected:
 	virtual auto GeneratePathForBlockLeveling(const MaterialBlockDetails& materialBlockDetails) -> std::vector<dxm::Vector3>;
+
 	virtual auto GeneratePathForModelBorder(const MaterialBlockDetails& materialBlockDetails) -> std::vector<dxm::Vector3>;
 };
