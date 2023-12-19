@@ -55,17 +55,22 @@ auto CrossSection::UpperBound() -> BoundingPolygon
 	
 	if (m_IntersectionEdges.empty())
 	{
-		result.emplace_back(0.0f, 0.0f);
-		result.emplace_back(1.0f, 0.0f);
-
-		return result;
+		return BoundingPolygon(result, 0.0f);
 	}
 
 	auto AET = ActiveEdgeTable();
 	
-	auto u = 0.0f;
-
 	auto idx = 0;
+
+	auto u = m_IntersectionEdges.front().StartU();
+
+	while (idx < m_IntersectionEdges.size() && m_IntersectionEdges[idx].StartU() <= u)
+	{
+		AET.Add(m_IntersectionEdges[idx]);
+		idx++;
+	}
+
+	AET.Update(u);
 
 	while (u < 1.0f)
 	{
@@ -73,15 +78,12 @@ auto CrossSection::UpperBound() -> BoundingPolygon
 
 		if (!currentMaxEdgeOpt.has_value())
 		{
-			result.emplace_back(u, 0.0f);
-
 			if (idx >= m_IntersectionEdges.size())
 			{
-				result.emplace_back(1.0f, 0.0f);
-
 				break;
 			}
 
+			result.emplace_back(u, 0.0f);
 			result.emplace_back(m_IntersectionEdges[idx].StartU(), 0.0f);
 
 			u = m_IntersectionEdges[idx].StartU();
@@ -155,7 +157,7 @@ auto CrossSection::UpperBound() -> BoundingPolygon
 		AET.Update(u);
 	}
 	
-	return BoundingPolygon(result);
+	return BoundingPolygon(result, 0.0f);
 }
 
 auto CrossSection::LowerBound() -> BoundingPolygon
@@ -164,17 +166,22 @@ auto CrossSection::LowerBound() -> BoundingPolygon
 
 	if (m_IntersectionEdges.empty())
 	{
-		result.emplace_back(0.0f, 1.0f);
-		result.emplace_back(1.0f, 1.0f);
-
-		return result;
+		return BoundingPolygon(result, 1.0f);
 	}
 
 	auto AET = ActiveEdgeTable();
 
-	auto u = 0.0f;
-
 	auto idx = 0;
+
+	auto u = m_IntersectionEdges.front().StartU();
+
+	while (idx < m_IntersectionEdges.size() && m_IntersectionEdges[idx].StartU() <= u)
+	{
+		AET.Add(m_IntersectionEdges[idx]);
+		idx++;
+	}
+
+	AET.Update(u);
 
 	while (u < 1.0f)
 	{
@@ -182,15 +189,12 @@ auto CrossSection::LowerBound() -> BoundingPolygon
 
 		if (!currentMaxEdgeOpt.has_value())
 		{
-			result.emplace_back(u, 1.0f);
-
 			if (idx >= m_IntersectionEdges.size())
 			{
-				result.emplace_back(1.0f, 1.0f);
-
 				break;
 			}
 
+			result.emplace_back(u, 1.0f);
 			result.emplace_back(m_IntersectionEdges[idx].StartU(), 1.0f);
 
 			u = m_IntersectionEdges[idx].StartU();
@@ -264,7 +268,7 @@ auto CrossSection::LowerBound() -> BoundingPolygon
 		AET.Update(u);
 	}
 
-	return BoundingPolygon(result);
+	return BoundingPolygon(result, 1.0f);
 }
 
 auto CrossSection::InitializeIntersectionEdgesCollection(std::weak_ptr<SceneObjectCAD> plane, const std::vector<std::shared_ptr<SceneObjectCAD>>& model, const std::vector<dxm::Vector3>& intersectionStartingPoints) -> void

@@ -113,6 +113,8 @@ auto RoughSphericalPathGenerator::GenerateCrossSection(const MaterialBlockDetail
 	auto crossSection = CrossSection(verticalPlane, offsetSurfacesCopy);
 	auto polygon = crossSection.UpperBound();
 
+	result.push_back(startPosition);
+
 	for (auto& polygonPoint : polygon.Points())
 	{
 		auto point = m_Sampler->GetPoint(verticalPlane, polygonPoint.x, polygonPoint.y);
@@ -121,6 +123,8 @@ auto RoughSphericalPathGenerator::GenerateCrossSection(const MaterialBlockDetail
 
 		result.push_back(point);
 	}
+
+	result.push_back(endPosition);
 
 	m_SceneCAD.DeleteObject(*verticalPlane.lock());
 

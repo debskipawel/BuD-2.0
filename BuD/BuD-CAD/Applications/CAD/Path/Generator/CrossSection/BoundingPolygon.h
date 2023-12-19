@@ -7,7 +7,7 @@ namespace dxm = DirectX::SimpleMath;
 class BoundingPolygon
 {
 public:
-	BoundingPolygon(const std::vector<dxm::Vector2>& polygonPoints);
+	BoundingPolygon(const std::vector<dxm::Vector2>& polygonPoints, float defaultValue);
 
 	virtual auto GetV(float u) const -> float;
 	virtual auto GetPath(float u1, float u2) -> std::vector<dxm::Vector2>;
@@ -16,4 +16,5 @@ public:
 
 protected:
 	std::vector<dxm::Vector2> m_PolygonPoints;
+	float m_DefaultValue;
 };

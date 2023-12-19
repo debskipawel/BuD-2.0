@@ -2,8 +2,8 @@
 
 #include <algorithm>
 
-BoundingPolygon::BoundingPolygon(const std::vector<dxm::Vector2>& polygonPoints)
-	: m_PolygonPoints(polygonPoints)
+BoundingPolygon::BoundingPolygon(const std::vector<dxm::Vector2>& polygonPoints, float defaultValue)
+	: m_PolygonPoints(polygonPoints), m_DefaultValue(defaultValue)
 {
 	constexpr auto MIN_U = 0.0f;
 	constexpr auto MAX_U = 1.0f;
@@ -18,8 +18,6 @@ BoundingPolygon::BoundingPolygon(const std::vector<dxm::Vector2>& polygonPoints)
 
 auto BoundingPolygon::GetV(float u) const -> float
 {
-	constexpr auto DEFAULT_RETURN_VALUE = 0.0f;
-	
 	auto it = std::lower_bound(m_PolygonPoints.begin(), m_PolygonPoints.end(), u,
 		[](const dxm::Vector2& p, float u)
 		{
@@ -29,7 +27,7 @@ auto BoundingPolygon::GetV(float u) const -> float
 
 	if (it == m_PolygonPoints.end())
 	{
-		return DEFAULT_RETURN_VALUE;
+		return m_DefaultValue;;
 	}
 
 	auto& uv = *it;
@@ -41,7 +39,7 @@ auto BoundingPolygon::GetV(float u) const -> float
 
 	if (it == m_PolygonPoints.begin())
 	{
-		return DEFAULT_RETURN_VALUE;
+		return m_DefaultValue;
 	}
 
 	auto prev = it - 1;
