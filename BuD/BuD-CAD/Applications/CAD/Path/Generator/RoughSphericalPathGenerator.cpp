@@ -14,7 +14,9 @@ RoughSphericalPathGenerator::RoughSphericalPathGenerator(SceneCAD& scene, const 
 
 auto RoughSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& materialBlockDetails) -> MillingToolPath
 {
-	auto path = std::vector<dxm::Vector3>{ dxm::Vector3(0.0f, materialBlockDetails.m_Size.y + 2.0f, 0.0f)};
+	auto safeHeight = materialBlockDetails.m_Position.y + materialBlockDetails.m_Size.y + 2.0f;
+
+	auto path = std::vector<dxm::Vector3>{ dxm::Vector3(materialBlockDetails.m_Position.x, safeHeight, materialBlockDetails.m_Position.z)};
 
 	auto eps = 0.1f;
 	
@@ -29,7 +31,9 @@ auto RoughSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& mate
 	auto minZ = materialBlockDetails.m_Position.z - (0.5f * materialBlockDetails.m_Size.z + R);
 	auto maxZ = materialBlockDetails.m_Position.z + (0.5f * materialBlockDetails.m_Size.z + R);
 
-	path.push_back(dxm::Vector3(minX, materialBlockDetails.m_Size.y + 2.0f, minZ));
+	auto toolPosition = dxm::Vector3(minX, safeHeight, minZ);
+
+	path.push_back(toolPosition);
 
 	auto moveVectorX = dxm::Vector3(1.0f, 0.0f, 0.0f);
 	auto moveVectorZ = dxm::Vector3(0.0f, 0.0f, 1.0f);
@@ -69,6 +73,8 @@ auto RoughSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& mate
 			auto startPosition = dxm::Vector3(startX, y, z);
 			auto endPosition = dxm::Vector3(endX, y, z);
 
+			toolPosition = endPosition;
+
 			auto passResult = GenerateCrossSection(materialBlockDetails, startPosition, endPosition, horizontalPlane);
 
 			std::copy(passResult.begin(), passResult.end(), std::back_inserter(path));
@@ -80,6 +86,9 @@ auto RoughSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& mate
 
 		moveForwardZ = !moveForwardZ;
 	}
+
+	path.emplace_back(toolPosition.x, safeHeight, toolPosition.z);
+	path.emplace_back(materialBlockDetails.m_Position.x, safeHeight, materialBlockDetails.m_Position.z);
 
 	return MillingToolPath(m_OffsetValue, path);
 }

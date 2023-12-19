@@ -373,9 +373,32 @@ auto CrossSection::ConnectDiscontinuousPath(const std::shared_ptr<SceneObjectCAD
 
 		if (direction.x > 0.0f)
 		{
-			auto newEdge = Edge(e1.m_PlaneUV2, e2.m_PlaneUV1, e1.m_ModelUV2, e2.m_ModelUV1, object);
-			
-			intersectionEdges.insert(intersectionEdges.begin() + i + 1, { newEdge });
+			auto d1 = e1.m_PlaneUV2.m_Parameter - e1.m_PlaneUV1.m_Parameter;
+			auto d2 = e2.m_PlaneUV2.m_Parameter - e2.m_PlaneUV1.m_Parameter;
+
+			auto det = d1.x * d2.y - d1.y * d2.x;
+
+			if (fabsf(det) > 1e-5f)
+			{
+				auto b = e2.m_PlaneUV1.m_Parameter - e1.m_PlaneUV2.m_Parameter;
+
+				auto t1 = (d2.y * b.x - d2.x * b.y) / det;
+				auto t2 = (d1.x * b.y - d1.y * b.x) / det;
+
+				auto p = IntersectionPoint(e1.m_PlaneUV2.m_Parameter + t1 * d1, 0.0f, 0.0f);
+				auto uv = IntersectionPoint(e1.m_ModelUV2.m_Parameter + t1 * (e1.m_ModelUV2.m_Parameter - e1.m_ModelUV1.m_Parameter), 0.0f, 0.0f);
+
+				auto newEdge1 = Edge(e1.m_PlaneUV2, p, e1.m_ModelUV2, uv, e1.m_IntersectedObject);
+				auto newEdge2 = Edge(p, e2.m_PlaneUV1, uv, e2.m_ModelUV1, e1.m_IntersectedObject);
+
+				intersectionEdges.insert(intersectionEdges.begin() + i + 1, { newEdge1, newEdge2 });
+			}
+			else
+			{
+				auto newEdge = Edge(e1.m_PlaneUV2, e2.m_PlaneUV1, e1.m_ModelUV2, e2.m_ModelUV1, object);
+
+				intersectionEdges.insert(intersectionEdges.begin() + i + 1, { newEdge });
+			}
 		}
 	}
 }
