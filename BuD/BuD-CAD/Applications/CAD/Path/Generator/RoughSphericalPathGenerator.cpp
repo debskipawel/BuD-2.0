@@ -116,10 +116,7 @@ auto RoughSphericalPathGenerator::GenerateCrossSection(const MaterialBlockDetail
 
 	auto verticalPlane = m_SceneCAD.CreateFinitePlane(dxm::Vector3(startPosition.x, 0.0f, startPosition.z), dU, dV, widthU, widthV);
 
-	auto offsetSurfacesCopy = m_OffsetSurfaces;
-	offsetSurfacesCopy.emplace_back(m_SceneCAD.CreateOffsetSurface(horizontalPlane, ROUGH_SPHERICAL_TOOL_RADIUS));
-
-	auto crossSection = CrossSection(verticalPlane, offsetSurfacesCopy);
+	auto crossSection = CrossSection(verticalPlane, m_OffsetSurfaces);
 	auto polygon = crossSection.UpperBound();
 
 	result.push_back(startPosition);
