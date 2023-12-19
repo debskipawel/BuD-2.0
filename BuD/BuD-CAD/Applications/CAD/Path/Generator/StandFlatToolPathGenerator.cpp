@@ -164,6 +164,8 @@ auto StandFlatToolPathGenerator::GeneratePathForBlockLeveling(const MaterialBloc
 	result.emplace_back(xEndUp, materialBlockDetails.m_Position.y + materialBlockDetails.m_Size.y + 1.0f, zStart);
 	result.emplace_back(materialBlockDetails.m_Position.x, materialBlockDetails.m_Position.y + materialBlockDetails.m_Size.y + 1.0f, materialBlockDetails.m_Position.z);
 
+	m_SceneCAD.DeleteObject(*horizontalPlane.lock());
+
 	return result;
 }
 
@@ -221,6 +223,8 @@ auto StandFlatToolPathGenerator::GeneratePathForModelBorder(const MaterialBlockD
 
 	result.emplace_back(toolPosition.x, safeHeight, toolPosition.z);
 	result.emplace_back(materialBlockDetails.m_Position.x, safeHeight, materialBlockDetails.m_Position.z);
+
+	m_SceneCAD.DeleteObject(*horizontalPlane.lock());
 
 	return result;
 }
