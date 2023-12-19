@@ -8,7 +8,7 @@
 constexpr auto ROUGH_SPHERICAL_TOOL_RADIUS = 0.8f;
 
 RoughSphericalPathGenerator::RoughSphericalPathGenerator(SceneCAD& scene, const std::vector<std::weak_ptr<SceneObjectCAD>>& surfaces)
-	: AbstractPathGenerator(scene, surfaces, ROUGH_SPHERICAL_TOOL_RADIUS)
+	: AbstractPathGenerator(scene, surfaces, ROUGH_SPHERICAL_TOOL_RADIUS + 0.1f)
 {
 }
 
