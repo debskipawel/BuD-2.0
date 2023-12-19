@@ -38,13 +38,6 @@ auto ModelMillingToolPathsGenerator::GeneratePaths(const MaterialBlockDetails& m
 	auto gCodeStandPath = converter.Convert(optimizedStandPath);
 	auto gCodeDetailPath = converter.Convert(optimizedDetailPath);
 
-	auto points = std::vector<std::weak_ptr<SceneObjectCAD>>();
-
-	for (const auto& pos : optimizedStandPath.GetPath())
-	{
-		points.emplace_back(m_Scene.CreatePoint(pos));
-	}
-
 	auto paths = std::vector<std::pair<std::string, GCP::GCodeProgram>>
 	{
 		{ "rough_path.k16", gCodeRoughPath }, 
