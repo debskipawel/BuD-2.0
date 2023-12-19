@@ -24,10 +24,10 @@ void PathListGuiLayerCNC::DrawGui()
 
 		DrawAddPathButton();
 
-		DrawImportPathDialog();
-
 		ImGui::End();
 	}
+
+	DrawImportPathDialog();
 }
 
 void PathListGuiLayerCNC::DrawPathList()
@@ -174,10 +174,11 @@ void PathListGuiLayerCNC::DrawImportPathDialog()
 				{
 					case GCP::GCodeParserCode::SUCCESS:
 					{
+						auto& scene = m_MainDataLayer.m_SimulationDataLayer.m_Scene;
 						auto& pathList = m_MainDataLayer.m_PathListDataLayer.m_PathList;
 
 						pathList.emplace_back(
-							std::make_shared<PathProgram>(path.filename().string(), parsingResult.m_Program, millingTool)
+							std::make_shared<PathProgram>(scene, path.filename().string(), parsingResult.m_Program, millingTool)
 						);
 
 						m_MainDataLayer.m_SimulationDataLayer.SetSelectedPath(pathList.back());
@@ -188,10 +189,11 @@ void PathListGuiLayerCNC::DrawImportPathDialog()
 					}
 					case GCP::GCodeParserCode::WARNING:
 					{
+						auto& scene = m_MainDataLayer.m_SimulationDataLayer.m_Scene;
 						auto& pathList = m_MainDataLayer.m_PathListDataLayer.m_PathList;
 
 						pathList.emplace_back(
-							std::make_shared<PathProgram>(path.filename().string(), parsingResult.m_Program, millingTool)
+							std::make_shared<PathProgram>(scene, path.filename().string(), parsingResult.m_Program, millingTool)
 						);
 
 						m_MainDataLayer.m_SimulationDataLayer.SetSelectedPath(pathList.back());

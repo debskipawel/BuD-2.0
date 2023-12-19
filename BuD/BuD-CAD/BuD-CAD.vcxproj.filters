@@ -561,6 +561,9 @@
     <ClInclude Include="Applications\CAD\Path\Generator\CrossSection\BoundingPolygon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Applications\CNC\GCodeCommandPathVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Applications\CAD\ApplicationCAD.cpp">
@@ -1031,6 +1034,9 @@
     <ClCompile Include="Applications\CAD\Path\Generator\CrossSection\BoundingPolygon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Applications\CNC\GCodeCommandPathVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Torus\torus_instanced_vs.hlsl" />
@@ -1105,6 +1111,8 @@
     <FxCompile Include="Resources\Shaders\FinitePlane\finite_plane_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\InfinitePlane\infinite_plane_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\InfinitePlane\infinite_plane_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\Path\path_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\Path\path_ps.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="testfile.f14" />

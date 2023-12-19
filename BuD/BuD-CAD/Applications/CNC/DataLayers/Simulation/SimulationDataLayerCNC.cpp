@@ -71,14 +71,14 @@ auto SimulationDataLayerCNC::SetSelectedPath(std::shared_ptr<PathProgram> select
 	
 	if (m_SelectedPath)
 	{
-		m_SelectedPath->m_Tool->DisableRendering();
+		m_SelectedPath->DisableRendering();
 	}
 	
 	m_SelectedPath = selectedPath;
 
 	if (m_SelectedPath)
 	{
-		m_SelectedPath->m_Tool->EnableRendering();
+		m_SelectedPath->EnableRendering();
 	}
 
 	m_MillingSimulator.UploadPath(selectedPath);
