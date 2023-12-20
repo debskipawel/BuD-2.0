@@ -282,6 +282,7 @@ auto CrossSection::InitializeIntersectionEdgesCollection(std::weak_ptr<SceneObje
 			auto intersectionParameters = IntersectionAlgorithmParameters();
 			intersectionParameters.m_UseCursorAsStartingPoint = true;
 			intersectionParameters.m_CursorPosition = startingPoint;
+			intersectionParameters.m_PointDistance = 0.03f;
 
 			auto intersectionCalculator = MultiIntersectionAlgorithm(intersectionParameters, plane, surface);
 

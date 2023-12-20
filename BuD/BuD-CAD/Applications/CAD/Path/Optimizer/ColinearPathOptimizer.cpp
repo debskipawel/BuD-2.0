@@ -7,9 +7,7 @@ ColinearPathOptimizer::ColinearPathOptimizer(float accuracy)
 
 auto ColinearPathOptimizer::Optimize(const MillingToolPath& toolPath) const -> MillingToolPath
 {
-    const auto& toolPathPoints = toolPath.GetPath();
-
-    auto compressedPathPoints = toolPathPoints;
+    auto compressedPathPoints = toolPath.GetPath();
 
     const auto accuracySquared = m_Accuracy * m_Accuracy;
 

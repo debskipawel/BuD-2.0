@@ -2,7 +2,7 @@
 
 #include <Applications/CAD/Path/Generator/CrossSection/CrossSection.h>
 
-constexpr auto DETAIL_SPHERICAL_TOOL_RADIUS = 0.2f;
+constexpr auto DETAIL_SPHERICAL_TOOL_RADIUS = 0.4f;
 
 DetailSphericalPathGenerator::DetailSphericalPathGenerator(SceneCAD& scene, const std::vector<std::weak_ptr<SceneObjectCAD>>& surfaces)
 	: AbstractPathGenerator(scene, surfaces, DETAIL_SPHERICAL_TOOL_RADIUS)
@@ -18,7 +18,7 @@ auto DetailSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& mat
 	auto eps = 0.1f;
 
 	auto R = DETAIL_SPHERICAL_TOOL_RADIUS;
-	auto T = 0.05f * R;
+	auto T = 0.02f * R;
 	auto D = 2.0f * R * sinf(acosf(1.0f - T / R));
 
 	auto minX = materialBlockDetails.m_Position.x - (0.5f * materialBlockDetails.m_Size.x + R + eps);
@@ -97,9 +97,6 @@ auto DetailSphericalPathGenerator::GenerateCrossSection(const MaterialBlockDetai
 	dV.Normalize();
 
 	auto verticalPlane = m_SceneCAD.CreateFinitePlane(dxm::Vector3(startPosition.x, 0.0f, startPosition.z), dU, dV, widthU, widthV);
-
-	//auto offsetSurfacesCopy = m_OffsetSurfaces;
-	//offsetSurfacesCopy.emplace_back(m_SceneCAD.CreateOffsetSurface(horizontalPlane, DETAIL_SPHERICAL_TOOL_RADIUS));
 
 	auto crossSection = CrossSection(verticalPlane, m_OffsetSurfaces);
 	auto polygon = crossSection.UpperBound();
