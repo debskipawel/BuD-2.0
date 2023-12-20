@@ -15,6 +15,21 @@ auto DetailSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& mat
 
 	auto path = std::vector<dxm::Vector3>{ dxm::Vector3(materialBlockDetails.m_Position.x, safeHeight, materialBlockDetails.m_Position.z) };
 
+	auto generalDetailPath = GenerateGeneralPathsForDetailMilling(materialBlockDetails);
+
+	std::copy(generalDetailPath.begin(), generalDetailPath.end(), std::back_inserter(path));
+	
+	path.emplace_back(materialBlockDetails.m_Position.x, safeHeight, materialBlockDetails.m_Position.z);
+
+	return MillingToolPath(m_OffsetValue, path);
+}
+
+auto DetailSphericalPathGenerator::GenerateGeneralPathsForDetailMilling(const MaterialBlockDetails& materialBlockDetails) -> std::vector<dxm::Vector3>
+{
+	auto safeHeight = materialBlockDetails.m_Position.y + materialBlockDetails.m_Size.y + 2.0f;
+
+	auto path = std::vector<dxm::Vector3>();
+
 	auto eps = 0.1f;
 
 	auto R = DETAIL_SPHERICAL_TOOL_RADIUS;
@@ -46,8 +61,6 @@ auto DetailSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& mat
 	auto currentMoveZ = dxm::Vector3(0.0f, 0.0f, endZ - startZ);
 	currentMoveZ.Normalize();
 
-	auto horizontalPlane = CreateHorizontalPlane(materialBlockDetails, y);
-
 	for (auto zPass = 0; zPass < zPassesCount; zPass++)
 	{
 		auto z = startZ + zPass * D * currentMoveZ.z;
@@ -58,32 +71,35 @@ auto DetailSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& mat
 		auto startPosition = dxm::Vector3(startX, y, z);
 		auto endPosition = dxm::Vector3(endX, y, z);
 
-		toolPosition = endPosition;
+		auto passResult = FindCrossSectionPath(materialBlockDetails, startPosition, endPosition);
 
-		auto passResult = GenerateCrossSection(materialBlockDetails, startPosition, endPosition, horizontalPlane);
+		if (passResult.empty())
+		{
+			continue;
+		}
 
 		std::copy(passResult.begin(), passResult.end(), std::back_inserter(path));
+
+		toolPosition = endPosition;
 
 		moveForwardX = !moveForwardX;
 	}
 
-	m_SceneCAD.DeleteObject(*horizontalPlane.lock());
-
 	path.emplace_back(toolPosition.x, safeHeight, toolPosition.z);
-	path.emplace_back(materialBlockDetails.m_Position.x, safeHeight, materialBlockDetails.m_Position.z);
 
-	return MillingToolPath(m_OffsetValue, path);
+	return path;
 }
 
-auto DetailSphericalPathGenerator::CreateHorizontalPlane(const MaterialBlockDetails& materialBlockDetails, float height) -> std::weak_ptr<SceneObjectCAD>
+auto DetailSphericalPathGenerator::GeneratePathsForIntersectionBorders(const MaterialBlockDetails& materialBlockDetails) -> std::vector<dxm::Vector3>
 {
-	auto& size = materialBlockDetails.m_Size;
-	auto point = materialBlockDetails.m_Position + 0.5f * dxm::Vector3(-size.x, 0.0f, size.z) + height * dxm::Vector3::UnitY;
+	auto safeHeight = materialBlockDetails.m_Position.y + materialBlockDetails.m_Size.y + 2.0f;
 
-	return m_SceneCAD.CreateFinitePlane(point, dxm::Vector3::UnitX, -dxm::Vector3::UnitZ, materialBlockDetails.m_Size.x, materialBlockDetails.m_Size.z);
+	auto result = std::vector<dxm::Vector3>();
+
+	return result;
 }
 
-auto DetailSphericalPathGenerator::GenerateCrossSection(const MaterialBlockDetails& materialBlockDetails, const dxm::Vector3& startPosition, const dxm::Vector3& endPosition, std::weak_ptr<SceneObjectCAD> horizontalPlane) -> std::vector<dxm::Vector3>
+auto DetailSphericalPathGenerator::FindCrossSectionPath(const MaterialBlockDetails& materialBlockDetails, const dxm::Vector3& startPosition, const dxm::Vector3& endPosition) -> std::vector<dxm::Vector3>
 {
 	auto result = std::vector<dxm::Vector3>();
 
@@ -101,18 +117,23 @@ auto DetailSphericalPathGenerator::GenerateCrossSection(const MaterialBlockDetai
 	auto crossSection = CrossSection(verticalPlane, m_OffsetSurfaces);
 	auto polygon = crossSection.UpperBound();
 
-	result.push_back(startPosition);
+	const auto& upperBoundPoints = polygon.Points();
 
-	for (auto& polygonPoint : polygon.Points())
+	if (!upperBoundPoints.empty())
 	{
-		auto point = m_Sampler->GetPoint(verticalPlane, polygonPoint.x, polygonPoint.y);
+		result.push_back(startPosition);
 
-		point.y = max(point.y - DETAIL_SPHERICAL_TOOL_RADIUS, startPosition.y);
+		for (auto& polygonPoint : upperBoundPoints)
+		{
+			auto point = m_Sampler->GetPoint(verticalPlane, polygonPoint.x, polygonPoint.y);
 
-		result.push_back(point);
+			point.y = max(point.y - DETAIL_SPHERICAL_TOOL_RADIUS, startPosition.y);
+
+			result.push_back(point);
+		}
+
+		result.push_back(endPosition);
 	}
-
-	result.push_back(endPosition);
 
 	m_SceneCAD.DeleteObject(*verticalPlane.lock());
 

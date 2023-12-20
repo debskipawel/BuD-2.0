@@ -1,15 +1,18 @@
 #include "ColinearPathOptimizer.h"
 
-ColinearPathOptimizer::ColinearPathOptimizer(float accuracy)
-    : m_Accuracy(accuracy)
+#include <numbers>
+
+ColinearPathOptimizer::ColinearPathOptimizer(float lengthAccuracy, float angleAccuracy)
+    : m_LengthAccuracy(lengthAccuracy)
 {
+    m_AngleAccuracy = cosf(angleAccuracy * std::numbers::pi_v<float> / 180.0f);
 }
 
 auto ColinearPathOptimizer::Optimize(const MillingToolPath& toolPath) const -> MillingToolPath
 {
     auto compressedPathPoints = toolPath.GetPath();
 
-    const auto accuracySquared = m_Accuracy * m_Accuracy;
+    const auto accuracySquared = m_LengthAccuracy * m_LengthAccuracy;
 
     for (size_t i = 1; i + 1 < compressedPathPoints.size(); ++i)
     {
@@ -27,9 +30,9 @@ auto ColinearPathOptimizer::Optimize(const MillingToolPath& toolPath) const -> M
         d1.Normalize();
         d2.Normalize();
 
-        auto crossed = d1.Cross(d2);
+        auto angle = d1.Dot(d2);
 
-        if (crossed.LengthSquared() < accuracySquared)
+        if (angle >= m_AngleAccuracy)
         {
             compressedPathPoints.erase(compressedPathPoints.begin() + i);
             --i;

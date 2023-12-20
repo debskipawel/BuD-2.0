@@ -5,10 +5,10 @@
 class ColinearPathOptimizer : public AbstractPathOptimizer
 {
 public:
-	ColinearPathOptimizer(float accuracy = 1e-3f);
+	ColinearPathOptimizer(float lengthAccuracy = 0.003f, float angleAccuracy = 2.0f);
 
 	virtual auto Optimize(const MillingToolPath& toolPath) const -> MillingToolPath override;
 
 protected:
-	float m_Accuracy;
+	float m_AngleAccuracy, m_LengthAccuracy;
 };

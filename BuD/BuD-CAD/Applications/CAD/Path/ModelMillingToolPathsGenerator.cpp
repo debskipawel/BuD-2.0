@@ -13,7 +13,7 @@
 ModelMillingToolPathsGenerator::ModelMillingToolPathsGenerator(SceneCAD& scene)
 	: m_Scene(scene)
 {
-	m_PathOptimizer = std::make_unique<ColinearPathOptimizer>();
+	m_PathOptimizer = std::make_unique<ColinearPathOptimizer>(0.0015f, 1.5f);
 }
 
 auto ModelMillingToolPathsGenerator::GeneratePaths(const MaterialBlockDetails& materialBlockDetails) -> std::vector<std::pair<std::string, GCP::GCodeProgram>>
