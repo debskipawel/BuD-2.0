@@ -11,7 +11,10 @@ public:
 
 protected:
 	virtual auto GenerateGeneralPathsForDetailMilling(const MaterialBlockDetails& materialBlockDetails) -> std::vector<dxm::Vector3>;
-	virtual auto GeneratePathsForIntersectionBorders(const MaterialBlockDetails& materialBlockDetails) -> std::vector<dxm::Vector3>;
+	virtual auto GeneratePathsForSharpEdges(const MaterialBlockDetails& materialBlockDetails) -> std::vector<dxm::Vector3>;
+
+	virtual auto GeneratePathsForButtonBodyIntersection(const MaterialBlockDetails& materialBlockDetails) -> std::vector<dxm::Vector3>;
+	virtual auto GeneratePathsForScrewButtonIntersection(const MaterialBlockDetails& materialBlockDetails) -> std::vector<dxm::Vector3>;
 
 	virtual auto FindCrossSectionPath(const MaterialBlockDetails& materialBlockDetails, const dxm::Vector3& startPosition, const dxm::Vector3& endPosition) -> std::vector<dxm::Vector3>;
 

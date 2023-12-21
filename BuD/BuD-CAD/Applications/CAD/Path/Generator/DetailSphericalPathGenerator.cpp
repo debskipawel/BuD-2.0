@@ -2,6 +2,9 @@
 
 #include <Applications/CAD/Path/Generator/CrossSection/CrossSection.h>
 
+#include <Applications/CAD/Intersection/MultiIntersectionAlgorithm.h>
+#include <Applications/CAD/Intersection/ResultConverter/IntersectionResultConverter.h>
+
 constexpr auto DETAIL_SPHERICAL_TOOL_RADIUS = 0.4f;
 
 DetailSphericalPathGenerator::DetailSphericalPathGenerator(SceneCAD& scene, const std::vector<std::weak_ptr<SceneObjectCAD>>& surfaces)
@@ -16,7 +19,11 @@ auto DetailSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& mat
 	auto path = std::vector<dxm::Vector3>{ dxm::Vector3(materialBlockDetails.m_Position.x, safeHeight, materialBlockDetails.m_Position.z) };
 
 	auto generalDetailPath = GenerateGeneralPathsForDetailMilling(materialBlockDetails);
+	auto buttonBodyIntersectionPath = GeneratePathsForButtonBodyIntersection(materialBlockDetails);
+	auto screwBodyIntersectionPath = GeneratePathsForScrewButtonIntersection(materialBlockDetails);
 
+	std::copy(buttonBodyIntersectionPath.begin(), buttonBodyIntersectionPath.end(), std::back_inserter(path));
+	std::copy(screwBodyIntersectionPath.begin(), screwBodyIntersectionPath.end(), std::back_inserter(path));
 	std::copy(generalDetailPath.begin(), generalDetailPath.end(), std::back_inserter(path));
 	
 	path.emplace_back(materialBlockDetails.m_Position.x, safeHeight, materialBlockDetails.m_Position.z);
@@ -33,7 +40,7 @@ auto DetailSphericalPathGenerator::GenerateGeneralPathsForDetailMilling(const Ma
 	auto eps = 0.1f;
 
 	auto R = DETAIL_SPHERICAL_TOOL_RADIUS;
-	auto T = 0.05f * R;
+	auto T = 0.01f * R;
 	auto D = 2.0f * R * sinf(acosf(1.0f - T / R));
 
 	auto minX = materialBlockDetails.m_Position.x - (0.5f * materialBlockDetails.m_Size.x + R + eps);
@@ -123,11 +130,171 @@ auto DetailSphericalPathGenerator::GenerateGeneralPathsForDetailMilling(const Ma
 	return path;
 }
 
-auto DetailSphericalPathGenerator::GeneratePathsForIntersectionBorders(const MaterialBlockDetails& materialBlockDetails) -> std::vector<dxm::Vector3>
+auto DetailSphericalPathGenerator::GeneratePathsForButtonBodyIntersection(const MaterialBlockDetails& materialBlockDetails) -> std::vector<dxm::Vector3>
+{
+	auto result = std::vector<dxm::Vector3>();
+
+	auto safeHeight = materialBlockDetails.m_Position.y + materialBlockDetails.m_Size.y + 2.0f;
+	auto minHeight = materialBlockDetails.m_Position.y + materialBlockDetails.m_StandHeight;
+
+	auto startingParameters = std::vector<dxm::Vector2>{ { 0.25f, 0.25f }, { 0.75f, 0.25f }, { 0.75f, 0.25f }, { 0.75f, 0.75f } };
+
+	auto surface1 = std::find_if(m_OffsetSurfaces.begin(), m_OffsetSurfaces.end(), 
+		[](std::shared_ptr<SceneObjectCAD> object)
+		{
+			auto& tag = object->m_Tag;
+			return tag.find("Button") != std::string::npos;
+		}
+	);
+
+	auto surface2 = std::find_if(m_OffsetSurfaces.begin(), m_OffsetSurfaces.end(),
+		[](std::shared_ptr<SceneObjectCAD> object)
+		{
+			auto& tag = object->m_Tag;
+			return tag.find("Body") != std::string::npos;
+		}
+	);
+
+	if (surface1 == m_OffsetSurfaces.end() || surface2 == m_OffsetSurfaces.end())
+	{
+		return result;
+	}
+
+	auto intersectionParameters = IntersectionAlgorithmParameters();
+	intersectionParameters.m_UseCursorAsStartingPoint = false;
+	intersectionParameters.m_PointDistance = 0.01f;
+
+	auto intersectionAlgorithm = MultiIntersectionAlgorithm(intersectionParameters, *surface1, *surface2);
+
+	auto intersection = intersectionAlgorithm.Find();
+
+	auto converter = IntersectionResultConverter();
+
+	auto [points1, points2] = converter.ToPointVectors(intersection);
+
+	auto intersectionCurve = std::vector<dxm::Vector3>();
+
+	std::transform(points1.begin(), points1.end(), std::back_inserter(intersectionCurve),
+		[this, surface1, minHeight](const IntersectionPoint& p)
+		{
+			auto point = m_Sampler->GetPoint(*surface1, p.m_Parameter.x, p.m_Parameter.y);
+			point.y = max(point.y - DETAIL_SPHERICAL_TOOL_RADIUS, minHeight);
+
+			return point;
+		}
+	);
+
+	if (intersectionCurve.size() < 2)
+	{
+		return result;
+	}
+
+	result.emplace_back(intersectionCurve.front().x, safeHeight, intersectionCurve.front().z);
+
+	std::copy(intersectionCurve.begin(), intersectionCurve.end(), std::back_inserter(result));
+
+	result.emplace_back(intersectionCurve.back().x, safeHeight, intersectionCurve.back().z);
+
+	return result;
+}
+
+auto DetailSphericalPathGenerator::GeneratePathsForScrewButtonIntersection(const MaterialBlockDetails& materialBlockDetails) -> std::vector<dxm::Vector3>
+{
+	auto result = std::vector<dxm::Vector3>();
+
+	auto safeHeight = materialBlockDetails.m_Position.y + materialBlockDetails.m_Size.y + 2.0f;
+	auto minHeight = materialBlockDetails.m_Position.y + materialBlockDetails.m_StandHeight;
+
+	auto surface1 = std::find_if(m_OffsetSurfaces.begin(), m_OffsetSurfaces.end(),
+		[](std::shared_ptr<SceneObjectCAD> object)
+		{
+			auto& tag = object->m_Tag;
+			return tag.find("Screw") != std::string::npos;
+		}
+	);
+
+	auto surface2 = std::find_if(m_OffsetSurfaces.begin(), m_OffsetSurfaces.end(),
+		[](std::shared_ptr<SceneObjectCAD> object)
+		{
+			auto& tag = object->m_Tag;
+			return tag.find("Button") != std::string::npos;
+		}
+	);
+
+	if (surface1 == m_OffsetSurfaces.end() || surface2 == m_OffsetSurfaces.end())
+	{
+		return result;
+	}
+
+	auto startingPoints = std::vector<dxm::Vector3>{ { -2.0f, 3.0f, 0.0f }, { 2.0f, 3.0f, 0.0f } };
+
+	for (auto& point : startingPoints)
+	{
+		auto intersectionParameters = IntersectionAlgorithmParameters();
+		intersectionParameters.m_CursorPosition = point;
+		intersectionParameters.m_UseCursorAsStartingPoint = true;
+		intersectionParameters.m_PointDistance = 0.005f;
+
+		auto intersectionAlgorithm = MultiIntersectionAlgorithm(intersectionParameters, *surface1, *surface2);
+
+		auto intersection = intersectionAlgorithm.Find();
+
+		auto converter = IntersectionResultConverter();
+
+		auto [points1, points2] = converter.ToPointVectors(intersection);
+
+		auto intersectionCurve = std::vector<dxm::Vector3>();
+
+		std::transform(points1.begin(), points1.end(), std::back_inserter(intersectionCurve),
+			[this, surface1, minHeight](const IntersectionPoint& p)
+			{
+				auto point = m_Sampler->GetPoint(*surface1, p.m_Parameter.x, p.m_Parameter.y);
+				point.y = max(point.y - DETAIL_SPHERICAL_TOOL_RADIUS, minHeight);
+
+				return point;
+			}
+		);
+
+		if (intersectionCurve.size() < 2)
+		{
+			return result;
+		}
+
+		result.emplace_back(intersectionCurve.front().x, safeHeight, intersectionCurve.front().z);
+
+		std::copy(intersectionCurve.begin(), intersectionCurve.end(), std::back_inserter(result));
+
+		result.emplace_back(intersectionCurve.back().x, safeHeight, intersectionCurve.back().z);
+	}
+
+	return result;
+}
+
+auto DetailSphericalPathGenerator::GeneratePathsForSharpEdges(const MaterialBlockDetails& materialBlockDetails) -> std::vector<dxm::Vector3>
 {
 	auto safeHeight = materialBlockDetails.m_Position.y + materialBlockDetails.m_Size.y + 2.0f;
 
 	auto result = std::vector<dxm::Vector3>();
+
+	auto potentialSharpEdges = std::vector<std::shared_ptr<SceneObjectCAD>>();
+
+	std::copy_if(m_OffsetSurfaces.begin(), m_OffsetSurfaces.end(), std::back_inserter(potentialSharpEdges),
+		[](std::shared_ptr<SceneObjectCAD> object)
+		{
+			auto offset = std::dynamic_pointer_cast<OffsetSurface>(object);
+
+			if (!offset)
+			{
+				return false;
+			}
+
+			auto inner = offset->InternalSurface();
+
+			auto bezierC0 = std::dynamic_pointer_cast<BezierSurfaceC0>(inner.lock());
+
+			return static_cast<bool>(bezierC0);
+		}
+	);
 
 	return result;
 }
