@@ -40,9 +40,9 @@ auto ModelMillingToolPathsGenerator::GeneratePaths(const MaterialBlockDetails& m
 
 	auto paths = std::vector<std::pair<std::string, GCP::GCodeProgram>>
 	{
-		{ "rough_path.k16", gCodeRoughPath }, 
-		{ "stand_path.f10", gCodeStandPath }, 
-		{ "detail_path.k08", gCodeDetailPath },
+		{ "1.k16", gCodeRoughPath }, 
+		{ "2.f10", gCodeStandPath }, 
+		{ "3.k08", gCodeDetailPath },
 	};
 
 	return paths;

@@ -40,7 +40,7 @@ auto DetailSphericalPathGenerator::GenerateGeneralPathsForDetailMilling(const Ma
 	auto eps = 0.1f;
 
 	auto R = DETAIL_SPHERICAL_TOOL_RADIUS;
-	auto T = 0.01f * R;
+	auto T = 0.008f * R;
 	auto D = 2.0f * R * sinf(acosf(1.0f - T / R));
 
 	auto minX = materialBlockDetails.m_Position.x - (0.5f * materialBlockDetails.m_Size.x + R + eps);
@@ -266,35 +266,6 @@ auto DetailSphericalPathGenerator::GeneratePathsForScrewButtonIntersection(const
 
 		result.emplace_back(intersectionCurve.back().x, safeHeight, intersectionCurve.back().z);
 	}
-
-	return result;
-}
-
-auto DetailSphericalPathGenerator::GeneratePathsForSharpEdges(const MaterialBlockDetails& materialBlockDetails) -> std::vector<dxm::Vector3>
-{
-	auto safeHeight = materialBlockDetails.m_Position.y + materialBlockDetails.m_Size.y + 2.0f;
-
-	auto result = std::vector<dxm::Vector3>();
-
-	auto potentialSharpEdges = std::vector<std::shared_ptr<SceneObjectCAD>>();
-
-	std::copy_if(m_OffsetSurfaces.begin(), m_OffsetSurfaces.end(), std::back_inserter(potentialSharpEdges),
-		[](std::shared_ptr<SceneObjectCAD> object)
-		{
-			auto offset = std::dynamic_pointer_cast<OffsetSurface>(object);
-
-			if (!offset)
-			{
-				return false;
-			}
-
-			auto inner = offset->InternalSurface();
-
-			auto bezierC0 = std::dynamic_pointer_cast<BezierSurfaceC0>(inner.lock());
-
-			return static_cast<bool>(bezierC0);
-		}
-	);
 
 	return result;
 }
