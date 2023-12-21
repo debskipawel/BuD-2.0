@@ -14,4 +14,6 @@ protected:
 	virtual auto GeneratePathsForIntersectionBorders(const MaterialBlockDetails& materialBlockDetails) -> std::vector<dxm::Vector3>;
 
 	virtual auto FindCrossSectionPath(const MaterialBlockDetails& materialBlockDetails, const dxm::Vector3& startPosition, const dxm::Vector3& endPosition) -> std::vector<dxm::Vector3>;
+
+	virtual auto CreateHorizontalStandPlane(const MaterialBlockDetails& materialBlockDetails) -> std::weak_ptr<SceneObjectCAD>;
 };

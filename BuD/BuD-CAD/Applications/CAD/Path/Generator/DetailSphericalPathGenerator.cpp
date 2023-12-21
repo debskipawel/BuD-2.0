@@ -33,7 +33,7 @@ auto DetailSphericalPathGenerator::GenerateGeneralPathsForDetailMilling(const Ma
 	auto eps = 0.1f;
 
 	auto R = DETAIL_SPHERICAL_TOOL_RADIUS;
-	auto T = 0.02f * R;
+	auto T = 0.05f * R;
 	auto D = 2.0f * R * sinf(acosf(1.0f - T / R));
 
 	auto minX = materialBlockDetails.m_Position.x - (0.5f * materialBlockDetails.m_Size.x + R + eps);
@@ -45,6 +45,18 @@ auto DetailSphericalPathGenerator::GenerateGeneralPathsForDetailMilling(const Ma
 	auto toolPosition = dxm::Vector3(minX, safeHeight, minZ);
 
 	path.push_back(toolPosition);
+
+	auto planeAnchorPoint = dxm::Vector3(minX, materialBlockDetails.m_Position.y + materialBlockDetails.m_StandHeight, minZ);
+	
+	auto horizontalPlaneAxisU = (maxZ - minZ) * dxm::Vector3::UnitZ;
+	auto horizontalPlaneAxisV = (maxX - minX) * dxm::Vector3::UnitX;
+
+	auto horizontalPlane = m_SceneCAD.CreateFinitePlane(planeAnchorPoint, dxm::Vector3::UnitZ, dxm::Vector3::UnitX, maxZ - minZ, maxX - minX);
+
+	auto horizontalCrossSection = CrossSection(horizontalPlane, m_OffsetSurfaces);
+	
+	auto horizontalLowerBound = horizontalCrossSection.LowerBound();
+	auto horizontalUpperBound = horizontalCrossSection.UpperBound();
 
 	auto moveForwardX = true;
 
@@ -80,7 +92,28 @@ auto DetailSphericalPathGenerator::GenerateGeneralPathsForDetailMilling(const Ma
 
 		std::copy(passResult.begin(), passResult.end(), std::back_inserter(path));
 
-		toolPosition = endPosition;
+		if (zPass + 1 < zPassesCount)
+		{
+			auto zNext = startZ + (zPass + 1) * D * currentMoveZ.z;
+
+			auto uCurrent = (z - minZ) / (maxZ - minZ);
+			auto uNext = (zNext - minZ) / (maxZ - minZ);
+
+			auto& polygon = moveForwardX ? horizontalUpperBound : horizontalLowerBound;
+
+			auto transitionPath = polygon.GetPath(uCurrent, uNext);
+
+			for (auto& parameter : transitionPath)
+			{
+				auto point = m_Sampler->GetPoint(horizontalPlane, parameter.x, parameter.y);
+
+				point.y = max(point.y - DETAIL_SPHERICAL_TOOL_RADIUS, y);
+
+				path.push_back(point);
+			}
+		}
+
+		toolPosition = path.back();
 
 		moveForwardX = !moveForwardX;
 	}
@@ -121,8 +154,6 @@ auto DetailSphericalPathGenerator::FindCrossSectionPath(const MaterialBlockDetai
 
 	if (!upperBoundPoints.empty())
 	{
-		result.push_back(startPosition);
-
 		for (auto& polygonPoint : upperBoundPoints)
 		{
 			auto point = m_Sampler->GetPoint(verticalPlane, polygonPoint.x, polygonPoint.y);
@@ -131,11 +162,28 @@ auto DetailSphericalPathGenerator::FindCrossSectionPath(const MaterialBlockDetai
 
 			result.push_back(point);
 		}
-
-		result.push_back(endPosition);
 	}
 
 	m_SceneCAD.DeleteObject(*verticalPlane.lock());
 
 	return result;
+}
+
+auto DetailSphericalPathGenerator::CreateHorizontalStandPlane(const MaterialBlockDetails& materialBlockDetails) -> std::weak_ptr<SceneObjectCAD>
+{
+	auto eps = 0.1f;
+
+	auto R = DETAIL_SPHERICAL_TOOL_RADIUS;
+
+	auto minX = materialBlockDetails.m_Position.x - (0.5f * materialBlockDetails.m_Size.x + R + eps);
+	auto maxX = materialBlockDetails.m_Position.x + (0.5f * materialBlockDetails.m_Size.x + R + eps);
+
+	auto minZ = materialBlockDetails.m_Position.z - (0.5f * materialBlockDetails.m_Size.z + R);
+	auto maxZ = materialBlockDetails.m_Position.z + (0.5f * materialBlockDetails.m_Size.z + R);
+
+	auto y = materialBlockDetails.m_Position.y + materialBlockDetails.m_StandHeight;
+
+	auto planeAnchorPoint = dxm::Vector3(minX, y, minZ);
+
+	return m_SceneCAD.CreateFinitePlane(planeAnchorPoint, dxm::Vector3::UnitZ, dxm::Vector3::UnitX, maxZ - minZ, maxX - minX);
 }
