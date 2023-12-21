@@ -20,28 +20,28 @@ auto ModelMillingToolPathsGenerator::GeneratePaths(const MaterialBlockDetails& m
 {
 	auto modelSurfaces = GetSurfacesOnScene();
 
-	//std::unique_ptr<AbstractPathGenerator> roughToolGenerator = std::make_unique<RoughSphericalPathGenerator>(m_Scene, modelSurfaces);
-	//std::unique_ptr<AbstractPathGenerator> standToolGenerator = std::make_unique<StandFlatToolPathGenerator>(m_Scene, modelSurfaces);
+	std::unique_ptr<AbstractPathGenerator> roughToolGenerator = std::make_unique<RoughSphericalPathGenerator>(m_Scene, modelSurfaces);
+	std::unique_ptr<AbstractPathGenerator> standToolGenerator = std::make_unique<StandFlatToolPathGenerator>(m_Scene, modelSurfaces);
 	std::unique_ptr<AbstractPathGenerator> detailToolGenerator = std::make_unique<DetailSphericalPathGenerator>(m_Scene, modelSurfaces);
 
-	//auto roughPath = roughToolGenerator->GeneratePaths(materialBlockDetails);
-	//auto standPath = standToolGenerator->GeneratePaths(materialBlockDetails);
+	auto roughPath = roughToolGenerator->GeneratePaths(materialBlockDetails);
+	auto standPath = standToolGenerator->GeneratePaths(materialBlockDetails);
 	auto detailPath = detailToolGenerator->GeneratePaths(materialBlockDetails);
 
-	//auto optimizedRoughPath = m_PathOptimizer->Optimize(roughPath);
-	//auto optimizedStandPath = m_PathOptimizer->Optimize(standPath);
+	auto optimizedRoughPath = m_PathOptimizer->Optimize(roughPath);
+	auto optimizedStandPath = m_PathOptimizer->Optimize(standPath);
 	auto optimizedDetailPath = m_PathOptimizer->Optimize(detailPath);
 
 	auto converter = PathToGCodeConverter();
 
-	//auto gCodeRoughPath = converter.Convert(optimizedRoughPath);
-	//auto gCodeStandPath = converter.Convert(optimizedStandPath);
+	auto gCodeRoughPath = converter.Convert(optimizedRoughPath);
+	auto gCodeStandPath = converter.Convert(optimizedStandPath);
 	auto gCodeDetailPath = converter.Convert(optimizedDetailPath);
 
 	auto paths = std::vector<std::pair<std::string, GCP::GCodeProgram>>
 	{
-		//{ "rough_path.k16", gCodeRoughPath }, 
-		//{ "stand_path.f10", gCodeStandPath }, 
+		{ "rough_path.k16", gCodeRoughPath }, 
+		{ "stand_path.f10", gCodeStandPath }, 
 		{ "detail_path.k08", gCodeDetailPath },
 	};
 

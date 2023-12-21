@@ -233,7 +233,7 @@ auto DetailSphericalPathGenerator::GeneratePathsForScrewButtonIntersection(const
 		auto intersectionParameters = IntersectionAlgorithmParameters();
 		intersectionParameters.m_CursorPosition = point;
 		intersectionParameters.m_UseCursorAsStartingPoint = true;
-		intersectionParameters.m_PointDistance = 0.005f;
+		intersectionParameters.m_PointDistance = 0.002f;
 
 		auto intersectionAlgorithm = MultiIntersectionAlgorithm(intersectionParameters, *surface1, *surface2);
 
