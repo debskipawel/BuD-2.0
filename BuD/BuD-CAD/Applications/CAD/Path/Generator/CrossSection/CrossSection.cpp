@@ -49,7 +49,7 @@ CrossSection::CrossSection(std::weak_ptr<SceneObjectCAD> plane, const std::vecto
 	InitializeIntersectionEdgesCollection(plane, model, startingPoints);
 }
 
-auto CrossSection::UpperBound() -> BoundingPolygon
+auto CrossSection::UpperBound(const std::vector<std::shared_ptr<SceneObjectCAD>>& surfacesToAvoid) -> BoundingPolygon
 {
 	auto result = std::vector<dxm::Vector2>{ };
 	
@@ -101,7 +101,9 @@ auto CrossSection::UpperBound() -> BoundingPolygon
 
 		const auto& currentMaxEdge = currentMaxEdgeOpt.value();
 
-		result.emplace_back(u, currentMaxEdge.InterpolateV(u));
+		auto avoidCurrentEdge = (std::find(surfacesToAvoid.begin(), surfacesToAvoid.end(), currentMaxEdge.m_IntersectedObject) != surfacesToAvoid.end());
+
+		result.emplace_back(u, avoidCurrentEdge ? 1.0f : currentMaxEdge.InterpolateV(u));
 
 		auto intersectionLowerBound = u;
 		auto intersectionUpperBound = idx < m_IntersectionEdges.size() ? min(currentMaxEdge.EndU(), m_IntersectionEdges[idx].StartU()) : currentMaxEdge.EndU();
@@ -112,6 +114,11 @@ auto CrossSection::UpperBound() -> BoundingPolygon
 		{
 			u = (1.0f - t) * currentMaxEdge.StartU() + t * currentMaxEdge.EndU();
 			
+			if (avoidCurrentEdge)
+			{
+				result.emplace_back(u, 1.0f);
+			}
+
 			AET.Update(u);
 
 			continue;
@@ -125,7 +132,7 @@ auto CrossSection::UpperBound() -> BoundingPolygon
 
 			if (gapBetweenEdges)
 			{
-				result.emplace_back(currentMaxEdge.EndU(), currentMaxEdge.EndV());
+				result.emplace_back(currentMaxEdge.EndU(), avoidCurrentEdge ? 1.0f : currentMaxEdge.EndV());
 
 				u = currentMaxEdge.EndU();
 			}
@@ -136,14 +143,14 @@ auto CrossSection::UpperBound() -> BoundingPolygon
 				auto uIntersect = (1.0f - t) * currentMaxEdge.StartU() + t * currentMaxEdge.EndU();
 				auto vIntersect = (1.0f - t) * currentMaxEdge.StartV() + t * currentMaxEdge.EndV();
 
-				result.emplace_back(uIntersect, vIntersect);
+				result.emplace_back(uIntersect, avoidCurrentEdge ? 1.0f : vIntersect);
 
 				u = nextEdge.StartU();
 			}
 		}
 		else
 		{
-			result.emplace_back(currentMaxEdge.EndU(), currentMaxEdge.EndV());
+			result.emplace_back(currentMaxEdge.EndU(), avoidCurrentEdge ? 1.0f : currentMaxEdge.EndV());
 
 			u = currentMaxEdge.EndU();
 		}
@@ -160,7 +167,7 @@ auto CrossSection::UpperBound() -> BoundingPolygon
 	return BoundingPolygon(result, 0.0f);
 }
 
-auto CrossSection::LowerBound() -> BoundingPolygon
+auto CrossSection::LowerBound(const std::vector<std::shared_ptr<SceneObjectCAD>>& surfacesToAvoid) -> BoundingPolygon
 {
 	auto result = std::vector<dxm::Vector2>{ };
 
@@ -212,7 +219,9 @@ auto CrossSection::LowerBound() -> BoundingPolygon
 
 		const auto& currentMaxEdge = currentMaxEdgeOpt.value();
 
-		result.emplace_back(u, currentMaxEdge.InterpolateV(u));
+		auto avoidCurrentEdge = (std::find(surfacesToAvoid.begin(), surfacesToAvoid.end(), currentMaxEdge.m_IntersectedObject) != surfacesToAvoid.end());
+
+		result.emplace_back(u, avoidCurrentEdge ? 0.0f : currentMaxEdge.InterpolateV(u));
 
 		auto intersectionLowerBound = u;
 		auto intersectionUpperBound = idx < m_IntersectionEdges.size() ? min(currentMaxEdge.EndU(), m_IntersectionEdges[idx].StartU()) : currentMaxEdge.EndU();
@@ -222,6 +231,11 @@ auto CrossSection::LowerBound() -> BoundingPolygon
 		if (intersectingEdge.has_value())
 		{
 			u = (1.0f - t) * currentMaxEdge.StartU() + t * currentMaxEdge.EndU();
+
+			if (avoidCurrentEdge)
+			{
+				result.emplace_back(u, 0.0f);
+			}
 
 			AET.Update(u);
 
@@ -236,7 +250,7 @@ auto CrossSection::LowerBound() -> BoundingPolygon
 
 			if (gapBetweenEdges)
 			{
-				result.emplace_back(currentMaxEdge.EndU(), currentMaxEdge.EndV());
+				result.emplace_back(currentMaxEdge.EndU(), avoidCurrentEdge ? 0.0f : currentMaxEdge.EndV());
 
 				u = currentMaxEdge.EndU();
 			}
@@ -247,14 +261,14 @@ auto CrossSection::LowerBound() -> BoundingPolygon
 				auto uIntersect = (1.0f - t) * currentMaxEdge.StartU() + t * currentMaxEdge.EndU();
 				auto vIntersect = (1.0f - t) * currentMaxEdge.StartV() + t * currentMaxEdge.EndV();
 
-				result.emplace_back(uIntersect, vIntersect);
+				result.emplace_back(uIntersect, avoidCurrentEdge ? 0.0f : vIntersect);
 
 				u = nextEdge.StartU();
 			}
 		}
 		else
 		{
-			result.emplace_back(currentMaxEdge.EndU(), currentMaxEdge.EndV());
+			result.emplace_back(currentMaxEdge.EndU(), avoidCurrentEdge ? 0.0f : currentMaxEdge.EndV());
 
 			u = currentMaxEdge.EndU();
 		}

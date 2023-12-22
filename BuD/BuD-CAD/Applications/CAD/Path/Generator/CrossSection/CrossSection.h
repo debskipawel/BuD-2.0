@@ -11,8 +11,8 @@ public:
 	CrossSection(std::weak_ptr<SceneObjectCAD> plane, const std::vector<std::shared_ptr<SceneObjectCAD>>& model);
 	CrossSection(std::weak_ptr<SceneObjectCAD> plane, const std::vector<std::shared_ptr<SceneObjectCAD>>& model, const std::vector<dxm::Vector2>& intersectionStartingParameters);
 
-	virtual auto UpperBound() -> BoundingPolygon;
-	virtual auto LowerBound() -> BoundingPolygon;
+	virtual auto UpperBound(const std::vector<std::shared_ptr<SceneObjectCAD>>& surfacesToAvoid = {}) -> BoundingPolygon;
+	virtual auto LowerBound(const std::vector<std::shared_ptr<SceneObjectCAD>>& surfacesToAvoid = {}) -> BoundingPolygon;
 
 protected:
 	virtual auto InitializeIntersectionEdgesCollection(std::weak_ptr<SceneObjectCAD> plane, const std::vector<std::shared_ptr<SceneObjectCAD>>& model, const std::vector<dxm::Vector3>& intersectionStartingPoints) -> void;

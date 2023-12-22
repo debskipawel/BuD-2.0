@@ -21,9 +21,11 @@ auto DetailSphericalPathGenerator::GeneratePaths(const MaterialBlockDetails& mat
 	auto generalDetailPath = GenerateGeneralPathsForDetailMilling(materialBlockDetails);
 	auto buttonBodyIntersectionPath = GeneratePathsForButtonBodyIntersection(materialBlockDetails);
 	auto screwBodyIntersectionPath = GeneratePathsForScrewButtonIntersection(materialBlockDetails);
+	auto sharpEdgesPath = GeneratePathsForSharpEdges(materialBlockDetails);
 
 	std::copy(buttonBodyIntersectionPath.begin(), buttonBodyIntersectionPath.end(), std::back_inserter(path));
 	std::copy(screwBodyIntersectionPath.begin(), screwBodyIntersectionPath.end(), std::back_inserter(path));
+	std::copy(sharpEdgesPath.begin(), sharpEdgesPath.end(), std::back_inserter(path));
 	std::copy(generalDetailPath.begin(), generalDetailPath.end(), std::back_inserter(path));
 	
 	path.emplace_back(materialBlockDetails.m_Position.x, safeHeight, materialBlockDetails.m_Position.z);
@@ -90,7 +92,7 @@ auto DetailSphericalPathGenerator::GenerateGeneralPathsForDetailMilling(const Ma
 		auto startPosition = dxm::Vector3(startX, y, z);
 		auto endPosition = dxm::Vector3(endX, y, z);
 
-		auto passResult = FindCrossSectionPath(materialBlockDetails, startPosition, endPosition);
+		auto passResult = FindCrossSectionPath(materialBlockDetails, m_OffsetSurfaces, startPosition, endPosition);
 
 		if (passResult.empty())
 		{
@@ -270,7 +272,86 @@ auto DetailSphericalPathGenerator::GeneratePathsForScrewButtonIntersection(const
 	return result;
 }
 
-auto DetailSphericalPathGenerator::FindCrossSectionPath(const MaterialBlockDetails& materialBlockDetails, const dxm::Vector3& startPosition, const dxm::Vector3& endPosition) -> std::vector<dxm::Vector3>
+auto DetailSphericalPathGenerator::GeneratePathsForSharpEdges(const MaterialBlockDetails& materialBlockDetails) -> std::vector<dxm::Vector3>
+{
+	auto result = std::vector<dxm::Vector3>();
+
+	auto screw = std::find_if(m_OffsetSurfaces.begin(), m_OffsetSurfaces.end(),
+		[](std::shared_ptr<SceneObjectCAD> object)
+		{
+			const auto& tag = object->m_Tag;
+
+			return tag.find("Screw") != std::string::npos;
+		}
+	);
+
+	if (screw == m_OffsetSurfaces.end())
+	{
+		return result;
+	}
+
+	auto screwOffset = std::dynamic_pointer_cast<OffsetSurface>(*screw);
+
+	auto pass1 = GeneratePathsForOffset(materialBlockDetails, screwOffset, 0.0f, 0.495f);
+	auto pass2 = GeneratePathsForOffset(materialBlockDetails, screwOffset, 1.0f, 0.505f);
+
+	std::copy(pass1.begin(), pass1.end(), std::back_inserter(result));
+	std::copy(pass2.begin(), pass2.end(), std::back_inserter(result));
+
+	return result;
+}
+
+auto DetailSphericalPathGenerator::GeneratePathsForOffset(const MaterialBlockDetails& materialBlockDetails, std::shared_ptr<OffsetSurface> offset, float minU, float maxU) -> std::vector<dxm::Vector3>
+{
+	auto result = std::vector<dxm::Vector3>();
+
+	auto moveForwardV = true;
+	auto safeHeight = materialBlockDetails.m_Position.y + materialBlockDetails.m_Size.y;
+
+	auto passesU = 50U;
+	auto dU = (maxU - minU) / (passesU - 1);
+
+	for (auto passU = 0; passU < passesU; passU++)
+	{
+		auto u = minU + passU * dU;
+
+		auto singleResult = std::vector<dxm::Vector3>();
+
+		const auto passesV = 60U;
+
+		auto minV = moveForwardV ? 0.01f : 0.99f;
+		auto maxV = moveForwardV ? 0.99f : 0.01f;
+
+		auto dV = (maxV - minV) / (passesV - 1);
+
+		for (auto passV = 0; passV < passesV; passV++)
+		{
+			auto v = minV + passV * dV;
+
+			auto p = m_Sampler->GetPoint(offset, u, v);
+
+			p.y -= DETAIL_SPHERICAL_TOOL_RADIUS;
+
+			if (p.y >= 2.7f)
+			{
+				singleResult.push_back(p);
+			}
+		}
+
+		std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(result));
+
+		moveForwardV = !moveForwardV;
+	}
+
+	auto startPoint = dxm::Vector3(result.front().x, safeHeight, result.front().z);
+
+	result.insert(result.begin(), { startPoint });
+	result.emplace_back(result.back().x, safeHeight, result.back().z);
+
+	return result;
+}
+
+auto DetailSphericalPathGenerator::FindCrossSectionPath(const MaterialBlockDetails& materialBlockDetails, std::vector<std::shared_ptr<SceneObjectCAD>> model, const dxm::Vector3& startPosition, const dxm::Vector3& endPosition) -> std::vector<dxm::Vector3>
 {
 	auto result = std::vector<dxm::Vector3>();
 
@@ -285,8 +366,17 @@ auto DetailSphericalPathGenerator::FindCrossSectionPath(const MaterialBlockDetai
 
 	auto verticalPlane = m_SceneCAD.CreateFinitePlane(dxm::Vector3(startPosition.x, 0.0f, startPosition.z), dU, dV, widthU, widthV);
 
-	auto crossSection = CrossSection(verticalPlane, m_OffsetSurfaces);
-	auto polygon = crossSection.UpperBound();
+	auto screw = std::find_if(m_OffsetSurfaces.begin(), m_OffsetSurfaces.end(),
+		[](std::shared_ptr<SceneObjectCAD> object)
+		{
+			const auto& tag = object->m_Tag;
+
+			return tag.find("Screw") != std::string::npos;
+		}
+	);
+
+	auto crossSection = CrossSection(verticalPlane, model);
+	auto polygon = crossSection.UpperBound({ *screw });
 
 	const auto& upperBoundPoints = polygon.Points();
 

@@ -1,6 +1,6 @@
 #include "Edge.h"
 
-Edge::Edge(const IntersectionPoint& plane1, const IntersectionPoint& plane2, const IntersectionPoint& model1, const IntersectionPoint& model2, std::weak_ptr<SceneObjectCAD> intersectedObject)
+Edge::Edge(const IntersectionPoint& plane1, const IntersectionPoint& plane2, const IntersectionPoint& model1, const IntersectionPoint& model2, std::shared_ptr<SceneObjectCAD> intersectedObject)
 	: m_PlaneUV1(plane1), m_PlaneUV2(plane2), m_ModelUV1(model1), m_ModelUV2(model2), m_IntersectedObject(intersectedObject)
 {
 }

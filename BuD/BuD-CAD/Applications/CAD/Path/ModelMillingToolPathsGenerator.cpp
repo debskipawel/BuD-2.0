@@ -24,24 +24,24 @@ auto ModelMillingToolPathsGenerator::GeneratePaths(const MaterialBlockDetails& m
 	std::unique_ptr<AbstractPathGenerator> standToolGenerator = std::make_unique<StandFlatToolPathGenerator>(m_Scene, modelSurfaces);
 	std::unique_ptr<AbstractPathGenerator> detailToolGenerator = std::make_unique<DetailSphericalPathGenerator>(m_Scene, modelSurfaces);
 
-	auto roughPath = roughToolGenerator->GeneratePaths(materialBlockDetails);
-	auto standPath = standToolGenerator->GeneratePaths(materialBlockDetails);
+	//auto roughPath = roughToolGenerator->GeneratePaths(materialBlockDetails);
+	//auto standPath = standToolGenerator->GeneratePaths(materialBlockDetails);
 	auto detailPath = detailToolGenerator->GeneratePaths(materialBlockDetails);
 
-	auto optimizedRoughPath = m_PathOptimizer->Optimize(roughPath);
-	auto optimizedStandPath = m_PathOptimizer->Optimize(standPath);
+	//auto optimizedRoughPath = m_PathOptimizer->Optimize(roughPath);
+	//auto optimizedStandPath = m_PathOptimizer->Optimize(standPath);
 	auto optimizedDetailPath = m_PathOptimizer->Optimize(detailPath);
 
 	auto converter = PathToGCodeConverter();
 
-	auto gCodeRoughPath = converter.Convert(optimizedRoughPath);
-	auto gCodeStandPath = converter.Convert(optimizedStandPath);
+	//auto gCodeRoughPath = converter.Convert(optimizedRoughPath);
+	//auto gCodeStandPath = converter.Convert(optimizedStandPath);
 	auto gCodeDetailPath = converter.Convert(optimizedDetailPath);
 
 	auto paths = std::vector<std::pair<std::string, GCP::GCodeProgram>>
 	{
-		{ "1.k16", gCodeRoughPath }, 
-		{ "2.f10", gCodeStandPath }, 
+		//{ "1.k16", gCodeRoughPath }, 
+		//{ "2.f10", gCodeStandPath }, 
 		{ "3.k08", gCodeDetailPath },
 	};
 

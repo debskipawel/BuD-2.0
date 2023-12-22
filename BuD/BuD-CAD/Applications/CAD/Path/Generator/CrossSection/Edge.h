@@ -4,7 +4,7 @@
 
 struct Edge
 {
-	Edge(const IntersectionPoint& plane1, const IntersectionPoint& plane2, const IntersectionPoint& model1, const IntersectionPoint& model2, std::weak_ptr<SceneObjectCAD> intersectedObject);
+	Edge(const IntersectionPoint& plane1, const IntersectionPoint& plane2, const IntersectionPoint& model1, const IntersectionPoint& model2, std::shared_ptr<SceneObjectCAD> intersectedObject);
 
 	virtual auto InterpolateV(float u) const -> float;
 
@@ -17,5 +17,5 @@ struct Edge
 	IntersectionPoint m_PlaneUV1, m_PlaneUV2;
 	IntersectionPoint m_ModelUV1, m_ModelUV2;
 
-	std::weak_ptr<SceneObjectCAD> m_IntersectedObject;
+	std::shared_ptr<SceneObjectCAD> m_IntersectedObject;
 };
