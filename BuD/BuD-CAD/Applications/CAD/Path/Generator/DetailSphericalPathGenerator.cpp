@@ -42,7 +42,7 @@ auto DetailSphericalPathGenerator::GenerateGeneralPathsForDetailMilling(const Ma
 	auto eps = 0.1f;
 
 	auto R = DETAIL_SPHERICAL_TOOL_RADIUS;
-	auto T = 0.008f * R;
+	auto T = 0.01f * R;
 	auto D = 2.0f * R * sinf(acosf(1.0f - T / R));
 
 	auto minX = materialBlockDetails.m_Position.x - (0.5f * materialBlockDetails.m_Size.x + R + eps);
@@ -359,7 +359,7 @@ auto DetailSphericalPathGenerator::FindCrossSectionPath(const MaterialBlockDetai
 	auto dV = dxm::Vector3::UnitY;
 
 	auto widthU = dU.Length();
-	auto widthV = materialBlockDetails.m_Size.y;
+	auto widthV = 0.775f * materialBlockDetails.m_Size.y;
 
 	dU.Normalize();
 	dV.Normalize();
