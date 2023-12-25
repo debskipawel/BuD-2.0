@@ -136,7 +136,7 @@ void MenuBarGuiLayerCAD::DrawRendererSettings()
 
 void MenuBarGuiLayerCAD::DrawMillingPathsMenu()
 {
-    if (ImGui::MenuItem("Generate milling paths", nullptr, nullptr))
+    if (ImGui::MenuItem("Generate milling paths", nullptr, nullptr, false))
     {
         m_GenerateMillingPathsPopupOpen = true;
     }
