@@ -49,3 +49,8 @@ void IntersectionEligibilityValidationVisitor::Visit(BezierSurfaceC2& surface)
 {
 	m_Valid = true;
 }
+
+void IntersectionEligibilityValidationVisitor::Visit(OffsetSurface& surface)
+{
+	BaseValidationVisitor::Visit(surface.InternalSurface());
+}

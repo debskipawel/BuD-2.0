@@ -9,8 +9,12 @@ public:
 
 	virtual void Visit(Torus& torus) override;
 
+	virtual void Visit(FinitePlane& plane) override;
+
 	virtual void Visit(BezierSurfaceC0& surface) override;
 	virtual void Visit(BezierSurfaceC2& surface) override;
+
+	virtual void Visit(OffsetSurface& surface) override;
 
 	virtual void SetParameter(const dxm::Vector2& parameter);
 

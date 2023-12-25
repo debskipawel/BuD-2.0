@@ -2,7 +2,13 @@
 
 #include <Applications/CAD/Objects/Torus.h>
 #include <Applications/CAD/Objects/Point.h>
+
+#include <Applications/CAD/Objects/FinitePlane.h>
+#include <Applications/CAD/Objects/InfinitePlane.h>
+
 #include <Applications/CAD/Objects/ParameterizedObject2D.h>
+
+#include <Applications/CAD/Objects/PointBased/Surfaces/OffsetSurface.h>
 
 #include <Applications/CAD/Objects/Intersection/IntersectionCurve.h>
 
@@ -21,7 +27,7 @@ SceneCAD::SceneCAD()
 {
 	m_Grid = std::make_unique<Grid>(m_Scene);
 	m_MainCursor = std::make_shared<Cursor>(m_Scene);
-	
+
 	m_CentroidCursor = std::make_shared<Cursor>(m_Scene);
 	m_CentroidCursor->SetPosition({ NAN, NAN, NAN });
 }
@@ -50,6 +56,16 @@ void SceneCAD::DeleteObject(SceneObjectCAD& object)
 	m_ObjectList.erase(id);
 }
 
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateOffsetSurface(std::weak_ptr<SceneObjectCAD> object, float offset)
+{
+	auto offsetSurface = std::make_shared<OffsetSurface>(m_Scene, object, offset);
+	m_ObjectList.emplace(offsetSurface->Id(), offsetSurface);
+
+	BuD::Log::WriteInfo("Successfully created an offset surface.");
+
+	return offsetSurface;
+}
+
 std::weak_ptr<SceneObjectCAD> SceneCAD::CreateTorus(dxm::Vector3 position)
 {
 	auto torus = std::make_shared<Torus>(m_Scene, position);
@@ -68,6 +84,46 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreatePoint(dxm::Vector3 position)
 	BuD::Log::WriteInfo("Successfully created a point.");
 
 	return point;
+}
+
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFinitePlane(dxm::Vector3 position, dxm::Vector3 dU, dxm::Vector3 dV, float widthU, float widthV)
+{
+	auto plane = std::make_shared<FinitePlane>(m_Scene, position, dU, dV, widthU, widthV);
+	m_ObjectList.emplace(plane->Id(), plane);
+
+	BuD::Log::WriteInfo("Successfully created a finite plane.");
+
+	return plane;
+}
+
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFinitePlane(dxm::Vector3 position, dxm::Vector3 normal, float widthU, float widthV)
+{
+	auto plane = std::make_shared<FinitePlane>(m_Scene, position, normal, widthU, widthV);
+	m_ObjectList.emplace(plane->Id(), plane);
+
+	BuD::Log::WriteInfo("Successfully created a finite plane.");
+
+	return plane;
+}
+
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateInfinitePlane(dxm::Vector3 position, dxm::Vector3 dU, dxm::Vector3 dV)
+{
+	auto plane = std::make_shared<InfinitePlane>(m_Scene, position, dU, dV);
+	m_ObjectList.emplace(plane->Id(), plane);
+
+	BuD::Log::WriteInfo("Successfully created an infinite plane.");
+
+	return plane;
+}
+
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateInfinitePlane(dxm::Vector3 position, dxm::Vector3 normal)
+{
+	auto plane = std::make_shared<InfinitePlane>(m_Scene, position, normal);
+	m_ObjectList.emplace(plane->Id(), plane);
+
+	BuD::Log::WriteInfo("Successfully created an infinite plane.");
+
+	return plane;
 }
 
 std::weak_ptr<SceneObjectCAD> SceneCAD::CreateBezierCurveC0(std::vector<std::weak_ptr<Point>> controlPoints)
@@ -118,9 +174,9 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreateYukselInterpolatingCurveC2(std::ve
 	return curve;
 }
 
-std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFlatBezierSurfaceC0(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV)
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFlatBezierSurfaceC0(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV, float patchSizeU, float patchSizeV)
 {
-	auto surface = std::make_shared<BezierSurfaceC0>(*this, position, patchesU, pachesV, false);
+	auto surface = std::make_shared<BezierSurfaceC0>(*this, position, patchesU, pachesV, patchSizeU, patchSizeV, false);
 	surface->UpdateOwnership();
 
 	m_ObjectList.emplace(surface->Id(), surface);
@@ -130,9 +186,9 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFlatBezierSurfaceC0(dxm::Vector3 p
 	return surface;
 }
 
-std::weak_ptr<SceneObjectCAD> SceneCAD::CreateCylinderBezierSurfaceC0(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV)
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateCylinderBezierSurfaceC0(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV, float patchSizeU, float patchSizeV)
 {
-	auto surface = std::make_shared<BezierSurfaceC0>(*this, position, patchesU, pachesV, true);
+	auto surface = std::make_shared<BezierSurfaceC0>(*this, position, patchesU, pachesV, patchSizeU, patchSizeV, true);
 	surface->UpdateOwnership();
 
 	m_ObjectList.emplace(surface->Id(), surface);
@@ -142,9 +198,9 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreateCylinderBezierSurfaceC0(dxm::Vecto
 	return surface;
 }
 
-std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFlatBezierSurfaceC2(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV)
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFlatBezierSurfaceC2(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV, float patchSizeU, float patchSizeV)
 {
-	auto surface = std::make_shared<BezierSurfaceC2>(*this, position, patchesU, pachesV, false);
+	auto surface = std::make_shared<BezierSurfaceC2>(*this, position, patchesU, pachesV, patchSizeU, patchSizeV, false);
 	surface->UpdateOwnership();
 
 	m_ObjectList.emplace(surface->Id(), surface);
@@ -154,9 +210,9 @@ std::weak_ptr<SceneObjectCAD> SceneCAD::CreateFlatBezierSurfaceC2(dxm::Vector3 p
 	return surface;
 }
 
-std::weak_ptr<SceneObjectCAD> SceneCAD::CreateCylinderBezierSurfaceC2(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV)
+std::weak_ptr<SceneObjectCAD> SceneCAD::CreateCylinderBezierSurfaceC2(dxm::Vector3 position, uint32_t patchesU, uint32_t pachesV, float patchSizeU, float patchSizeV)
 {
-	auto surface = std::make_shared<BezierSurfaceC2>(*this, position, patchesU, pachesV, true);
+	auto surface = std::make_shared<BezierSurfaceC2>(*this, position, patchesU, pachesV, patchSizeU, patchSizeV, true);
 	surface->UpdateOwnership();
 
 	m_ObjectList.emplace(surface->Id(), surface);

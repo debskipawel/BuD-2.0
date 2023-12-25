@@ -23,6 +23,16 @@ void ObjectSelectVisitor::Visit(Point& point)
 	point.m_InstanceData.m_Color = Point::SELECTED_COLOR;
 }
 
+void ObjectSelectVisitor::Visit(InfinitePlane& plane)
+{
+	SelectManually(m_Caller);
+}
+
+void ObjectSelectVisitor::Visit(FinitePlane& plane)
+{
+	SelectManually(m_Caller);
+}
+
 void ObjectSelectVisitor::Visit(IntersectionCurve& curve)
 {
 	SelectManually(m_Caller);
@@ -95,6 +105,11 @@ void ObjectSelectVisitor::Visit(BezierSurfaceC0& surface)
 void ObjectSelectVisitor::Visit(BezierSurfaceC2& surface)
 {
 	CommonSelectSurface(surface);
+}
+
+void ObjectSelectVisitor::Visit(OffsetSurface& surface)
+{
+	SelectManually(m_Caller);
 }
 
 void ObjectSelectVisitor::CommonSelectCurve(BaseCurve& curve)

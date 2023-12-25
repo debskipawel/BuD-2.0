@@ -24,6 +24,7 @@ protected:
 	virtual dxm::Vector3 GetInitialDirection(const StartingCommonPointResult& initialPosition) = 0;
 
 	virtual StartingCommonPointResult FindInitialCommonPoint(dxm::Vector4 startingPosition);
+	virtual std::optional<LoopResult> DetectLoop(const NextCommonPointResult& startingPoint, const NextCommonPointResult& previousPoint, const NextCommonPointResult& nextPoint);
 
 	virtual NextCommonPointResult FindNextPoint(const NextCommonPointResult& previousPoint, std::optional<dxm::Vector3> previousStep, MarchingDirection marchingDirection);
 
@@ -40,7 +41,7 @@ protected:
 	std::unique_ptr<ISampler> m_Sampler;
 
 	std::vector<std::unique_ptr<AbstractInitialCommonPointFinder>> m_NearestCommonPointFinders;
-	
+	std::vector<std::unique_ptr<AbstractLoopDetector>> m_LoopDetectors;
+
 	std::unique_ptr<AbstractCommonPointMarching> m_MarchingCommonPointFinder;
-	std::unique_ptr<AbstractLoopDetector> m_LoopDetector;
 };

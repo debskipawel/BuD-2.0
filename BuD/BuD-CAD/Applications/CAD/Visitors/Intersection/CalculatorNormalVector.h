@@ -9,9 +9,13 @@ class CalculatorNormalVector : public CalculatorParameterized
 public:
 	explicit CalculatorNormalVector();
 
-	virtual void Visit(std::weak_ptr<SceneObjectCAD> object) override;
+	virtual void Visit(Torus& torus) override;
 
-protected:
-	std::unique_ptr<CalculatorParameterized> m_DerivativeUVisitor;
-	std::unique_ptr<CalculatorParameterized> m_DerivativeVVisitor;
+	virtual void Visit(InfinitePlane& plane) override;
+	virtual void Visit(FinitePlane& plane) override;
+
+	virtual void Visit(BezierSurfaceC0& surface) override;
+	virtual void Visit(BezierSurfaceC2& surface) override;
+
+	virtual void Visit(OffsetSurface& surface) override;
 };

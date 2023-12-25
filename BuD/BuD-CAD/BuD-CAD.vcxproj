@@ -176,6 +176,26 @@
     <ClInclude Include="Applications\CAD\AppState.h" />
     <ClInclude Include="Applications\CAD\Behaviors\Keyboard\AppState\AppStateHeyboardBehaviorLayer.h" />
     <ClInclude Include="Applications\CAD\Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Applications\CAD\Intersection\ResultConverter\IntersectionResultConverter.h" />
+    <ClInclude Include="Applications\CAD\Intersection\Sampler\OffsetSampler.h" />
+    <ClInclude Include="Applications\CAD\Objects\FinitePlane.h" />
+    <ClInclude Include="Applications\CAD\Objects\InfinitePlane.h" />
+    <ClInclude Include="Applications\CAD\Objects\Plane.h" />
+    <ClInclude Include="Applications\CAD\Path\Converter\PathToGCodeConverter.h" />
+    <ClInclude Include="Applications\CAD\Path\Generator\CrossSection\ActiveEdgeTable.h" />
+    <ClInclude Include="Applications\CAD\Path\Generator\CrossSection\BoundingPolygon.h" />
+    <ClInclude Include="Applications\CAD\Path\Generator\CrossSection\CrossSection.h" />
+    <ClInclude Include="Applications\CAD\Path\Generator\CrossSection\Edge.h" />
+    <ClInclude Include="Applications\CAD\Path\MaterialBlockDetails.h" />
+    <ClInclude Include="Applications\CAD\Path\ModelMillingToolPathsGenerator.h" />
+    <ClInclude Include="Applications\CAD\Path\MillingToolPath.h" />
+    <ClInclude Include="Applications\CAD\Path\Generator\AbstractPathGenerator.h" />
+    <ClInclude Include="Applications\CAD\Path\Generator\DetailSphericalPathGenerator.h" />
+    <ClInclude Include="Applications\CAD\Path\Generator\RoughSphericalPathGenerator.h" />
+    <ClInclude Include="Applications\CAD\Path\Generator\StandFlatToolPathGenerator.h" />
+    <ClInclude Include="Applications\CAD\Path\Optimizer\AbstractPathOptimizer.h" />
+    <ClInclude Include="Applications\CAD\Path\Optimizer\ColinearPathOptimizer.h" />
+    <ClInclude Include="Applications\CAD\Objects\PointBased\Surfaces\OffsetSurface.h" />
     <ClInclude Include="Applications\CNC\ApplicationCNC.h" />
     <ClInclude Include="Applications\CNC\Behaviors\Mouse\BaseMouseBehaviorLayerCNC.h" />
     <ClInclude Include="Applications\CNC\Behaviors\Mouse\Camera\CameraMouseBehaviorLayerCNC.h" />
@@ -188,6 +208,7 @@
     <ClInclude Include="Applications\CNC\Factories\MillingTool\MainMillingToolFactory.h" />
     <ClInclude Include="Applications\CNC\Factories\MillingTool\MillingToolFactory.h" />
     <ClInclude Include="Applications\CNC\Factories\MillingTool\SphericalMillingToolFactory.h" />
+    <ClInclude Include="Applications\CNC\GCodeCommandPathVisitor.h" />
     <ClInclude Include="Applications\CNC\GUI\BaseGuiLayerCNC.h" />
     <ClInclude Include="Applications\CNC\GUI\MainGuiLayerCNC.h" />
     <ClInclude Include="Applications\CNC\GUI\MenuBar\MenuBarGuiLayerCNC.h" />
@@ -262,7 +283,7 @@
     <ClInclude Include="Applications\CAD\Intersection\Structures\PointMappingResult.h" />
     <ClInclude Include="Applications\CAD\Intersection\Structures\StartingCommonPointResult.h" />
     <ClInclude Include="Applications\CAD\Objects\Intersection\IntersectionCurve.h" />
-    <ClInclude Include="Applications\CAD\Objects\Intersection\IntersectionPoint.h" />
+    <ClInclude Include="Applications\CAD\Intersection\ResultConverter\IntersectionPoint.h" />
     <ClInclude Include="Applications\CAD\Objects\ParameterizedObject2D.h" />
     <ClInclude Include="Applications\CAD\Objects\PointBased\Curve\BaseCurve.h" />
     <ClInclude Include="Applications\CAD\Objects\PointBased\Curve\BezierCurveC0.h" />
@@ -337,10 +358,30 @@
     <ClCompile Include="Applications\CAD\Behaviors\Keyboard\AxisLock\AxisLockKeyboardBehaviorLayer.cpp" />
     <ClCompile Include="Applications\CAD\Behaviors\Keyboard\BaseKeyboardBehaviorLayerCAD.cpp" />
     <ClCompile Include="Applications\CAD\Behaviors\Mouse\BaseMouseBehaviorLayerCAD.cpp" />
+    <ClCompile Include="Applications\CAD\Intersection\ResultConverter\IntersectionResultConverter.cpp" />
+    <ClCompile Include="Applications\CAD\Intersection\Sampler\OffsetSampler.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\FinitePlane.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\InfinitePlane.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\Plane.cpp" />
+    <ClCompile Include="Applications\CAD\Path\Converter\PathToGCodeConverter.cpp" />
+    <ClCompile Include="Applications\CAD\Path\Generator\CrossSection\ActiveEdgeTable.cpp" />
+    <ClCompile Include="Applications\CAD\Path\Generator\CrossSection\BoundingPolygon.cpp" />
+    <ClCompile Include="Applications\CAD\Path\Generator\CrossSection\CrossSection.cpp" />
+    <ClCompile Include="Applications\CAD\Path\Generator\CrossSection\Edge.cpp" />
+    <ClCompile Include="Applications\CAD\Path\Generator\DetailSphericalPathGenerator.cpp" />
+    <ClCompile Include="Applications\CAD\Path\Generator\RoughSphericalPathGenerator.cpp" />
+    <ClCompile Include="Applications\CAD\Path\Generator\StandFlatToolPathGenerator.cpp" />
+    <ClCompile Include="Applications\CAD\Path\MaterialBlockDetails.cpp" />
+    <ClCompile Include="Applications\CAD\Path\ModelMillingToolPathsGenerator.cpp" />
+    <ClCompile Include="Applications\CAD\Path\MillingToolPath.cpp" />
+    <ClCompile Include="Applications\CAD\Path\Generator\AbstractPathGenerator.cpp" />
+    <ClCompile Include="Applications\CAD\Path\Optimizer\ColinearPathOptimizer.cpp" />
+    <ClCompile Include="Applications\CAD\Objects\PointBased\Surfaces\OffsetSurface.cpp" />
     <ClCompile Include="Applications\CNC\ApplicationCNC.cpp" />
     <ClCompile Include="Applications\CNC\Behaviors\Mouse\BaseMouseBehaviorLayerCNC.cpp" />
     <ClCompile Include="Applications\CNC\Behaviors\Mouse\Camera\CameraMouseBehaviorLayerCNC.cpp" />
     <ClCompile Include="Applications\CNC\Behaviors\Mouse\MainMouseBehaviorLayerCNC.cpp" />
+    <ClCompile Include="Applications\CNC\GCodeCommandPathVisitor.cpp" />
     <ClCompile Include="Applications\CNC\GUI\MillingTool\MillingToolGuiLayerCNC.cpp" />
     <ClCompile Include="Applications\CNC\Objects\MaterialBlock\Mesh\MaterialBlockSidesMesh.cpp" />
     <ClCompile Include="Applications\CNC\Objects\Tools\Visitors\MillingToolVisitor.cpp" />
@@ -517,6 +558,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+    <FxCompile Include="Resources\Shaders\FinitePlane\finite_plane_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\FinitePlane\finite_plane_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="Resources\Shaders\Grid\grid_ps.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
@@ -524,6 +577,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\Grid\grid_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\InfinitePlane\infinite_plane_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\InfinitePlane\infinite_plane_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
@@ -628,6 +693,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Path\path_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Path\path_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\PointBased\BezierCurveC0\bezier_curve_c0_border_gs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>

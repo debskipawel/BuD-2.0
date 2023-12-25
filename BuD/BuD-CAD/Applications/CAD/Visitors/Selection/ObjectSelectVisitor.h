@@ -10,6 +10,9 @@ public:
 	virtual void Visit(Torus& torus) override;
 	virtual void Visit(Point& point) override;
 
+	virtual void Visit(InfinitePlane& plane) override;
+	virtual void Visit(FinitePlane& plane) override;
+
 	virtual void Visit(IntersectionCurve& curve) override;
 
 	virtual void Visit(BezierCurveC0& curve) override;
@@ -21,6 +24,8 @@ public:
 
 	virtual void Visit(BezierSurfaceC0& surface) override;
 	virtual void Visit(BezierSurfaceC2& surface) override;
+
+	virtual void Visit(OffsetSurface& surface) override;
 
 protected:
 	virtual void CommonSelectCurve(BaseCurve& curve);

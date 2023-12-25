@@ -2,6 +2,8 @@
 
 #include <numbers>
 
+#include <Applications/CAD/Visitors/Intersection/CalculatorNormalVector.h>
+
 void CalculatorPointOnSurface::Visit(Torus& torus)
 {
 	WrapParameter(true, true);
@@ -22,6 +24,16 @@ void CalculatorPointOnSurface::Visit(Torus& torus)
 	auto worldPosition = dxm::Vector4::Transform(localPosition, torus.m_InstanceData.m_ModelMatrix);
 
 	m_Result = { worldPosition.x, worldPosition.y, worldPosition.z };
+}
+
+void CalculatorPointOnSurface::Visit(InfinitePlane& plane)
+{
+	m_Result = plane.GetPoint(m_Parameter.x, m_Parameter.y);
+}
+
+void CalculatorPointOnSurface::Visit(FinitePlane& plane)
+{
+	m_Result = plane.GetPoint(m_Parameter.x, m_Parameter.y);
 }
 
 void CalculatorPointOnSurface::Visit(BezierSurfaceC0& surface)
@@ -81,4 +93,20 @@ void CalculatorPointOnSurface::Visit(BezierSurfaceC2& surface)
 	auto vPointsInBernstein = BSplineToBernstein(vControlPoints);
 
 	m_Result = DeCastiljeau3(vPointsInBernstein, v);
+}
+
+void CalculatorPointOnSurface::Visit(OffsetSurface& surface)
+{
+	CalculatorParameterized::Visit(surface.InternalSurface());
+
+	auto point = m_Result;
+
+	std::unique_ptr<CalculatorParameterized> normalCalculator = std::make_unique<CalculatorNormalVector>();
+	normalCalculator->SetParameter(m_Parameter);
+	normalCalculator->Visit(surface.InternalSurface());
+
+	auto normal = normalCalculator->Result();
+	auto offset = surface.Offset();
+
+	m_Result = point + offset * normal;
 }

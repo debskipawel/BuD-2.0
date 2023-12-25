@@ -170,6 +170,31 @@ void ObjectGuiDrawerVisitor::Visit(YukselInterpolatingCurveC2& curve)
 	DrawGuiForSelectedTransform();
 }
 
+void ObjectGuiDrawerVisitor::Visit(FinitePlane& plane)
+{
+	DrawGuiForTag(plane);
+
+	ImGui::Separator();
+
+	if (DrawGuiForTransform(plane.m_Transform))
+	{
+		std::unique_ptr<AbstractVisitor> onTransformVisitor = std::make_unique<UpdateTransformVisitor>();
+		std::unique_ptr<AbstractVisitor> afterTransformVisitor = std::make_unique<AfterUpdateTransformVisitor>();
+
+		onTransformVisitor->Visit(m_Caller);
+		afterTransformVisitor->Visit(m_Caller);
+
+		auto centroid = m_SceneDataLayer.m_SelectedForTransform.Centroid();
+
+		auto& cursor = m_SceneDataLayer.m_SceneCAD.m_CentroidCursor;
+		cursor->SetPosition(centroid);
+	}
+
+	ImGui::Separator();
+
+	DrawGuiForParameterSpace(plane);
+}
+
 void ObjectGuiDrawerVisitor::Visit(BezierPatchC0& patch)
 {
 	DrawGuiForTag(patch);

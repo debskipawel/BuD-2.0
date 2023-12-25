@@ -17,4 +17,8 @@ protected:
 	virtual void DrawGuiForSelectedTransform();
 	virtual void DrawGuiForSingularObject();
 	virtual void DrawDeleteButton();
+
+	virtual void DrawGuiForOffsetSurface(std::weak_ptr<SceneObjectCAD> object);
+
+	float m_SurfaceOffset;
 };

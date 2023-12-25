@@ -5,6 +5,9 @@
 #include <Applications/CAD/Objects/Point.h>
 #include <Applications/CAD/Objects/Torus.h>
 
+#include <Applications/CAD/Objects/FinitePlane.h>
+#include <Applications/CAD/Objects/InfinitePlane.h>
+
 #include <Applications/CAD/Objects/Intersection/IntersectionCurve.h>
 
 #include <Applications/CAD/Objects/PointBased/Curve/BezierCurveC0.h>
@@ -16,6 +19,8 @@
 #include <Applications/CAD/Objects/PointBased/Surfaces/BezierPatchC0.h>
 #include <Applications/CAD/Objects/PointBased/Surfaces/BezierPatchC2.h>
 
+#include <Applications/CAD/Objects/PointBased/Surfaces/OffsetSurface.h>
+
 class AbstractVisitor
 {
 public:
@@ -25,6 +30,9 @@ public:
 
 	virtual void Visit(Point& point) {}
 	virtual void Visit(Torus& torus) {}
+
+	virtual void Visit(FinitePlane& plane) {}
+	virtual void Visit(InfinitePlane& plane) {}
 
 	virtual void Visit(IntersectionCurve& curve) {}
 
@@ -37,6 +45,8 @@ public:
 	
 	virtual void Visit(BezierSurfaceC0& surface) {}
 	virtual void Visit(BezierSurfaceC2& surface) {}
+
+	virtual void Visit(OffsetSurface& surface) {}
 
 protected:
 	std::weak_ptr<SceneObjectCAD> m_Caller;

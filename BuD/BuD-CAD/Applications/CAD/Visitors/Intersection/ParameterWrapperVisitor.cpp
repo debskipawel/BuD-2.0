@@ -20,6 +20,16 @@ void ParameterWrapperVisitor::Visit(Torus& torus)
 	m_Parameter.y -= floor(m_Parameter.y);
 }
 
+void ParameterWrapperVisitor::Visit(FinitePlane& plane)
+{
+	m_WrappedU = m_WrappedV = 0;
+
+	m_ParameterOutOfRange = m_Parameter.x < 0.0f || m_Parameter.x > 1.0f || m_Parameter.y < 0.0f || m_Parameter.y > 1.0f;
+
+	m_Parameter.x = std::clamp(m_Parameter.x, 0.0f, 1.0f);
+	m_Parameter.y = std::clamp(m_Parameter.y, 0.0f, 1.0f);
+}
+
 void ParameterWrapperVisitor::Visit(BezierSurfaceC0& surface)
 {
 	m_WrappedU = m_WrappedV = 0;
@@ -52,6 +62,11 @@ void ParameterWrapperVisitor::Visit(BezierSurfaceC2& surface)
 
 	m_Parameter.x = std::clamp(m_Parameter.x, 0.0f, 1.0f);
 	m_Parameter.y = std::clamp(m_Parameter.y, 0.0f, 1.0f);
+}
+
+void ParameterWrapperVisitor::Visit(OffsetSurface& surface)
+{
+	ParameterWrapperVisitor::Visit(surface.InternalSurface());
 }
 
 void ParameterWrapperVisitor::SetParameter(const dxm::Vector2& parameter)

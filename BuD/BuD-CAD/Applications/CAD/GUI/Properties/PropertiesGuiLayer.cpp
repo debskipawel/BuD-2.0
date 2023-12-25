@@ -9,8 +9,10 @@
 #include <Applications/CAD/Visitors/Transform/AfterUpdateTransformVisitor.h>
 #include <Applications/CAD/Visitors/Transform/ApplyGroupTransformVisitor.h>
 
+#include <Applications/CAD/Visitors/Validation/IntersectionEligibilityValidationVisitor.h>
+
 PropertiesGuiLayer::PropertiesGuiLayer(MainDataLayerCAD& dataLayer)
-	: BaseGuiLayerCAD(dataLayer)
+	: BaseGuiLayerCAD(dataLayer), m_SurfaceOffset(0.0f)
 {
 }
 
@@ -112,6 +114,15 @@ void PropertiesGuiLayer::DrawGuiForSingularObject()
 	std::unique_ptr<AbstractVisitor> visitor = std::make_unique<ObjectGuiDrawerVisitor>(m_MainDataLayer.m_SceneDataLayer);
 
 	visitor->Visit(object);
+
+	std::unique_ptr<BaseValidationVisitor> intersectionEligibilityVisitor = std::make_unique<IntersectionEligibilityValidationVisitor>();
+
+	intersectionEligibilityVisitor->Visit(object);
+
+	if (intersectionEligibilityVisitor->Valid())
+	{
+		DrawGuiForOffsetSurface(object);
+	}
 }
 
 void PropertiesGuiLayer::DrawDeleteButton()
@@ -228,5 +239,17 @@ void PropertiesGuiLayer::DrawDeleteButton()
 		}
 
 		ImGui::EndPopup();
+	}
+}
+
+void PropertiesGuiLayer::DrawGuiForOffsetSurface(std::weak_ptr<SceneObjectCAD> object)
+{
+	ImGui::Separator();
+
+	ImGui::DragFloat("###surface_offset_value", &m_SurfaceOffset, 0.01f, 0.0f, 1.0f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+
+	if (ImGui::Button("Make offset surface"))
+	{
+		m_MainDataLayer.m_SceneDataLayer.m_SceneCAD.CreateOffsetSurface(object, m_SurfaceOffset);
 	}
 }

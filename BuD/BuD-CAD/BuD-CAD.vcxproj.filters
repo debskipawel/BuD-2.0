@@ -312,7 +312,7 @@
     <ClInclude Include="Applications\CAD\Objects\Intersection\IntersectionCurve.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Applications\CAD\Objects\Intersection\IntersectionPoint.h">
+    <ClInclude Include="Applications\CAD\Intersection\ResultConverter\IntersectionPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CAD\Objects\ParameterizedObject2D.h">
@@ -499,6 +499,69 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Applications\CNC\GUI\MillingTool\MillingToolGuiLayerCNC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\ModelMillingToolPathsGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Intersection\Sampler\OffsetSampler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Objects\PointBased\Surfaces\OffsetSurface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Generator\AbstractPathGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\MillingToolPath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Optimizer\AbstractPathOptimizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Optimizer\ColinearPathOptimizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Generator\RoughSphericalPathGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Generator\StandFlatToolPathGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Generator\DetailSphericalPathGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\MaterialBlockDetails.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Objects\InfinitePlane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Objects\FinitePlane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Objects\Plane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Intersection\ResultConverter\IntersectionResultConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Generator\CrossSection\CrossSection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Generator\CrossSection\ActiveEdgeTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Generator\CrossSection\Edge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Converter\PathToGCodeConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CAD\Path\Generator\CrossSection\BoundingPolygon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\CNC\GCodeCommandPathVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -914,6 +977,66 @@
     <ClCompile Include="Applications\CNC\GUI\MillingTool\MillingToolGuiLayerCNC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\ModelMillingToolPathsGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Intersection\Sampler\OffsetSampler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Objects\PointBased\Surfaces\OffsetSurface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Generator\AbstractPathGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\MillingToolPath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Optimizer\ColinearPathOptimizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\MaterialBlockDetails.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Generator\RoughSphericalPathGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Generator\StandFlatToolPathGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Generator\DetailSphericalPathGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Objects\InfinitePlane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Objects\Plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Objects\FinitePlane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Intersection\ResultConverter\IntersectionResultConverter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Generator\CrossSection\CrossSection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Generator\CrossSection\ActiveEdgeTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Generator\CrossSection\Edge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Converter\PathToGCodeConverter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CAD\Path\Generator\CrossSection\BoundingPolygon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Applications\CNC\GCodeCommandPathVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\Torus\torus_instanced_vs.hlsl" />
@@ -984,6 +1107,12 @@
     <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_hs.hlsl" />
     <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_ds.hlsl" />
     <FxCompile Include="Resources\Shaders\MaterialBlock\material_block_sides_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\FinitePlane\finite_plane_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\FinitePlane\finite_plane_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\InfinitePlane\infinite_plane_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\InfinitePlane\infinite_plane_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\Path\path_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\Path\path_ps.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="testfile.f14" />

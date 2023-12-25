@@ -11,6 +11,7 @@ ObjectCreationGuiLayer::ObjectCreationGuiLayer(MainDataLayerCAD& dataLayer)
 	m_Buttons.emplace_back(ButtonInfo{ "Create point", [this]() { CreatePoint(); } });
 	m_Buttons.emplace_back(ButtonInfo{ "Create surface C0", [this]() { OpenPopupForSurfaceCreationC0(); } });
 	m_Buttons.emplace_back(ButtonInfo{ "Create surface C2", [this]() { OpenPopupForSurfaceCreationC2(); } });
+	m_Buttons.emplace_back(ButtonInfo{ "Create finite plane", [this]() { CreatePlane(); } });
 }
 
 void ObjectCreationGuiLayer::DrawGui()
@@ -74,6 +75,14 @@ void ObjectCreationGuiLayer::CreatePoint()
 		std::unique_ptr<AbstractVisitor> visitor = std::make_unique<PointAddedVisitor>(m_MainDataLayer.m_SceneDataLayer, point);
 		visitor->Visit(first);
 	}
+}
+
+void ObjectCreationGuiLayer::CreatePlane()
+{
+	auto& scene = m_MainDataLayer.m_SceneDataLayer.m_SceneCAD;
+	auto position = scene.m_MainCursor->GetPosition();
+
+	scene.CreateFinitePlane(position, -10.0f * dxm::Vector3::UnitZ, 10.0f * dxm::Vector3::UnitY);
 }
 
 void ObjectCreationGuiLayer::OpenPopupForSurfaceCreationC0()

@@ -2,7 +2,7 @@
 
 #include <Applications/CAD/Scene/SceneObjectCAD.h>
 
-#include <Applications/CAD/Objects/Intersection/IntersectionPoint.h>
+#include <Applications/CAD/Intersection/ResultConverter/IntersectionPoint.h>
 
 class IntersectionCurve : public SceneObjectCAD
 {

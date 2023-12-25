@@ -2,6 +2,9 @@
 
 #include <numbers>
 
+#include <Applications/CAD/Visitors/Intersection/CalculatorPointOnSurface.h>
+#include <Applications/CAD/Visitors/Intersection/ParameterWrapperVisitor.h>
+
 void CalculatorPartialDerivativeV::Visit(Torus& torus)
 {
 	auto R = torus.m_InstanceData.m_OuterRadius;
@@ -19,6 +22,16 @@ void CalculatorPartialDerivativeV::Visit(Torus& torus)
 	auto worldVector = dxm::Vector4::Transform(localVector, torus.m_InstanceData.m_ModelMatrix);
 
 	m_Result = { worldVector.x, worldVector.y, worldVector.z };
+}
+
+void CalculatorPartialDerivativeV::Visit(InfinitePlane& plane)
+{
+	m_Result = plane.GetV();
+}
+
+void CalculatorPartialDerivativeV::Visit(FinitePlane& plane)
+{
+	m_Result = plane.GetTransformedV();
 }
 
 void CalculatorPartialDerivativeV::Visit(BezierSurfaceC0& surface)
@@ -88,4 +101,55 @@ void CalculatorPartialDerivativeV::Visit(BezierSurfaceC2& surface)
 	};
 
 	m_Result = DeCastiljeau2(vDerPointsInBernstein, v) * surface.m_SizeV;
+}
+
+void CalculatorPartialDerivativeV::Visit(OffsetSurface& surface)
+{
+	auto inner = surface.InternalSurface();
+
+	auto pointCalculator = std::make_unique<CalculatorPointOnSurface>();
+	auto parameterWrapper = std::make_unique<ParameterWrapperVisitor>();
+
+	auto h = 0.0005f;
+	auto mul = 1.0f;
+
+	auto [u, v] = m_Parameter;
+
+	auto vph = v + h;
+	auto vmh = v - h;
+
+	auto prevParameter = dxm::Vector2(u, vmh);
+	auto nextParameter = dxm::Vector2(u, vph);
+
+	parameterWrapper->SetParameter(prevParameter);
+	parameterWrapper->Visit(inner);
+
+	prevParameter = parameterWrapper->Parameter();
+
+	if (vmh < 0.0f && !parameterWrapper->WrappedV())
+	{
+		mul = 2.0f;
+	}
+
+	parameterWrapper->SetParameter(nextParameter);
+	parameterWrapper->Visit(inner);
+
+	nextParameter = parameterWrapper->Parameter();
+
+	if (vph > 1.0f && !parameterWrapper->WrappedV())
+	{
+		mul = 2.0f;
+	}
+
+	pointCalculator->SetParameter(prevParameter);
+	pointCalculator->Visit(surface);
+
+	auto prevPoint = pointCalculator->Result();
+
+	pointCalculator->SetParameter(nextParameter);
+	pointCalculator->Visit(surface);
+
+	auto nextPoint = pointCalculator->Result();
+
+	m_Result = (nextPoint - prevPoint) / (2.0f * h) * mul;
 }

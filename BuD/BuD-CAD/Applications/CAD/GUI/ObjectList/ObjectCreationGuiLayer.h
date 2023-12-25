@@ -13,6 +13,8 @@ protected:
 	void CreateTorus();
 	void CreatePoint();
 
+	void CreatePlane();
+
 	void OpenPopupForSurfaceCreationC0();
 	void OpenPopupForSurfaceCreationC2();
 

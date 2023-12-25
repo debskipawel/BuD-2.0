@@ -55,6 +55,21 @@ StartingCommonPointResult BaseIntersectionAlgorithm::FindInitialCommonPoint(dxm:
 	return result;
 }
 
+std::optional<LoopResult> BaseIntersectionAlgorithm::DetectLoop(const NextCommonPointResult& startingPoint, const NextCommonPointResult& previousPoint, const NextCommonPointResult& nextPoint)
+{
+	for (auto& loopDetector : m_LoopDetectors)
+	{
+		auto result = loopDetector->DetectLoop(startingPoint, previousPoint, nextPoint);
+
+		if (result.has_value())
+		{
+			return result;
+		}
+	}
+
+	return std::nullopt;
+}
+
 NextCommonPointResult BaseIntersectionAlgorithm::FindNextPoint(const NextCommonPointResult& previousPoint, std::optional<dxm::Vector3> previousDirection, MarchingDirection marchingDirection)
 {
 	if (previousDirection.has_value())
@@ -97,17 +112,17 @@ CommonPointSequenceResult BaseIntersectionAlgorithm::FindAllCommonPointsInDirect
 		auto nextPoint = m_MarchingCommonPointFinder->NextPoint(previousPoint.m_Parameter, m_Parameters.m_PointDistance, marchingDirection);
 
 		// TODO: sometimes loop detection doesn't work because of this
-		if (!nextPoint.m_ResultFound && previousDirection.has_value() && previousDirection->Length() > 1e-3f)
-		{
-			previousDirection->Normalize();
-			nextPoint = m_MarchingCommonPointFinder->NextPoint(previousPoint.m_Parameter, previousDirection.value(), m_Parameters.m_PointDistance);
-		}
+		//if (!nextPoint.m_ResultFound && previousDirection.has_value() && previousDirection->Length() > 1e-3f)
+		//{
+		//	previousDirection->Normalize();
+		//	nextPoint = m_MarchingCommonPointFinder->NextPoint(previousPoint.m_Parameter, previousDirection.value(), m_Parameters.m_PointDistance);
+		//}
 
 		if (nextPoint.m_ResultFound)
 		{
 			previousDirection = nextPoint.m_Point - previousPoint.m_Point;
 
-			auto loopResult = m_LoopDetector->DetectLoop(startingPoint, previousPoint, nextPoint);
+			auto loopResult = DetectLoop(startingPoint, previousPoint, nextPoint);
 
 			if (loopResult.has_value())
 			{
