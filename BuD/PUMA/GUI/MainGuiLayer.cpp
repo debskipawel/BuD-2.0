@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include <GUI/ViewportGuiLayer.h>
+#include <GUI/Viewport/ViewportGuiLayer.h>
 
 MainGuiLayer::MainGuiLayer(MainDataLayer& dataLayer)
 	: BaseGuiLayer(dataLayer)

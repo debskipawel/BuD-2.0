@@ -2,6 +2,9 @@
 
 #include <BuD.h>
 
+#include <Behaviors/Keyboard/BaseKeyboardBehaviorLayer.h>
+#include <Behaviors/Mouse/BaseMouseBehaviorLayer.h>
+
 #include <DataLayers/MainDataLayer.h>
 #include <GUI/BaseGuiLayer.h>
 
@@ -19,6 +22,9 @@ public:
 
 	virtual auto OnConcreteEvent(BuD::KeyDownEvent& e) -> void override;
 	virtual auto OnConcreteEvent(BuD::KeyReleaseEvent& e) -> void override;
+
+	virtual auto OnConcreteEvent(BuD::MouseButtonDownEvent& e) -> void override;
+	virtual auto OnConcreteEvent(BuD::MouseButtonReleasedEvent& e) -> void override;
 	virtual auto OnConcreteEvent(BuD::MouseScrolledEvent& e) -> void override;
 	virtual auto OnConcreteEvent(BuD::MouseMovedEvent& e) -> void override;
 
@@ -29,6 +35,6 @@ protected:
 	PumaMesh m_Mesh;
 
 	std::unique_ptr<BaseGuiLayer> m_MainGuiLayer;
-
-	bool m_MouseMove;
+	std::unique_ptr<BaseKeyboardBehaviorLayer> m_KeyboardBehaviorLayer;
+	std::unique_ptr<BaseMouseBehaviorLayer> m_MouseBehaviorLayer;
 };

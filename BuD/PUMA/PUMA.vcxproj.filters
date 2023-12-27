@@ -30,10 +30,10 @@
     <ClCompile Include="DataLayers\MainDataLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataLayers\ViewportDataLayer.cpp">
+    <ClCompile Include="DataLayers\Viewport\ViewportDataLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\ViewportGuiLayer.cpp">
+    <ClCompile Include="GUI\Viewport\ViewportGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Robot\Frame.cpp">
@@ -51,6 +51,27 @@
     <ClCompile Include="Robot\Mesh\PumaMesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Behaviors\Mouse\BaseMouseBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Mouse\MainMouseBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataLayers\Camera\CameraDataLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PumaApp.h">
@@ -65,10 +86,10 @@
     <ClInclude Include="DataLayers\MainDataLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataLayers\ViewportDataLayer.h">
+    <ClInclude Include="DataLayers\Viewport\ViewportDataLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\ViewportGuiLayer.h">
+    <ClInclude Include="GUI\Viewport\ViewportGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Robot\RobotConfiguration.h">
@@ -87,6 +108,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Robot\Mesh\PumaMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Mouse\BaseMouseBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLayers\Camera\CameraDataLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
