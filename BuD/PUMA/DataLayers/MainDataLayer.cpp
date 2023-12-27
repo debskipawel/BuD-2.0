@@ -1,6 +1,6 @@
 #include "MainDataLayer.h"
 
-MainDataLayer::MainDataLayer(BuD::Scene& scene)
-	: m_Scene(scene), m_ViewportDataLayer()
+MainDataLayer::MainDataLayer()
+	: m_ViewportDataLayer1(), m_ViewportDataLayer2()
 {
 }

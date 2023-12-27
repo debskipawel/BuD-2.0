@@ -7,9 +7,10 @@ CameraMouseBehaviorLayer::CameraMouseBehaviorLayer(MainDataLayer& mainDataLayer)
 
 auto CameraMouseBehaviorLayer::OnMiddleButtonDown(int x, int y) -> void
 {
-	auto& viewport = m_MainDataLayer.m_ViewportDataLayer;
+	auto& viewport1 = m_MainDataLayer.m_ViewportDataLayer1;
+	auto& viewport2 = m_MainDataLayer.m_ViewportDataLayer2;
 
-	if (!viewport.IsMouseOnViewport(x, y))
+	if (!viewport1.IsMouseOnViewport(x, y) && !viewport2.IsMouseOnViewport(x, y))
 	{
 		return;
 	}
@@ -19,9 +20,10 @@ auto CameraMouseBehaviorLayer::OnMiddleButtonDown(int x, int y) -> void
 
 auto CameraMouseBehaviorLayer::OnMiddleButtonUp(int x, int y) -> void
 {
-	auto& viewport = m_MainDataLayer.m_ViewportDataLayer;
+	auto& viewport1 = m_MainDataLayer.m_ViewportDataLayer1;
+	auto& viewport2 = m_MainDataLayer.m_ViewportDataLayer2;
 
-	if (!viewport.IsMouseOnViewport(x, y))
+	if (!viewport1.IsMouseOnViewport(x, y) && !viewport2.IsMouseOnViewport(x, y))
 	{
 		return;
 	}
@@ -36,25 +38,26 @@ auto CameraMouseBehaviorLayer::OnMove(int x, int y, int dx, int dy) -> void
 		return;
 	}
 	
-	auto& scene = m_MainDataLayer.m_Scene;
+	//auto& scene = m_MainDataLayer.m_Scene;
 
-	auto camera = scene.ActiveCamera();
+	//auto camera = scene.ActiveCamera();
 
-	camera->RotateCamera(0.01f * dx, 0.01f * dy);
+	//camera->RotateCamera(0.01f * dx, 0.01f * dy);
 }
 
 auto CameraMouseBehaviorLayer::OnScroll(int x, int y, int delta) -> void
 {
-	auto& viewport = m_MainDataLayer.m_ViewportDataLayer;
+	auto& viewport1 = m_MainDataLayer.m_ViewportDataLayer1;
+	auto& viewport2 = m_MainDataLayer.m_ViewportDataLayer2;
 
-	if (!viewport.IsMouseOnViewport(x, y))
+	if (!viewport1.IsMouseOnViewport(x, y) && !viewport2.IsMouseOnViewport(x, y))
 	{
 		return;
 	}
 
-	auto& scene = m_MainDataLayer.m_Scene;
+	//auto& scene = m_MainDataLayer.m_Scene;
 
-	auto camera = scene.ActiveCamera();
+	//auto camera = scene.ActiveCamera();
 
-	camera->Zoom(-0.01f * delta);
+	//camera->Zoom(-0.01f * delta);
 }

@@ -7,10 +7,10 @@
 
 struct MainDataLayer
 {
-	MainDataLayer(BuD::Scene& scene);
+	MainDataLayer();
 
 	CameraDataLayer m_CameraDataLayer;
-	ViewportDataLayer m_ViewportDataLayer;
 
-	BuD::Scene& m_Scene;
+	ViewportDataLayer m_ViewportDataLayer1;
+	ViewportDataLayer m_ViewportDataLayer2;
 };

@@ -29,10 +29,7 @@ public:
 	virtual auto OnConcreteEvent(BuD::MouseMovedEvent& e) -> void override;
 
 protected:
-	BuD::Scene m_Scene;
 	MainDataLayer m_MainDataLayer;
-
-	PumaMesh m_Mesh;
 
 	std::unique_ptr<BaseGuiLayer> m_MainGuiLayer;
 	std::unique_ptr<BaseKeyboardBehaviorLayer> m_KeyboardBehaviorLayer;

@@ -7,5 +7,8 @@ class ViewportGuiLayer : public BaseGuiLayer
 public:
 	ViewportGuiLayer(MainDataLayer& dataLayer);
 
-	virtual void DrawGui() override;
+	virtual auto DrawGui() -> void override;
+
+protected:
+	virtual auto DrawViewport(ViewportDataLayer& viewport, const std::string& viewportName) -> void;
 };
