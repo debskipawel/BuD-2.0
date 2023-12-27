@@ -155,6 +155,8 @@
     <ClCompile Include="Robot\Mesh\PumaMesh.cpp" />
     <ClCompile Include="Robot\Mesh\RobotSegmentMesh.cpp" />
     <ClCompile Include="Robot\RobotParameters.cpp" />
+    <ClCompile Include="Scene\Objects\Grid.cpp" />
+    <ClCompile Include="Scene\PumaScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuD\BuD.vcxproj">
@@ -188,8 +190,22 @@
     <ClInclude Include="Robot\Mesh\RobotSegmentMesh.h" />
     <ClInclude Include="Robot\RobotConfiguration.h" />
     <ClInclude Include="Robot\RobotParameters.h" />
+    <ClInclude Include="Scene\Objects\Grid.h" />
+    <ClInclude Include="Scene\PumaScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Resources\Shaders\Grid\grid_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Grid\grid_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="Resources\Shaders\robot_segment_ps.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

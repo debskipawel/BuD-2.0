@@ -1,8 +1,7 @@
 #pragma once
 
-#include <BuD.h>
-
 #include <DataLayers/Viewport/ViewportDataLayer.h>
+#include <Scene/PumaScene.h>
 
 class SimulationDataLayer
 {
@@ -14,14 +13,14 @@ public:
 
 	virtual auto Render() -> void;
 
-	virtual auto Camera() const -> std::shared_ptr<BuD::AbstractCamera>;
+	virtual auto Camera() -> std::shared_ptr<BuD::AbstractCamera>;
 
 	virtual auto Update(float deltaTime) -> void;
 
 	virtual auto ViewportDetails() -> ViewportDataLayer&;
 
 protected:
-	BuD::Scene m_Scene;
+	PumaScene m_Scene;
 
 	ViewportDataLayer m_Viewport;
 

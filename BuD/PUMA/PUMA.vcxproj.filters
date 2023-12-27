@@ -75,6 +75,12 @@
     <ClCompile Include="DataLayers\Simulation\SimulationDataLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\Objects\Grid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\PumaScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PumaApp.h">
@@ -137,9 +143,17 @@
     <ClInclude Include="DataLayers\Simulation\SimulationDataLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\Objects\Grid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PumaScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\robot_segment_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\robot_segment_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\Grid\grid_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\Grid\grid_ps.hlsl" />
   </ItemGroup>
 </Project>
