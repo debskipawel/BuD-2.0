@@ -5,6 +5,8 @@
 #include <DataLayers/MainDataLayer.h>
 #include <GUI/BaseGuiLayer.h>
 
+#include <Robot/Mesh/PumaMesh.h>
+
 class PumaApp : public BuD::AppLayer
 {
 public:
@@ -15,9 +17,18 @@ public:
 	virtual auto OnRender() -> void override;
 	virtual auto OnGuiRender() -> void override;
 
+	virtual auto OnConcreteEvent(BuD::KeyDownEvent& e) -> void override;
+	virtual auto OnConcreteEvent(BuD::KeyReleaseEvent& e) -> void override;
+	virtual auto OnConcreteEvent(BuD::MouseScrolledEvent& e) -> void override;
+	virtual auto OnConcreteEvent(BuD::MouseMovedEvent& e) -> void override;
+
 protected:
 	BuD::Scene m_Scene;
 	MainDataLayer m_MainDataLayer;
 
+	PumaMesh m_Mesh;
+
 	std::unique_ptr<BaseGuiLayer> m_MainGuiLayer;
+
+	bool m_MouseMove;
 };
