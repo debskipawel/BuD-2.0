@@ -7,10 +7,18 @@ CameraMouseBehaviorLayer::CameraMouseBehaviorLayer(MainDataLayer& mainDataLayer)
 
 auto CameraMouseBehaviorLayer::OnMiddleButtonDown(int x, int y) -> void
 {
-	auto& viewport1 = m_MainDataLayer.m_ViewportDataLayer1;
-	auto& viewport2 = m_MainDataLayer.m_ViewportDataLayer2;
+	auto& simulations = m_MainDataLayer.m_Simulations;
 
-	if (!viewport1.IsMouseOnViewport(x, y) && !viewport2.IsMouseOnViewport(x, y))
+	auto mouseNotOnAnyViewport = std::none_of(simulations.begin(), simulations.end(),
+		[x, y](std::shared_ptr<SimulationDataLayer> simulation)
+		{
+			auto& viewport = simulation->ViewportDetails();
+
+			return viewport.IsMouseOnViewport(x, y);
+		}
+	);
+
+	if (mouseNotOnAnyViewport)
 	{
 		return;
 	}
@@ -20,10 +28,18 @@ auto CameraMouseBehaviorLayer::OnMiddleButtonDown(int x, int y) -> void
 
 auto CameraMouseBehaviorLayer::OnMiddleButtonUp(int x, int y) -> void
 {
-	auto& viewport1 = m_MainDataLayer.m_ViewportDataLayer1;
-	auto& viewport2 = m_MainDataLayer.m_ViewportDataLayer2;
+	auto& simulations = m_MainDataLayer.m_Simulations;
 
-	if (!viewport1.IsMouseOnViewport(x, y) && !viewport2.IsMouseOnViewport(x, y))
+	auto mouseNotOnAnyViewport = std::none_of(simulations.begin(), simulations.end(),
+		[x, y](std::shared_ptr<SimulationDataLayer> simulation)
+		{
+			auto& viewport = simulation->ViewportDetails();
+
+			return viewport.IsMouseOnViewport(x, y);
+		}
+	);
+
+	if (mouseNotOnAnyViewport)
 	{
 		return;
 	}
@@ -38,26 +54,36 @@ auto CameraMouseBehaviorLayer::OnMove(int x, int y, int dx, int dy) -> void
 		return;
 	}
 	
-	//auto& scene = m_MainDataLayer.m_Scene;
+	for (const auto& simulation : m_MainDataLayer.m_Simulations)
+	{
+		auto camera = simulation->Camera();
 
-	//auto camera = scene.ActiveCamera();
-
-	//camera->RotateCamera(0.01f * dx, 0.01f * dy);
+		camera->RotateCamera(0.01f * dx, 0.01f * dy);
+	}
 }
 
 auto CameraMouseBehaviorLayer::OnScroll(int x, int y, int delta) -> void
 {
-	auto& viewport1 = m_MainDataLayer.m_ViewportDataLayer1;
-	auto& viewport2 = m_MainDataLayer.m_ViewportDataLayer2;
+	auto& simulations = m_MainDataLayer.m_Simulations;
 
-	if (!viewport1.IsMouseOnViewport(x, y) && !viewport2.IsMouseOnViewport(x, y))
+	auto mouseNotOnAnyViewport = std::none_of(simulations.begin(), simulations.end(),
+		[x, y](std::shared_ptr<SimulationDataLayer> simulation)
+		{
+			auto& viewport = simulation->ViewportDetails();
+
+			return viewport.IsMouseOnViewport(x, y);
+		}
+	);
+
+	if (mouseNotOnAnyViewport)
 	{
 		return;
 	}
 
-	//auto& scene = m_MainDataLayer.m_Scene;
+	for (const auto& simulation : m_MainDataLayer.m_Simulations)
+	{
+		auto camera = simulation->Camera();
 
-	//auto camera = scene.ActiveCamera();
-
-	//camera->Zoom(-0.01f * delta);
+		camera->Zoom(-0.01f * delta);
+	}
 }

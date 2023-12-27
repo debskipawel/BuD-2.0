@@ -21,21 +21,10 @@ auto PumaApp::OnUpdate(float deltaTime) -> void
 
 auto PumaApp::OnRender() -> void
 {
-	auto& viewport1 = m_MainDataLayer.m_ViewportDataLayer1;
-
-	BuD::Renderer::BeginTarget(viewport1.m_ViewportWidth, viewport1.m_ViewportHeight);
-	BuD::Renderer::Clear(0.0f, 0.0f, 0.0f, 1.0f);
-	//BuD::Renderer::Render(m_Scene);
-
-	viewport1.m_ViewportImage = BuD::Renderer::EndTarget();
-
-	auto& viewport2 = m_MainDataLayer.m_ViewportDataLayer1;
-
-	BuD::Renderer::BeginTarget(viewport2.m_ViewportWidth, viewport2.m_ViewportHeight);
-	BuD::Renderer::Clear(0.0f, 0.0f, 0.0f, 1.0f);
-	//BuD::Renderer::Render(m_Scene);
-
-	viewport2.m_ViewportImage = BuD::Renderer::EndTarget();
+	for (const auto& simulation : m_MainDataLayer.m_Simulations)
+	{
+		simulation->Render();
+	}
 }
 
 auto PumaApp::OnGuiRender() -> void

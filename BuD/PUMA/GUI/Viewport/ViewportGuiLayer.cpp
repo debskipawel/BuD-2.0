@@ -9,8 +9,16 @@ ViewportGuiLayer::ViewportGuiLayer(MainDataLayer& dataLayer)
 
 void ViewportGuiLayer::DrawGui()
 {
-	DrawViewport(m_MainDataLayer.m_ViewportDataLayer1, "Viewport1");
-	DrawViewport(m_MainDataLayer.m_ViewportDataLayer2, "Viewport2");
+	auto idx = 0;
+
+	for (const auto& simulation : m_MainDataLayer.m_Simulations)
+	{
+		idx++;
+
+		auto& viewport = simulation->ViewportDetails();
+
+		DrawViewport(viewport, std::format("Viewport{}", idx));
+	}
 }
 
 auto ViewportGuiLayer::DrawViewport(ViewportDataLayer& viewport, const std::string& viewportName) -> void

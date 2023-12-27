@@ -3,7 +3,7 @@
 #include <BuD.h>
 
 #include <DataLayers/Camera/CameraDataLayer.h>
-#include <DataLayers/Viewport/ViewportDataLayer.h>
+#include <DataLayers/Simulation/SimulationDataLayer.h>
 
 struct MainDataLayer
 {
@@ -11,6 +11,5 @@ struct MainDataLayer
 
 	CameraDataLayer m_CameraDataLayer;
 
-	ViewportDataLayer m_ViewportDataLayer1;
-	ViewportDataLayer m_ViewportDataLayer2;
+	std::vector<std::shared_ptr<SimulationDataLayer>> m_Simulations;
 };

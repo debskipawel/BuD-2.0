@@ -1,0 +1,41 @@
+#include "SimulationDataLayer.h"
+
+SimulationDataLayer::SimulationDataLayer()
+    : m_Scene(), m_Viewport(), m_Running(false)
+{
+
+}
+
+auto SimulationDataLayer::Start() -> void
+{
+
+}
+
+auto SimulationDataLayer::Stop() -> void
+{
+
+}
+
+auto SimulationDataLayer::Render() -> void
+{
+	BuD::Renderer::BeginTarget(m_Viewport.m_ViewportWidth, m_Viewport.m_ViewportHeight);
+	BuD::Renderer::Clear(0.0f, 0.0f, 0.0f, 1.0f);
+	BuD::Renderer::Render(m_Scene);
+
+	m_Viewport.m_ViewportImage = BuD::Renderer::EndTarget();
+}
+
+auto SimulationDataLayer::Camera() const -> std::shared_ptr<BuD::AbstractCamera>
+{
+	return m_Scene.ActiveCamera();
+}
+
+auto SimulationDataLayer::Update(float deltaTime) -> void
+{
+
+}
+
+auto SimulationDataLayer::ViewportDetails() -> ViewportDataLayer&
+{
+    return m_Viewport;
+}

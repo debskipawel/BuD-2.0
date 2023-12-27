@@ -1,6 +1,8 @@
 #include "MainDataLayer.h"
 
 MainDataLayer::MainDataLayer()
-	: m_ViewportDataLayer1(), m_ViewportDataLayer2()
+	: m_Simulations()
 {
+	m_Simulations.emplace_back(std::make_shared<SimulationDataLayer>());
+	m_Simulations.emplace_back(std::make_shared<SimulationDataLayer>());
 }
