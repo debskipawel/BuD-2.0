@@ -2,13 +2,18 @@
 
 #include <BuD.h>
 
+#include <Robot/RobotParameters.h>
+#include <Robot/RobotConfiguration.h>
 #include <Robot/Mesh/PumaMesh.h>
+
 #include <Scene/Objects/Grid.h>
 
 class PumaScene
 {
 public:
 	PumaScene();
+
+	virtual auto UpdateRobotMesh(const RobotParameters& parameters, const RobotConfiguration& robotConfiguration) -> void;
 
 	virtual auto Scene() -> BuD::Scene&;
 

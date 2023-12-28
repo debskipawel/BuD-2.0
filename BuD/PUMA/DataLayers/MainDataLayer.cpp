@@ -1,10 +1,8 @@
 #include "MainDataLayer.h"
 
 MainDataLayer::MainDataLayer()
-	: m_Simulations(), m_Running(false)
+	: m_Simulations(), m_Running(false), m_SimulationTime(0.0f), m_RobotParameters(2.0f, 1.0f, 1.0f), m_AnimationClip(5.0f)
 {
-	m_Simulations.emplace_back(std::make_shared<SimulationDataLayer>());
-	m_Simulations.emplace_back(std::make_shared<SimulationDataLayer>());
 }
 
 auto MainDataLayer::Update(float deltaTime) -> void
@@ -14,9 +12,15 @@ auto MainDataLayer::Update(float deltaTime) -> void
 		return;
 	}
 
+	m_SimulationTime += deltaTime;
+
+	auto duration = m_AnimationClip.Duration();
+
+	m_SimulationTime -= static_cast<int>(floorf(m_SimulationTime / duration)) * duration;
+
 	for (const auto& simulation : m_Simulations)
 	{
-		simulation->Update(deltaTime);
+		simulation->Update(m_RobotParameters, m_AnimationClip, m_SimulationTime);
 	}
 }
 

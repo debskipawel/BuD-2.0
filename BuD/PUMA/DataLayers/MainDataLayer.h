@@ -5,6 +5,9 @@
 #include <DataLayers/Camera/CameraDataLayer.h>
 #include <DataLayers/Simulation/SimulationDataLayer.h>
 
+#include <Robot/RobotParameters.h>
+#include <Robot/Animation/AnimationClip.h>
+
 struct MainDataLayer
 {
 public:
@@ -19,8 +22,14 @@ public:
 
 	CameraDataLayer m_CameraDataLayer;
 
+	RobotParameters m_RobotParameters;
+
 	std::vector<std::shared_ptr<SimulationDataLayer>> m_Simulations;
 
 protected:
+	AnimationClip m_AnimationClip;
+
+	float m_SimulationTime;
+
 	bool m_Running;
 };

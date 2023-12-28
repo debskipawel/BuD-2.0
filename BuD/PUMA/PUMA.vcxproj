@@ -150,6 +150,8 @@
     <ClCompile Include="GUI\Viewport\ViewportGuiLayer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PumaApp.cpp" />
+    <ClCompile Include="Robot\Animation\AnimationClip.cpp" />
+    <ClCompile Include="Robot\Animation\AnimationKeyFrame.cpp" />
     <ClCompile Include="Robot\Frame.cpp" />
     <ClCompile Include="Robot\InverseKinematicSolver.cpp" />
     <ClCompile Include="Robot\Mesh\PumaMesh.cpp" />
@@ -184,6 +186,8 @@
     <ClInclude Include="GUI\MainGuiLayer.h" />
     <ClInclude Include="GUI\Viewport\ViewportGuiLayer.h" />
     <ClInclude Include="PumaApp.h" />
+    <ClInclude Include="Robot\Animation\AnimationClip.h" />
+    <ClInclude Include="Robot\Animation\AnimationKeyFrame.h" />
     <ClInclude Include="Robot\Frame.h" />
     <ClInclude Include="Robot\InverseKinematicSolver.h" />
     <ClInclude Include="Robot\Mesh\PumaMesh.h" />
