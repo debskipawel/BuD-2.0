@@ -1,17 +1,7 @@
 #include "SimulationDataLayer.h"
 
 SimulationDataLayer::SimulationDataLayer()
-    : m_Scene(), m_Viewport(), m_Running(false)
-{
-
-}
-
-auto SimulationDataLayer::Start() -> void
-{
-
-}
-
-auto SimulationDataLayer::Stop() -> void
+    : m_Scene(), m_Viewport()
 {
 
 }

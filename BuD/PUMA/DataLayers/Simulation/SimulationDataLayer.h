@@ -8,21 +8,14 @@ class SimulationDataLayer
 public:
 	SimulationDataLayer();
 
-	virtual auto Start() -> void;
-	virtual auto Stop() -> void;
-
 	virtual auto Render() -> void;
-
-	virtual auto Camera() -> std::shared_ptr<BuD::AbstractCamera>;
-
 	virtual auto Update(float deltaTime) -> void;
 
 	virtual auto ViewportDetails() -> ViewportDataLayer&;
+	virtual auto Camera() -> std::shared_ptr<BuD::AbstractCamera>;
 
 protected:
 	PumaScene m_Scene;
 
 	ViewportDataLayer m_Viewport;
-
-	bool m_Running;
 };

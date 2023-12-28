@@ -16,7 +16,7 @@ PumaApp::PumaApp()
 
 auto PumaApp::OnUpdate(float deltaTime) -> void
 {
-	return;
+	m_MainDataLayer.Update(deltaTime);
 }
 
 auto PumaApp::OnRender() -> void
