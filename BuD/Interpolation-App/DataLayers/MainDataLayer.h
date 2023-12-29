@@ -10,7 +10,7 @@ struct MainDataLayer
 	virtual void UpdateGhostMesh();
 
 	SceneDataLayer m_SceneDataLayer;
-	SimulationDataLayer m_SimulationDataLayer;
+	BaseSimulation m_SimulationDataLayer;
 
 	bool m_ShowGhost;
 	unsigned int m_IntermediateFramesCount;

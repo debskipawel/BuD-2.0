@@ -10,7 +10,7 @@ auto CameraMouseBehaviorLayer::OnMiddleButtonDown(int x, int y) -> void
 	auto& simulations = m_MainDataLayer.m_Simulations;
 
 	auto mouseNotOnAnyViewport = std::none_of(simulations.begin(), simulations.end(),
-		[x, y](std::shared_ptr<SimulationDataLayer> simulation)
+		[x, y](std::shared_ptr<BaseSimulation> simulation)
 		{
 			auto& viewport = simulation->ViewportDetails();
 
@@ -31,7 +31,7 @@ auto CameraMouseBehaviorLayer::OnMiddleButtonUp(int x, int y) -> void
 	auto& simulations = m_MainDataLayer.m_Simulations;
 
 	auto mouseNotOnAnyViewport = std::none_of(simulations.begin(), simulations.end(),
-		[x, y](std::shared_ptr<SimulationDataLayer> simulation)
+		[x, y](std::shared_ptr<BaseSimulation> simulation)
 		{
 			auto& viewport = simulation->ViewportDetails();
 
@@ -67,7 +67,7 @@ auto CameraMouseBehaviorLayer::OnScroll(int x, int y, int delta) -> void
 	auto& simulations = m_MainDataLayer.m_Simulations;
 
 	auto mouseNotOnAnyViewport = std::none_of(simulations.begin(), simulations.end(),
-		[x, y](std::shared_ptr<SimulationDataLayer> simulation)
+		[x, y](std::shared_ptr<BaseSimulation> simulation)
 		{
 			auto& viewport = simulation->ViewportDetails();
 

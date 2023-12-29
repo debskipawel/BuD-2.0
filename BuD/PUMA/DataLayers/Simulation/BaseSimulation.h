@@ -4,11 +4,11 @@
 #include <Robot/Animation/AnimationClip.h>
 #include <Scene/PumaScene.h>
 
-class SimulationDataLayer
+class BaseSimulation
 {
 public:
-	SimulationDataLayer();
-	virtual ~SimulationDataLayer() = default;
+	BaseSimulation();
+	virtual ~BaseSimulation() = default;
 
 	virtual auto Render() -> void;
 	virtual auto Update(const RobotParameters& robotParameters, const AnimationClip& animationClip, float time) -> void;

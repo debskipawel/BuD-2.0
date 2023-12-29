@@ -4,9 +4,9 @@
 
 #include <AnimationClip.h>
 
-struct SimulationDataLayer
+struct BaseSimulation
 {
-	SimulationDataLayer();
+	BaseSimulation();
 
 	virtual void Run();
 	virtual void Stop();

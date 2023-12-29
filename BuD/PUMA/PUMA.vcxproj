@@ -143,7 +143,8 @@
     <ClCompile Include="Behaviors\Mouse\MainMouseBehaviorLayer.cpp" />
     <ClCompile Include="DataLayers\Camera\CameraDataLayer.cpp" />
     <ClCompile Include="DataLayers\MainDataLayer.cpp" />
-    <ClCompile Include="DataLayers\Simulation\SimulationDataLayer.cpp" />
+    <ClCompile Include="DataLayers\Simulation\BaseSimulation.cpp" />
+    <ClCompile Include="DataLayers\Simulation\TestSimulation.cpp" />
     <ClCompile Include="DataLayers\Viewport\ViewportDataLayer.cpp" />
     <ClCompile Include="GUI\BaseGuiLayer.cpp" />
     <ClCompile Include="GUI\MainGuiLayer.cpp" />
@@ -181,7 +182,8 @@
     <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h" />
     <ClInclude Include="DataLayers\Camera\CameraDataLayer.h" />
     <ClInclude Include="DataLayers\MainDataLayer.h" />
-    <ClInclude Include="DataLayers\Simulation\SimulationDataLayer.h" />
+    <ClInclude Include="DataLayers\Simulation\BaseSimulation.h" />
+    <ClInclude Include="DataLayers\Simulation\TestSimulation.h" />
     <ClInclude Include="DataLayers\Viewport\ViewportDataLayer.h" />
     <ClInclude Include="GUI\BaseGuiLayer.h" />
     <ClInclude Include="GUI\MainGuiLayer.h" />

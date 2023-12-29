@@ -72,7 +72,7 @@
     <ClCompile Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataLayers\Simulation\SimulationDataLayer.cpp">
+    <ClCompile Include="DataLayers\Simulation\BaseSimulation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Scene\Objects\Grid.cpp">
@@ -88,6 +88,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GUI\Timeline\TimelineGuiLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataLayers\Simulation\TestSimulation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -149,7 +152,7 @@
     <ClInclude Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataLayers\Simulation\SimulationDataLayer.h">
+    <ClInclude Include="DataLayers\Simulation\BaseSimulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene\Objects\Grid.h">
@@ -165,6 +168,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI\Timeline\TimelineGuiLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLayers\Simulation\TestSimulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,10 +2,10 @@
 
 #include <BuD.h>
 
-struct SimulationDataLayer
+struct BaseSimulation
 {
 public:
-	SimulationDataLayer();
+	BaseSimulation();
 
 	virtual auto StartSimulation(std::vector<std::pair<int, int>> path) -> void;
 	virtual auto Update(float deltaTime) -> void;

@@ -3,7 +3,7 @@
 #include <BuD.h>
 
 #include <DataLayers/Camera/CameraDataLayer.h>
-#include <DataLayers/Simulation/SimulationDataLayer.h>
+#include <DataLayers/Simulation/BaseSimulation.h>
 
 #include <Robot/RobotParameters.h>
 #include <Robot/Animation/AnimationClip.h>
@@ -31,7 +31,7 @@ public:
 	
 	AnimationClip m_AnimationClip;
 
-	std::vector<std::shared_ptr<SimulationDataLayer>> m_Simulations;
+	std::vector<std::shared_ptr<BaseSimulation>> m_Simulations;
 
 protected:
 	float m_SimulationTime;

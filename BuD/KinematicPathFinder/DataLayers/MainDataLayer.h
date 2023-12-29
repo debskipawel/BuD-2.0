@@ -13,7 +13,7 @@ struct MainDataLayer
 
 	AppStateDataLayer m_AppStateDataLayer;
 	SceneDataLayer m_SceneDataLayer;
-	SimulationDataLayer m_SimulationDataLayer;
+	BaseSimulation m_SimulationDataLayer;
 	ViewportDataLayer m_ViewportDataLayer;
 	
 	float m_AngularVelocity;

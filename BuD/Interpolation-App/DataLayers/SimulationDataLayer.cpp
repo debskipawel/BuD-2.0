@@ -1,11 +1,11 @@
 #include "SimulationDataLayer.h"
 
-SimulationDataLayer::SimulationDataLayer()
+BaseSimulation::BaseSimulation()
 	: m_Looped(false), m_Running(false), m_Time(0.0f), m_AnimationClip({}, 5.0f)
 {
 }
 
-void SimulationDataLayer::Run()
+void BaseSimulation::Run()
 {
 	if (m_Time == m_AnimationClip.GetDuration())
 	{
@@ -15,12 +15,12 @@ void SimulationDataLayer::Run()
 	m_Running = true;
 }
 
-void SimulationDataLayer::Stop()
+void BaseSimulation::Stop()
 {
 	m_Running = false;
 }
 
-void SimulationDataLayer::Update(float deltaTime)
+void BaseSimulation::Update(float deltaTime)
 {
 	if (!m_Running)
 	{
@@ -42,7 +42,7 @@ void SimulationDataLayer::Update(float deltaTime)
 	}
 }
 
-KeyFrame SimulationDataLayer::Interpolate()
+KeyFrame BaseSimulation::Interpolate()
 {
 	return m_AnimationClip.Interpolate(m_Time);
 }

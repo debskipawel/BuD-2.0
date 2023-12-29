@@ -1,12 +1,12 @@
 #include "SimulationDataLayer.h"
 
-SimulationDataLayer::SimulationDataLayer()
+BaseSimulation::BaseSimulation()
 	: m_CurrentIndex(0), m_Path(), m_CurrentConfiguration({ 0.0f, 0.0f }), m_AngularVelocity(20.0f)
 {
 
 }
 
-auto SimulationDataLayer::StartSimulation(std::vector<std::pair<int, int>> path) -> void
+auto BaseSimulation::StartSimulation(std::vector<std::pair<int, int>> path) -> void
 {
 	m_Path = path;
 
@@ -19,7 +19,7 @@ auto SimulationDataLayer::StartSimulation(std::vector<std::pair<int, int>> path)
 	m_CurrentConfiguration = m_Path.front();
 }
 
-auto SimulationDataLayer::Update(float deltaTime) -> void
+auto BaseSimulation::Update(float deltaTime) -> void
 {
 	auto step = deltaTime * m_AngularVelocity;
 
@@ -46,12 +46,12 @@ auto SimulationDataLayer::Update(float deltaTime) -> void
 	}
 }
 
-auto SimulationDataLayer::IsFinished() -> bool
+auto BaseSimulation::IsFinished() -> bool
 {
 	return m_CurrentIndex + 1 >= m_Path.size();
 }
 
-auto SimulationDataLayer::GetConfiguration() -> std::pair<float, float>
+auto BaseSimulation::GetConfiguration() -> std::pair<float, float>
 {
 	return m_CurrentConfiguration;
 }

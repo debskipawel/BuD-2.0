@@ -1,12 +1,11 @@
-#include "SimulationDataLayer.h"
+#include "BaseSimulation.h"
 
-SimulationDataLayer::SimulationDataLayer()
+BaseSimulation::BaseSimulation()
     : m_Scene(), m_Viewport()
 {
-
 }
 
-auto SimulationDataLayer::Render() -> void
+auto BaseSimulation::Render() -> void
 {
 	BuD::Renderer::BeginTarget(m_Viewport.m_ViewportWidth, m_Viewport.m_ViewportHeight);
 	BuD::Renderer::Clear(0.0f, 0.0f, 0.0f, 1.0f);
@@ -15,12 +14,12 @@ auto SimulationDataLayer::Render() -> void
 	m_Viewport.m_ViewportImage = BuD::Renderer::EndTarget();
 }
 
-auto SimulationDataLayer::Camera() -> std::shared_ptr<BuD::AbstractCamera>
+auto BaseSimulation::Camera() -> std::shared_ptr<BuD::AbstractCamera>
 {
 	return m_Scene.Scene().ActiveCamera();
 }
 
-auto SimulationDataLayer::Update(const RobotParameters& robotParameters, const AnimationClip& animationClip, float time) -> void
+auto BaseSimulation::Update(const RobotParameters& robotParameters, const AnimationClip& animationClip, float time) -> void
 {
 	const auto& frames = animationClip.KeyFrames();
 
@@ -66,7 +65,7 @@ auto SimulationDataLayer::Update(const RobotParameters& robotParameters, const A
 	m_Scene.UpdateRobotMesh(robotParameters, configuration);
 }
 
-auto SimulationDataLayer::ViewportDetails() -> ViewportDataLayer&
+auto BaseSimulation::ViewportDetails() -> ViewportDataLayer&
 {
     return m_Viewport;
 }
