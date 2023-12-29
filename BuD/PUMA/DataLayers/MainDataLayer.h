@@ -23,16 +23,17 @@ public:
 	virtual auto IsRunning() const -> bool;
 	virtual auto IsLooped() const -> bool;
 
+	virtual auto GetSimulationTime() const -> float;
+	virtual auto SetSimulationTime(float simulationTime) -> void;
 
 	CameraDataLayer m_CameraDataLayer;
-
 	RobotParameters m_RobotParameters;
+	
+	AnimationClip m_AnimationClip;
 
 	std::vector<std::shared_ptr<SimulationDataLayer>> m_Simulations;
 
 protected:
-	AnimationClip m_AnimationClip;
-
 	float m_SimulationTime;
 
 	bool m_Looped;

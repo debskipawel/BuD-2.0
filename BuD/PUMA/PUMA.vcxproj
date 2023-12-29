@@ -147,6 +147,7 @@
     <ClCompile Include="DataLayers\Viewport\ViewportDataLayer.cpp" />
     <ClCompile Include="GUI\BaseGuiLayer.cpp" />
     <ClCompile Include="GUI\MainGuiLayer.cpp" />
+    <ClCompile Include="GUI\Timeline\TimelineGuiLayer.cpp" />
     <ClCompile Include="GUI\Viewport\ViewportGuiLayer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PumaApp.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="DataLayers\Viewport\ViewportDataLayer.h" />
     <ClInclude Include="GUI\BaseGuiLayer.h" />
     <ClInclude Include="GUI\MainGuiLayer.h" />
+    <ClInclude Include="GUI\Timeline\TimelineGuiLayer.h" />
     <ClInclude Include="GUI\Viewport\ViewportGuiLayer.h" />
     <ClInclude Include="PumaApp.h" />
     <ClInclude Include="Robot\Animation\AnimationClip.h" />

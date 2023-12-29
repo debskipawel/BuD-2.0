@@ -12,25 +12,7 @@ auto MainDataLayer::Update(float deltaTime) -> void
 		return;
 	}
 
-	m_SimulationTime += deltaTime;
-
-	auto duration = m_AnimationClip.Duration();
-
-	if (m_Looped)
-	{
-		m_SimulationTime -= static_cast<int>(floorf(m_SimulationTime / duration)) * duration;
-	}
-
-	if (m_SimulationTime > duration)
-	{
-		m_SimulationTime = duration;
-		Stop();
-	}
-
-	for (const auto& simulation : m_Simulations)
-	{
-		simulation->Update(m_RobotParameters, m_AnimationClip, m_SimulationTime);
-	}
+	SetSimulationTime(m_SimulationTime + deltaTime);
 }
 
 auto MainDataLayer::Start() -> void
@@ -66,4 +48,32 @@ auto MainDataLayer::IsRunning() const -> bool
 auto MainDataLayer::IsLooped() const -> bool
 {
 	return m_Looped;
+}
+
+auto MainDataLayer::GetSimulationTime() const -> float
+{
+	return m_SimulationTime;
+}
+
+auto MainDataLayer::SetSimulationTime(float simulationTime) -> void
+{
+	m_SimulationTime = simulationTime;
+
+	auto duration = m_AnimationClip.Duration();
+
+	if (m_Looped)
+	{
+		m_SimulationTime -= static_cast<int>(floorf(m_SimulationTime / duration)) * duration;
+	}
+
+	if (m_SimulationTime > duration)
+	{
+		m_SimulationTime = duration;
+		Stop();
+	}
+
+	for (const auto& simulation : m_Simulations)
+	{
+		simulation->Update(m_RobotParameters, m_AnimationClip, m_SimulationTime);
+	}
 }
