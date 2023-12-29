@@ -50,7 +50,7 @@ auto TimelineGuiLayer::DrawGui() -> void
 
 		for (const auto& keyFrame : keyFrames)
 		{
-			auto timePoint = keyFrame.Time();
+			auto timePoint = keyFrame.GetTime();
 			auto progress = timePoint / animationClip.Duration();
 
 			auto margin = 5.0f;

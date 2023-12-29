@@ -14,11 +14,12 @@ public:
 	virtual auto AddKeyFrame(const AnimationKeyFrame& keyFrame) -> void;
 	virtual auto RemoveKeyFrame(size_t frameIndex) -> void;
 
+	virtual auto KeyFrames() -> std::vector<AnimationKeyFrame>&;
 	virtual auto KeyFrames() const -> const std::vector<AnimationKeyFrame>&;
 
-protected:
 	virtual auto SortFrames() -> void;
 
+protected:
 	float m_Duration;
 
 	std::vector<AnimationKeyFrame> m_KeyFrames;

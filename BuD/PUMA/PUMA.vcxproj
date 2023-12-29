@@ -147,6 +147,7 @@
     <ClCompile Include="DataLayers\Simulation\TestSimulation.cpp" />
     <ClCompile Include="DataLayers\Viewport\ViewportDataLayer.cpp" />
     <ClCompile Include="GUI\BaseGuiLayer.cpp" />
+    <ClCompile Include="GUI\KeyFrameList\KeyFrameListGuiLayer.cpp" />
     <ClCompile Include="GUI\MainGuiLayer.cpp" />
     <ClCompile Include="GUI\Timeline\TimelineGuiLayer.cpp" />
     <ClCompile Include="GUI\Viewport\ViewportGuiLayer.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="DataLayers\Simulation\TestSimulation.h" />
     <ClInclude Include="DataLayers\Viewport\ViewportDataLayer.h" />
     <ClInclude Include="GUI\BaseGuiLayer.h" />
+    <ClInclude Include="GUI\KeyFrameList\KeyFrameListGuiLayer.h" />
     <ClInclude Include="GUI\MainGuiLayer.h" />
     <ClInclude Include="GUI\Timeline\TimelineGuiLayer.h" />
     <ClInclude Include="GUI\Viewport\ViewportGuiLayer.h" />

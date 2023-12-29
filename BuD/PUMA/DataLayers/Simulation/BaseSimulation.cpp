@@ -30,7 +30,7 @@ auto BaseSimulation::Update(const RobotParameters& robotParameters, const Animat
 
 	auto& front = frames.front();
 	
-	if (time <= front.Time())
+	if (time <= front.GetTime())
 	{
 		m_Scene.UpdateRobotMesh(robotParameters, front.Configuration());
 
@@ -39,7 +39,7 @@ auto BaseSimulation::Update(const RobotParameters& robotParameters, const Animat
 
 	auto& back = frames.back();
 
-	if (time >= back.Time())
+	if (time >= back.GetTime())
 	{
 		m_Scene.UpdateRobotMesh(robotParameters, back.Configuration());
 
@@ -49,7 +49,7 @@ auto BaseSimulation::Update(const RobotParameters& robotParameters, const Animat
 	auto previousFrameIt = std::lower_bound(frames.begin(), frames.end(), time,
 		[](const AnimationKeyFrame& keyFrame, float time)
 		{
-			return keyFrame.Time() < time;
+			return keyFrame.GetTime() < time;
 		}
 	);
 
@@ -58,7 +58,7 @@ auto BaseSimulation::Update(const RobotParameters& robotParameters, const Animat
 	const auto& previousFrame = *previousFrameIt;
 	const auto& nextFrame = *nextFrameIt;
 
-	auto t = (time - previousFrame.Time()) / (nextFrame.Time() - previousFrame.Time());
+	auto t = (time - previousFrame.GetTime()) / (nextFrame.GetTime() - previousFrame.GetTime());
 
 	auto configuration = Interpolate(previousFrame, nextFrame, t);
 

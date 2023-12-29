@@ -29,6 +29,11 @@ auto AnimationClip::RemoveKeyFrame(size_t frameIndex) -> void
 	m_KeyFrames.erase(m_KeyFrames.begin() + frameIndex);
 }
 
+auto AnimationClip::KeyFrames() -> std::vector<AnimationKeyFrame>&
+{
+	return m_KeyFrames;
+}
+
 auto AnimationClip::KeyFrames() const -> const std::vector<AnimationKeyFrame>&
 {
 	return m_KeyFrames;
@@ -39,7 +44,7 @@ auto AnimationClip::SortFrames() -> void
 	std::sort(m_KeyFrames.begin(), m_KeyFrames.end(),
 		[](const AnimationKeyFrame& frame1, const AnimationKeyFrame& frame2)
 		{
-			return frame1.Time() < frame2.Time();
+			return frame1.GetTime() < frame2.GetTime();
 		}
 	);
 }
