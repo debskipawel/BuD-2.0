@@ -18,7 +18,11 @@ public:
 	virtual auto Start() -> void;
 	virtual auto Stop() -> void;
 
+	virtual auto ToggleLoop() -> void;
+
 	virtual auto IsRunning() const -> bool;
+	virtual auto IsLooped() const -> bool;
+
 
 	CameraDataLayer m_CameraDataLayer;
 
@@ -31,5 +35,6 @@ protected:
 
 	float m_SimulationTime;
 
+	bool m_Looped;
 	bool m_Running;
 };

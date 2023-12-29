@@ -1,13 +1,13 @@
 #include "MainDataLayer.h"
 
 MainDataLayer::MainDataLayer()
-	: m_Simulations(), m_Running(false), m_SimulationTime(0.0f), m_RobotParameters(2.0f, 1.0f, 1.0f), m_AnimationClip(5.0f)
+	: m_Simulations(), m_Running(false), m_Looped(false), m_SimulationTime(0.0f), m_RobotParameters(2.0f, 1.0f, 1.0f), m_AnimationClip(5.0f)
 {
 }
 
 auto MainDataLayer::Update(float deltaTime) -> void
 {
-	if (!m_Running)
+	if (!IsRunning())
 	{
 		return;
 	}
@@ -16,7 +16,16 @@ auto MainDataLayer::Update(float deltaTime) -> void
 
 	auto duration = m_AnimationClip.Duration();
 
-	m_SimulationTime -= static_cast<int>(floorf(m_SimulationTime / duration)) * duration;
+	if (m_Looped)
+	{
+		m_SimulationTime -= static_cast<int>(floorf(m_SimulationTime / duration)) * duration;
+	}
+
+	if (m_SimulationTime > duration)
+	{
+		m_SimulationTime = duration;
+		Stop();
+	}
 
 	for (const auto& simulation : m_Simulations)
 	{
@@ -44,7 +53,17 @@ auto MainDataLayer::Stop() -> void
 	m_Running = false;
 }
 
+auto MainDataLayer::ToggleLoop() -> void
+{
+	m_Looped = !m_Looped;
+}
+
 auto MainDataLayer::IsRunning() const -> bool
 {
 	return m_Running;
+}
+
+auto MainDataLayer::IsLooped() const -> bool
+{
+	return m_Looped;
 }
