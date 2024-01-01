@@ -19,12 +19,17 @@ auto AnimationKeyFrame::SetTime(float time) -> void
 	m_FrameTime = time;
 }
 
-auto AnimationKeyFrame::Configuration() const -> RobotConfiguration
+auto AnimationKeyFrame::GetConfiguration() const -> RobotConfiguration
 {
 	return m_RobotConfiguration;
 }
 
-auto AnimationKeyFrame::Id() const -> int
+auto AnimationKeyFrame::SetConfiguration(const RobotConfiguration& configuration) -> void
+{
+	m_RobotConfiguration = configuration;
+}
+
+auto AnimationKeyFrame::Id() const -> unsigned int
 {
 	return m_Id;
 }

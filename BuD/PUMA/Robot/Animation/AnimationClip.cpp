@@ -19,14 +19,9 @@ auto AnimationClip::AddKeyFrame(const AnimationKeyFrame& keyFrame) -> void
 	SortFrames();
 }
 
-auto AnimationClip::RemoveKeyFrame(size_t frameIndex) -> void
+auto AnimationClip::RemoveKeyFrame(unsigned int frameId) -> void
 {
-	if (frameIndex > m_KeyFrames.size())
-	{
-		return;
-	}
-
-	m_KeyFrames.erase(m_KeyFrames.begin() + frameIndex);
+	std::erase_if(m_KeyFrames, [frameId](const AnimationKeyFrame& keyFrame) { return keyFrame.Id() == frameId; });
 }
 
 auto AnimationClip::KeyFrames() -> std::vector<AnimationKeyFrame>&

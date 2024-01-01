@@ -12,7 +12,7 @@ public:
 	virtual auto Duration() const -> float;
 
 	virtual auto AddKeyFrame(const AnimationKeyFrame& keyFrame) -> void;
-	virtual auto RemoveKeyFrame(size_t frameIndex) -> void;
+	virtual auto RemoveKeyFrame(unsigned int frameId) -> void;
 
 	virtual auto KeyFrames() -> std::vector<AnimationKeyFrame>&;
 	virtual auto KeyFrames() const -> const std::vector<AnimationKeyFrame>&;

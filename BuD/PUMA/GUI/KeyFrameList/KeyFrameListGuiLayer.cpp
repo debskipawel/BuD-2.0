@@ -4,7 +4,9 @@
 #include <imgui_internal.h>
 #include <misc/cpp/imgui_stdlib.h>
 
-constexpr std::optional<int> NO_KEYFRAME_SELECTED = std::nullopt;
+#include <Robot/Calculators/EffectorFrameCalculator.h>
+
+constexpr std::optional<unsigned int> NO_KEYFRAME_SELECTED = std::nullopt;
 
 KeyFrameListGuiLayer::KeyFrameListGuiLayer(MainDataLayer& mainDataLayer)
     : BaseGuiLayer(mainDataLayer), m_FrameSelectedForEditing(NO_KEYFRAME_SELECTED)
@@ -97,23 +99,106 @@ auto KeyFrameListGuiLayer::DrawGuiForSelectedKeyframe() -> void
 
 	ImGui::Begin("Keyframe details", nullptr, ImGuiWindowFlags_NoFocusOnAppearing);
 
+	DrawTimeGuiForKeyframe(selectedKeyFrame);
+	
+	ImGui::Separator();
+	DrawConfigurationGuiForKeyframe(selectedKeyFrame);
+	
+	ImGui::Separator();
+	DrawEffectorFrameGuiForKeyframe(selectedKeyFrame);
+
+	DrawDeleteButtonGuiForKeyframe(selectedKeyFrame);
+
+	ImGui::End();
+}
+
+auto KeyFrameListGuiLayer::DrawTimeGuiForKeyframe(AnimationKeyFrame& keyFrame) -> void
+{
 	ImGui::Text("Name");
-	ImGui::InputText("###keyframe_name", &selectedKeyFrame.m_Name);
+	ImGui::InputText("###keyframe_name", &keyFrame.m_Name);
 
 	ImGui::NewLine();
 
 	ImGui::Text("Keyframe time");
 
-	auto keyFrameTime = selectedKeyFrame.GetTime();
+	auto keyFrameTime = keyFrame.GetTime();
+
+	auto& animationClip = m_MainDataLayer.m_AnimationClip;
 
 	if (ImGui::DragFloat("###keyframe_time", &keyFrameTime, 0.1f, 0.0f, animationClip.Duration(), "%.1f", ImGuiSliderFlags_ClampOnInput))
 	{
-		selectedKeyFrame.SetTime(keyFrameTime);
+		keyFrame.SetTime(keyFrameTime);
 		animationClip.SortFrames();
 
 		m_MainDataLayer.SetSimulationTime(keyFrameTime);
 	}
+}
 
+auto KeyFrameListGuiLayer::DrawConfigurationGuiForKeyframe(AnimationKeyFrame& keyFrame) -> void
+{
+	auto configuration = keyFrame.GetConfiguration();
+
+	auto modified = false;
+
+	ImGui::Text("Joint angle 1");
+
+	modified |= ImGui::DragFloat("###joint_angle_1", &configuration.m_A1, 0.1f, 0.0f, 0.0f, "%.1f [deg]");
+
+	ImGui::Text("Joint angle 2");
+
+	modified |= ImGui::DragFloat("###joint_angle_2", &configuration.m_A2, 0.1f, 0.0f, 0.0f, "%.1f [deg]");
+
+	ImGui::Text("Joint angle 3");
+
+	modified |= ImGui::DragFloat("###joint_angle_3", &configuration.m_A3, 0.1f, 0.0f, 0.0f, "%.1f [deg]");
+
+	ImGui::Text("Joint angle 4");
+
+	modified |= ImGui::DragFloat("###joint_angle_4", &configuration.m_A4, 0.1f, 0.0f, 0.0f, "%.1f [deg]");
+
+	ImGui::Text("Joint angle 5");
+
+	modified |= ImGui::DragFloat("###joint_angle_5", &configuration.m_A5, 0.1f, 0.0f, 0.0f, "%.1f [deg]");
+
+	ImGui::Text("Arm length 2");
+
+	modified |= ImGui::DragFloat("###arm_length_2", &configuration.m_Q2, 0.01f, 0.0f, FLT_MAX, "%.1f [cm]", ImGuiSliderFlags_AlwaysClamp);
+
+	if (modified)
+	{
+		keyFrame.SetConfiguration(configuration);
+
+		m_MainDataLayer.RevalidateSimulationMeshes();
+	}
+}
+
+auto KeyFrameListGuiLayer::DrawEffectorFrameGuiForKeyframe(AnimationKeyFrame& keyFrame) -> void
+{
+	const auto& parameters = m_MainDataLayer.m_RobotParameters;
+	auto configuration = keyFrame.GetConfiguration();
+
+	auto effectorFrameCalculator = EffectorFrameCalculator();
+
+	auto effectorFrame = effectorFrameCalculator.Calculate(configuration, parameters);
+	
+	auto effectorPosition = effectorFrame.Position();
+	auto effectorRotation = dxm::Matrix::CreateLookAt(dxm::Vector3::Zero, effectorFrame.Front(), effectorFrame.Up()).ToEuler();
+
+	effectorRotation.x = DirectX::XMConvertToDegrees(effectorRotation.x);
+	effectorRotation.y = DirectX::XMConvertToDegrees(effectorRotation.y);
+	effectorRotation.z = DirectX::XMConvertToDegrees(effectorRotation.z);
+
+	ImGui::Text("Effector position");
+	ImGui::DragFloat3("###effector_position", &effectorPosition.x, 0.01f, 0.0f, 0.0f, "%.2f [cm]");
+
+	ImGui::NewLine();
+
+	ImGui::Text("Effector rotation (in Euler)");
+	ImGui::DragFloat3("###effector_rotation", &effectorRotation.x, 0.1f, 0.0f, 0.0f, "%.1f [deg]");
+}
+
+auto KeyFrameListGuiLayer::DrawDeleteButtonGuiForKeyframe(AnimationKeyFrame& keyFrame) -> void
+{
 	auto max = ImGui::GetWindowContentRegionMax();
 	auto min = ImGui::GetWindowContentRegionMin();
 
@@ -133,16 +218,14 @@ auto KeyFrameListGuiLayer::DrawGuiForSelectedKeyframe() -> void
 
 	if (ImGui::Button("Delete keyframe", ImVec2(max.x - min.x, buttonHeight)))
 	{
-		auto idx = selectedKeyFrameIt - keyFrames.begin();
+		auto& animationClip = m_MainDataLayer.m_AnimationClip;
 
-		animationClip.RemoveKeyFrame(idx);
+		animationClip.RemoveKeyFrame(keyFrame.Id());
 
 		m_FrameSelectedForEditing = NO_KEYFRAME_SELECTED;
 
 		m_MainDataLayer.RevalidateSimulationMeshes();
 	}
-
-	ImGui::End();
 }
 
 auto KeyFrameListGuiLayer::UpdateSelectedKeyframeBasedOnTime() -> void

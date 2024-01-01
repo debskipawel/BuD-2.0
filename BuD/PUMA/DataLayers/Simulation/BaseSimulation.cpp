@@ -32,7 +32,7 @@ auto BaseSimulation::Update(const RobotParameters& robotParameters, const Animat
 	
 	if (time <= front.GetTime())
 	{
-		m_Scene.UpdateRobotMesh(robotParameters, front.Configuration());
+		m_Scene.UpdateRobotMesh(robotParameters, front.GetConfiguration());
 
 		return;
 	}
@@ -41,19 +41,19 @@ auto BaseSimulation::Update(const RobotParameters& robotParameters, const Animat
 
 	if (time >= back.GetTime())
 	{
-		m_Scene.UpdateRobotMesh(robotParameters, back.Configuration());
+		m_Scene.UpdateRobotMesh(robotParameters, back.GetConfiguration());
 
 		return;
 	}
 
-	auto previousFrameIt = std::lower_bound(frames.begin(), frames.end(), time,
+	auto nextFrameIt = std::lower_bound(frames.begin(), frames.end(), time,
 		[](const AnimationKeyFrame& keyFrame, float time)
 		{
 			return keyFrame.GetTime() < time;
 		}
 	);
 
-	auto nextFrameIt = previousFrameIt + 1;
+	auto previousFrameIt = nextFrameIt - 1;
 
 	const auto& previousFrame = *previousFrameIt;
 	const auto& nextFrame = *nextFrameIt;

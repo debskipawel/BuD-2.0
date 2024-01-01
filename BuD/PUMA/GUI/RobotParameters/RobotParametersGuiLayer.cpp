@@ -17,15 +17,15 @@ auto RobotParametersGuiLayer::DrawGui() -> void
 
 		ImGui::Text("Arm length 1");
 		
-		modified |= ImGui::DragFloat("###arm_length_1", &robotParameters.m_L1, 0.1f, 0.0f, 10.0f, "%.1f", ImGuiSliderFlags_AlwaysClamp);
+		modified |= ImGui::DragFloat("###arm_length_1", &robotParameters.m_L1, 0.1f, 0.0f, 10.0f, "%.1f [cm]", ImGuiSliderFlags_AlwaysClamp);
 
 		ImGui::Text("Arm length 3");
 
-		modified |= ImGui::DragFloat("###arm_length_3", &robotParameters.m_L3, 0.1f, 0.0f, 10.0f, "%.1f", ImGuiSliderFlags_AlwaysClamp);
+		modified |= ImGui::DragFloat("###arm_length_3", &robotParameters.m_L3, 0.1f, 0.0f, 10.0f, "%.1f [cm]", ImGuiSliderFlags_AlwaysClamp);
 
 		ImGui::Text("Arm length 4");
 
-		modified |= ImGui::DragFloat("###arm_length_4", &robotParameters.m_L4, 0.1f, 0.0f, 10.0f, "%.1f", ImGuiSliderFlags_AlwaysClamp);
+		modified |= ImGui::DragFloat("###arm_length_4", &robotParameters.m_L4, 0.1f, 0.0f, 10.0f, "%.1f [cm]", ImGuiSliderFlags_AlwaysClamp);
 
 		if (modified)
 		{
