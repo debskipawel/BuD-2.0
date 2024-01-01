@@ -102,6 +102,9 @@
     <ClCompile Include="Robot\Calculators\AllJointFramesCalculator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Robot\RobotConfiguration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PumaApp.h">

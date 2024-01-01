@@ -16,7 +16,7 @@ auto EffectorFrameCalculator::Calculate(const RobotConfiguration& configuration,
 		.Rotate(dxm::Matrix::CreateFromAxisAngle(F2.Front(), DirectX::XMConvertToRadians(configuration.m_A3)));
 
 	auto F4 = F3
-		.Translate(parameters.m_L3 * F3.Up())
+		.Translate(-parameters.m_L3 * F3.Up())
 		.Rotate(dxm::Matrix::CreateFromAxisAngle(F3.Up(), DirectX::XMConvertToRadians(configuration.m_A4)));
 
 	auto F5 = F4

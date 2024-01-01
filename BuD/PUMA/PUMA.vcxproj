@@ -161,6 +161,7 @@
     <ClCompile Include="Robot\InverseKinematicSolver.cpp" />
     <ClCompile Include="Robot\Mesh\PumaMesh.cpp" />
     <ClCompile Include="Robot\Mesh\RobotSegmentMesh.cpp" />
+    <ClCompile Include="Robot\RobotConfiguration.cpp" />
     <ClCompile Include="Robot\RobotParameters.cpp" />
     <ClCompile Include="Scene\Objects\Grid.cpp" />
     <ClCompile Include="Scene\PumaScene.cpp" />
