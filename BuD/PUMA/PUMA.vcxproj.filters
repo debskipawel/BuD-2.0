@@ -96,6 +96,12 @@
     <ClCompile Include="GUI\KeyFrameList\KeyFrameListGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Robot\Calculators\EffectorFrameCalculator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Robot\Calculators\AllJointFramesCalculator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PumaApp.h">
@@ -177,6 +183,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI\KeyFrameList\KeyFrameListGuiLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Robot\Calculators\EffectorFrameCalculator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Robot\Calculators\AllJointFramesCalculator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
