@@ -42,7 +42,7 @@ auto KeyFrameListGuiLayer::DrawAddKeyframeButton() -> void
 		auto newKeyframe = AnimationKeyFrame(currentTime, RobotConfiguration());
 
 		m_MainDataLayer.m_AnimationClip.AddKeyFrame(newKeyframe);
-		m_MainDataLayer.SetSimulationTime(currentTime);
+		m_MainDataLayer.RevalidateSimulationMeshes();
 	}
 
 	ImGui::PopItemFlag();
@@ -139,7 +139,7 @@ auto KeyFrameListGuiLayer::DrawGuiForSelectedKeyframe() -> void
 
 		m_FrameSelectedForEditing = NO_KEYFRAME_SELECTED;
 
-		m_MainDataLayer.SetSimulationTime(keyFrameTime);
+		m_MainDataLayer.RevalidateSimulationMeshes();
 	}
 
 	ImGui::End();

@@ -26,6 +26,8 @@ public:
 	virtual auto GetSimulationTime() const -> float;
 	virtual auto SetSimulationTime(float simulationTime) -> void;
 
+	virtual auto RevalidateSimulationMeshes() -> void;
+
 	CameraDataLayer m_CameraDataLayer;
 	RobotParameters m_RobotParameters;
 	

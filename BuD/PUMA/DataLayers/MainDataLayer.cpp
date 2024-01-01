@@ -81,6 +81,11 @@ auto MainDataLayer::SetSimulationTime(float simulationTime) -> void
 		Stop();
 	}
 
+	RevalidateSimulationMeshes();
+}
+
+auto MainDataLayer::RevalidateSimulationMeshes() -> void
+{
 	for (const auto& simulation : m_Simulations)
 	{
 		simulation->Update(m_RobotParameters, m_AnimationClip, m_SimulationTime);
