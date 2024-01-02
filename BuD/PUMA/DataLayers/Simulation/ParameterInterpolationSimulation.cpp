@@ -21,8 +21,6 @@ auto ParameterInterpolationSimulation::Interpolate(const AnimationKeyFrame& fram
 	configuration2.m_A4 -= static_cast<int>(floorf(configuration2.m_A4 / 360.0f)) * 360.0f;
 	configuration2.m_A5 -= static_cast<int>(floorf(configuration2.m_A5 / 360.0f)) * 360.0f;
 
-	auto interpolatedConfiguration = RobotConfiguration();
-
 	auto dA1 = configuration2.m_A1 - configuration1.m_A1;
 	auto dA2 = configuration2.m_A2 - configuration1.m_A2;
 	auto dA3 = configuration2.m_A3 - configuration1.m_A3;
@@ -53,6 +51,8 @@ auto ParameterInterpolationSimulation::Interpolate(const AnimationKeyFrame& fram
 	{
 		dA5 = (dA5 > 0.0f) ? (dA5 - 360.0f) : (dA5 + 360.0f);
 	}
+
+	auto interpolatedConfiguration = RobotConfiguration();
 
 	interpolatedConfiguration.m_A1 = configuration1.m_A1 + t * dA1;
 	interpolatedConfiguration.m_A2 = configuration1.m_A2 + t * dA2;
