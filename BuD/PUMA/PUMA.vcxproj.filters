@@ -108,6 +108,9 @@
     <ClCompile Include="GUI\RobotParameters\RobotParametersGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DataLayers\Simulation\ParameterInterpolationSimulation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PumaApp.h">
@@ -198,6 +201,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GUI\RobotParameters\RobotParametersGuiLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataLayers\Simulation\ParameterInterpolationSimulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

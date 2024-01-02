@@ -144,6 +144,7 @@
     <ClCompile Include="DataLayers\Camera\CameraDataLayer.cpp" />
     <ClCompile Include="DataLayers\MainDataLayer.cpp" />
     <ClCompile Include="DataLayers\Simulation\BaseSimulation.cpp" />
+    <ClCompile Include="DataLayers\Simulation\ParameterInterpolationSimulation.cpp" />
     <ClCompile Include="DataLayers\Simulation\TestSimulation.cpp" />
     <ClCompile Include="DataLayers\Viewport\ViewportDataLayer.cpp" />
     <ClCompile Include="GUI\BaseGuiLayer.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="DataLayers\Camera\CameraDataLayer.h" />
     <ClInclude Include="DataLayers\MainDataLayer.h" />
     <ClInclude Include="DataLayers\Simulation\BaseSimulation.h" />
+    <ClInclude Include="DataLayers\Simulation\ParameterInterpolationSimulation.h" />
     <ClInclude Include="DataLayers\Simulation\TestSimulation.h" />
     <ClInclude Include="DataLayers\Viewport\ViewportDataLayer.h" />
     <ClInclude Include="GUI\BaseGuiLayer.h" />
