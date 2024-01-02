@@ -15,11 +15,11 @@ auto ParameterInterpolationSimulation::Interpolate(const AnimationKeyFrame& fram
 	configuration1.m_A4 -= static_cast<int>(floorf(configuration1.m_A4 / 360.0f)) * 360.0f;
 	configuration1.m_A5 -= static_cast<int>(floorf(configuration1.m_A5 / 360.0f)) * 360.0f;
 
-	configuration2.m_A1 -= static_cast<int>(floorf(configuration1.m_A1 / 360.0f)) * 360.0f;
-	configuration2.m_A2 -= static_cast<int>(floorf(configuration1.m_A2 / 360.0f)) * 360.0f;
-	configuration2.m_A3 -= static_cast<int>(floorf(configuration1.m_A3 / 360.0f)) * 360.0f;
-	configuration2.m_A4 -= static_cast<int>(floorf(configuration1.m_A4 / 360.0f)) * 360.0f;
-	configuration2.m_A5 -= static_cast<int>(floorf(configuration1.m_A5 / 360.0f)) * 360.0f;
+	configuration2.m_A1 -= static_cast<int>(floorf(configuration2.m_A1 / 360.0f)) * 360.0f;
+	configuration2.m_A2 -= static_cast<int>(floorf(configuration2.m_A2 / 360.0f)) * 360.0f;
+	configuration2.m_A3 -= static_cast<int>(floorf(configuration2.m_A3 / 360.0f)) * 360.0f;
+	configuration2.m_A4 -= static_cast<int>(floorf(configuration2.m_A4 / 360.0f)) * 360.0f;
+	configuration2.m_A5 -= static_cast<int>(floorf(configuration2.m_A5 / 360.0f)) * 360.0f;
 
 	auto interpolatedConfiguration = RobotConfiguration();
 
@@ -59,6 +59,12 @@ auto ParameterInterpolationSimulation::Interpolate(const AnimationKeyFrame& fram
 	interpolatedConfiguration.m_A3 = configuration1.m_A3 + t * dA3;
 	interpolatedConfiguration.m_A4 = configuration1.m_A4 + t * dA4;
 	interpolatedConfiguration.m_A5 = configuration1.m_A5 + t * dA5;
+
+	interpolatedConfiguration.m_A1 -= static_cast<int>(floorf(interpolatedConfiguration.m_A1 / 360.0f)) * 360.0f;
+	interpolatedConfiguration.m_A2 -= static_cast<int>(floorf(interpolatedConfiguration.m_A2 / 360.0f)) * 360.0f;
+	interpolatedConfiguration.m_A3 -= static_cast<int>(floorf(interpolatedConfiguration.m_A3 / 360.0f)) * 360.0f;
+	interpolatedConfiguration.m_A4 -= static_cast<int>(floorf(interpolatedConfiguration.m_A4 / 360.0f)) * 360.0f;
+	interpolatedConfiguration.m_A5 -= static_cast<int>(floorf(interpolatedConfiguration.m_A5 / 360.0f)) * 360.0f;
 
 	interpolatedConfiguration.m_Q2 = (1 - t) * configuration1.m_Q2 + t * configuration2.m_Q2;
 
