@@ -17,7 +17,7 @@ public:
 	virtual auto Camera() -> std::shared_ptr<BuD::AbstractCamera>;
 
 protected:
-	virtual auto Interpolate(const AnimationKeyFrame& frame1, const AnimationKeyFrame& frame2, float t) -> RobotConfiguration = 0;
+	virtual auto Interpolate(const RobotParameters& robotParameters, const AnimationKeyFrame& frame1, const AnimationKeyFrame& frame2, float t) -> RobotConfiguration = 0;
 
 	PumaScene m_Scene;
 

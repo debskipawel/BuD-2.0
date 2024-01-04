@@ -20,6 +20,14 @@ auto Frame::Rotate(const dxm::Matrix& rotationMatrix) const -> Frame
     return Frame(m_Position, rotatedFront, rotatedUp);
 }
 
+auto Frame::Rotate(const dxm::Quaternion& rotation) const -> Frame
+{
+    auto rotatedFront = dxm::Vector3::Transform(m_Front, rotation);
+    auto rotatedUp = dxm::Vector3::Transform(m_Up, rotation);
+
+    return Frame(m_Position, rotatedFront, rotatedUp);
+}
+
 auto Frame::Front() const -> dxm::Vector3
 {
     return m_Front;

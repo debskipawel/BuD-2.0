@@ -9,6 +9,7 @@ public:
 
 	virtual auto Translate(const dxm::Vector3& translation) const -> Frame;
 	virtual auto Rotate(const dxm::Matrix& rotationMatrix) const -> Frame;
+	virtual auto Rotate(const dxm::Quaternion& rotation) const -> Frame;
 
 	virtual auto Front() const -> dxm::Vector3;
 	virtual auto Up() const -> dxm::Vector3;

@@ -60,7 +60,7 @@ auto BaseSimulation::Update(const RobotParameters& robotParameters, const Animat
 
 	auto t = (time - previousFrame.GetTime()) / (nextFrame.GetTime() - previousFrame.GetTime());
 
-	auto configuration = Interpolate(previousFrame, nextFrame, t);
+	auto configuration = Interpolate(robotParameters, previousFrame, nextFrame, t);
 
 	m_Scene.UpdateRobotMesh(robotParameters, configuration);
 }

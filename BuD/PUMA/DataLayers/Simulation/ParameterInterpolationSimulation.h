@@ -9,5 +9,5 @@ public:
 	virtual ~ParameterInterpolationSimulation() = default;
 
 protected:
-	virtual auto Interpolate(const AnimationKeyFrame& frame1, const AnimationKeyFrame& frame2, float t) -> RobotConfiguration override;
+	virtual auto Interpolate(const RobotParameters& parameters, const AnimationKeyFrame& frame1, const AnimationKeyFrame& frame2, float t) -> RobotConfiguration override;
 };

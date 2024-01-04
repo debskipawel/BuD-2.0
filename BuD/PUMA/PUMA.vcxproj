@@ -144,6 +144,7 @@
     <ClCompile Include="DataLayers\Camera\CameraDataLayer.cpp" />
     <ClCompile Include="DataLayers\MainDataLayer.cpp" />
     <ClCompile Include="DataLayers\Simulation\BaseSimulation.cpp" />
+    <ClCompile Include="DataLayers\Simulation\FrameInterpolationSimulation.cpp" />
     <ClCompile Include="DataLayers\Simulation\ParameterInterpolationSimulation.cpp" />
     <ClCompile Include="DataLayers\Simulation\TestSimulation.cpp" />
     <ClCompile Include="DataLayers\Viewport\ViewportDataLayer.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="Robot\Mesh\RobotSegmentMesh.cpp" />
     <ClCompile Include="Robot\RobotConfiguration.cpp" />
     <ClCompile Include="Robot\RobotParameters.cpp" />
+    <ClCompile Include="Scene\Objects\FrameMesh.cpp" />
     <ClCompile Include="Scene\Objects\Grid.cpp" />
     <ClCompile Include="Scene\PumaScene.cpp" />
   </ItemGroup>
@@ -189,6 +191,7 @@
     <ClInclude Include="DataLayers\Camera\CameraDataLayer.h" />
     <ClInclude Include="DataLayers\MainDataLayer.h" />
     <ClInclude Include="DataLayers\Simulation\BaseSimulation.h" />
+    <ClInclude Include="DataLayers\Simulation\FrameInterpolationSimulation.h" />
     <ClInclude Include="DataLayers\Simulation\ParameterInterpolationSimulation.h" />
     <ClInclude Include="DataLayers\Simulation\TestSimulation.h" />
     <ClInclude Include="DataLayers\Viewport\ViewportDataLayer.h" />
@@ -209,10 +212,23 @@
     <ClInclude Include="Robot\Mesh\RobotSegmentMesh.h" />
     <ClInclude Include="Robot\RobotConfiguration.h" />
     <ClInclude Include="Robot\RobotParameters.h" />
+    <ClInclude Include="Scene\Objects\FrameMesh.h" />
     <ClInclude Include="Scene\Objects\Grid.h" />
     <ClInclude Include="Scene\PumaScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Resources\Shaders\Arrow\arrow_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Arrow\arrow_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="Resources\Shaders\Grid\grid_ps.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
@@ -236,6 +252,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Sphere\sphere_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Sphere\sphere_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

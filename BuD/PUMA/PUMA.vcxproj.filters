@@ -111,6 +111,12 @@
     <ClCompile Include="DataLayers\Simulation\ParameterInterpolationSimulation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DataLayers\Simulation\FrameInterpolationSimulation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Objects\FrameMesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PumaApp.h">
@@ -206,11 +212,21 @@
     <ClInclude Include="DataLayers\Simulation\ParameterInterpolationSimulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DataLayers\Simulation\FrameInterpolationSimulation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Objects\FrameMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\robot_segment_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\robot_segment_ps.hlsl" />
     <FxCompile Include="Resources\Shaders\Grid\grid_vs.hlsl" />
     <FxCompile Include="Resources\Shaders\Grid\grid_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\Arrow\arrow_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\Arrow\arrow_ps.hlsl" />
+    <FxCompile Include="Resources\Shaders\Sphere\sphere_vs.hlsl" />
+    <FxCompile Include="Resources\Shaders\Sphere\sphere_ps.hlsl" />
   </ItemGroup>
 </Project>

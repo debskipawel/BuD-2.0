@@ -4,7 +4,7 @@ ParameterInterpolationSimulation::ParameterInterpolationSimulation()
 {
 }
 
-auto ParameterInterpolationSimulation::Interpolate(const AnimationKeyFrame& frame1, const AnimationKeyFrame& frame2, float t) -> RobotConfiguration
+auto ParameterInterpolationSimulation::Interpolate(const RobotParameters& parameters, const AnimationKeyFrame& frame1, const AnimationKeyFrame& frame2, float t) -> RobotConfiguration
 {
 	auto configuration1 = frame1.GetConfiguration();
 	auto configuration2 = frame2.GetConfiguration();

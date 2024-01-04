@@ -1,12 +1,13 @@
 #include "MainDataLayer.h"
 
 #include <DataLayers/Simulation/TestSimulation.h>
+#include <DataLayers/Simulation/FrameInterpolationSimulation.h>
 #include <DataLayers/Simulation/ParameterInterpolationSimulation.h>
 
 MainDataLayer::MainDataLayer()
 	: m_Simulations(), m_Running(false), m_Looped(false), m_SimulationTime(0.0f), m_RobotParameters(2.0f, 1.0f, 1.0f), m_AnimationClip(5.0f)
 {
-	m_Simulations.emplace_back(std::make_shared<TestSimulation>());
+	m_Simulations.emplace_back(std::make_shared<FrameInterpolationSimulation>());
 	m_Simulations.emplace_back(std::make_shared<ParameterInterpolationSimulation>());
 }
 
