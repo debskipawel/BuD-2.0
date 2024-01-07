@@ -17,7 +17,12 @@ auto PumaScene::UpdateRobotMesh(const RobotParameters& parameters, const RobotCo
 	auto [F0, F1, F2, F3, F4, F5] = allJointsCalculator.Calculate(robotConfiguration, parameters);
 
 	m_RobotMesh->UpdateMesh({ F1.Position(), F2.Position(), F3.Position(), F4.Position(), F5.Position() });
-	m_FrameMesh->UpdateMesh(F5);
+	//m_FrameMesh->UpdateMesh(F5);
+}
+
+auto PumaScene::UpdateFrameMesh(const Frame& frame) -> void
+{
+	m_FrameMesh->UpdateMesh(frame);
 }
 
 auto PumaScene::Scene() -> BuD::Scene&

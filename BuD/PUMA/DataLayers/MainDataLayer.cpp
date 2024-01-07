@@ -4,9 +4,17 @@
 #include <DataLayers/Simulation/FrameInterpolationSimulation.h>
 #include <DataLayers/Simulation/ParameterInterpolationSimulation.h>
 
+constexpr auto ANIMATION_INITIAL_LENGTH = 5.0f;
+
 MainDataLayer::MainDataLayer()
-	: m_Simulations(), m_Running(false), m_Looped(false), m_SimulationTime(0.0f), m_RobotParameters(2.0f, 1.0f, 1.0f), m_AnimationClip(5.0f)
+	: m_Simulations(), m_Running(false), m_Looped(false), m_SimulationTime(0.0f), m_RobotParameters(2.0f, 1.0f, 1.0f), m_AnimationClip(ANIMATION_INITIAL_LENGTH)
 {
+	auto startKeyFrame = AnimationKeyFrame(0.0f, RobotConfiguration());
+	auto finalKeyFrame = AnimationKeyFrame(ANIMATION_INITIAL_LENGTH, RobotConfiguration());
+
+	m_AnimationClip.AddKeyFrame(startKeyFrame);
+	m_AnimationClip.AddKeyFrame(finalKeyFrame);
+
 	m_Simulations.emplace_back(std::make_shared<FrameInterpolationSimulation>());
 	m_Simulations.emplace_back(std::make_shared<ParameterInterpolationSimulation>());
 }

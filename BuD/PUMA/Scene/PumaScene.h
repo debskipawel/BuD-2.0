@@ -15,6 +15,7 @@ public:
 	PumaScene();
 
 	virtual auto UpdateRobotMesh(const RobotParameters& parameters, const RobotConfiguration& robotConfiguration) -> void;
+	virtual auto UpdateFrameMesh(const Frame& frame) -> void;
 
 	virtual auto Scene() -> BuD::Scene&;
 

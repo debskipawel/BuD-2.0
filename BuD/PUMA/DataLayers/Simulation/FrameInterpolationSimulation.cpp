@@ -18,10 +18,12 @@ auto FrameInterpolationSimulation::Interpolate(const RobotParameters& parameters
 	auto effectorFrame2 = effectorFrameCalculator.Calculate(configuration2, parameters);
 
 	auto interpolatedFrame = InterpolateFrame(effectorFrame1, effectorFrame2, t);
+	
+	m_Scene.UpdateFrameMesh(interpolatedFrame);
 
 	auto inverseKinematicSolver = InverseKinematicSolver();
 
-	auto resultConfiguration = inverseKinematicSolver.Solve(parameters, Frame(), interpolatedFrame, configuration1);
+	auto resultConfiguration = inverseKinematicSolver.Solve(parameters, Frame(), interpolatedFrame, t < 0.5f ? configuration1 : configuration2);
 
 	return resultConfiguration;
 }
