@@ -138,6 +138,7 @@
     <ClCompile Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.cpp" />
+    <ClCompile Include="Behaviors\Keyboard\Pause\PauseKeyboardBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Mouse\BaseMouseBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.cpp" />
     <ClCompile Include="Behaviors\Mouse\MainMouseBehaviorLayer.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="Behaviors\Keyboard\BaseKeyboardBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Keyboard\Camera\CameraKeyboardBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Keyboard\MainKeyboardBehaviorLayer.h" />
+    <ClInclude Include="Behaviors\Keyboard\Pause\PauseKeyboardBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\BaseMouseBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\Camera\CameraMouseBehaviorLayer.h" />
     <ClInclude Include="Behaviors\Mouse\MainMouseBehaviorLayer.h" />
