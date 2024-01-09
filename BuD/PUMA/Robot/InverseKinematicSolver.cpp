@@ -16,11 +16,11 @@ auto InverseKinematicSolver::Solve(const RobotParameters& robotParameters, const
 	auto v21 = P2 - P1;
 	auto v41 = P4 - P1;
 
-	if (v21.LengthSquared() < 1e-10f || v41.LengthSquared() < 1e-10f)
-	{
-		// some points are common
-		return SolveAdjacentPoints(robotParameters, baseFrame, effectorFrame, referenceConfiguration);
-	}
+	//if (v21.LengthSquared() < 1e-10f || v41.LengthSquared() < 1e-10f)
+	//{
+	//	// some points are common
+	//	return SolveAdjacentPoints(robotParameters, baseFrame, effectorFrame, referenceConfiguration);
+	//}
 
 	v21.Normalize();
 	v41.Normalize();
@@ -44,7 +44,52 @@ auto InverseKinematicSolver::SolveAdjacentPoints(const RobotParameters& robotPar
 
 auto InverseKinematicSolver::SolveColinear(const RobotParameters& robotParameters, const Frame& baseFrame, const Frame& effectorFrame, const std::optional<RobotConfiguration> referenceConfiguration) -> RobotConfiguration
 {
-	return RobotConfiguration();
+	auto P0 = baseFrame.Position();
+	auto P5 = effectorFrame.Position();
+
+	auto P1 = P0;
+	auto P2 = P1 + robotParameters.m_L1 * baseFrame.Up();
+	auto P4 = P5 - robotParameters.m_L4 * effectorFrame.Right();
+
+	auto allJointsCalculator = AllJointFramesCalculator();
+
+	auto P3 = dxm::Vector3::Zero;
+
+	if (referenceConfiguration.has_value())
+	{
+		auto [F0prev, F1prev, F2prev, F3prev, F4prev, F5prev] = allJointsCalculator.Calculate(referenceConfiguration.value(), robotParameters);
+
+		auto sphereRadiusVector = F3prev.Position() - P4;
+
+		if (sphereRadiusVector.Length() < 1e-5f)
+		{
+			sphereRadiusVector = F3prev.Position() - F4prev.Position();
+		}
+
+		sphereRadiusVector.Normalize();
+
+		P3 = P4 + robotParameters.m_L3 * sphereRadiusVector;
+	}
+	else
+	{
+		auto v42 = P2 - P4;
+		auto distanceHalved = 0.5f * v42.Length();
+
+		if (distanceHalved < robotParameters.m_L3)
+		{
+			P3 = P4 + distanceHalved * v42 + sqrtf(robotParameters.m_L3 * robotParameters.m_L3 - distanceHalved * distanceHalved) * dxm::Vector3::UnitY;
+		}
+		else
+		{
+			v42.Normalize();
+
+			P3 = P4 + robotParameters.m_L3 * v42;
+		}
+	}
+
+	auto resultConfiguration = GetAnglesFromJoints(robotParameters, baseFrame, effectorFrame, { P1, P2, P3, P4, P5 }, referenceConfiguration);
+
+	return resultConfiguration;
 }
 
 auto InverseKinematicSolver::SolveWithPlane(const RobotParameters& robotParameters, const Frame& baseFrame, const Frame& effectorFrame, const std::optional<RobotConfiguration> referenceConfiguration) -> RobotConfiguration
