@@ -16,12 +16,6 @@ auto InverseKinematicSolver::Solve(const RobotParameters& robotParameters, const
 	auto v21 = P2 - P1;
 	auto v41 = P4 - P1;
 
-	//if (v21.LengthSquared() < 1e-10f || v41.LengthSquared() < 1e-10f)
-	//{
-	//	// some points are common
-	//	return SolveAdjacentPoints(robotParameters, baseFrame, effectorFrame, referenceConfiguration);
-	//}
-
 	v21.Normalize();
 	v41.Normalize();
 
@@ -174,10 +168,10 @@ auto InverseKinematicSolver::GetAnglesFromJoints(const RobotParameters& robotPar
 	{
 		canBeTrustedAlpha1 = false;
 
-		if (referenceConfiguration.has_value())
-		{
-			alpha1 = referenceConfiguration->m_A1;
-		}
+		//if (referenceConfiguration.has_value())
+		//{
+		//	alpha1 = referenceConfiguration->m_A1;
+		//}
 	}
 
 	auto F1 = baseFrame.Rotate(dxm::Matrix::CreateFromAxisAngle(baseFrame.Up(), alpha1));

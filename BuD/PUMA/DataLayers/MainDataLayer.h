@@ -28,6 +28,8 @@ public:
 
 	virtual auto RevalidateSimulationMeshes() -> void;
 
+	float m_SimulationSpeed;
+
 	CameraDataLayer m_CameraDataLayer;
 	RobotParameters m_RobotParameters;
 	

@@ -7,7 +7,7 @@
 constexpr auto ANIMATION_INITIAL_LENGTH = 5.0f;
 
 MainDataLayer::MainDataLayer()
-	: m_Simulations(), m_Running(false), m_Looped(false), m_SimulationTime(0.0f), m_RobotParameters(2.0f, 1.0f, 1.0f), m_AnimationClip(ANIMATION_INITIAL_LENGTH)
+	: m_Simulations(), m_Running(false), m_Looped(false), m_SimulationTime(0.0f), m_RobotParameters(2.0f, 1.0f, 1.0f), m_AnimationClip(ANIMATION_INITIAL_LENGTH), m_SimulationSpeed(1.0f)
 {
 	auto startKeyFrame = AnimationKeyFrame(0.0f, RobotConfiguration());
 	auto finalKeyFrame = AnimationKeyFrame(ANIMATION_INITIAL_LENGTH, RobotConfiguration());
@@ -28,7 +28,7 @@ auto MainDataLayer::Update(float deltaTime) -> void
 		return;
 	}
 
-	SetSimulationTime(m_SimulationTime + deltaTime);
+	SetSimulationTime(m_SimulationTime + m_SimulationSpeed * deltaTime);
 }
 
 auto MainDataLayer::Start() -> void

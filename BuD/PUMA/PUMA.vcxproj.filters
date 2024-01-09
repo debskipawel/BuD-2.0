@@ -120,6 +120,9 @@
     <ClCompile Include="Behaviors\Keyboard\Pause\PauseKeyboardBehaviorLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GUI\SimulationParameters\SimulationParametersGuiLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PumaApp.h">
@@ -222,6 +225,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Behaviors\Keyboard\Pause\PauseKeyboardBehaviorLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\SimulationParameters\SimulationParametersGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

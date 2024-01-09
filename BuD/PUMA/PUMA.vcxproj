@@ -153,6 +153,7 @@
     <ClCompile Include="GUI\KeyFrameList\KeyFrameListGuiLayer.cpp" />
     <ClCompile Include="GUI\MainGuiLayer.cpp" />
     <ClCompile Include="GUI\RobotParameters\RobotParametersGuiLayer.cpp" />
+    <ClCompile Include="GUI\SimulationParameters\SimulationParametersGuiLayer.cpp" />
     <ClCompile Include="GUI\Timeline\TimelineGuiLayer.cpp" />
     <ClCompile Include="GUI\Viewport\ViewportGuiLayer.cpp" />
     <ClCompile Include="main.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="GUI\KeyFrameList\KeyFrameListGuiLayer.h" />
     <ClInclude Include="GUI\MainGuiLayer.h" />
     <ClInclude Include="GUI\RobotParameters\RobotParametersGuiLayer.h" />
+    <ClInclude Include="GUI\SimulationParameters\SimulationParametersGuiLayer.h" />
     <ClInclude Include="GUI\Timeline\TimelineGuiLayer.h" />
     <ClInclude Include="GUI\Viewport\ViewportGuiLayer.h" />
     <ClInclude Include="PumaApp.h" />
