@@ -59,6 +59,7 @@ auto InverseKinematicSolver::SolveColinear(const RobotParameters& robotParameter
 	{
 		auto [F0prev, F1prev, F2prev, F3prev, F4prev, F5prev] = allJointsCalculator.Calculate(referenceConfiguration.value(), robotParameters);
 
+		auto circleNormalVector = effectorFrame.Right();
 		auto sphereRadiusVector = F3prev.Position() - P4;
 
 		if (sphereRadiusVector.Length() < 1e-5f)
@@ -68,7 +69,10 @@ auto InverseKinematicSolver::SolveColinear(const RobotParameters& robotParameter
 
 		sphereRadiusVector.Normalize();
 
-		P3 = P4 + robotParameters.m_L3 * sphereRadiusVector;
+		auto crossedOrthogonalVector = sphereRadiusVector.Cross(circleNormalVector);
+		auto circleRadiusVector = circleNormalVector.Cross(crossedOrthogonalVector);
+
+		P3 = P4 + robotParameters.m_L3 * circleRadiusVector;
 	}
 	else
 	{

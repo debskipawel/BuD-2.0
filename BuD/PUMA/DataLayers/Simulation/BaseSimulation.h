@@ -21,6 +21,9 @@ public:
 protected:
 	virtual auto Interpolate(const RobotParameters& robotParameters, const AnimationKeyFrame& frame1, const AnimationKeyFrame& frame2, float t) -> RobotConfiguration = 0;
 
+	RobotConfiguration m_PreviousConfiguration;
+	float m_PreviousConfigurationTime;
+
 	PumaScene m_Scene;
 
 	ViewportDataLayer m_Viewport;

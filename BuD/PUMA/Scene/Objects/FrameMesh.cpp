@@ -13,12 +13,12 @@ FrameMesh::FrameMesh(BuD::Scene& scene, const Frame& frame)
 			{ "INS_MODEL_Y", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, sizeof(dxm::Vector4), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 			{ "INS_MODEL_Z", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 2 * sizeof(dxm::Vector4), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 			{ "INS_MODEL_W", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 3 * sizeof(dxm::Vector4), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
-			{ "INS_COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 4 * sizeof(dxm::Vector4), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
+			{ "INS_COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 4 * sizeof(dxm::Vector4), D3D11_INPUT_PER_INSTANCE_DATA, 1 },
 		}
 	);
 
 	auto sphereMeshElements = meshLoader.LoadMeshFromFile("Resources/Meshes/unit_sphere.obj",
-		{ { "INS_POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1 }}
+		{ { "INS_POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 0, D3D11_INPUT_PER_INSTANCE_DATA, 1 }}
 	);
 
 	auto arrowShaderPipeline = BuD::ShaderPipeline();

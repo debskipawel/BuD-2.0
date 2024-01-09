@@ -9,7 +9,7 @@ struct VSInput
     float3 position : POSITION;
     float3 normal : NORMAL;
     float3 tangent : TANGENT;
-    float3 texCoords : TEX_COORDS;
+    float2 texCoords : TEXCOORDS;
     float4 insModelRowX : INS_MODEL_X;
     float4 insModelRowY : INS_MODEL_Y;
     float4 insModelRowZ : INS_MODEL_Z;

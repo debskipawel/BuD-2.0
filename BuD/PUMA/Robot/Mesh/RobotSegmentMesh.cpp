@@ -1,5 +1,7 @@
 #include "RobotSegmentMesh.h"
 
+#include <numbers>
+
 RobotSegmentMesh::RobotSegmentMesh(BuD::Scene& scene, const dxm::Vector3& position, const dxm::Vector3& orientation, float length, const dxm::Vector3& color)
 	: m_SegmentEntity(scene), m_SegmentInstanceData()
 {
@@ -69,9 +71,27 @@ auto RobotSegmentMesh::UpdateInstanceData(const dxm::Vector3& position, const dx
 auto RobotSegmentMesh::UpdateInstanceData(const dxm::Vector3& position, const dxm::Vector3& orientation, float length) -> void
 {
 	auto cylinderAxis = dxm::Vector3::UnitY;
-	auto rotation = dxm::Quaternion::FromToRotation(cylinderAxis, orientation);
 
-	auto modelMatrix = dxm::Matrix::CreateScale(0.2f, length, 0.2f) * dxm::Matrix::CreateFromQuaternion(rotation) * dxm::Matrix::CreateTranslation(position);
+	if (1.0f - cylinderAxis.Dot(orientation) < 1e-5f)
+	{
+		auto modelMatrix = dxm::Matrix::CreateScale(0.2f, length, 0.2f) * dxm::Matrix::CreateTranslation(position);
 
-	m_SegmentInstanceData.m_ModelMatrix = modelMatrix;
+		m_SegmentInstanceData.m_ModelMatrix = modelMatrix;
+	}
+	else if (1.0f + cylinderAxis.Dot(orientation) < 1e-5f)
+	{
+		auto rotation = dxm::Quaternion::CreateFromAxisAngle(dxm::Vector3::UnitX, std::numbers::pi_v<float>);
+
+		auto modelMatrix = dxm::Matrix::CreateScale(0.2f, length, 0.2f) * dxm::Matrix::CreateFromQuaternion(rotation) * dxm::Matrix::CreateTranslation(position);
+
+		m_SegmentInstanceData.m_ModelMatrix = modelMatrix;
+	}
+	else
+	{
+		auto rotation = dxm::Quaternion::FromToRotation(cylinderAxis, orientation);
+
+		auto modelMatrix = dxm::Matrix::CreateScale(0.2f, length, 0.2f) * dxm::Matrix::CreateFromQuaternion(rotation) * dxm::Matrix::CreateTranslation(position);
+
+		m_SegmentInstanceData.m_ModelMatrix = modelMatrix;
+	}
 }

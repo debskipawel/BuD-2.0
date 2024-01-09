@@ -28,7 +28,15 @@ auto FrameInterpolationSimulation::Interpolate(const RobotParameters& parameters
 
 	auto inverseKinematicSolver = InverseKinematicSolver();
 
-	auto resultConfiguration = inverseKinematicSolver.Solve(parameters, Frame(), interpolatedFrame, t < 0.5f ? configuration1 : configuration2);
+	auto referenceConfiguration = (t < 0.25f)
+		? configuration1
+		: (t > 0.75f)
+			? configuration2
+			: m_PreviousConfiguration;
+
+	referenceConfiguration = m_PreviousConfiguration;
+
+	auto resultConfiguration = inverseKinematicSolver.Solve(parameters, Frame(), interpolatedFrame, referenceConfiguration);
 
 	return resultConfiguration;
 }

@@ -1,6 +1,6 @@
 #include "AllJointFramesCalculator.h"
 
-auto AllJointFramesCalculator::Calculate(const RobotConfiguration& configuration, const RobotParameters& parameters)->std::array<Frame, 6>
+auto AllJointFramesCalculator::Calculate(const RobotConfiguration& configuration, const RobotParameters& parameters) -> std::array<Frame, 6>
 {
 	auto F0 = Frame();
 

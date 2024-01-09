@@ -25,6 +25,9 @@ auto BaseSimulation::Update(const RobotParameters& robotParameters, const Animat
 
 	if (frames.empty())
 	{
+		m_PreviousConfiguration = RobotConfiguration();
+		m_PreviousConfigurationTime = time;
+
 		return;
 	}
 
@@ -32,7 +35,10 @@ auto BaseSimulation::Update(const RobotParameters& robotParameters, const Animat
 	
 	if (time <= front.GetTime())
 	{
-		m_Scene.UpdateRobotMesh(robotParameters, front.GetConfiguration());
+		m_PreviousConfiguration = front.GetConfiguration();
+		m_PreviousConfigurationTime = time;
+
+		m_Scene.UpdateRobotMesh(robotParameters, m_PreviousConfiguration);
 
 		return;
 	}
@@ -41,7 +47,10 @@ auto BaseSimulation::Update(const RobotParameters& robotParameters, const Animat
 
 	if (time >= back.GetTime())
 	{
-		m_Scene.UpdateRobotMesh(robotParameters, back.GetConfiguration());
+		m_PreviousConfiguration = back.GetConfiguration();
+		m_PreviousConfigurationTime = time;
+
+		m_Scene.UpdateRobotMesh(robotParameters, m_PreviousConfiguration);
 
 		return;
 	}
@@ -62,7 +71,10 @@ auto BaseSimulation::Update(const RobotParameters& robotParameters, const Animat
 
 	auto configuration = Interpolate(robotParameters, previousFrame, nextFrame, t);
 
-	m_Scene.UpdateRobotMesh(robotParameters, configuration);
+	m_PreviousConfiguration = configuration;
+	m_PreviousConfigurationTime = time;
+
+	m_Scene.UpdateRobotMesh(robotParameters, m_PreviousConfiguration);
 }
 
 auto BaseSimulation::ViewportDetails() -> ViewportDataLayer&
