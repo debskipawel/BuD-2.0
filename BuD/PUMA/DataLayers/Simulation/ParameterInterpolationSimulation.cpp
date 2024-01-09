@@ -4,6 +4,11 @@ ParameterInterpolationSimulation::ParameterInterpolationSimulation()
 {
 }
 
+auto ParameterInterpolationSimulation::Name() -> std::string
+{
+	return "Parameter interpolation";
+}
+
 auto ParameterInterpolationSimulation::Interpolate(const RobotParameters& parameters, const AnimationKeyFrame& frame1, const AnimationKeyFrame& frame2, float t) -> RobotConfiguration
 {
 	auto configuration1 = frame1.GetConfiguration();

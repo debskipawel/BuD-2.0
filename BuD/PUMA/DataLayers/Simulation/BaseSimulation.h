@@ -16,6 +16,8 @@ public:
 	virtual auto ViewportDetails() -> ViewportDataLayer&;
 	virtual auto Camera() -> std::shared_ptr<BuD::AbstractCamera>;
 
+	virtual auto Name() -> std::string = 0;
+
 protected:
 	virtual auto Interpolate(const RobotParameters& robotParameters, const AnimationKeyFrame& frame1, const AnimationKeyFrame& frame2, float t) -> RobotConfiguration = 0;
 

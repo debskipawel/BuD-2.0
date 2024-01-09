@@ -1,5 +1,10 @@
 #include "TestSimulation.h"
 
+auto TestSimulation::Name() -> std::string
+{
+    return "Test";
+}
+
 auto TestSimulation::Interpolate(const RobotParameters& parameters, const AnimationKeyFrame& frame1, const AnimationKeyFrame& frame2, float t) -> RobotConfiguration
 {
     auto configuration1 = frame1.GetConfiguration();

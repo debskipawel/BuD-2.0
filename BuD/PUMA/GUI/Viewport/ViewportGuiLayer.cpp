@@ -17,13 +17,13 @@ void ViewportGuiLayer::DrawGui()
 
 		auto& viewport = simulation->ViewportDetails();
 
-		DrawViewport(viewport, std::format("Viewport{}", idx));
+		DrawViewport(viewport, std::format("{} ###viewport{}", simulation->Name(), idx));
 	}
 }
 
 auto ViewportGuiLayer::DrawViewport(ViewportDataLayer& viewport, const std::string& viewportName) -> void
 {
-	auto label = std::format("{}###{}", viewportName, viewportName);
+	auto label = std::format("{}", viewportName, viewportName);
 
 	if (ImGui::Begin(label.c_str()))
 	{

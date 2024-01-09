@@ -7,6 +7,11 @@ FrameInterpolationSimulation::FrameInterpolationSimulation()
 {
 }
 
+auto FrameInterpolationSimulation::Name() -> std::string
+{
+	return "Frame interpolation";
+}
+
 auto FrameInterpolationSimulation::Interpolate(const RobotParameters& parameters, const AnimationKeyFrame& frame1, const AnimationKeyFrame& frame2, float t) -> RobotConfiguration
 {
 	auto configuration1 = frame1.GetConfiguration();

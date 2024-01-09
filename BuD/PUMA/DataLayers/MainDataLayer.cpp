@@ -17,6 +17,8 @@ MainDataLayer::MainDataLayer()
 
 	m_Simulations.emplace_back(std::make_shared<FrameInterpolationSimulation>());
 	m_Simulations.emplace_back(std::make_shared<ParameterInterpolationSimulation>());
+
+	RevalidateSimulationMeshes();
 }
 
 auto MainDataLayer::Update(float deltaTime) -> void
