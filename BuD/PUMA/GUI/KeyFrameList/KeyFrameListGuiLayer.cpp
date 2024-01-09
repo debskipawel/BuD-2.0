@@ -5,6 +5,7 @@
 #include <misc/cpp/imgui_stdlib.h>
 
 #include <Robot/Calculators/EffectorFrameCalculator.h>
+#include <Robot/InverseKinematicSolver.h>
 
 constexpr std::optional<unsigned int> NO_KEYFRAME_SELECTED = std::nullopt;
 
@@ -188,13 +189,42 @@ auto KeyFrameListGuiLayer::DrawEffectorFrameGuiForKeyframe(AnimationKeyFrame& ke
 	effectorRotation.y = DirectX::XMConvertToDegrees(effectorRotation.y);
 	effectorRotation.z = DirectX::XMConvertToDegrees(effectorRotation.z);
 
+	auto frameModified = false;
+
 	ImGui::Text("Effector position");
-	ImGui::DragFloat3("###effector_position", &effectorPosition.x, 0.01f, 0.0f, 0.0f, "%.2f [cm]");
+	frameModified |= ImGui::DragFloat3("###effector_position", &effectorPosition.x, 0.01f, 0.0f, 0.0f, "%.2f [cm]");
 
 	ImGui::NewLine();
 
 	ImGui::Text("Effector rotation (in Euler)");
-	ImGui::DragFloat3("###effector_rotation", &effectorRotation.x, 0.1f, 0.0f, 0.0f, "%.1f [deg]");
+	frameModified |= ImGui::DragFloat3("###effector_rotation", &effectorRotation.x, 0.1f, 0.0f, 0.0f, "%.1f [deg]");
+
+	if (frameModified)
+	{
+		effectorRotation.x = DirectX::XMConvertToRadians(effectorRotation.x);
+		effectorRotation.y = DirectX::XMConvertToRadians(effectorRotation.y);
+		effectorRotation.z = DirectX::XMConvertToRadians(effectorRotation.z);
+
+		auto effectorQuaternionRotation = dxm::Quaternion::CreateFromYawPitchRoll(effectorRotation);
+		effectorQuaternionRotation.w *= -1.0f;
+
+		auto resultFrame = Frame();
+
+		resultFrame = resultFrame
+			.Translate(effectorPosition)
+			.Rotate(effectorQuaternionRotation);
+
+		auto inverseKinematicSolver = InverseKinematicSolver();
+
+		auto robotParameters = m_MainDataLayer.m_RobotParameters;
+		auto referenceConfiguration = keyFrame.GetConfiguration();
+
+		auto inverseKinematicConfiguration = inverseKinematicSolver.Solve(robotParameters, Frame(), resultFrame, referenceConfiguration);
+
+		keyFrame.SetConfiguration(inverseKinematicConfiguration);
+
+		m_MainDataLayer.RevalidateSimulationMeshes();
+	}
 }
 
 auto KeyFrameListGuiLayer::DrawDeleteButtonGuiForKeyframe(AnimationKeyFrame& keyFrame) -> void
