@@ -2,11 +2,13 @@
 
 #include <imgui.h>
 
+#include <GUI/Plot/TestPlotGuiLayer.h>
 #include <GUI/Viewport/ViewportGuiLayer.h>
 
 MainGuiLayer::MainGuiLayer(MainDataLayer& dataLayer)
 	: BaseGuiLayer(dataLayer)
 {
+	m_GuiLayers.emplace_back(std::make_unique<TestPlotGuiLayer>(m_MainDataLayer));
 	m_GuiLayers.emplace_back(std::make_unique<ViewportGuiLayer>(m_MainDataLayer));
 }
 
