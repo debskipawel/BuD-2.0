@@ -14,6 +14,14 @@ auto HodographApp::OnUpdate(float deltaTime) -> void
 
 auto HodographApp::OnRender() -> void
 {
+	auto& viewportInfo = m_MainDataLayer.m_ViewportDataLayer;
+
+	BuD::Renderer::BeginTarget(viewportInfo.m_ViewportWidth, viewportInfo.m_ViewportHeight);
+	BuD::Renderer::Clear(0.0f, 0.0f, 0.0f, 0.0f);
+
+	BuD::Renderer::Render(m_MainDataLayer.m_SceneDataLayer.m_Scene);
+
+	viewportInfo.m_ViewportImage = BuD::Renderer::EndTarget();
 }
 
 auto HodographApp::OnGuiRender() -> void
