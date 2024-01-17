@@ -135,6 +135,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DataLayers\MainDataLayer.cpp" />
+    <ClCompile Include="DataLayers\Simulation\SimulationDataLayer.cpp" />
+    <ClCompile Include="DataLayers\Viewport\ViewportDataLayer.cpp" />
+    <ClCompile Include="GUI\BaseGuiLayer.cpp" />
+    <ClCompile Include="GUI\MainGuiLayer.cpp" />
+    <ClCompile Include="GUI\Viewport\ViewportGuiLayer.cpp" />
     <ClCompile Include="HodographApp.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -150,6 +156,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DataLayers\MainDataLayer.h" />
+    <ClInclude Include="DataLayers\Scene\SceneDataLayer.h" />
+    <ClInclude Include="DataLayers\Simulation\SimulationDataLayer.h" />
+    <ClInclude Include="DataLayers\Viewport\ViewportDataLayer.h" />
+    <ClInclude Include="GUI\BaseGuiLayer.h" />
+    <ClInclude Include="GUI\MainGuiLayer.h" />
+    <ClInclude Include="GUI\Viewport\ViewportGuiLayer.h" />
     <ClInclude Include="HodographApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

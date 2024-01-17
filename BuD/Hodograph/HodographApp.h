@@ -2,6 +2,9 @@
 
 #include <BuD.h>
 
+#include <DataLayers/MainDataLayer.h>
+#include <GUI/BaseGuiLayer.h>
+
 class HodographApp : public BuD::AppLayer
 {
 public:
@@ -21,4 +24,7 @@ public:
 	virtual auto OnConcreteEvent(BuD::MouseMovedEvent& e) -> void override;
 
 protected:
+	MainDataLayer m_MainDataLayer;
+
+	std::unique_ptr<BaseGuiLayer> m_GuiLayer;
 };
