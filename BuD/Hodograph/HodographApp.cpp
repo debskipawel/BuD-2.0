@@ -10,6 +10,7 @@ HodographApp::HodographApp()
 
 auto HodographApp::OnUpdate(float deltaTime) -> void
 {
+	m_MainDataLayer.m_SimulationDataLayer.Update(deltaTime);
 }
 
 auto HodographApp::OnRender() -> void
