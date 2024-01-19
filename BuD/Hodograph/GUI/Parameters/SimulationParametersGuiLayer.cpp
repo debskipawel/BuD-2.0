@@ -14,10 +14,10 @@ auto SimulationParametersGuiLayer::DrawGui() -> void
 	auto& simulationDataLayer = m_MainDataLayer.m_SimulationDataLayer;
 
 	ImGui::Text("Arm length (L)");
-	ImGui::DragFloat("###arm_length", &simulationDataLayer.m_ArmLength, 0.01f, 0.1f, 10.0f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+	ImGui::DragFloat("###arm_length", &simulationDataLayer.m_ArmLength, 0.01f, simulationDataLayer.m_Radius, 10.0f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
 
 	ImGui::Text("Radius (R)");
-	ImGui::DragFloat("###radius", &simulationDataLayer.m_Radius, 0.01f, 0.1f, 10.0f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+	ImGui::DragFloat("###radius", &simulationDataLayer.m_Radius, 0.01f, 0.1f, simulationDataLayer.m_ArmLength, "%.2f", ImGuiSliderFlags_AlwaysClamp);
 
 	ImGui::Text("Angular velocity");
 	ImGui::DragFloat("###angular_velocity", &simulationDataLayer.m_AngularVelocity, 0.1f, 0.0f, 720.0f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
