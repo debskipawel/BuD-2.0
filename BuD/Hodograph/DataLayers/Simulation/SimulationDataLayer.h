@@ -32,6 +32,7 @@ protected:
 
 	bool m_Running;
 
+	float m_Angle;
 	float m_SimulationTime;
 	float m_TimeSinceLastUpdate;
 };

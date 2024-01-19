@@ -10,6 +10,11 @@ AccelerationPlotGuiLayer::AccelerationPlotGuiLayer(MainDataLayer& mainDataLayer)
 
 auto AccelerationPlotGuiLayer::DrawGui() -> void
 {
+	if (!m_MainDataLayer.m_DisplayAccelerationPlot)
+	{
+		return;
+	}
+
 	if (ImGui::Begin("Acceleration plot"))
 	{
 		auto min = ImGui::GetWindowContentRegionMin();

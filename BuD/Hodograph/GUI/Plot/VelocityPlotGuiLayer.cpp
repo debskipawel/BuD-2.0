@@ -10,6 +10,11 @@ VelocityPlotGuiLayer::VelocityPlotGuiLayer(MainDataLayer& mainDataLayer)
 
 auto VelocityPlotGuiLayer::DrawGui() -> void
 {
+	if (!m_MainDataLayer.m_DisplayVelocityPlot)
+	{
+		return;
+	}
+
 	if (ImGui::Begin("Velocity plot"))
 	{
 		auto min = ImGui::GetWindowContentRegionMin();

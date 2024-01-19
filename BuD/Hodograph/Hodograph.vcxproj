@@ -140,6 +140,7 @@
     <ClCompile Include="DataLayers\Viewport\ViewportDataLayer.cpp" />
     <ClCompile Include="GUI\BaseGuiLayer.cpp" />
     <ClCompile Include="GUI\MainGuiLayer.cpp" />
+    <ClCompile Include="GUI\Parameters\PlotDisplayParametersGuiLayer.cpp" />
     <ClCompile Include="GUI\Parameters\SimulationParametersGuiLayer.cpp" />
     <ClCompile Include="GUI\Plot\AccelerationPlotGuiLayer.cpp" />
     <ClCompile Include="GUI\Plot\MainImPlotGuiLayer.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="DataLayers\Viewport\ViewportDataLayer.h" />
     <ClInclude Include="GUI\BaseGuiLayer.h" />
     <ClInclude Include="GUI\MainGuiLayer.h" />
+    <ClInclude Include="GUI\Parameters\PlotDisplayParametersGuiLayer.h" />
     <ClInclude Include="GUI\Parameters\SimulationParametersGuiLayer.h" />
     <ClInclude Include="GUI\Plot\AccelerationPlotGuiLayer.h" />
     <ClInclude Include="GUI\Plot\MainImPlotGuiLayer.h" />

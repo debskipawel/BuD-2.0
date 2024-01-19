@@ -10,6 +10,11 @@ PhasePlotGuiLayer::PhasePlotGuiLayer(MainDataLayer& mainDataLayer)
 
 auto PhasePlotGuiLayer::DrawGui() -> void
 {
+	if (!m_MainDataLayer.m_DisplayPhasePlot)
+	{
+		return;
+	}
+
 	if (ImGui::Begin("Phase plot"))
 	{
 		auto min = ImGui::GetWindowContentRegionMin();

@@ -10,6 +10,11 @@ PositionPlotGuiLayer::PositionPlotGuiLayer(MainDataLayer& mainDataLayer)
 
 auto PositionPlotGuiLayer::DrawGui() -> void
 {
+	if (!m_MainDataLayer.m_DisplayPositionPlot)
+	{
+		return;
+	}
+
 	if (ImGui::Begin("Position plot"))
 	{
 		auto min = ImGui::GetWindowContentRegionMin();
