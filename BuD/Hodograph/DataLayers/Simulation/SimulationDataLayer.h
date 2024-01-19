@@ -12,7 +12,9 @@ public:
 
 	virtual auto IsRunning() const -> bool;
 
-	virtual void Update(float deltaTime);
+	virtual auto Update(float deltaTime) -> void;
+
+	virtual auto Alpha() const -> float;
 
 	float m_ArmLength;
 	float m_Radius;

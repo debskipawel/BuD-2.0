@@ -6,7 +6,7 @@
 constexpr auto TICK_PERIOD = 1.0f / 120.0f;
 
 SimulationDataLayer::SimulationDataLayer()
-	: m_ArmLength(5.0f), m_Radius(1.0f), m_AngularVelocity(30.0f), m_Running(false), m_TimeSinceLastUpdate(0.0f), m_SimulationTime(0.0f), m_StandardDeviation(0.0001f)
+	: m_ArmLength(5.0f), m_Radius(1.0f), m_AngularVelocity(30.0f), m_Running(false), m_TimeSinceLastUpdate(0.0f), m_SimulationTime(0.0f), m_StandardDeviation(0.0001f), m_Angle(0.0f)
 {
 }
 
@@ -59,6 +59,11 @@ void SimulationDataLayer::Update(float deltaTime)
 
 		SimulationTick();
 	}
+}
+
+auto SimulationDataLayer::Alpha() const -> float
+{
+	return m_Angle;
 }
 
 auto SimulationDataLayer::ClearPlotData() -> void

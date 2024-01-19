@@ -11,4 +11,5 @@ public:
 
 protected:
 	virtual auto DrawViewport(ViewportDataLayer& viewport, const std::string& viewportName) -> void;
+	virtual auto DrawSceneElements() -> void;
 };
