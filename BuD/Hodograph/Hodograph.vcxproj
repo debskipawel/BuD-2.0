@@ -141,7 +141,11 @@
     <ClCompile Include="GUI\BaseGuiLayer.cpp" />
     <ClCompile Include="GUI\MainGuiLayer.cpp" />
     <ClCompile Include="GUI\Parameters\SimulationParametersGuiLayer.cpp" />
-    <ClCompile Include="GUI\Plot\TestPlotGuiLayer.cpp" />
+    <ClCompile Include="GUI\Plot\AccelerationPlotGuiLayer.cpp" />
+    <ClCompile Include="GUI\Plot\MainImPlotGuiLayer.cpp" />
+    <ClCompile Include="GUI\Plot\PhasePlotGuiLayer.cpp" />
+    <ClCompile Include="GUI\Plot\PositionPlotGuiLayer.cpp" />
+    <ClCompile Include="GUI\Plot\VelocityPlotGuiLayer.cpp" />
     <ClCompile Include="GUI\Viewport\ViewportGuiLayer.cpp" />
     <ClCompile Include="HodographApp.cpp" />
     <ClCompile Include="main.cpp" />
@@ -168,7 +172,11 @@
     <ClInclude Include="GUI\BaseGuiLayer.h" />
     <ClInclude Include="GUI\MainGuiLayer.h" />
     <ClInclude Include="GUI\Parameters\SimulationParametersGuiLayer.h" />
-    <ClInclude Include="GUI\Plot\TestPlotGuiLayer.h" />
+    <ClInclude Include="GUI\Plot\AccelerationPlotGuiLayer.h" />
+    <ClInclude Include="GUI\Plot\MainImPlotGuiLayer.h" />
+    <ClInclude Include="GUI\Plot\PhasePlotGuiLayer.h" />
+    <ClInclude Include="GUI\Plot\PositionPlotGuiLayer.h" />
+    <ClInclude Include="GUI\Plot\VelocityPlotGuiLayer.h" />
     <ClInclude Include="GUI\Viewport\ViewportGuiLayer.h" />
     <ClInclude Include="HodographApp.h" />
   </ItemGroup>

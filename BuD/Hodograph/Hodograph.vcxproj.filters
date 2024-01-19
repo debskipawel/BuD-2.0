@@ -39,10 +39,22 @@
     <ClCompile Include="DataLayers\MainDataLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Plot\TestPlotGuiLayer.cpp">
+    <ClCompile Include="GUI\Parameters\SimulationParametersGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Parameters\SimulationParametersGuiLayer.cpp">
+    <ClCompile Include="GUI\Plot\MainImPlotGuiLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Plot\PositionPlotGuiLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Plot\VelocityPlotGuiLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Plot\AccelerationPlotGuiLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Plot\PhasePlotGuiLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,10 +83,22 @@
     <ClInclude Include="GUI\Viewport\ViewportGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Plot\TestPlotGuiLayer.h">
+    <ClInclude Include="GUI\Parameters\SimulationParametersGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\Parameters\SimulationParametersGuiLayer.h">
+    <ClInclude Include="GUI\Plot\MainImPlotGuiLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Plot\PositionPlotGuiLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Plot\VelocityPlotGuiLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Plot\AccelerationPlotGuiLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Plot\PhasePlotGuiLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -22,6 +22,9 @@ auto SimulationParametersGuiLayer::DrawGui() -> void
 	ImGui::Text("Angular velocity");
 	ImGui::DragFloat("###angular_velocity", &simulationDataLayer.m_AngularVelocity, 0.1f, 0.0f, 720.0f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
 
+	ImGui::Text("Standard deviation");
+	ImGui::DragFloat("###standard_deviation", &simulationDataLayer.m_StandardDeviation, 0.0001f, 0.0001f, 0.01f, "%.4f", ImGuiSliderFlags_AlwaysClamp);
+
 	ImGui::Separator();
 
 	DrawSimulationButtons();
