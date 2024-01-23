@@ -13,17 +13,19 @@ auto SimulationParametersGuiLayer::DrawGui() -> void
 
 	auto& simulationDataLayer = m_MainDataLayer.m_SimulationDataLayer;
 
+	auto epsilon = 0.01f;
+
 	ImGui::Text("Arm length (L)");
-	ImGui::DragFloat("###arm_length", &simulationDataLayer.m_ArmLength, 0.01f, simulationDataLayer.m_Radius, 10.0f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+	ImGui::DragFloat("###arm_length", &simulationDataLayer.m_ArmLength, epsilon, simulationDataLayer.m_Radius + epsilon, 10.0f, "%.2f [m]", ImGuiSliderFlags_AlwaysClamp);
 
 	ImGui::Text("Radius (R)");
-	ImGui::DragFloat("###radius", &simulationDataLayer.m_Radius, 0.01f, 0.1f, simulationDataLayer.m_ArmLength, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+	ImGui::DragFloat("###radius", &simulationDataLayer.m_Radius, epsilon, 0.1f, simulationDataLayer.m_ArmLength - epsilon, "%.2f [m]", ImGuiSliderFlags_AlwaysClamp);
 
 	ImGui::Text("Angular velocity");
-	ImGui::DragFloat("###angular_velocity", &simulationDataLayer.m_AngularVelocity, 0.1f, 0.0f, 720.0f, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+	ImGui::DragFloat("###angular_velocity", &simulationDataLayer.m_AngularVelocity, 0.1f, 0.0f, 720.0f, "%.2f [deg/s]", ImGuiSliderFlags_AlwaysClamp);
 
 	ImGui::Text("Standard deviation");
-	ImGui::DragFloat("###standard_deviation", &simulationDataLayer.m_StandardDeviation, 0.0001f, 0.0001f, 0.01f, "%.4f", ImGuiSliderFlags_AlwaysClamp);
+	ImGui::DragFloat("###standard_deviation", &simulationDataLayer.m_StandardDeviation, 0.0001f, 0.0f, 0.01f, "%.4f", ImGuiSliderFlags_AlwaysClamp);
 
 	ImGui::Separator();
 

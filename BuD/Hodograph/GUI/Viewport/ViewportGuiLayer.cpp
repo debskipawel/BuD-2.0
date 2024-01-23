@@ -50,7 +50,7 @@ auto ViewportGuiLayer::DrawSceneElements() -> void
 	auto blockSize = dxm::Vector2(1.0f, 1.0f);
 	auto blockPosition = dxm::Vector2(0.5f * sqrtf(L * L - R * R), 0.0f);
 
-	if (m_MainDataLayer.m_SimulationDataLayer.m_PositionValues.size() > 0)
+	if (m_MainDataLayer.m_SimulationDataLayer.IsRunning() && m_MainDataLayer.m_SimulationDataLayer.m_TimeValues.size() > 0)
 	{
 		blockPosition.x += m_MainDataLayer.m_SimulationDataLayer.m_PositionValues.back();
 	}

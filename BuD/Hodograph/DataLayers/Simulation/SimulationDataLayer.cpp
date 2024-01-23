@@ -6,7 +6,7 @@
 constexpr auto TICK_PERIOD = 1.0f / 120.0f;
 
 SimulationDataLayer::SimulationDataLayer()
-	: m_ArmLength(5.0f), m_Radius(1.0f), m_AngularVelocity(30.0f), m_Running(false), m_TimeSinceLastUpdate(0.0f), m_SimulationTime(0.0f), m_StandardDeviation(0.0001f), m_Angle(0.0f)
+	: m_ArmLength(5.0f), m_Radius(1.0f), m_AngularVelocity(60.0f), m_Running(false), m_TimeSinceLastUpdate(0.0f), m_SimulationTime(0.0f), m_StandardDeviation(0.0f), m_Angle(0.0f)
 {
 }
 
@@ -77,17 +77,25 @@ auto SimulationDataLayer::ClearPlotData() -> void
 
 auto SimulationDataLayer::SimulationTick() -> void
 {
+	auto armLengthScalingFactor = 1.0f;
+	
 	static auto generator = std::default_random_engine();
-	auto distribution = std::normal_distribution<float>(0.0f, m_StandardDeviation);
+	
+	if (m_StandardDeviation > 0.0f)
+	{
+		auto distribution = std::normal_distribution<float>(0.0f, m_StandardDeviation);
 
-	auto disturbance = distribution(generator);
+		auto disturbance = distribution(generator);
+
+		armLengthScalingFactor += disturbance;
+	}
 
 	auto omega = m_AngularVelocity * std::numbers::pi_v<float> / 180.0f;
 
 	m_Angle += omega * TICK_PERIOD;
 
 	auto R = m_Radius;
-	auto L = (1.0f + disturbance) * m_ArmLength;
+	auto L = armLengthScalingFactor * m_ArmLength;
 
 	auto positionCalculator = [this](float alpha, float L, float R)
 	{
@@ -98,10 +106,20 @@ auto SimulationDataLayer::SimulationTick() -> void
 
 	auto positionCurrent = positionCalculator(m_Angle, L, R);
 	auto positionPrev = positionCalculator(m_Angle - omega * TICK_PERIOD, L, R);
-	auto positionNext = positionCalculator(m_Angle + omega * TICK_PERIOD, L, R);
+	auto positionPrevPrev = positionCalculator(m_Angle - 2.0f * omega * TICK_PERIOD, L, R);
 
-	auto velocityCurrent = (positionNext - positionCurrent) / TICK_PERIOD;
-	auto velocityPrev = (positionCurrent - positionPrev) / TICK_PERIOD;
+	if (m_PositionValues.size() > 0)
+	{
+		positionPrev = m_PositionValues[m_PositionValues.size() - 1];
+	}
+
+	if (m_PositionValues.size() > 1)
+	{
+		positionPrevPrev = m_PositionValues[m_PositionValues.size() - 2];
+	}
+
+	auto velocityCurrent = (positionCurrent - positionPrev) / TICK_PERIOD;
+	auto velocityPrev = (positionPrev - positionPrevPrev) / TICK_PERIOD;
 
 	auto accelerationCurrent = (velocityCurrent - velocityPrev) / TICK_PERIOD;
 
